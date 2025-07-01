@@ -1,23 +1,25 @@
 /**
  * @file web_server.c
- * @brief HTTP server for WiFi captive portal and configuration interface
+ * @brief HTTPS server for WiFi captive portal and configuration interface
  *
- * This module provides a comprehensive HTTP server for ESP32 WiFi configuration
+ * This module provides a comprehensive HTTPS server for ESP32 WiFi configuration
  * and device management. It serves both a captive portal for WiFi setup and
- * a full web interface for device monitoring and control.
+ * a full web interface for device monitoring and control with SSL/TLS encryption.
  *
  * Features:
  * - Static file serving from embedded flash assets (HTML, CSS, JS)
  * - WiFi configuration API endpoints (scan, connect, status, reset)
  * - Multi-page responsive web interface with navbar navigation
  * - Integration with DNS server for captive portal functionality
+ * - SSL/TLS encryption using embedded self-signed certificates
  */
 
 #include "web_server.h"
 #include "wifi_manager.h"
 #include "dns_server.h"
+#include "cert_handler.h"
 #include "esp_log.h"
-#include "esp_http_server.h"
+#include "esp_https_server.h"
 #include "esp_wifi.h"
 #include "cJSON.h"
 
@@ -431,20 +433,54 @@ esp_err_t web_server_init(const web_server_config_t *config)
         current_config = default_config;
     }
 
-    ESP_LOGI(TAG, "Initializing web server on port %d", current_config.port);
+    ESP_LOGI(TAG, "Initializing HTTPS server on port %d", current_config.port);
 
-    httpd_config_t httpd_config = HTTPD_DEFAULT_CONFIG();
-    httpd_config.server_port = current_config.port;
-    httpd_config.max_open_sockets = current_config.max_open_sockets;
-    httpd_config.max_uri_handlers = 32; // Increase to 32 to ensure we have plenty of slots
-    httpd_config.lru_purge_enable = true;
-
-    ESP_LOGI(TAG, "HTTP config: port=%d, max_sockets=%d, max_handlers=%d",
-             httpd_config.server_port, httpd_config.max_open_sockets, httpd_config.max_uri_handlers);
-
-    if (httpd_start(&server, &httpd_config) != ESP_OK)
+    // Initialize certificate handler
+    esp_err_t cert_ret = cert_handler_init();
+    if (cert_ret != ESP_OK)
     {
-        ESP_LOGE(TAG, "Failed to start HTTP server");
+        ESP_LOGE(TAG, "Failed to initialize certificate handler: %s", esp_err_to_name(cert_ret));
+        return cert_ret;
+    }
+
+    // Get SSL certificates
+    const char *server_cert_data, *server_key_data;
+    size_t server_cert_len, server_key_len;
+    
+    cert_ret = cert_handler_get_server_cert(&server_cert_data, &server_cert_len);
+    if (cert_ret != ESP_OK)
+    {
+        ESP_LOGE(TAG, "Failed to get server certificate: %s", esp_err_to_name(cert_ret));
+        return cert_ret;
+    }
+    
+    cert_ret = cert_handler_get_server_key(&server_key_data, &server_key_len);
+    if (cert_ret != ESP_OK)
+    {
+        ESP_LOGE(TAG, "Failed to get server private key: %s", esp_err_to_name(cert_ret));
+        return cert_ret;
+    }
+
+    // Configure HTTPS server
+    httpd_ssl_config_t httpd_ssl_config = HTTPD_SSL_CONFIG_DEFAULT();
+    httpd_ssl_config.httpd.server_port = current_config.port;
+    httpd_ssl_config.httpd.max_open_sockets = current_config.max_open_sockets;
+    httpd_ssl_config.httpd.max_uri_handlers = 32; // Increase to 32 to ensure we have plenty of slots
+    httpd_ssl_config.httpd.lru_purge_enable = true;
+    
+    // SSL certificate configuration
+    httpd_ssl_config.servercert = (const uint8_t *)server_cert_data;
+    httpd_ssl_config.servercert_len = server_cert_len;
+    httpd_ssl_config.prvtkey_pem = (const uint8_t *)server_key_data;
+    httpd_ssl_config.prvtkey_len = server_key_len;
+
+    ESP_LOGI(TAG, "HTTPS config: port=%d, max_sockets=%d, max_handlers=%d",
+             httpd_ssl_config.httpd.server_port, httpd_ssl_config.httpd.max_open_sockets, httpd_ssl_config.httpd.max_uri_handlers);
+    ESP_LOGI(TAG, "SSL config: cert_len=%zu, key_len=%zu", server_cert_len, server_key_len);
+
+    if (httpd_ssl_start(&server, &httpd_ssl_config) != ESP_OK)
+    {
+        ESP_LOGE(TAG, "Failed to start HTTPS server");
         return ESP_FAIL;
     }
 
@@ -556,7 +592,7 @@ esp_err_t web_server_start(void)
         return ESP_OK;
     }
 
-    ESP_LOGI(TAG, "Starting web server");
+    ESP_LOGI(TAG, "Starting HTTPS server");
 
     // Start DNS server for captive portal if we're in AP mode
     wifi_mode_t wifi_mode;
@@ -583,7 +619,7 @@ esp_err_t web_server_start(void)
     }
 
     server_running = true;
-    ESP_LOGI(TAG, "Web server started successfully");
+    ESP_LOGI(TAG, "HTTPS server started successfully");
 
     return ESP_OK;
 }
@@ -595,20 +631,20 @@ esp_err_t web_server_stop(void)
         return ESP_OK;
     }
 
-    ESP_LOGI(TAG, "Stopping web server");
+    ESP_LOGI(TAG, "Stopping HTTPS server");
 
     // Stop DNS server
     dns_server_stop();
 
-    // Stop HTTP server
+    // Stop HTTPS server
     if (server != NULL)
     {
-        httpd_stop(server);
+        httpd_ssl_stop(server);
         server = NULL;
     }
 
     server_running = false;
-    ESP_LOGI(TAG, "Web server stopped");
+    ESP_LOGI(TAG, "HTTPS server stopped");
 
     return ESP_OK;
 }
