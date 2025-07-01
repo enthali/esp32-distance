@@ -139,7 +139,7 @@
                     .then(data => {
                         if (data.success) {
                             showStatus('Device will restart in AP mode...', 'info');
-                            setTimeout(() => window.location.href = 'http://192.168.4.1', 5000);
+                            setTimeout(() => window.location.href = 'https://192.168.4.1', 5000);
                         } else {
                             showStatus('Reset failed: ' + (data.error || 'Unknown error'), 'error');
                         }

@@ -32,7 +32,7 @@ static httpd_handle_t server = NULL;
 static web_server_config_t current_config;
 static bool server_running = false;
 
-// Forward declarations for HTTP request handlers
+// Forward declarations for HTTPS request handlers
 static esp_err_t root_handler(httpd_req_t *req);
 static esp_err_t config_handler(httpd_req_t *req);
 static esp_err_t scan_handler(httpd_req_t *req);
@@ -56,7 +56,7 @@ extern const uint8_t app_js_end[] asm("_binary_app_js_end");
 static const char *get_mime_type(const char *filename);
 static esp_err_t get_embedded_file(const char *filename, const uint8_t **data, size_t *size);
 
-// HTTP request handlers
+// HTTPS request handlers
 static esp_err_t root_handler(httpd_req_t *req)
 {
     ESP_LOGI(TAG, "Root request - serving main dashboard");
