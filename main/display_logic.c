@@ -6,6 +6,7 @@
 #include "display_logic.h"
 #include "distance_sensor.h"
 #include "led_controller.h"
+#include "config.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "esp_log.h"
@@ -23,11 +24,11 @@ static bool is_initialized = false;
 /**
  * @brief Map distance to LED index
  *
- * Maps distance in centimeters to LED index (0-39).
- * Uses linear mapping: 10-50cm range mapped to LEDs 0-39.
+ * Maps distance in centimeters to LED index (0 to led_count-1).
+ * Uses linear mapping: configured distance range mapped to all available LEDs.
  *
  * @param distance_cm Distance in centimeters
- * @return LED index (0-39), or -1 if out of normal range
+ * @return LED index (0 to led_count-1), or -1 if out of normal range
  */
 static int map_distance_to_led(float distance_cm)
 {
@@ -36,16 +37,19 @@ static int map_distance_to_led(float distance_cm)
         return -1; // Out of range
     }
 
-    // Linear mapping: 10-50cm → LEDs 0-39
-    float range_cm = display_config.max_distance_cm - display_config.min_distance_cm; // 40cm
+    // Linear mapping: Distance range → LEDs 0 to (led_count-1)
+    float range_cm = display_config.max_distance_cm - display_config.min_distance_cm;
     float normalized = (distance_cm - display_config.min_distance_cm) / range_cm;     // 0.0-1.0
-    int led_index = (int)(normalized * 39.0f);                                        // 0-39
+    
+    // Get actual LED count for dynamic mapping
+    uint16_t led_count = led_get_count();
+    int led_index = (int)(normalized * (float)(led_count - 1));                      // 0 to (led_count-1)
 
     // Ensure within bounds
     if (led_index < 0)
         led_index = 0;
-    if (led_index > 39)
-        led_index = 39;
+    if (led_index >= led_count)
+        led_index = led_count - 1;
 
     return led_index;
 }
@@ -176,18 +180,18 @@ esp_err_t display_logic_init(const display_config_t *config)
         return ESP_ERR_INVALID_STATE;
     }
 
-    // Verify LED count is 40 as expected
+    // Verify LED count matches configuration expectation
     uint16_t led_count = led_get_count();
-    if (led_count != 40)
+    if (led_count != DEFAULT_LED_COUNT)
     {
-        ESP_LOGW(TAG, "Expected 40 LEDs, found %d. Mapping may be incorrect.", led_count);
+        ESP_LOGW(TAG, "Expected %d LEDs, found %d. Mapping will be adjusted dynamically.", DEFAULT_LED_COUNT, led_count);
     }
 
     is_initialized = true;
 
     ESP_LOGI(TAG, "Display logic initialized successfully");
-    ESP_LOGI(TAG, "Config: %.1f-%.1fcm → LEDs 0-39",
-             display_config.min_distance_cm, display_config.max_distance_cm);
+    ESP_LOGI(TAG, "Config: %.1f-%.1fcm → LEDs 0-%d",
+             display_config.min_distance_cm, display_config.max_distance_cm, led_count - 1);
 
     return ESP_OK;
 }

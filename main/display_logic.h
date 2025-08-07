@@ -7,8 +7,8 @@
  *
  * FEATURES:
  * =========
- * - Distance Range Mapping: 10-50cm mapped linearly to 40 LEDs (LED 0 to LED 39)
- * - LED Spacing: Approximately 1cm per LED (40cm range / 40 LEDs)
+ * - Distance Range Mapping: Configurable range mapped linearly to configured LED count
+ * - LED Spacing: Approximately (max_distance - min_distance) / led_count cm per LED
  * - Visual Feedback:
  *   - Normal range: Green/blue gradient or solid color
  *   - Below 10cm: First LED red (error indicator)
@@ -50,8 +50,8 @@ extern "C"
      */
     typedef struct
     {
-        float min_distance_cm;       ///< Minimum distance for normal range (10.0f)
-        float max_distance_cm;       ///< Maximum distance for normal range (50.0f)
+        float min_distance_cm;       ///< Minimum distance for normal range (configurable)
+        float max_distance_cm;       ///< Maximum distance for normal range (configurable)
         // Add calibration support for future extensions
     } display_config_t;
 

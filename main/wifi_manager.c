@@ -5,6 +5,7 @@
 
 #include "wifi_manager.h"
 #include "web_server.h"
+#include "config.h"
 #include "esp_log.h"
 #include "esp_wifi.h"
 #include "esp_netif.h"
@@ -19,15 +20,6 @@
 #include "esp_netif_ip_addr.h"
 
 static const char *TAG = "wifi_manager";
-
-// WiFi configuration constants
-#define WIFI_AP_SSID "ESP32-Distance-Sensor"
-#define WIFI_AP_PASSWORD "" // Open network for easier access
-#define WIFI_AP_CHANNEL 1
-#define WIFI_AP_MAX_CONNECTIONS 4
-
-#define WIFI_STA_MAXIMUM_RETRY 3
-#define WIFI_STA_TIMEOUT_MS 5000
 
 // NVS storage keys
 #define NVS_NAMESPACE "wifi_config"
@@ -298,7 +290,7 @@ static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t e
             
             // Start connection timeout timer
             if (connection_timeout_timer) {
-                esp_timer_start_once(connection_timeout_timer, WIFI_STA_TIMEOUT_MS * 1000); // Convert to microseconds
+                esp_timer_start_once(connection_timeout_timer, DEFAULT_WIFI_STA_TIMEOUT_MS * 1000); // Convert to microseconds
             }
             
             esp_wifi_connect();
@@ -325,15 +317,15 @@ static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t e
 
             if (current_mode == WIFI_MODE_STA_CONNECTING || current_mode == WIFI_MODE_STA_CONNECTED)
             {
-                if (retry_count < WIFI_STA_MAXIMUM_RETRY)
+                if (retry_count < DEFAULT_WIFI_STA_MAX_RETRY)
                 {
                     retry_count++;
-                    ESP_LOGI(TAG, "Retry connecting to WiFi (%d/%d)", retry_count, WIFI_STA_MAXIMUM_RETRY);
+                    ESP_LOGI(TAG, "Retry connecting to WiFi (%d/%d)", retry_count, DEFAULT_WIFI_STA_MAX_RETRY);
                     esp_wifi_connect();
                 }
                 else
                 {
-                    ESP_LOGW(TAG, "Failed to connect after %d retries, switching to AP mode", WIFI_STA_MAXIMUM_RETRY);
+                    ESP_LOGW(TAG, "Failed to connect after %d retries, switching to AP mode", DEFAULT_WIFI_STA_MAX_RETRY);
                     // Switch back to AP mode
                     switch_to_mode(WIFI_MODE_AP_ACTIVE);
                     xEventGroupSetBits(wifi_event_group, WIFI_FAIL_BIT);
@@ -343,7 +335,7 @@ static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t e
         }
 
         case WIFI_EVENT_AP_START:
-            ESP_LOGI(TAG, "WiFi AP started: %s", WIFI_AP_SSID);
+            ESP_LOGI(TAG, "WiFi AP started: %s", DEFAULT_WIFI_AP_SSID);
             current_mode = WIFI_MODE_AP_ACTIVE;
 
             // Start web server for captive portal
@@ -407,7 +399,7 @@ static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t e
 
 static void connection_timeout_callback(void* arg)
 {
-    ESP_LOGW(TAG, "Connection timeout after %d ms, switching to AP mode", WIFI_STA_TIMEOUT_MS);
+    ESP_LOGW(TAG, "Connection timeout after %d ms, switching to AP mode", DEFAULT_WIFI_STA_TIMEOUT_MS);
     
     // Check current WiFi state
     wifi_ap_record_t ap_info;
@@ -554,15 +546,15 @@ static esp_err_t start_sta_mode(void)
 
 static esp_err_t start_ap_mode(void)
 {
-    ESP_LOGI(TAG, "Starting AP mode: %s", WIFI_AP_SSID);
+    ESP_LOGI(TAG, "Starting AP mode: %s", DEFAULT_WIFI_AP_SSID);
 
     wifi_config_t wifi_config = {
         .ap = {
-            .ssid = WIFI_AP_SSID,
-            .ssid_len = strlen(WIFI_AP_SSID),
-            .channel = WIFI_AP_CHANNEL,
-            .password = WIFI_AP_PASSWORD,
-            .max_connection = WIFI_AP_MAX_CONNECTIONS,
+            .ssid = DEFAULT_WIFI_AP_SSID,
+            .ssid_len = strlen(DEFAULT_WIFI_AP_SSID),
+            .channel = DEFAULT_WIFI_AP_CHANNEL,
+            .password = DEFAULT_WIFI_AP_PASSWORD,
+            .max_connection = DEFAULT_WIFI_AP_MAX_CONN,
             .authmode = WIFI_AUTH_OPEN},
     };
 

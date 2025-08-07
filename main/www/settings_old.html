@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP32 Distance Sensor - Settings</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">Distance Sensor</div>
+        <div class="nav-links">
+            <a href="/index.html" class="nav-btn">Dashboard</a>
+            <a href="/wifi-setup.html" class="nav-btn">WiFi</a>
+            <a href="/settings.html" class="nav-btn active">Settings</a>
+        </div>
+    </nav>
+    
+    <main class="container">
+        <h2>System Settings</h2>
+        
+        <div class="info-card">
+            <h3>System Information</h3>
+            <div class="status-grid">
+                <div class="status-item">
+                    <span class="status-label">Device:</span>
+                    <span class="status-value">ESP32 Distance Sensor</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Version:</span>
+                    <span class="status-value" id="version">1.0.0</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Uptime:</span>
+                    <span class="status-value" id="uptime">--</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Free Memory:</span>
+                    <span class="status-value" id="free-memory">-- KB</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">WiFi Status:</span>
+                    <span class="status-value" id="wifi-status">--</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">IP Address:</span>
+                    <span class="status-value" id="ip-address">--</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-card">
+            <h3>Sensor Configuration</h3>
+            <div class="status-grid">
+                <div class="status-item">
+                    <span class="status-label">Measurement Interval:</span>
+                    <span class="status-value">100 ms</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Trigger Pin:</span>
+                    <span class="status-value">GPIO 14</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Echo Pin:</span>
+                    <span class="status-value">GPIO 15</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Temperature:</span>
+                    <span class="status-value">20°C</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Range:</span>
+                    <span class="status-value">2-400 cm</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Queue Overflows:</span>
+                    <span class="status-value" id="queue-overflows">--</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-card">
+            <h3>Device Actions</h3>
+            <div class="action-buttons">
+                <button onclick="refreshStatus()" class="action-btn">Refresh Status</button>
+                <button onclick="window.location.href='/wifi-setup.html'" class="action-btn">WiFi Settings</button>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 ESP32 Distance Sensor Project</p>
+            <p>
+                <a href="https://github.com/enthali/esp32-distance" target="_blank" rel="noopener">
+                    View on GitHub
+                </a>
+            </p>
+        </div>
+    </footer>
+    
+    <script src="/js/app.js"></script>
+    <script>
+        function refreshStatus() {
+            // Update system status information
+            // For now, show placeholder data - real API integration comes later
+            document.getElementById('uptime').textContent = Math.floor(Date.now() / 1000) + ' seconds';
+            document.getElementById('free-memory').textContent = '200 KB';
+            document.getElementById('wifi-status').textContent = 'Connected';
+            document.getElementById('ip-address').textContent = window.location.hostname;
+            document.getElementById('queue-overflows').textContent = '0';
+            
+            showNotification('Status refreshed', 'success');
+        }
+        
+        // Initialize with current data
+        document.addEventListener('DOMContentLoaded', function() {
+            refreshStatus();
+        });
+    </script>
+</body>
+</html>
