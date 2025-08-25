@@ -121,12 +121,8 @@ void app_main(void)
     ESP_LOGI(TAG, "WiFi manager initialized and started");
     ESP_LOGI(TAG, "Ready for distance measurement, LED display, and web interface...");
 
-    // Configure and initialize display logic using runtime configuration
-    display_config_t display_config = {
-        .min_distance_cm = runtime_config.distance_min_cm,
-        .max_distance_cm = runtime_config.distance_max_cm};
-
-    ret = display_logic_init(&display_config);
+    // Initialize display logic (configuration obtained from config_manager automatically)
+    ret = display_logic_init();
     if (ret != ESP_OK)
     {
         ESP_LOGE(TAG, "Failed to initialize display logic: %s", esp_err_to_name(ret));

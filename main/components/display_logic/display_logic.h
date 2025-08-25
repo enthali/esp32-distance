@@ -43,30 +43,19 @@ extern "C"
 {
 #endif
 
-    /**
-     * @brief Display configuration structure
-     *
-     * Configuration parameters for the LED distance visualization system.
-     */
-    typedef struct
-    {
-        float min_distance_cm;       ///< Minimum distance for normal range (configurable)
-        float max_distance_cm;       ///< Maximum distance for normal range (configurable)
-        // Add calibration support for future extensions
-    } display_config_t;
+    // Configuration structure removed - now uses config_manager API directly
 
     /**
      * @brief Initialize the display logic component
      *
-     * Initializes the display logic with specified configuration.
+     * Initializes the display logic. Configuration is obtained from config_manager.
      * Must be called before display_logic_start().
      *
-     * @param config Pointer to display configuration. Must not be NULL.
      * @return ESP_OK on success, ESP_ERR_* on failure
      *
-     * @note Configuration must be provided from main.c to maintain single source of truth
+     * @note Configuration obtained from config_manager API (REQ-CFG-2)
      */
-    esp_err_t display_logic_init(const display_config_t *config);
+    esp_err_t display_logic_init(void);
 
     /**
      * @brief Start the display logic task
@@ -98,12 +87,7 @@ extern "C"
      */
     bool display_logic_is_running(void);
 
-    /**
-     * @brief Get current display configuration
-     *
-     * @return Current display configuration structure
-     */
-    display_config_t display_logic_get_config(void);
+    // display_logic_get_config() function removed - configuration access via config_manager API
 
 #ifdef __cplusplus
 }

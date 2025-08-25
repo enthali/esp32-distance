@@ -114,20 +114,20 @@
  * 
  * The current implementation has several gaps relative to the target design:
  * 
- * GAP 1: CONFIGURATION ARCHITECTURE (REQ-CFG-2 Violation)
- * CURRENT: Uses separate display_config_t structure and display_logic_init(const display_config_t *config)
- * TARGET: Use config_manager API directly (DSN-DSP-ARCH-02)
- * IMPACT: Violates centralized configuration requirement
+ * GAP 1: CONFIGURATION ARCHITECTURE (REQ-CFG-2 Violation) ✅ **COMPLETED**
+ * FIXED: Now uses config_manager API directly via config_get_current()
+ * FIXED: Removed separate display_config_t structure and display_logic_init(config) parameter
+ * RESULT: Satisfies centralized configuration requirement (REQ-CFG-2)
  * 
  * GAP 2: API COMPLEXITY (Restart-Based Architecture Mismatch)  
  * CURRENT: Complex init/start/stop/is_running lifecycle management
  * TARGET: Single display_logic_start() function (DSN-DSP-API-01)
  * IMPACT: Incompatible with restart-based architecture philosophy
  * 
- * GAP 3: CONFIGURATION STATE DUPLICATION
- * CURRENT: Static display_config storage, is_initialized flag tracking
- * TARGET: Direct config_manager calls, no state tracking (DSN-DSP-ARCH-02)
- * IMPACT: Data duplication, configuration synchronization issues
+ * GAP 3: CONFIGURATION STATE DUPLICATION ✅ **COMPLETED**
+ * FIXED: Removed static display_config storage and is_initialized flag tracking
+ * FIXED: All configuration access now through config_manager API calls
+ * RESULT: Eliminated data duplication and configuration synchronization issues
  * 
  * GAP 4: UNNECESSARY API EXPOSURE
  * CURRENT: display_logic_get_config() exposes internal configuration structure
@@ -153,10 +153,10 @@
  *         This represents comprehensive architectural refactoring to proper embedded standards
  * 
  * REFACTORING IMPLEMENTATION PLAN:
- * 1. Replace display_config_t with config_manager API calls (Fix GAP 1, 3)
+ * 1. Replace display_config_t with config_manager API calls (Fix GAP 1, 3) ✅ **COMPLETED**
  * 2. Simplify to single display_logic_start() function (Fix GAP 2)  
- * 3. Remove lifecycle management complexity and state tracking (Fix GAP 2, 3)
- * 4. Remove display_logic_get_config() and other unnecessary APIs (Fix GAP 4)
+ * 3. Remove lifecycle management complexity and state tracking (Fix GAP 2, 3) ✅ **PARTIALLY COMPLETED**
+ * 4. Remove display_logic_get_config() and other unnecessary APIs (Fix GAP 4) ✅ **COMPLETED**
  * 5. Convert entire system from floating-point to integer arithmetic (Fix GAP 6)
  *    - Requires coordination across distance_sensor, config_manager, web_server components
  *    - Major architectural improvement for embedded performance and reliability
@@ -168,6 +168,7 @@
 #include "distance_sensor.h"
 #include "led_controller.h"
 #include "config.h"
+#include "config_manager.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "esp_log.h"
@@ -178,29 +179,37 @@ static const char *TAG = "display_logic";
 // Task handle
 static TaskHandle_t display_task_handle = NULL;
 
-// Configuration
-static display_config_t display_config;
-static bool is_initialized = false;
+// Configuration removed - using config_manager API directly (REQ-CFG-2)
+// static display_config_t display_config;  <- REMOVED: Violates centralized configuration
+// static bool is_initialized = false;      <- REMOVED: Unnecessary state tracking
 
 /**
  * @brief Map distance to LED index
  *
  * Maps distance in centimeters to LED index (0 to led_count-1).
  * Uses linear mapping: configured distance range mapped to all available LEDs.
+ * Configuration obtained from config_manager API (REQ-CFG-2).
  *
  * @param distance_cm Distance in centimeters
  * @return LED index (0 to led_count-1), or -1 if out of normal range
  */
 static int map_distance_to_led(float distance_cm)
 {
-    if (distance_cm < display_config.min_distance_cm || distance_cm > display_config.max_distance_cm)
+    // Get current configuration from config_manager (REQ-CFG-2)
+    system_config_t config;
+    if (config_get_current(&config) != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to get current configuration");
+        return -1;
+    }
+    
+    if (distance_cm < config.distance_min_cm || distance_cm > config.distance_max_cm)
     {
         return -1; // Out of range
     }
 
     // Linear mapping: Distance range → LEDs 0 to (led_count-1)
-    float range_cm = display_config.max_distance_cm - display_config.min_distance_cm;
-    float normalized = (distance_cm - display_config.min_distance_cm) / range_cm;     // 0.0-1.0
+    float range_cm = config.distance_max_cm - config.distance_min_cm;
+    float normalized = (distance_cm - config.distance_min_cm) / range_cm;     // 0.0-1.0
     
     // Get actual LED count for dynamic mapping
     uint16_t led_count = led_get_count();
@@ -238,18 +247,25 @@ static void update_led_display(const distance_measurement_t *measurement)
             led_set_pixel(led_index, color);
             ESP_LOGD(TAG, "Distance %.2f cm → LED %d", measurement->distance_cm, led_index);
         }
-        else if (measurement->distance_cm < display_config.min_distance_cm)
-        {
-            // Too close: Red on first LED
-            led_set_pixel(0, LED_COLOR_RED);
-            ESP_LOGD(TAG, "Distance %.2f cm too close → LED 0 red", measurement->distance_cm);
-        }
         else
         {
-            // Too far: Red on last LED
-            uint16_t led_count = led_get_count();
-            led_set_pixel(led_count - 1, LED_COLOR_RED);
-            ESP_LOGD(TAG, "Distance %.2f cm too far → LED %d red", measurement->distance_cm, led_count - 1);
+            // Get configuration to check distance range
+            system_config_t config;
+            if (config_get_current(&config) == ESP_OK) {
+                if (measurement->distance_cm < config.distance_min_cm)
+                {
+                    // Too close: Red on first LED
+                    led_set_pixel(0, LED_COLOR_RED);
+                    ESP_LOGD(TAG, "Distance %.2f cm too close → LED 0 red", measurement->distance_cm);
+                }
+                else
+                {
+                    // Too far: Red on last LED
+                    uint16_t led_count = led_get_count();
+                    led_set_pixel(led_count - 1, LED_COLOR_RED);
+                    ESP_LOGD(TAG, "Distance %.2f cm too far → LED %d red", measurement->distance_cm, led_count - 1);
+                }
+            }
         }
         break;
     }
@@ -293,8 +309,14 @@ static void display_logic_task(void *pvParameters)
     ESP_LOGI(TAG, "Display logic task started (Priority: %d, Core: %d)",
              uxTaskPriorityGet(NULL), xPortGetCoreID());
 
-    ESP_LOGI(TAG, "Distance range: %.1f-%.1fcm → LEDs 0-39, blocking until new measurements",
-             display_config.min_distance_cm, display_config.max_distance_cm);
+    // Get current configuration to log the range
+    system_config_t config;
+    if (config_get_current(&config) == ESP_OK) {
+        ESP_LOGI(TAG, "Distance range: %.1f-%.1fcm → LEDs 0-39, blocking until new measurements",
+                 config.distance_min_cm, config.distance_max_cm);
+    } else {
+        ESP_LOGW(TAG, "Could not get configuration, using defaults");
+    }
 
     distance_measurement_t measurement;
 
@@ -312,29 +334,21 @@ static void display_logic_task(void *pvParameters)
     }
 }
 
-esp_err_t display_logic_init(const display_config_t *config)
+esp_err_t display_logic_init(void)
 {
-    if (is_initialized)
-    {
-        ESP_LOGW(TAG, "Display logic already initialized");
-        return ESP_ERR_INVALID_STATE;
+    // Get current configuration from config_manager (REQ-CFG-2)
+    system_config_t config;
+    esp_err_t ret = config_get_current(&config);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to get current configuration: %s", esp_err_to_name(ret));
+        return ret;
     }
 
-    // Config parameter is required
-    if (config == NULL)
-    {
-        ESP_LOGE(TAG, "Configuration parameter is required");
-        return ESP_ERR_INVALID_ARG;
-    }
-
-    // Copy provided configuration
-    display_config = *config;
-
-    // Validate configuration
-    if (display_config.min_distance_cm >= display_config.max_distance_cm)
+    // Validate configuration (redundant check since config_manager validates)
+    if (config.distance_min_cm >= config.distance_max_cm)
     {
         ESP_LOGE(TAG, "Invalid distance range: min=%.1f, max=%.1f",
-                 display_config.min_distance_cm, display_config.max_distance_cm);
+                 config.distance_min_cm, config.distance_max_cm);
         return ESP_ERR_INVALID_ARG;
     }
 
@@ -352,23 +366,15 @@ esp_err_t display_logic_init(const display_config_t *config)
         ESP_LOGW(TAG, "Expected %d LEDs, found %d. Mapping will be adjusted dynamically.", DEFAULT_LED_COUNT, led_count);
     }
 
-    is_initialized = true;
-
     ESP_LOGI(TAG, "Display logic initialized successfully");
     ESP_LOGI(TAG, "Config: %.1f-%.1fcm → LEDs 0-%d",
-             display_config.min_distance_cm, display_config.max_distance_cm, led_count - 1);
+             config.distance_min_cm, config.distance_max_cm, led_count - 1);
 
     return ESP_OK;
 }
 
 esp_err_t display_logic_start(void)
 {
-    if (!is_initialized)
-    {
-        ESP_LOGE(TAG, "Display logic not initialized. Call display_logic_init() first.");
-        return ESP_ERR_INVALID_STATE;
-    }
-
     if (display_task_handle != NULL)
     {
         ESP_LOGW(TAG, "Display logic task already running");
@@ -427,7 +433,4 @@ bool display_logic_is_running(void)
     return (display_task_handle != NULL);
 }
 
-display_config_t display_logic_get_config(void)
-{
-    return display_config;
-}
+// display_logic_get_config() function removed - configuration access via config_manager API (REQ-CFG-2)
