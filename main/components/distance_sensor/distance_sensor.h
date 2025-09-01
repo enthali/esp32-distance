@@ -93,7 +93,7 @@ extern "C"
      */
     typedef struct
     {
-        float distance_cm;              ///< Calculated distance in centimeters
+        uint16_t distance_mm;           ///< Calculated distance in millimeters (0-65535mm = 65.5m range)
         uint64_t timestamp_us;          ///< Measurement timestamp (microseconds)
         distance_sensor_error_t status; ///< Measurement status
     } distance_measurement_t;
@@ -107,8 +107,8 @@ extern "C"
         gpio_num_t echo_pin;              ///< Echo pin (default: GPIO15)
         uint32_t measurement_interval_ms; ///< Measurement interval (default: 100ms)
         uint32_t timeout_ms;              ///< Echo timeout (default: 30ms)
-        float temperature_celsius;        ///< Temperature for speed of sound compensation (default: 20°C)
-        float smoothing_alpha;            ///< EMA smoothing factor: 0.0=heavy smoothing, 1.0=no smoothing (default: 0.3)
+        int16_t temperature_c_x10;        ///< Temperature for speed of sound compensation in tenths (default: 200 = 20.0°C)
+        uint16_t smoothing_factor;        ///< EMA smoothing factor: 0=heavy smoothing, 1000=no smoothing (default: 300 = 0.3)
     } distance_sensor_config_t;
 
     /**

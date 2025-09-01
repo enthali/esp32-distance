@@ -37,18 +37,18 @@ extern "C" {
 // =============================================================================
 
 /**
- * @brief The distance mapped to the first LED (cm)
- * @note Range: 5.0-100.0
+ * @brief The distance mapped to the first LED (mm)
+ * @note Range: 50-1000 (5.0-100.0cm)
  * @requirement REQ-CFG-1 AC-1
  */
-#define DEFAULT_DISTANCE_MIN_CM         10.0f
+#define DEFAULT_DISTANCE_MIN_MM         100
 
 /**
- * @brief The distance mapped to the last LED (cm) 
- * @note Range: 20.0-400.0, must be larger than DEFAULT_DISTANCE_MIN_CM
+ * @brief The distance mapped to the last LED (mm) 
+ * @note Range: 200-4000 (20.0-400.0cm), must be larger than DEFAULT_DISTANCE_MIN_MM
  * @requirement REQ-CFG-1 AC-1
  */
-#define DEFAULT_DISTANCE_MAX_CM         50.0f    
+#define DEFAULT_DISTANCE_MAX_MM         500    
 
 /**
  * @brief How often to measure distance (milliseconds)
@@ -65,18 +65,18 @@ extern "C" {
 #define DEFAULT_SENSOR_TIMEOUT_MS       30       
 
 /**
- * @brief Ambient temperature for sound speed calculation (Celsius)
- * @note Range: -20.0-60.0
+ * @brief Ambient temperature for sound speed calculation (tenths of Celsius)
+ * @note Range: -200 to 600 (-20.0 to 60.0°C), value 200 = 20.0°C
  * @requirement REQ-CFG-1 AC-1
  */
-#define DEFAULT_TEMPERATURE_C           20.0f    
+#define DEFAULT_TEMPERATURE_C_X10       200
 
 /**
  * @brief Exponential moving average smoothing factor
- * @note Range: 0.1-1.0, lower values = more smoothing (stable), higher values = less smoothing (responsive)
+ * @note Range: 100-1000, where 1000=1.0 (no smoothing), 300=0.3 (balanced), 100=0.1 (heavy smoothing)
  * @requirement REQ-CFG-1 AC-1
  */
-#define DEFAULT_SMOOTHING_ALPHA         0.3f     
+#define DEFAULT_SMOOTHING_FACTOR        300     
 
 // =============================================================================
 // LED CONTROLLER CONFIGURATION (User Configurable)

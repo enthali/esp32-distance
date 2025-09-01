@@ -80,12 +80,12 @@ typedef struct {
     uint32_t save_count;             ///< Number of times configuration has been saved
     
     // Distance sensor settings (runtime configurable)
-    float distance_min_cm;           ///< Minimum distance for LED mapping (5.0-100.0)
-    float distance_max_cm;           ///< Maximum distance for LED mapping (20.0-400.0)
+    uint16_t distance_min_mm;        ///< Minimum distance for LED mapping in mm (50-1000 = 5.0-100.0cm)
+    uint16_t distance_max_mm;        ///< Maximum distance for LED mapping in mm (200-4000 = 20.0-400.0cm)
     uint16_t measurement_interval_ms; ///< Measurement interval in ms (50-1000)
     uint32_t sensor_timeout_ms;      ///< Sensor timeout in ms (10-50)
-    float temperature_c;             ///< Ambient temperature in Celsius (-20.0-60.0)
-    float smoothing_alpha;           ///< EMA smoothing factor (0.1-1.0)
+    int16_t temperature_c_x10;       ///< Ambient temperature in tenths of Celsius (-200 to 600 = -20.0 to 60.0°C)
+    uint16_t smoothing_factor;       ///< EMA smoothing factor (100-1000, where 1000=1.0, 300=0.3)
     
     // LED settings (runtime configurable)
     uint8_t led_count;               ///< Number of LEDs in strip (1-60)
@@ -193,7 +193,16 @@ esp_err_t config_factory_reset(void);
  * 
  * @requirement REQ-CFG-6 AC-1-2
  */
-bool config_is_valid_range(const char* param_name, float value, float min_val, float max_val);
+/**
+ * @brief Validate integer parameter is within specified range
+ * 
+ * @param param_name Parameter name for logging
+ * @param value Value to validate
+ * @param min_val Minimum allowed value (inclusive)
+ * @param max_val Maximum allowed value (inclusive)
+ * @return true if valid, false if out of range
+ */
+bool config_is_valid_int_range(const char* param_name, int32_t value, int32_t min_val, int32_t max_val);
 
 /**
  * @brief Get current configuration (thread-safe)

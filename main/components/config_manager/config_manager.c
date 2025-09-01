@@ -348,11 +348,11 @@ esp_err_t config_factory_reset(void)
     return ret;
 }
 
-bool config_is_valid_range(const char* param_name, float value, float min_val, float max_val)
+bool config_is_valid_int_range(const char* param_name, int32_t value, int32_t min_val, int32_t max_val)
 {
     if (value < min_val || value > max_val) {
-        ESP_LOGE(TAG, "Parameter %s value %.2f is out of range [%.2f, %.2f]", 
-                 param_name, value, min_val, max_val);
+        ESP_LOGE(TAG, "Parameter %s value %ld is out of range [%ld, %ld]", 
+                 param_name, (long)value, (long)min_val, (long)max_val);
         return false;
     }
     return true;
