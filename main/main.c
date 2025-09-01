@@ -36,7 +36,7 @@ void app_main(void)
 
     ESP_LOGI(TAG, "Configuration loaded: LED count=%d, brightness=%d, dist_range=%.1f-%.1fcm", 
              runtime_config.led_count, runtime_config.led_brightness,
-             runtime_config.distance_min_cm, runtime_config.distance_max_cm);
+             runtime_config.distance_min_mm / 10.0, runtime_config.distance_max_mm / 10.0);
 
     // Perform system health check (REQ-CFG-11)
     size_t nvs_free, nvs_total;

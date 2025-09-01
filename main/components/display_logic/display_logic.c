@@ -287,7 +287,7 @@ static void display_logic_task(void *pvParameters)
     system_config_t config;
     if (config_get_current(&config) == ESP_OK) {
         ESP_LOGI(TAG, "Distance range: %.1f-%.1fcm → LEDs 0-39, blocking until new measurements",
-                 config.distance_min_cm, config.distance_max_cm);
+                 config.distance_min_mm / 10.0, config.distance_max_mm / 10.0);
     } else {
         ESP_LOGW(TAG, "Could not get configuration, using defaults");
     }
@@ -344,7 +344,7 @@ esp_err_t display_logic_start(void)
 
     ESP_LOGI(TAG, "Display logic initialized successfully");
     ESP_LOGI(TAG, "Config: %.1f-%.1fcm → LEDs 0-%d",
-             config.distance_min_cm, config.distance_max_cm, led_count - 1);
+             config.distance_min_mm / 10.0, config.distance_max_mm / 10.0, led_count - 1);
 
     // Create display logic task
     BaseType_t result = xTaskCreatePinnedToCore(
