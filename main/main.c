@@ -83,8 +83,8 @@ void app_main(void)
         .echo_pin = DISTANCE_ECHO_PIN,
         .measurement_interval_ms = runtime_config.measurement_interval_ms,
         .timeout_ms = runtime_config.sensor_timeout_ms,
-        .temperature_celsius = runtime_config.temperature_c,
-        .smoothing_alpha = runtime_config.smoothing_alpha};
+        .temperature_c_x10 = runtime_config.temperature_c_x10,
+        .smoothing_factor = runtime_config.smoothing_factor};
 
     ret = distance_sensor_init(&distance_config);
     if (ret != ESP_OK)
