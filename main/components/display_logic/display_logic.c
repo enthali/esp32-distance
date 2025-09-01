@@ -184,53 +184,16 @@ static TaskHandle_t display_task_handle = NULL;
 // static bool is_initialized = false;      <- REMOVED: Unnecessary state tracking
 
 /**
- * @brief Map distance to LED index
- *
- * Maps distance in centimeters to LED index (0 to led_count-1).
- * Uses linear mapping: configured distance range mapped to all available LEDs.
- * Configuration obtained from config_manager API (REQ-CFG-2).
- *
- * @param distance_cm Distance in centimeters
- * @return LED index (0 to led_count-1), or -1 if out of normal range
- */
-static int map_distance_to_led(float distance_cm)
-{
-    // Get current configuration from config_manager (REQ-CFG-2)
-    system_config_t config;
-    if (config_get_current(&config) != ESP_OK) {
-        ESP_LOGE(TAG, "Failed to get current configuration");
-        return -1;
-    }
-    
-    if (distance_cm < config.distance_min_cm || distance_cm > config.distance_max_cm)
-    {
-        return -1; // Out of range
-    }
-
-    // Linear mapping: Distance range → LEDs 0 to (led_count-1)
-    float range_cm = config.distance_max_cm - config.distance_min_cm;
-    float normalized = (distance_cm - config.distance_min_cm) / range_cm;     // 0.0-1.0
-    
-    // Get actual LED count for dynamic mapping
-    uint16_t led_count = led_get_count();
-    int led_index = (int)(normalized * (float)(led_count - 1));                      // 0 to (led_count-1)
-
-    // Ensure within bounds
-    if (led_index < 0)
-        led_index = 0;
-    if (led_index >= led_count)
-        led_index = led_count - 1;
-
-    return led_index;
-}
-
-/**
  * @brief Update LED display based on distance measurement
  *
  * @param measurement Distance measurement from sensor
  */
 static void update_led_display(const distance_measurement_t *measurement)
 {
+    // Get configuration once for entire function (optimization: avoid multiple config_get_current calls)
+    system_config_t config;
+    bool config_valid = (config_get_current(&config) == ESP_OK);
+    
     // Clear all LEDs first
     led_clear_all();
 
@@ -238,34 +201,44 @@ static void update_led_display(const distance_measurement_t *measurement)
     {
     case DISTANCE_SENSOR_OK:
     {
-        int led_index = map_distance_to_led(measurement->distance_cm);
-
-        if (led_index >= 0)
+        if (config_valid)
         {
-            // Normal range: Green color for distance visualization
-            led_color_t color = LED_COLOR_GREEN;
-            led_set_pixel(led_index, color);
-            ESP_LOGD(TAG, "Distance %.2f cm → LED %d", measurement->distance_cm, led_index);
+            // Use config directly instead of calling map_distance_to_led (avoids duplicate config_get_current)
+            if (measurement->distance_cm >= config.distance_min_cm && measurement->distance_cm <= config.distance_max_cm)
+            {
+                // Normal range: Calculate LED position directly
+                float range_cm = config.distance_max_cm - config.distance_min_cm;
+                float normalized = (measurement->distance_cm - config.distance_min_cm) / range_cm;
+                
+                uint16_t led_count = led_get_count();
+                int led_index = (int)(normalized * (float)(led_count - 1));
+                
+                // Ensure within bounds
+                if (led_index < 0) led_index = 0;
+                if (led_index >= led_count) led_index = led_count - 1;
+                
+                // Normal range: Green color for distance visualization
+                led_color_t color = LED_COLOR_GREEN;
+                led_set_pixel(led_index, color);
+                ESP_LOGD(TAG, "Distance %.2f cm → LED %d", measurement->distance_cm, led_index);
+            }
+            else if (measurement->distance_cm < config.distance_min_cm)
+            {
+                // Too close: Red on first LED
+                led_set_pixel(0, LED_COLOR_RED);
+                ESP_LOGD(TAG, "Distance %.2f cm too close → LED 0 red", measurement->distance_cm);
+            }
+            else
+            {
+                // Too far: Red on last LED
+                uint16_t led_count = led_get_count();
+                led_set_pixel(led_count - 1, LED_COLOR_RED);
+                ESP_LOGD(TAG, "Distance %.2f cm too far → LED %d red", measurement->distance_cm, led_count - 1);
+            }
         }
         else
         {
-            // Get configuration to check distance range
-            system_config_t config;
-            if (config_get_current(&config) == ESP_OK) {
-                if (measurement->distance_cm < config.distance_min_cm)
-                {
-                    // Too close: Red on first LED
-                    led_set_pixel(0, LED_COLOR_RED);
-                    ESP_LOGD(TAG, "Distance %.2f cm too close → LED 0 red", measurement->distance_cm);
-                }
-                else
-                {
-                    // Too far: Red on last LED
-                    uint16_t led_count = led_get_count();
-                    led_set_pixel(led_count - 1, LED_COLOR_RED);
-                    ESP_LOGD(TAG, "Distance %.2f cm too far → LED %d red", measurement->distance_cm, led_count - 1);
-                }
-            }
+            ESP_LOGE(TAG, "Failed to get configuration for display update");
         }
         break;
     }
@@ -344,13 +317,7 @@ esp_err_t display_logic_init(void)
         return ret;
     }
 
-    // Validate configuration (redundant check since config_manager validates)
-    if (config.distance_min_cm >= config.distance_max_cm)
-    {
-        ESP_LOGE(TAG, "Invalid distance range: min=%.1f, max=%.1f",
-                 config.distance_min_cm, config.distance_max_cm);
-        return ESP_ERR_INVALID_ARG;
-    }
+    // Configuration validation is handled by config_manager - no redundant checks needed
 
     // Check if LED controller is initialized
     if (!led_is_initialized())
@@ -359,12 +326,8 @@ esp_err_t display_logic_init(void)
         return ESP_ERR_INVALID_STATE;
     }
 
-    // Verify LED count matches configuration expectation
+    // Get LED count for logging
     uint16_t led_count = led_get_count();
-    if (led_count != DEFAULT_LED_COUNT)
-    {
-        ESP_LOGW(TAG, "Expected %d LEDs, found %d. Mapping will be adjusted dynamically.", DEFAULT_LED_COUNT, led_count);
-    }
 
     ESP_LOGI(TAG, "Display logic initialized successfully");
     ESP_LOGI(TAG, "Config: %.1f-%.1fcm → LEDs 0-%d",
