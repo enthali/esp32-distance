@@ -119,20 +119,20 @@
  * FIXED: Removed separate display_config_t structure and display_logic_init(config) parameter
  * RESULT: Satisfies centralized configuration requirement (REQ-CFG-2)
  * 
- * GAP 2: API COMPLEXITY (Restart-Based Architecture Mismatch)  
- * CURRENT: Complex init/start/stop/is_running lifecycle management
- * TARGET: Single display_logic_start() function (DSN-DSP-API-01)
- * IMPACT: Incompatible with restart-based architecture philosophy
+ * GAP 2: API COMPLEXITY (Restart-Based Architecture Mismatch) ✅ **COMPLETED**
+ * FIXED: Removed complex init/start/stop/is_running lifecycle management
+ * FIXED: Single display_logic_start() function provides unified entry point
+ * RESULT: Compatible with restart-based architecture philosophy (DSN-DSP-API-01)
  * 
  * GAP 3: CONFIGURATION STATE DUPLICATION ✅ **COMPLETED**
  * FIXED: Removed static display_config storage and is_initialized flag tracking
  * FIXED: All configuration access now through config_manager API calls
  * RESULT: Eliminated data duplication and configuration synchronization issues
  * 
- * GAP 4: UNNECESSARY API EXPOSURE
- * CURRENT: display_logic_get_config() exposes internal configuration structure
- * TARGET: No configuration exposure (DSN-DSP-API-01)
- * IMPACT: API complexity, configuration encapsulation violation
+ * GAP 4: UNNECESSARY API EXPOSURE ✅ **COMPLETED**
+ * FIXED: display_logic_get_config() function removed
+ * FIXED: No internal configuration structure exposure
+ * RESULT: Clean API boundary, configuration encapsulation maintained (DSN-DSP-API-01)
  * 
  * GAP 5: IMPLEMENTATION OPTIMIZATION OPPORTUNITIES
  * CURRENT: Floating-point arithmetic, complex error handling, LED count validation warnings
@@ -154,8 +154,8 @@
  * 
  * REFACTORING IMPLEMENTATION PLAN:
  * 1. Replace display_config_t with config_manager API calls (Fix GAP 1, 3) ✅ **COMPLETED**
- * 2. Simplify to single display_logic_start() function (Fix GAP 2)  
- * 3. Remove lifecycle management complexity and state tracking (Fix GAP 2, 3) ✅ **PARTIALLY COMPLETED**
+ * 2. Simplify to single display_logic_start() function (Fix GAP 2) ✅ **COMPLETED**
+ * 3. Remove lifecycle management complexity and state tracking (Fix GAP 2, 3) ✅ **COMPLETED**
  * 4. Remove display_logic_get_config() and other unnecessary APIs (Fix GAP 4) ✅ **COMPLETED**
  * 5. Convert entire system from floating-point to integer arithmetic (Fix GAP 6)
  *    - Requires coordination across distance_sensor, config_manager, web_server components
@@ -307,9 +307,15 @@ static void display_logic_task(void *pvParameters)
     }
 }
 
-esp_err_t display_logic_init(void)
+esp_err_t display_logic_start(void)
 {
-    // Get current configuration from config_manager (REQ-CFG-2)
+    if (display_task_handle != NULL)
+    {
+        ESP_LOGW(TAG, "Display logic task already running");
+        return ESP_ERR_INVALID_STATE;
+    }
+
+    // Get current configuration from config_manager (REQ-CFG-2) - consolidated from display_logic_init()
     system_config_t config;
     esp_err_t ret = config_get_current(&config);
     if (ret != ESP_OK) {
@@ -319,28 +325,10 @@ esp_err_t display_logic_init(void)
 
     // Configuration validation is handled by config_manager - no redundant checks needed
 
-    // Check if LED controller is initialized
+    // Check if LED controller is initialized - consolidated from display_logic_init()
     if (!led_is_initialized())
     {
         ESP_LOGE(TAG, "LED controller not initialized");
-        return ESP_ERR_INVALID_STATE;
-    }
-
-    // Get LED count for logging
-    uint16_t led_count = led_get_count();
-
-    ESP_LOGI(TAG, "Display logic initialized successfully");
-    ESP_LOGI(TAG, "Config: %.1f-%.1fcm → LEDs 0-%d",
-             config.distance_min_cm, config.distance_max_cm, led_count - 1);
-
-    return ESP_OK;
-}
-
-esp_err_t display_logic_start(void)
-{
-    if (display_task_handle != NULL)
-    {
-        ESP_LOGW(TAG, "Display logic task already running");
         return ESP_ERR_INVALID_STATE;
     }
 
@@ -349,6 +337,13 @@ esp_err_t display_logic_start(void)
     {
         ESP_LOGW(TAG, "Distance sensor not running. Display may not update.");
     }
+
+    // Get LED count for logging - consolidated from display_logic_init()
+    uint16_t led_count = led_get_count();
+
+    ESP_LOGI(TAG, "Display logic initialized successfully");
+    ESP_LOGI(TAG, "Config: %.1f-%.1fcm → LEDs 0-%d",
+             config.distance_min_cm, config.distance_max_cm, led_count - 1);
 
     // Create display logic task
     BaseType_t result = xTaskCreatePinnedToCore(
@@ -371,29 +366,6 @@ esp_err_t display_logic_start(void)
     return ESP_OK;
 }
 
-esp_err_t display_logic_stop(void)
-{
-    if (display_task_handle == NULL)
-    {
-        ESP_LOGW(TAG, "Display logic task not running");
-        return ESP_ERR_INVALID_STATE;
-    }
-
-    // Delete task
-    vTaskDelete(display_task_handle);
-    display_task_handle = NULL;
-
-    // Clear all LEDs
-    led_clear_all();
-    led_show();
-
-    ESP_LOGI(TAG, "Display logic task stopped");
-    return ESP_OK;
-}
-
-bool display_logic_is_running(void)
-{
-    return (display_task_handle != NULL);
-}
-
 // display_logic_get_config() function removed - configuration access via config_manager API (REQ-CFG-2)
+// display_logic_stop() function removed - restart-based architecture (GAP 2 fix)
+// display_logic_is_running() function removed - restart-based architecture (GAP 2 fix)

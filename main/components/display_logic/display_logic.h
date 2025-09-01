@@ -43,49 +43,20 @@ extern "C"
 {
 #endif
 
-    // Configuration structure removed - now uses config_manager API directly
-
     /**
-     * @brief Initialize the display logic component
-     *
-     * Initializes the display logic. Configuration is obtained from config_manager.
-     * Must be called before display_logic_start().
-     *
+     * @brief Start the display logic system
+     * 
+     * Obtains configuration from config_manager, initializes hardware,
+     * and starts the display task. No separate init/start lifecycle needed.
+     * 
      * @return ESP_OK on success, ESP_ERR_* on failure
-     *
+     * 
+     * @note Single entry point - handles initialization and task startup
+     * @note Task runs on core 1 with 4KB stack at priority 3
+     * @note Task blocks on distance_sensor_get_latest() until new data arrives
      * @note Configuration obtained from config_manager API (REQ-CFG-2)
      */
-    esp_err_t display_logic_init(void);
-
-    /**
-     * @brief Start the display logic task
-     *
-     * Creates and starts the display logic task with priority 3.
-     * Task will continuously wait for distance measurements and update LED strip.
-     *
-     * @return ESP_OK on success, ESP_ERR_* on failure
-     *
-     * @note Task runs on core 1 with 4KB stack at priority 3
-     * @note display_logic_init() must be called first
-     * @note Task blocks on distance_sensor_get_latest() until new data arrives
-     */
     esp_err_t display_logic_start(void);
-
-    /**
-     * @brief Stop the display logic task
-     *
-     * Stops the display logic task and clears all LEDs.
-     *
-     * @return ESP_OK on success, ESP_ERR_* on failure
-     */
-    esp_err_t display_logic_stop(void);
-
-    /**
-     * @brief Check if display logic task is running
-     *
-     * @return true if task is running, false otherwise
-     */
-    bool display_logic_is_running(void);
 
     // display_logic_get_config() function removed - configuration access via config_manager API
 

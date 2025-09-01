@@ -121,14 +121,7 @@ void app_main(void)
     ESP_LOGI(TAG, "WiFi manager initialized and started");
     ESP_LOGI(TAG, "Ready for distance measurement, LED display, and web interface...");
 
-    // Initialize display logic (configuration obtained from config_manager automatically)
-    ret = display_logic_init();
-    if (ret != ESP_OK)
-    {
-        ESP_LOGE(TAG, "Failed to initialize display logic: %s", esp_err_to_name(ret));
-        esp_restart();
-    }
-
+    // Start display logic (single entry point - handles initialization and task startup)
     ret = display_logic_start();
     if (ret != ESP_OK)
     {
