@@ -451,10 +451,10 @@ static void config_init_defaults(system_config_t* config)
 
 static esp_err_t config_validate_relationships(const system_config_t* config)
 {
-    // Validate that distance_max_cm > distance_min_cm
-    if (config->distance_max_cm <= config->distance_min_cm) {
-        ESP_LOGE(TAG, "distance_max_cm (%.2f) must be greater than distance_min_cm (%.2f)",
-                 config->distance_max_cm, config->distance_min_cm);
+    // Validate that distance_max_mm > distance_min_mm
+    if (config->distance_max_mm <= config->distance_min_mm) {
+        ESP_LOGE(TAG, "distance_max_mm (%u) must be greater than distance_min_mm (%u)",
+                 config->distance_max_mm, config->distance_min_mm);
         return ESP_ERR_INVALID_SIZE;
     }
 
