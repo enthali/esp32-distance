@@ -381,8 +381,8 @@ static void distance_sensor_task(void *pvParameters)
 
 #ifdef DISTANCE_SENSOR_MEASUREMENT_LOGS
 #ifdef DISTANCE_SENSOR_MEASUREMENT_LOGS
-            ESP_LOGI(TAG, "Distance: raw=%.2f cm, smoothed=%.2f cm (echo: %llu µs)",
-                     distance_cm, final_distance_cm, echo_duration_us);
+            ESP_LOGI(TAG, "Distance: raw=%d mm, smoothed=%d mm (echo: %llu µs)",
+                     distance_mm, final_distance_mm, echo_duration_us);
 #endif
 #endif
         }
@@ -392,7 +392,7 @@ static void distance_sensor_task(void *pvParameters)
             ESP_LOGW(TAG, "Distance measurement timeout");
 
             distance_measurement_t timeout_measurement = {
-                .distance_cm = 0.0f,
+                .distance_mm = 0,
                 .timestamp_us = esp_timer_get_time(),
                 .status = DISTANCE_SENSOR_TIMEOUT};
 

@@ -49,7 +49,7 @@
  * // Read measurements
  * distance_measurement_t measurement;
  * if (distance_sensor_get_latest(&measurement) == ESP_OK) {
- *     printf("Distance: %.2f cm\n", measurement.distance_cm);
+ *     printf("Distance: %d mm\n", measurement.distance_mm);
  * }
  * ```
  */
