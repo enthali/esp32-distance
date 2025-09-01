@@ -738,12 +738,15 @@ static esp_err_t config_get_handler(httpd_req_t *req)
 
     // Add distance sensor configuration
     cJSON *distance = cJSON_CreateObject();
-    cJSON_AddNumberToObject(distance, "min_distance_cm", config.distance_min_cm);
-    cJSON_AddNumberToObject(distance, "max_distance_cm", config.distance_max_cm);
+    // Convert mm back to cm for web interface display (100mm = 10.0cm)
+    cJSON_AddNumberToObject(distance, "min_distance_cm", config.distance_min_mm / 10.0);
+    cJSON_AddNumberToObject(distance, "max_distance_cm", config.distance_max_mm / 10.0);
     cJSON_AddNumberToObject(distance, "measurement_interval_ms", config.measurement_interval_ms);
     cJSON_AddNumberToObject(distance, "sensor_timeout_ms", config.sensor_timeout_ms);
-    cJSON_AddNumberToObject(distance, "temperature_c", config.temperature_c);
-    cJSON_AddNumberToObject(distance, "smoothing_alpha", config.smoothing_alpha);
+    // Convert fixed-point temperature back to decimal (200 = 20.0°C)
+    cJSON_AddNumberToObject(distance, "temperature_c", config.temperature_c_x10 / 10.0);
+    // Convert integer factor back to decimal (300 = 0.3)
+    cJSON_AddNumberToObject(distance, "smoothing_alpha", config.smoothing_factor / 1000.0);
     cJSON_AddItemToObject(json, "distance_sensor", distance);
 
     // Add LED configuration
@@ -830,10 +833,12 @@ static esp_err_t config_set_handler(httpd_req_t *req)
     if (distance != NULL) {
         cJSON *item;
         if ((item = cJSON_GetObjectItem(distance, "min_distance_cm")) != NULL && cJSON_IsNumber(item)) {
-            new_config.distance_min_cm = (float)cJSON_GetNumberValue(item);
+            // Convert cm to mm (10.0cm = 100mm)
+            new_config.distance_min_mm = (uint16_t)(cJSON_GetNumberValue(item) * 10);
         }
         if ((item = cJSON_GetObjectItem(distance, "max_distance_cm")) != NULL && cJSON_IsNumber(item)) {
-            new_config.distance_max_cm = (float)cJSON_GetNumberValue(item);
+            // Convert cm to mm (50.0cm = 500mm)
+            new_config.distance_max_mm = (uint16_t)(cJSON_GetNumberValue(item) * 10);
         }
         if ((item = cJSON_GetObjectItem(distance, "measurement_interval_ms")) != NULL && cJSON_IsNumber(item)) {
             new_config.measurement_interval_ms = (uint16_t)cJSON_GetNumberValue(item);
@@ -842,10 +847,12 @@ static esp_err_t config_set_handler(httpd_req_t *req)
             new_config.sensor_timeout_ms = (uint32_t)cJSON_GetNumberValue(item);
         }
         if ((item = cJSON_GetObjectItem(distance, "temperature_c")) != NULL && cJSON_IsNumber(item)) {
-            new_config.temperature_c = (float)cJSON_GetNumberValue(item);
+            // Convert to fixed-point tenths (20.0°C = 200)
+            new_config.temperature_c_x10 = (int16_t)(cJSON_GetNumberValue(item) * 10);
         }
         if ((item = cJSON_GetObjectItem(distance, "smoothing_alpha")) != NULL && cJSON_IsNumber(item)) {
-            new_config.smoothing_alpha = (float)cJSON_GetNumberValue(item);
+            // Convert to integer factor (0.3 = 300)
+            new_config.smoothing_factor = (uint16_t)(cJSON_GetNumberValue(item) * 1000);
         }
     }
 
@@ -1076,8 +1083,8 @@ static esp_err_t distance_data_handler(httpd_req_t *req)
         return httpd_resp_send_500(req);
     }
 
-    // Add measurement data
-    cJSON_AddNumberToObject(json, "distance_cm", measurement.distance_cm);
+    // Add measurement data - convert mm to cm for web interface display
+    cJSON_AddNumberToObject(json, "distance_cm", measurement.distance_mm / 10.0);
     cJSON_AddNumberToObject(json, "timestamp_us", (double)measurement.timestamp_us);
     
     // Add status as string for better readability
