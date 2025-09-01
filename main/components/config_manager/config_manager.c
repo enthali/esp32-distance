@@ -264,64 +264,64 @@ esp_err_t config_validate_range(const system_config_t* config)
     ESP_LOGD(TAG, "Validating configuration parameters");
 
     // Distance sensor parameters
-    if (!config_is_valid_range("distance_min_cm", config->distance_min_cm, 
-                               CONFIG_DISTANCE_MIN_CM_MIN, CONFIG_DISTANCE_MIN_CM_MAX)) {
+    if (!config_is_valid_int_range("distance_min_mm", config->distance_min_mm, 
+                               CONFIG_DISTANCE_MIN_MM_MIN, CONFIG_DISTANCE_MIN_MM_MAX)) {
         return ESP_ERR_INVALID_SIZE;
     }
 
-    if (!config_is_valid_range("distance_max_cm", config->distance_max_cm,
-                               CONFIG_DISTANCE_MAX_CM_MIN, CONFIG_DISTANCE_MAX_CM_MAX)) {
+    if (!config_is_valid_int_range("distance_max_mm", config->distance_max_mm,
+                               CONFIG_DISTANCE_MAX_MM_MIN, CONFIG_DISTANCE_MAX_MM_MAX)) {
         return ESP_ERR_INVALID_SIZE;
     }
 
-    if (!config_is_valid_range("measurement_interval_ms", (float)config->measurement_interval_ms,
+    if (!config_is_valid_int_range("measurement_interval_ms", (int32_t)config->measurement_interval_ms,
                                CONFIG_MEASUREMENT_INTERVAL_MS_MIN, CONFIG_MEASUREMENT_INTERVAL_MS_MAX)) {
         return ESP_ERR_INVALID_SIZE;
     }
 
-    if (!config_is_valid_range("sensor_timeout_ms", (float)config->sensor_timeout_ms,
+    if (!config_is_valid_int_range("sensor_timeout_ms", (int32_t)config->sensor_timeout_ms,
                                CONFIG_SENSOR_TIMEOUT_MS_MIN, CONFIG_SENSOR_TIMEOUT_MS_MAX)) {
         return ESP_ERR_INVALID_SIZE;
     }
 
-    if (!config_is_valid_range("temperature_c", config->temperature_c,
-                               CONFIG_TEMPERATURE_C_MIN, CONFIG_TEMPERATURE_C_MAX)) {
+    if (!config_is_valid_int_range("temperature_c_x10", config->temperature_c_x10,
+                               CONFIG_TEMPERATURE_C_X10_MIN, CONFIG_TEMPERATURE_C_X10_MAX)) {
         return ESP_ERR_INVALID_SIZE;
     }
 
-    if (!config_is_valid_range("smoothing_alpha", config->smoothing_alpha,
-                               CONFIG_SMOOTHING_ALPHA_MIN, CONFIG_SMOOTHING_ALPHA_MAX)) {
+    if (!config_is_valid_int_range("smoothing_factor", config->smoothing_factor,
+                               CONFIG_SMOOTHING_FACTOR_MIN, CONFIG_SMOOTHING_FACTOR_MAX)) {
         return ESP_ERR_INVALID_SIZE;
     }
 
     // LED parameters
-    if (!config_is_valid_range("led_count", (float)config->led_count,
+    if (!config_is_valid_int_range("led_count", (int32_t)config->led_count,
                                CONFIG_LED_COUNT_MIN, CONFIG_LED_COUNT_MAX)) {
         return ESP_ERR_INVALID_SIZE;
     }
 
-    if (!config_is_valid_range("led_brightness", (float)config->led_brightness,
+    if (!config_is_valid_int_range("led_brightness", (int32_t)config->led_brightness,
                                CONFIG_LED_BRIGHTNESS_MIN, CONFIG_LED_BRIGHTNESS_MAX)) {
         return ESP_ERR_INVALID_SIZE;
     }
 
     // WiFi parameters
-    if (!config_is_valid_range("wifi_ap_channel", (float)config->wifi_ap_channel,
+    if (!config_is_valid_int_range("wifi_ap_channel", (int32_t)config->wifi_ap_channel,
                                CONFIG_WIFI_AP_CHANNEL_MIN, CONFIG_WIFI_AP_CHANNEL_MAX)) {
         return ESP_ERR_INVALID_SIZE;
     }
 
-    if (!config_is_valid_range("wifi_ap_max_conn", (float)config->wifi_ap_max_conn,
+    if (!config_is_valid_int_range("wifi_ap_max_conn", (int32_t)config->wifi_ap_max_conn,
                                CONFIG_WIFI_AP_MAX_CONN_MIN, CONFIG_WIFI_AP_MAX_CONN_MAX)) {
         return ESP_ERR_INVALID_SIZE;
     }
 
-    if (!config_is_valid_range("wifi_sta_max_retry", (float)config->wifi_sta_max_retry,
+    if (!config_is_valid_int_range("wifi_sta_max_retry", (int32_t)config->wifi_sta_max_retry,
                                CONFIG_WIFI_STA_MAX_RETRY_MIN, CONFIG_WIFI_STA_MAX_RETRY_MAX)) {
         return ESP_ERR_INVALID_SIZE;
     }
 
-    if (!config_is_valid_range("wifi_sta_timeout_ms", (float)config->wifi_sta_timeout_ms,
+    if (!config_is_valid_int_range("wifi_sta_timeout_ms", (int32_t)config->wifi_sta_timeout_ms,
                                CONFIG_WIFI_STA_TIMEOUT_MS_MIN, CONFIG_WIFI_STA_TIMEOUT_MS_MAX)) {
         return ESP_ERR_INVALID_SIZE;
     }
@@ -427,12 +427,12 @@ static void config_init_defaults(system_config_t* config)
     config->save_count = 0;
 
     // Distance sensor defaults from config.h
-    config->distance_min_cm = DEFAULT_DISTANCE_MIN_CM;
-    config->distance_max_cm = DEFAULT_DISTANCE_MAX_CM;
+    config->distance_min_mm = DEFAULT_DISTANCE_MIN_MM;
+    config->distance_max_mm = DEFAULT_DISTANCE_MAX_MM;
     config->measurement_interval_ms = DEFAULT_MEASUREMENT_INTERVAL_MS;
     config->sensor_timeout_ms = DEFAULT_SENSOR_TIMEOUT_MS;
-    config->temperature_c = DEFAULT_TEMPERATURE_C;
-    config->smoothing_alpha = DEFAULT_SMOOTHING_ALPHA;
+    config->temperature_c_x10 = DEFAULT_TEMPERATURE_C_X10;
+    config->smoothing_factor = DEFAULT_SMOOTHING_FACTOR;
 
     // LED defaults from config.h
     config->led_count = DEFAULT_LED_COUNT;

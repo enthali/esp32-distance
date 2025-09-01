@@ -250,18 +250,18 @@ esp_err_t config_nvs_health_check(size_t* free_entries, size_t* total_entries);
 // =============================================================================
 
 // Distance sensor parameter ranges
-#define CONFIG_DISTANCE_MIN_CM_MIN          5.0f
-#define CONFIG_DISTANCE_MIN_CM_MAX          100.0f
-#define CONFIG_DISTANCE_MAX_CM_MIN          20.0f
-#define CONFIG_DISTANCE_MAX_CM_MAX          400.0f
+#define CONFIG_DISTANCE_MIN_MM_MIN          50     // 5.0cm in mm
+#define CONFIG_DISTANCE_MIN_MM_MAX          1000   // 100.0cm in mm
+#define CONFIG_DISTANCE_MAX_MM_MIN          200    // 20.0cm in mm
+#define CONFIG_DISTANCE_MAX_MM_MAX          4000   // 400.0cm in mm
 #define CONFIG_MEASUREMENT_INTERVAL_MS_MIN  50
 #define CONFIG_MEASUREMENT_INTERVAL_MS_MAX  1000
 #define CONFIG_SENSOR_TIMEOUT_MS_MIN        10
 #define CONFIG_SENSOR_TIMEOUT_MS_MAX        50
-#define CONFIG_TEMPERATURE_C_MIN            -20.0f
-#define CONFIG_TEMPERATURE_C_MAX            60.0f
-#define CONFIG_SMOOTHING_ALPHA_MIN          0.1f
-#define CONFIG_SMOOTHING_ALPHA_MAX          1.0f
+#define CONFIG_TEMPERATURE_C_X10_MIN        -200   // -20.0°C in tenths
+#define CONFIG_TEMPERATURE_C_X10_MAX        600    // 60.0°C in tenths
+#define CONFIG_SMOOTHING_FACTOR_MIN         100    // 0.1 * 1000
+#define CONFIG_SMOOTHING_FACTOR_MAX         1000   // 1.0 * 1000
 
 // LED parameter ranges
 #define CONFIG_LED_COUNT_MIN                1
