@@ -53,6 +53,38 @@ idf.py menuconfig
 - **Codespaces**: Use ESP-IDF Web extension for WebSerial/WebUSB flashing
 - **Mixed workflow**: Build in container, flash on Windows if needed
 
+### Using ESP-IDF Web Extension in Codespaces
+
+The ESP-IDF Web extension enables flashing ESP32 devices directly from your browser using WebSerial API:
+
+#### Prerequisites
+- **Chrome or Edge browser** (best WebSerial support)
+- **ESP32 connected** to your local machine via USB
+- **Project built** using `idf.py build` in Codespaces
+
+#### Flashing Steps
+1. **Build the project** in Codespaces:
+   ```bash
+   idf.py build
+   ```
+
+2. **Open Command Palette** (`Ctrl+Shift+P`) and run:
+   - `ESP-IDF-Web: Select serial port` (first time only)
+   - `ESP-IDF-Web: Flash` to flash the device
+   - `ESP-IDF-Web: Monitor` to view serial output
+   - `ESP-IDF-Web: Flash and Monitor` for both operations
+
+3. **Grant browser permissions** when prompted to access USB serial port
+
+4. **Select your ESP32** from the device list (usually shows VendorID/ProductID)
+
+#### Troubleshooting
+- If flash commands are not available, reload VS Code (`Developer: Reload Window`)
+- If "Build file not found" error occurs, ensure project is built and `idf.buildPath` is correct
+- For CH340/CP210x USB chips, try different browsers if connection fails
+- Check status bar for ESP-IDF Web extension icons (flash ⚡ and monitor 📟)
+
+
 ## Benefits
 
 - **Consistent environments** across Windows, macOS, Linux, Codespaces

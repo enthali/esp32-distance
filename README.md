@@ -107,6 +107,26 @@ For Windows users, USB devices need to be attached to the dev container:
 
 **Note**: After unplugging/reconnecting the ESP32, use Option 1 (run the script) for quickest reconnection.
 
+### For GitHub Codespaces Users
+
+If you're using GitHub Codespaces, you can flash your ESP32 directly from the browser using the ESP-IDF Web extension:
+
+1. **Build the project** in Codespaces:
+   ```bash
+   idf.py build
+   ```
+
+2. **Use ESP-IDF Web extension** for flashing:
+   - Open Command Palette (`Ctrl+Shift+P`)
+   - Run `ESP-IDF-Web: Flash` command
+   - Select your ESP32 device when prompted by the browser
+   - Grant USB access permissions
+
+3. **Monitor output** with:
+   - `ESP-IDF-Web: Monitor` command
+
+For detailed setup instructions, see [`.devcontainer/README.md`](.devcontainer/README.md#using-esp-idf-web-extension-in-codespaces).
+
 ## Project Structure
 
 ```text

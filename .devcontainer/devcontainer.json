@@ -17,9 +17,10 @@
 				"idf.pythonBinPath": "/opt/esp/python_env/idf5.4_py3.12_env/bin/python",
 				"idf.toolsPath": "/opt/esp",
 				"idf.gitPath": "/usr/bin/git",
-				"idf.buildPath": "/workspaces/esp32-distance/build",
+				"idf.buildPath": "${workspaceFolder}/build",
 				"idf.showOnboardingOnInit": false,
-				"extensions.ignoreRecommendations": true
+				"extensions.ignoreRecommendations": true,
+				"idfWeb.enableStatusBarIcons": true
 			},
 			"extensions": [
 				"espressif.esp-idf-extension",
@@ -30,6 +31,17 @@
 			"openFiles": [
 				"README.md"
 			]
+		}
+	},
+	"forwardPorts": [80, 443],
+	"portsAttributes": {
+		"80": {
+			"label": "ESP32 Web Interface (HTTP)",
+			"onAutoForward": "openPreview"
+		},
+		"443": {
+			"label": "ESP32 Web Interface (HTTPS)",
+			"onAutoForward": "openPreview"
 		}
 	},
 	"runArgs": ["--privileged"]
