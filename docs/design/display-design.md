@@ -58,13 +58,15 @@ Design:
 
 - Normal range (min ≤ distance ≤ max): Green LED at calculated position using linear interpolation
   - Formula: `led_index = (distance_mm - min_mm) * (led_count - 1) / (max_mm - min_mm)`
-- Below minimum (distance < min): Red LED at position 0
+- Below minimum (distance < min): Flash every 10th LED in red with 1-second interval
+  - LED positions: 0, 10, 20, 30, ... (every 10th position within led_count range)
+  - Flash timing: 500ms on, 500ms off cycle using FreeRTOS timer
 - Above maximum (distance > max): Red LED at position `led_count-1`
 - Boundary clamping ensures valid LED positions `[0, led_count-1]`
-- Single LED illumination enforced by logic
+- Single LED illumination for normal/above-max, multiple LED pattern for below-min
 
-Validation: Min distance → LED 0, max distance → LED `led_count-1`, linear interpolation between,
-            below/above range → correct red LED positions.
+Validation: Min distance → flashing pattern at positions 0,10,20..., max distance → LED `led_count-1`, 
+           linear interpolation for normal range, 1-second flash cycle for below minimum.
 
 ### DSN-DSP-ALGO-02: LED Update Pattern Design (HOW to display)
 Addresses: REQ-DSP-IMPL-02
@@ -78,6 +80,21 @@ Design:
 WS2812 serial protocol requires complete buffer transmission; clear-and-set pattern guarantees only one LED illuminated.
 
 Validation: Only one LED illuminated after each update, WS2812 transmission successful.
+
+### DSN-DSP-TIMING-01: Flash Timer Design for Below Minimum Display
+Addresses: REQ-DSP-VISUAL-03
+
+Design: FreeRTOS timer-based flashing mechanism for below minimum distance indication.
+
+- Timer Implementation: FreeRTOS software timer with 500ms period for 1-second flash cycle
+- Flash State: Boolean flag tracking on/off state (alternates every 500ms)
+- LED Pattern Calculation: `for (i = 0; i < led_count; i += 10)` to identify every 10th LED position
+- Timer Lifecycle: Started when distance goes below minimum, stopped when returning to valid range
+- Performance: Timer runs independently of main display task to avoid blocking measurement processing
+- Memory: Minimal overhead with single timer handle and boolean state variable
+
+Validation: Flash cycle maintains precise 1-second interval, pattern covers all 10th positions, 
+           timer properly starts/stops based on distance conditions.
 
 ### DSN-DSP-ALGO-03: Embedded Arithmetic Architecture Design
 Addresses: REQ-SYS-1

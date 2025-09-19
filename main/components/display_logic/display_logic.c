@@ -14,6 +14,7 @@
 #include "config_manager.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "freertos/timers.h"
 #include "esp_log.h"
 #include <math.h>
 
@@ -21,6 +22,62 @@ static const char *TAG = "display_logic";
 
 // Task handle
 static TaskHandle_t display_task_handle = NULL;
+
+// Flash timer for below minimum display (REQ-DSP-VISUAL-03, DSN-DSP-TIMING-01)
+static TimerHandle_t flash_timer_handle = NULL;
+static bool flash_state = false; // true = LEDs on, false = LEDs off
+static bool below_minimum_active = false; // tracks if we're in below minimum state
+
+/**
+ * @brief Timer callback for flashing below minimum LEDs
+ * 
+ * Implements REQ-DSP-VISUAL-03: Flash every 10th LED with 1-second interval
+ * Design documented in DSN-DSP-TIMING-01
+ *
+ * @param xTimer Timer handle (unused)
+ */
+static void flash_timer_callback(TimerHandle_t xTimer)
+{
+    if (!below_minimum_active) {
+        return; // Safety check - should not happen if timer lifecycle is correct
+    }
+
+    // Toggle flash state
+    flash_state = !flash_state;
+    
+    // Clear all LEDs first
+    led_clear_all();
+    
+    if (flash_state) {
+        // Flash ON: Illuminate every 10th LED in red
+        uint16_t led_count = led_get_count();
+        for (uint16_t i = 0; i < led_count; i += 10) {
+            led_set_pixel(i, LED_COLOR_RED);
+        }
+        ESP_LOGD(TAG, "Flash ON: Every 10th LED red (positions 0,10,20...)");
+    } else {
+        ESP_LOGD(TAG, "Flash OFF: All LEDs off");
+    }
+    
+    // Update physical LEDs
+    led_show();
+}
+
+/**
+ * @brief Stop the flashing timer if active
+ * 
+ * Helper function to ensure timer is properly stopped when exiting below minimum state
+ */
+static void stop_flash_timer_if_active(void)
+{
+    if (below_minimum_active) {
+        below_minimum_active = false;
+        if (flash_timer_handle != NULL) {
+            xTimerStop(flash_timer_handle, 0);
+        }
+        ESP_LOGD(TAG, "Stopped flashing timer");
+    }
+}
 
 /**
  * @brief Update LED display based on distance measurement
@@ -45,6 +102,9 @@ static void update_led_display(const distance_measurement_t *measurement)
             // Use config directly instead of calling map_distance_to_led (avoids duplicate config_get_current)
             if (measurement->distance_mm >= config.distance_min_mm && measurement->distance_mm <= config.distance_max_mm)
             {
+                // Stop flashing timer if we were in below minimum state
+                stop_flash_timer_if_active();
+                
                 // Normal range: Calculate LED position directly with integer arithmetic
                 uint16_t range_mm = config.distance_max_mm - config.distance_min_mm;
                 uint16_t offset_mm = measurement->distance_mm - config.distance_min_mm;
@@ -64,12 +124,31 @@ static void update_led_display(const distance_measurement_t *measurement)
             }
             else if (measurement->distance_mm < config.distance_min_mm)
             {
-                // Too close: Red on first LED
-                led_set_pixel(0, LED_COLOR_RED);
-                ESP_LOGD(TAG, "Distance %d mm too close → LED 0 red", measurement->distance_mm);
+                // Below minimum: Start flashing every 10th LED (REQ-DSP-VISUAL-03)
+                if (!below_minimum_active) {
+                    // Transition to below minimum state
+                    below_minimum_active = true;
+                    flash_state = true; // Start with LEDs on
+                    
+                    // Start the flash timer (500ms period for 1-second cycle)
+                    if (flash_timer_handle != NULL) {
+                        xTimerStart(flash_timer_handle, 0);
+                    }
+                    
+                    // Immediately show the first flash state
+                    uint16_t led_count = led_get_count();
+                    for (uint16_t i = 0; i < led_count; i += 10) {
+                        led_set_pixel(i, LED_COLOR_RED);
+                    }
+                    ESP_LOGD(TAG, "Distance %d mm below minimum → Started flashing every 10th LED", measurement->distance_mm);
+                }
+                // If already in below minimum state, timer handles the flashing
             }
             else
             {
+                // Stop flashing timer if we were in below minimum state
+                stop_flash_timer_if_active();
+                
                 // Too far: Red on last LED
                 uint16_t led_count = led_get_count();
                 led_set_pixel(led_count - 1, LED_COLOR_RED);
@@ -85,11 +164,13 @@ static void update_led_display(const distance_measurement_t *measurement)
 
     case DISTANCE_SENSOR_TIMEOUT:
         // Sensor timeout: All LEDs off (already cleared)
+        stop_flash_timer_if_active();
         ESP_LOGD(TAG, "Sensor timeout → All LEDs off");
         break;
 
     case DISTANCE_SENSOR_OUT_OF_RANGE:
         // Out of sensor range: Red on last LED
+        stop_flash_timer_if_active();
         {
             uint16_t led_count = led_get_count();
             led_set_pixel(led_count - 1, LED_COLOR_RED);
@@ -101,6 +182,7 @@ static void update_led_display(const distance_measurement_t *measurement)
     case DISTANCE_SENSOR_INVALID_READING:
     default:
         // Other errors: Red on first LED
+        stop_flash_timer_if_active();
         led_set_pixel(0, LED_COLOR_RED);
         ESP_LOGD(TAG, "Sensor error → LED 0 red");
         break;
@@ -172,6 +254,23 @@ esp_err_t display_logic_start(void)
         return ESP_ERR_INVALID_STATE;
     }
 
+    // Create flash timer for below minimum display (REQ-DSP-VISUAL-03, DSN-DSP-TIMING-01)
+    if (flash_timer_handle == NULL) {
+        flash_timer_handle = xTimerCreate(
+            "flash_timer",          // Timer name
+            pdMS_TO_TICKS(500),     // Period: 500ms for 1-second flash cycle
+            pdTRUE,                 // Auto-reload: true
+            NULL,                   // Timer ID (unused)
+            flash_timer_callback    // Callback function
+        );
+        
+        if (flash_timer_handle == NULL) {
+            ESP_LOGE(TAG, "Failed to create flash timer");
+            return ESP_ERR_NO_MEM;
+        }
+        ESP_LOGI(TAG, "Flash timer created successfully");
+    }
+
     // Check if distance sensor is running
     if (!distance_sensor_is_running())
     {
@@ -199,6 +298,13 @@ esp_err_t display_logic_start(void)
     if (result != pdPASS)
     {
         ESP_LOGE(TAG, "Failed to create display logic task");
+        
+        // Cleanup timer on failure
+        if (flash_timer_handle != NULL) {
+            xTimerDelete(flash_timer_handle, 0);
+            flash_timer_handle = NULL;
+        }
+        
         return ESP_FAIL;
     }
 
