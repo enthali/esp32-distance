@@ -75,7 +75,9 @@ static void stop_flash_timer_if_active(void)
         if (flash_timer_handle != NULL) {
             xTimerStop(flash_timer_handle, 0);
         }
-        ESP_LOGD(TAG, "Stopped flashing timer");
+        // Clear LEDs when exiting below minimum state to clean up flashing pattern
+        led_clear_all();
+        ESP_LOGD(TAG, "Stopped flashing timer and cleared LEDs");
     }
 }
 
@@ -90,8 +92,10 @@ static void update_led_display(const distance_measurement_t *measurement)
     system_config_t config;
     bool config_valid = (config_get_current(&config) == ESP_OK);
     
-    // Clear all LEDs first
-    led_clear_all();
+    // Clear all LEDs first (unless timer is controlling display for below minimum state)
+    if (!below_minimum_active) {
+        led_clear_all();
+    }
 
     switch (measurement->status)
     {
@@ -137,12 +141,17 @@ static void update_led_display(const distance_measurement_t *measurement)
                     
                     // Immediately show the first flash state
                     uint16_t led_count = led_get_count();
+                    led_clear_all(); // Clear first, then set the pattern
                     for (uint16_t i = 0; i < led_count; i += 10) {
                         led_set_pixel(i, LED_COLOR_RED);
                     }
                     ESP_LOGD(TAG, "Distance %d mm below minimum → Started flashing every 10th LED", measurement->distance_mm);
+                    // Continue to led_show() to display initial pattern
+                } else {
+                    // Already in below minimum state, timer handles the flashing
+                    // Skip LED updates to avoid interfering with timer
+                    return;
                 }
-                // If already in below minimum state, timer handles the flashing
             }
             else
             {
