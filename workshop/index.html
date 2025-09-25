@@ -11,10 +11,10 @@
       
       
       
-        <link rel="prev" href="../test/config-tests/">
+        <link rel="prev" href="../planning/Features-intended/">
       
       
-        <link rel="next" href="exercises/">
+        <link rel="next" href="prerequisites/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -765,7 +765,7 @@
   
   
   <span class="md-ellipsis">
-    Planning
+    Tests
     
   </span>
   
@@ -776,7 +776,7 @@
         <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2_4">
             <span class="md-nav__icon md-icon"></span>
-            Planning
+            Tests
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -787,12 +787,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../planning/Features-intended/" class="md-nav__link">
+      <a href="../test/config-tests/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Features
+    Config tests
     
   </span>
   
@@ -834,7 +834,7 @@
   
   
   <span class="md-ellipsis">
-    Tests
+    Planning
     
   </span>
   
@@ -845,7 +845,7 @@
         <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2_5">
             <span class="md-nav__icon md-icon"></span>
-            Tests
+            Planning
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -856,12 +856,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../test/config-tests/" class="md-nav__link">
+      <a href="../planning/Features-intended/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Config tests
+    Features
     
   </span>
   
@@ -1002,15 +1002,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#example-workshop-exercises" class="md-nav__link">
-    <span class="md-ellipsis">
-      Example workshop exercises
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#faq-troubleshooting-short" class="md-nav__link">
     <span class="md-ellipsis">
       FAQ / Troubleshooting (short)
@@ -1020,9 +1011,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#contribution-next-steps" class="md-nav__link">
+  <a href="#happy-coding" class="md-nav__link">
     <span class="md-ellipsis">
-      Contribution &amp; Next Steps
+      Happy Coding!
     </span>
   </a>
   
@@ -1032,6 +1023,75 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="prerequisites/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Prerequisites
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="hardwaresetup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Getting Started Hardware
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="gettingstartet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Getting Started Software
+    
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -1225,15 +1285,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#example-workshop-exercises" class="md-nav__link">
-    <span class="md-ellipsis">
-      Example workshop exercises
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#faq-troubleshooting-short" class="md-nav__link">
     <span class="md-ellipsis">
       FAQ / Troubleshooting (short)
@@ -1243,9 +1294,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#contribution-next-steps" class="md-nav__link">
+  <a href="#happy-coding" class="md-nav__link">
     <span class="md-ellipsis">
-      Contribution &amp; Next Steps
+      Happy Coding!
     </span>
   </a>
   
@@ -1271,53 +1322,71 @@
 <p>This section contains the workshop materials. The goal is to give participants hands-on experience working on open-source embedded projects (ESP32 + HC-SR04 + WS2812) using GitHub, Codespaces and Copilot/Coding-Agents.</p>
 <p>Included files (short overview):</p>
 <ul>
-<li><code>WORKSHOP-BRAINSTORMING.md</code> — agenda, goals and schedule</li>
-<li><code>COPILOT-PROMPTS.md</code> — example prompts for Copilot / coding agents</li>
+<li><code>WORKSHOP-AGENDA.md</code> — agenda, goals and schedule</li>
 <li><code>CODESPACES-GUIDE.md</code> — step-by-step guide to open a Codespace / Dev Container</li>
 <li><code>BUILD-FLASH-INSTRUCTIONS.md</code> — build and flash instructions (ESP-IDF)</li>
 <li><code>ISSUE-MCP-EXERCISE.md</code> — exercise: create an issue &amp; use a coding agent</li>
+<li><code>COPILOT-PROMPTS.md</code> — example prompts for Copilot / coding agents</li>
 </ul>
 <h2 id="prerequisites">Prerequisites</h2>
-<ul>
-<li>Git &amp; GitHub access</li>
-<li>VS Code (recommended) with Dev Container / Codespaces or a local ESP-IDF setup</li>
-<li>USB cable and an ESP32 development board for flashing (optional for hands-on)</li>
-</ul>
+<p>See <a href="prerequisites/">Workshop Prerequisites</a> for all required software, accounts, and hardware.</p>
 <h2 id="quick-flow">Quick flow</h2>
 <ol>
-<li>Verify setup (Codespace or local Dev Container)</li>
-<li>Introduce repository structure and components</li>
-<li>Small tasks/issues: measure, display, extend LED patterns</li>
-<li>Use Copilot/Coding-Agents for assistance</li>
-<li>Code review, tests, merge process and wrap-up</li>
+<li>
+<p><strong>Fork the repository</strong><br />
+    Start by forking the main repository to your own GitHub account. This gives you a personal copy where you can make changes freely.</p>
+</li>
+<li>
+<p><strong>Open a Codespace from your fork</strong><br />
+    In your forked repository, click the green "Code" button and select "Create codespace on main". This launches a cloud-based VS Code environment with all dependencies pre-installed.</p>
+</li>
+<li>
+<p><strong>Familiarize yourself with the repository</strong><br />
+    Explore the project structure and key components (see overview above and in the repo). Understand where main application logic, components, and documentation are located.</p>
+</li>
+<li>
+<p><strong>Build the project</strong><br />
+    Use the "Build" button at the very bottom of the VS Code window (see screenshot below). This compiles the firmware using ESP-IDF in the Codespace.
+    <img alt="VS Code Build Button" src="../assets/images/build-button.png" /></p>
+</li>
+<li>
+<p><strong>Flash the firmware</strong><br />
+    After a successful build, click the "Flash" button (also at the bottom of VS Code; see screenshot). This uploads the firmware to your connected ESP32 board.
+     <img alt="VS Code Flash Button" src="../assets/images/flash-button.png" /></p>
+</li>
+<li>
+<p><strong>Monitor the device</strong><br />
+    Once flashing is complete, click the "Monitor" button (bottom of VS Code) to open a serial monitor. This lets you observe device logs, sensor readings, and debug output in real time.
+     <img alt="VS Code Monitor Button" src="../assets/images/monitor-button.png" /></p>
+</li>
+<li>
+<p><strong>Experience the running system</strong><br />
+    With the device running, observe the LED strip responding to distance measurements. Use your phone or laptop to connect to the ESP32's WiFi access point, open the captive portal, and access the web interface. You can experiment with connecting the ESP32 to your own network or adjust range settings via the web UI.</p>
+</li>
+<li>
+<p><strong>Proceed to workshop exercises</strong><br />
+    After exploring the live system, continue with the workshop exercises (e.g., extending LED patterns, improving distance measurement, testing HTTPS features).</p>
+</li>
+<li>
+<p><strong>Use Copilot/Coding-Agents for assistance</strong><br />
+    Leverage GitHub Copilot and Copilot Chat to help with code suggestions, explanations, and troubleshooting as you work through the tasks.</p>
+</li>
+<li>
+<p><strong>Review, test, and merge</strong><br />
+     After completing tasks, review your code, run tests, and follow the standard merge process (branch → PR → review → merge).</p>
+</li>
 </ol>
-<h2 id="example-workshop-exercises">Example workshop exercises</h2>
-<ul>
-<li>Exercise A: Extend LED patterns (scoring: readability &amp; memory efficiency)</li>
-<li>Exercise B: Make distance measurement more robust (timeouts, filtering)</li>
-<li>Exercise C: Test HTTPS web interface (certificates in the build)</li>
-</ul>
 <h2 id="faq-troubleshooting-short">FAQ / Troubleshooting (short)</h2>
 <p>Q: Codespaces not available?</p>
 <p>A: Use local VS Code with the included Dev Container, or follow <code>CODESPACES-GUIDE.md</code>.</p>
 <p>Q: Copilot returns unhelpful suggestions?</p>
-<p>A: Provide more context in the prompt (e.g. REQ IDs, file paths, expected return values). Always review suggestions — never accept blindly.</p>
-<p>Q: The coding agent made incorrect changes?</p>
-<p>A: Stop the agent, inspect the branch, and fix changes manually. Use PR review workflow (branch → PR → review → merge).</p>
-<h2 id="contribution-next-steps">Contribution &amp; Next Steps</h2>
-<ul>
-<li>Before pushing changes: follow the commit message format (see <code>/.github/prompt-snippets/commit-message.md</code>).</li>
-<li>Suggested first local commit (after edits):</li>
-</ul>
-<pre><code>git checkout -b workshop
-git add workshop/README.md
-git commit -m &quot;docs(workshop): update workshop README (EN)&quot;
-</code></pre>
-<ul>
-<li>Optional: open a PR from <code>workshop</code> → <code>main</code> and request review.</li>
-</ul>
+<p>A: Provide more context in the prompt (e.g. REQ IDs, file paths, expected return values). Always review suggestions — never accept blindly.
+Q: The coding agent made incorrect changes?</p>
+<p>A: Stop the agent, inspect the branch, and fix changes manually. Use the PR review workflow (branch → PR → review → merge). In the worst case, delete the agent's branch and start over. <strong>Note:</strong> By default, the coding agent works from the <code>main</code> branch. If you want the agent to work on your own branch, you must explicitly specify your branch when assigning the issue. The coding agent will always create and work in its own branch—it will not make changes directly to your branch.</p>
 <hr />
-<p>These files were added as a starting point for workshop materials and translated/extended.</p>
+<h2 id="happy-coding">Happy Coding!</h2>
+<p>We hope you enjoy the workshop and learn valuable skills for embedded development with ESP32, GitHub, and Copilot. If you get stuck, ask questions, collaborate with others, and make the most of the tools and resources provided.</p>
+<p>Happy coding! 🚀</p>
 
 
 
@@ -1347,7 +1416,7 @@ git commit -m &quot;docs(workshop): update workshop README (EN)&quot;
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../test/config-tests/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Config tests">
+          <a href="../planning/Features-intended/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Features">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1357,20 +1426,20 @@ git commit -m &quot;docs(workshop): update workshop README (EN)&quot;
                 Previous
               </span>
               <div class="md-ellipsis">
-                Config tests
+                Features
               </div>
             </div>
           </a>
         
         
           
-          <a href="exercises/" class="md-footer__link md-footer__link--next" aria-label="Next: Exercises">
+          <a href="prerequisites/" class="md-footer__link md-footer__link--next" aria-label="Next: Prerequisites">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Exercises
+                Prerequisites
               </div>
             </div>
             <div class="md-footer__button md-icon">
