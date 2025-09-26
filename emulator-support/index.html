@@ -1,0 +1,2241 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="This project is a proof of concept project to learn about GH Codespaces and GH Copilot including a Hands-on Workshop">
+      
+      
+      
+      
+        <link rel="prev" href="../design/startup-test-design/">
+      
+      
+        <link rel="next" href="../test/config-tests/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>Emulator - ESP32 Distance</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.e53b48f4.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#esp32-distance-sensor-emulator-support" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="ESP32 Distance" class="md-header__button md-logo" aria-label="ESP32 Distance" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ESP32 Distance
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Emulator
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="ESP32 Distance" class="md-nav__button md-logo" aria-label="ESP32 Distance" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ESP32 Distance
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Documentation
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Documentation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Architecture
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            Architecture
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Requirements
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Requirements
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../requirements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../requirements/system-requirements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    System
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../requirements/distance-sensor-requirements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Distance sensor
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../requirements/led-controller-requirements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LED controller
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../requirements/display-requirements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Display
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../requirements/config-requirements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../requirements/startup-test-requirements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Startup test
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../requirements/web-server-requirements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Web server
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Design
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            Design
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/system-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    System
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/distance-sensor-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Distance sensor
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/led-controller-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LED controller
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/display-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Display
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/config-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/startup-test-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Startup test
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Tests
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            Tests
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Emulator
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Emulator
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Architecture
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hardware-abstraction-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hardware Abstraction Strategy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-distance-sensor-simulator-distance_sensor_simc" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Distance Sensor Simulator (distance_sensor_sim.c)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-led-controller-simulator-led_controller_simc" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. LED Controller Simulator (led_controller_sim.c)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-wifi-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. WiFi Manager
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build Configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Build Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kconfig-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kconfig Options
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cmake-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      CMake Integration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage Instructions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage Instructions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-hardware-build-default" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Hardware Build (Default)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-emulator-build" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Emulator Build
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#expected-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Expected Output
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Expected Output">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#console-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Console Logs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#animated-distance-readings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Animated Distance Readings
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#led-strip-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      LED Strip Visualization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#color-mapping-legend" class="md-nav__link">
+    <span class="md-ellipsis">
+      Color Mapping Legend
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation Details
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#distance-sensor-simulator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Distance Sensor Simulator
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#led-controller-simulator" class="md-nav__link">
+    <span class="md-ellipsis">
+      LED Controller Simulator
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#benefits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Benefits
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Benefits">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#development-advantages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Development Advantages
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testing-advantages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing Advantages
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#educational-benefits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Educational Benefits
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#files-modifiedcreated" class="md-nav__link">
+    <span class="md-ellipsis">
+      Files Modified/Created
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Files Modified/Created">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#new-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      New Files
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modified-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Modified Files
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unchanged-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Unchanged Files
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Validation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#future-enhancements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Future Enhancements
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../test/config-tests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Config tests
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Planning
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            Planning
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../planning/Features-intended/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Features
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Workshop
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Workshop
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../workshop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../workshop/prerequisites/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Prerequisites
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../workshop/hardwaresetup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Getting Started Hardware
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../workshop/gettingstartet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Getting Started Software
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../workshop/exercises/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Exercises
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Legal
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Legal
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../legal/impressum/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Impressum
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../legal/datenschutz/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Datenschutz
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Architecture
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hardware-abstraction-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hardware Abstraction Strategy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-distance-sensor-simulator-distance_sensor_simc" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Distance Sensor Simulator (distance_sensor_sim.c)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-led-controller-simulator-led_controller_simc" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. LED Controller Simulator (led_controller_sim.c)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-wifi-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. WiFi Manager
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build Configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Build Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kconfig-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kconfig Options
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cmake-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      CMake Integration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage Instructions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage Instructions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-hardware-build-default" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Hardware Build (Default)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-emulator-build" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Emulator Build
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#expected-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Expected Output
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Expected Output">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#console-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Console Logs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#animated-distance-readings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Animated Distance Readings
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#led-strip-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      LED Strip Visualization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#color-mapping-legend" class="md-nav__link">
+    <span class="md-ellipsis">
+      Color Mapping Legend
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation Details
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#distance-sensor-simulator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Distance Sensor Simulator
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#led-controller-simulator" class="md-nav__link">
+    <span class="md-ellipsis">
+      LED Controller Simulator
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#benefits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Benefits
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Benefits">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#development-advantages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Development Advantages
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testing-advantages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing Advantages
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#educational-benefits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Educational Benefits
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#files-modifiedcreated" class="md-nav__link">
+    <span class="md-ellipsis">
+      Files Modified/Created
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Files Modified/Created">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#new-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      New Files
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modified-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Modified Files
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unchanged-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Unchanged Files
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Validation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#future-enhancements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Future Enhancements
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="esp32-distance-sensor-emulator-support">ESP32 Distance Sensor Emulator Support</h1>
+<p>This document explains the emulator support implementation for the ESP32 distance sensor project, which enables development and testing without physical hardware using QEMU.</p>
+<h2 id="overview">Overview</h2>
+<p>The emulator support provides hardware abstraction through separate simulator implementations that maintain identical APIs to the hardware components. This allows the same application code to run in both hardware and emulated environments without modification.</p>
+<h2 id="architecture">Architecture</h2>
+<h3 id="hardware-abstraction-strategy">Hardware Abstraction Strategy</h3>
+<p>The implementation uses a <strong>clean separation approach</strong>:
+- <strong>Same headers</strong>: Identical APIs for both hardware and simulator versions
+- <strong>Different source files</strong>: CMake selects appropriate implementation at build time
+- <strong>No #ifdef clutter</strong>: Clean, maintainable code without conditional compilation</p>
+<h3 id="components">Components</h3>
+<h4 id="1-distance-sensor-simulator-distance_sensor_simc">1. Distance Sensor Simulator (<code>distance_sensor_sim.c</code>)</h4>
+<ul>
+<li><strong>API Compatibility</strong>: Identical to hardware version (<code>distance_sensor.h</code>)</li>
+<li><strong>Animation</strong>: 5cm → 60cm → 5cm linear sweep with 1mm steps</li>
+<li><strong>Timing</strong>: Configurable interval (default 1 second for clear visualization)</li>
+<li><strong>Queue Architecture</strong>: Same dual-queue system as hardware for real-time behavior</li>
+<li><strong>Error Handling</strong>: Complete status codes and overflow management</li>
+</ul>
+<h4 id="2-led-controller-simulator-led_controller_simc">2. LED Controller Simulator (<code>led_controller_sim.c</code>)</h4>
+<ul>
+<li><strong>API Compatibility</strong>: Identical to hardware version (<code>led_controller.h</code>)</li>
+<li><strong>Visualization</strong>: Unicode emoji blocks in terminal (🔴🟢🔵⚪🟡🟣⚫🟤)</li>
+<li><strong>Rate Limiting</strong>: Output limited to ~1Hz to prevent terminal spam</li>
+<li><strong>Color Mapping</strong>: Intelligent RGB-to-emoji conversion</li>
+<li><strong>Buffer Management</strong>: Same pixel operations as hardware</li>
+</ul>
+<h4 id="3-wifi-manager">3. WiFi Manager</h4>
+<ul>
+<li><strong>No Changes Needed</strong>: Runs as-is without network events</li>
+<li><strong>Web Interface</strong>: Still accessible (localhost without network)</li>
+</ul>
+<h2 id="build-configuration">Build Configuration</h2>
+<h3 id="kconfig-options">Kconfig Options</h3>
+<p>New configuration options in <code>main/Kconfig.projbuild</code>:</p>
+<pre><code class="language-kconfig">config TARGET_EMULATOR
+    bool &quot;Build for QEMU emulator&quot;
+    default n
+    help
+        Enable this option to build for QEMU emulator instead of real hardware
+
+config EMULATOR_MOCK_SENSOR
+    bool &quot;Use mocked sensor data in emulator&quot;
+    depends on TARGET_EMULATOR
+    default y
+    help
+        Generate simulated distance sensor readings
+</code></pre>
+<h3 id="cmake-integration">CMake Integration</h3>
+<p>The build system automatically selects the correct source files:</p>
+<p><strong>Distance Sensor</strong> (<code>components/distance_sensor/CMakeLists.txt</code>):</p>
+<pre><code class="language-cmake">if(CONFIG_TARGET_EMULATOR)
+    set(COMPONENT_SRCS &quot;distance_sensor_sim.c&quot;)
+else()
+    set(COMPONENT_SRCS &quot;distance_sensor.c&quot;)
+endif()
+</code></pre>
+<p><strong>LED Controller</strong> (<code>components/led_controller/CMakeLists.txt</code>):</p>
+<pre><code class="language-cmake">if(CONFIG_TARGET_EMULATOR)
+    set(COMPONENT_SRCS &quot;led_controller_sim.c&quot;)
+else()
+    set(COMPONENT_SRCS &quot;led_controller.c&quot;)
+endif()
+</code></pre>
+<h2 id="usage-instructions">Usage Instructions</h2>
+<h3 id="1-hardware-build-default">1. Hardware Build (Default)</h3>
+<pre><code class="language-bash">idf.py build
+idf.py flash monitor
+</code></pre>
+<h3 id="2-emulator-build">2. Emulator Build</h3>
+<pre><code class="language-bash"># Configure for emulator
+idf.py menuconfig
+# Navigate to: ESP32 Distance Project Configuration
+# Enable: [x] Build for QEMU emulator
+# Enable: [x] Use mocked sensor data in emulator
+
+# Build
+idf.py build
+
+# Run in QEMU (example)
+qemu-system-xtensa -nographic -M esp32 -kernel build/distance.elf
+</code></pre>
+<h2 id="expected-output">Expected Output</h2>
+<h3 id="console-logs">Console Logs</h3>
+<pre><code>I (1000) main: ESP32 Distance Measurement with LED Strip Display
+I (1100) led_controller_sim: LED controller simulator initialized: 40 LEDs (terminal visualization)
+I (1200) distance_sensor_sim: Distance sensor simulator initialized successfully  
+I (1300) distance_sensor_sim: Distance sensor simulator started (5cm→60cm→5cm sweep, interval: 1000 ms)
+</code></pre>
+<h3 id="animated-distance-readings">Animated Distance Readings</h3>
+<pre><code>I (2000) distance_sensor_sim: Simulated distance: 5.0 cm (increasing)
+I (3000) distance_sensor_sim: Simulated distance: 5.1 cm (increasing)
+I (4000) distance_sensor_sim: Simulated distance: 5.2 cm (increasing)
+...
+I (58000) distance_sensor_sim: Simulated distance: 60.0 cm (decreasing)
+I (59000) distance_sensor_sim: Simulated distance: 59.9 cm (decreasing)
+</code></pre>
+<h3 id="led-strip-visualization">LED Strip Visualization</h3>
+<pre><code>[LED Strip]: 🔴🔴🔴⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫
+
+[LED Strip]: 🟡🟡🟡🟡🟡🟡🟡🟡⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫
+
+[LED Strip]: 🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫
+
+[LED Strip]: 🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫
+</code></pre>
+<h3 id="color-mapping-legend">Color Mapping Legend</h3>
+<ul>
+<li>🔴 <strong>Red</strong>: Close distances (5-15cm)</li>
+<li>🟡 <strong>Yellow</strong>: Medium distances (15-35cm) </li>
+<li>🟢 <strong>Green</strong>: Far distances (35-50cm)</li>
+<li>🔵 <strong>Blue</strong>: Maximum distances (50-60cm)</li>
+<li>⚪ <strong>White</strong>: Very bright/mixed colors</li>
+<li>🟣 <strong>Purple</strong>: Magenta/mixed colors</li>
+<li>⚫ <strong>Black</strong>: Off/very dim LEDs</li>
+</ul>
+<h2 id="implementation-details">Implementation Details</h2>
+<h3 id="distance-sensor-simulator">Distance Sensor Simulator</h3>
+<p><strong>Animation Logic</strong>:</p>
+<pre><code class="language-c">// Animate distance: 5cm (50mm) → 60cm (600mm) → 5cm (50mm)
+sim_distance += direction;
+
+if (sim_distance &gt;= 600) {  // 60.0cm = 600mm
+    direction = -1;
+} else if (sim_distance &lt;= 50) {  // 5.0cm = 50mm  
+    direction = 1;
+}
+</code></pre>
+<p><strong>Queue Behavior</strong>: Identical to hardware implementation with overflow handling and statistics tracking.</p>
+<h3 id="led-controller-simulator">LED Controller Simulator</h3>
+<p><strong>Rate Limiting</strong>:</p>
+<pre><code class="language-c">static uint64_t last_display_time = 0;
+static const uint64_t DISPLAY_INTERVAL_US = 1000000; // 1 second
+
+esp_err_t led_show(void) {
+    uint64_t now = esp_timer_get_time();
+    if (now - last_display_time &lt; DISPLAY_INTERVAL_US) {
+        return ESP_OK;  // Suppress output, just return success
+    }
+    last_display_time = now;
+    // ... display emoji output
+}
+</code></pre>
+<p><strong>Color Analysis</strong>: Intelligent mapping from RGB values to representative emoji blocks based on dominant colors and brightness levels.</p>
+<h2 id="benefits">Benefits</h2>
+<h3 id="development-advantages">Development Advantages</h3>
+<ul>
+<li><strong>No Hardware Dependencies</strong>: Develop without physical ESP32, sensors, or LEDs</li>
+<li><strong>Fast Iteration</strong>: Quick build-test cycles without flashing hardware</li>
+<li><strong>Visual Feedback</strong>: Clear terminal visualization of system behavior</li>
+<li><strong>CI/CD Friendly</strong>: Automated testing in continuous integration pipelines</li>
+<li><strong>Cross-Platform</strong>: Develop on any system with QEMU support</li>
+</ul>
+<h3 id="testing-advantages">Testing Advantages</h3>
+<ul>
+<li><strong>Predictable Behavior</strong>: Animated patterns for systematic testing</li>
+<li><strong>Integration Testing</strong>: Full system testing without hardware setup</li>
+<li><strong>Algorithm Validation</strong>: Test LED display logic and distance mapping</li>
+<li><strong>Performance Analysis</strong>: Monitor queue behavior and timing</li>
+</ul>
+<h3 id="educational-benefits">Educational Benefits</h3>
+<ul>
+<li><strong>System Understanding</strong>: Clear visualization of sensor-to-display pipeline</li>
+<li><strong>Algorithm Learning</strong>: See distance mapping and color gradients in action</li>
+<li><strong>Real-time Concepts</strong>: Observe queue-based architecture behavior</li>
+</ul>
+<h2 id="files-modifiedcreated">Files Modified/Created</h2>
+<h3 id="new-files">New Files</h3>
+<ul>
+<li><code>main/Kconfig.projbuild</code> - Build configuration options</li>
+<li><code>main/components/distance_sensor/distance_sensor_sim.c</code> - Distance sensor simulator</li>
+<li><code>main/components/led_controller/led_controller_sim.c</code> - LED controller simulator</li>
+</ul>
+<h3 id="modified-files">Modified Files</h3>
+<ul>
+<li><code>main/components/distance_sensor/CMakeLists.txt</code> - Conditional source selection</li>
+<li><code>main/components/led_controller/CMakeLists.txt</code> - Conditional source selection</li>
+</ul>
+<h3 id="unchanged-files">Unchanged Files</h3>
+<ul>
+<li>All header files (<code>.h</code>) - APIs remain identical</li>
+<li>Main application logic - No changes needed</li>
+<li>WiFi/web server components - Run unchanged</li>
+</ul>
+<h2 id="validation">Validation</h2>
+<p>The implementation has been validated for:
+- ✅ Complete API compatibility with hardware versions
+- ✅ Proper CMake conditional compilation
+- ✅ Animation logic and timing behavior<br />
+- ✅ LED visualization and rate limiting
+- ✅ Queue-based architecture and error handling
+- ✅ No security vulnerabilities introduced</p>
+<h2 id="future-enhancements">Future Enhancements</h2>
+<p>Potential improvements for the emulator support:
+- <strong>Web Interface Preview</strong>: Show LED state in browser
+- <strong>Interactive Controls</strong>: Manual distance adjustment via keyboard
+- <strong>Performance Metrics</strong>: Queue utilization and timing statistics
+- <strong>Multiple Animation Patterns</strong>: Different test sequences
+- <strong>Color Scheme Options</strong>: Alternative emoji sets or ASCII mode</p>
+<hr />
+<p><em>This emulator support enables efficient development and testing of the ESP32 distance sensor project without requiring physical hardware, while maintaining complete compatibility with the production system.</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../design/startup-test-design/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Startup test">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Startup test
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../test/config-tests/" class="md-footer__link md-footer__link--next" aria-label="Next: Config tests">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Config tests
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2025 Georg Doll - 
+<a href="/legal/impressum/">Impressum</a> | 
+<a href="/legal/datenschutz/">Datenschutz</a>
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/enthali/esp32-distance" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.footer"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>
