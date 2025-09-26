@@ -30,6 +30,7 @@ The ESP32 Distance Sensor system is an IoT device that:
 | REQ-SYS-6      | DSN-SYS-6        | Mandatory |
 | REQ-SYS-7      | DSN-SYS-7        | Mandatory |
 | REQ-SYS-8      | DSN-SYS-8        | Mandatory |
+| REQ-SYS-SIM-1  | DSN-SIM-LED-01, DSN-SIM-SNS-01 | Mandatory |
 
 ## Requirement Categories
 
@@ -162,6 +163,28 @@ Requirements are categorized using the following prefixes:
 - AC-4: Dynamic allocation minimized in time-critical paths
 
 ---
+
+### REQ-SYS-SIM-1: Emulator / Simulator Build Support
+
+**Type**: Design / Testability
+
+**Priority**: Mandatory
+
+**Description**: The system SHALL provide a build-time selectable emulator/simulator mode that replaces hardware-near modules with simulator implementations while preserving the public component APIs and runtime behavior seen by higher-level modules. Simulator implementations MUST be selectable without modifying header files or higher-level application code.
+
+**Rationale**: Enables development and testing on host environments (QEMU) without physical hardware, improves reproducibility and CI test coverage, and enforces clean module boundaries that encapsulate hardware dependencies.
+
+**Acceptance Criteria**:
+
+- AC-1: A Kconfig option `CONFIG_TARGET_EMULATOR` (or equivalent) exists to enable emulator builds via `menuconfig` or `idf.py -DCONFIG_TARGET_EMULATOR=1 build`.
+- AC-2: Simulator implementations are selected by the buildsystem (CMake) and compiled in place of hardware implementations (example: `distance_sensor_sim.c` vs `distance_sensor.c`) without requiring changes to header files or higher-layer code.
+- AC-3: Simulator components MUST implement the complete public API of their hardware counterparts and return identical error codes and semantics for consumers (blocking queue semantics, return values, state queries).
+- AC-4: The distance sensor simulator SHALL produce deterministic measurements performing a linear sweep from 5cm to 60cm and back with 1mm resolution, advancing once per second; measurements are published on the processed measurement queue using the same `distance_measurement_t` structure and status codes.
+- AC-5: The LED controller simulator SHALL maintain the same in-RAM buffer semantics and `led_show()` API; physical transmission is replaced by a rate-limited terminal visualization (≈1Hz) using unobtrusive symbols (emoji or ASCII) to reflect per-pixel state.
+- AC-6: The web server and WiFi manager MAY be left unchanged in emulator builds; lack of real WiFi events is acceptable and must not cause crashes. The emulator requirement does not mandate network stack simulation in the first iteration.
+- AC-7: The emulator build SHALL be runnable under QEMU (or a documented emulator) and produce observable LED visualization and distance measurement output in the serial console.
+- AC-8: Documentation in `docs/design/` and `docs/requirements/` updated to reference simulator design artifacts and provide build/run verification steps.
+
 
 ## Compliance and Validation
 

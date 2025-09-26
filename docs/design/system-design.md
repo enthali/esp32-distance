@@ -16,6 +16,8 @@ This document describes the technical architecture and implementation details fo
 | DSN-SYS-6 | REQ-SYS-6 | Mandatory |
 | DSN-SYS-7 | REQ-SYS-7 | Mandatory |
 | DSN-SYS-8 | REQ-SYS-8 | Mandatory |
+| DSN-SIM-LED-01 | REQ-SYS-SIM-1 | Mandatory |
+| DSN-SIM-SNS-01 | REQ-SYS-SIM-1 | Mandatory |
 
 ## System Architecture
 

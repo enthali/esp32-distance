@@ -407,6 +407,13 @@ CONFIG_PARTITION_TABLE_MD5=y
 # end of Partition Table
 
 #
+# ESP32 Distance Project Configuration
+#
+CONFIG_TARGET_EMULATOR=y
+CONFIG_EMULATOR_MOCK_SENSOR=y
+# end of ESP32 Distance Project Configuration
+
+#
 # Compiler options
 #
 CONFIG_COMPILER_OPTIMIZATION_DEBUG=y

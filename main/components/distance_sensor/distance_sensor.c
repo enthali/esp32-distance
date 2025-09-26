@@ -47,13 +47,6 @@
  *   - Size: 5 (buffering for consumer applications)
  *   - Contains: Calculated distances with metadata
  *   - Overflow: Automatic with statistics tracking
- *
- * COMPARED TO VxWorks:
- * ===================
- * - VxWorks msgQ ≈ FreeRTOS xQueue
- * - VxWorks ISR ≈ ESP32 GPIO ISR with IRAM_ATTR
- * - VxWorks timestamps ≈ esp_timer_get_time()
- * - Priority inversion protection via proper task priorities
  */
 
 #include "distance_sensor.h"

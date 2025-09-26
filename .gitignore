@@ -38,6 +38,8 @@ ENV/
 # Temporary files
 *.tmp
 *.temp
+temp/
+tmp/
 
 # ESP-IDF specific
 managed_components/
@@ -61,3 +63,6 @@ ssl/
 # Certificate generation test files
 tools/test_*.pem
 tools/server_*.pem
+
+# MkDocs build output - generated site
+site/

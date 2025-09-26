@@ -14,6 +14,25 @@ RUN groupadd --gid $USER_GID $CONTAINER_USER \
   && echo "${CONTAINER_USER} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
   && rm -rf /var/lib/apt/lists/*
 
+# install pip and mkdocs tooling in a dedicated venv so we don't modify
+# the system-managed Python environment (avoids PEP 668 issues)
+USER root
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends python3-venv python3-pip \
+  # create a system venv for documentation tools
+  && python3 -m venv /opt/venv \
+  && /opt/venv/bin/python -m pip install --upgrade pip setuptools wheel \
+  && /opt/venv/bin/pip install --no-cache-dir \
+    "mkdocs>=1.5" \
+    "mkdocs-material>=9.0" \
+    "mkdocstrings>=0.19" \
+    pymdown-extensions \
+  # make the venv binaries available system-wide via /etc/profile.d
+  && echo 'export PATH="/opt/venv/bin:$PATH"' > /etc/profile.d/venv-mkdocs.sh \
+  && chmod +x /etc/profile.d/venv-mkdocs.sh \
+  && rm -rf /var/lib/apt/lists/*
+USER ${CONTAINER_USER}
+
 USER ${CONTAINER_USER}
 ENV USER=${CONTAINER_USER}
 WORKDIR /home/${CONTAINER_USER}
