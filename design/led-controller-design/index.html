@@ -798,6 +798,30 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#simulator-design-dsn-sim" class="md-nav__link">
+    <span class="md-ellipsis">
+      Simulator Design (DSN-SIM)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Simulator Design (DSN-SIM)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dsn-sim-led-01-led-controller-simulator-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      DSN-SIM-LED-01: LED Controller Simulator Design
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1447,6 +1471,30 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#simulator-design-dsn-sim" class="md-nav__link">
+    <span class="md-ellipsis">
+      Simulator Design (DSN-SIM)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Simulator Design (DSN-SIM)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dsn-sim-led-01-led-controller-simulator-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      DSN-SIM-LED-01: LED Controller Simulator Design
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1512,6 +1560,11 @@
 <tr>
 <td>DSN-LED-ERR-01</td>
 <td>REQ-LED-2, REQ-LED-3</td>
+<td>Mandatory</td>
+</tr>
+<tr>
+<td>DSN-SIM-LED-01</td>
+<td>REQ-SYS-SIM-1</td>
 <td>Mandatory</td>
 </tr>
 </tbody>
@@ -1606,6 +1659,55 @@
 <li>Graceful Degradation: Safe operation when not initialized (return errors, not crash)</li>
 </ul>
 <p>Validation: Invalid inputs return appropriate error codes, operations fail safely, system remains stable.</p>
+<h2 id="simulator-design-dsn-sim">Simulator Design (DSN-SIM)</h2>
+<h3 id="dsn-sim-led-01-led-controller-simulator-design">DSN-SIM-LED-01: LED Controller Simulator Design</h3>
+<p>Addresses: REQ-SYS-SIM-1</p>
+<p>Design: Provide a simulator implementation for the LED controller that exposes the full public API (<code>led_controller.h</code>) while replacing RMT transmission with a rate-limited terminal visualization.</p>
+<ul>
+<li>API Compatibility: The simulator SHALL implement all public functions declared in <code>led_controller.h</code> and return the same error codes and behavior as the hardware implementation.</li>
+<li>Buffer Semantics: Maintain the same in-memory buffer and batch <code>led_show()</code> semantics as the hardware implementation.</li>
+<li>Visualization: Rate-limited (≈1Hz) terminal output using Unicode emoji blocks (🔴🟢🔵🟡🟣⚪⚫) to represent per-pixel color state.</li>
+<li>Non-intrusive: The simulator SHOULD NOT change header files, configuration, or higher-layer logic (e.g., display logic).</li>
+</ul>
+<p>Validation: Simulator build compiles with <code>CONFIG_TARGET_EMULATOR=y</code>, <code>led_show()</code> logs appear ~1x/sec and reflect buffer state.</p>
+<p>Example simulator <code>led_controller_sim.c</code> snippet (for design guidance):</p>
+<pre><code class="language-c">// Rate-limited output - only display ~1x per second
+static uint64_t last_display_time = 0;
+
+esp_err_t led_show(void) {
+    uint64_t now = esp_timer_get_time();
+    if (now - last_display_time &lt; 1000000) {  // 1 second = 1,000,000 us
+        return ESP_OK;  // Suppress output, just return success
+    }
+    last_display_time = now;
+
+    // Now do the emoji output
+    printf(&quot;\n[LED Strip]: &quot;);
+    for (int i = 0; i &lt; led_count; i++) {
+        led_color_t* color = &amp;led_buffer[i];
+
+        if (color-&gt;red &gt; 200 &amp;&amp; color-&gt;green &lt; 50 &amp;&amp; color-&gt;blue &lt; 50) {
+            printf(&quot;🔴&quot;);  // Red
+        } else if (color-&gt;green &gt; 200 &amp;&amp; color-&gt;red &lt; 50 &amp;&amp; color-&gt;blue &lt; 50) {
+            printf(&quot;🟢&quot;);  // Green  
+        } else if (color-&gt;blue &gt; 200 &amp;&amp; color-&gt;red &lt; 50 &amp;&amp; color-&gt;green &lt; 50) {
+            printf(&quot;🔵&quot;);  // Blue
+        } else if (color-&gt;red &gt; 200 &amp;&amp; color-&gt;blue &gt; 200 &amp;&amp; color-&gt;green &lt; 50) {
+            printf(&quot;🟣&quot;);  // Magenta/Purple
+        } else if (color-&gt;red &gt; 200 &amp;&amp; color-&gt;green &gt; 200 &amp;&amp; color-&gt;blue &lt; 50) {
+            printf(&quot;🟡&quot;);  // Yellow
+        } else if (color-&gt;red + color-&gt;green + color-&gt;blue &gt; 600) {
+            printf(&quot;⚪&quot;);  // White/bright
+        } else if (color-&gt;red + color-&gt;green + color-&gt;blue &gt; 100) {
+            printf(&quot;🟡&quot;);  // Dim/mixed
+        } else {
+            printf(&quot;⚫&quot;);  // Off
+        }
+    }
+    printf(&quot;\n&quot;);
+    return ESP_OK;
+}
+</code></pre>
 
 
 

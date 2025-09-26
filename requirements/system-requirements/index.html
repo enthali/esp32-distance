@@ -567,6 +567,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#req-sys-sim-1-emulator-simulator-build-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      REQ-SYS-SIM-1: Emulator / Simulator Build Support
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1538,6 +1547,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#req-sys-sim-1-emulator-simulator-build-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      REQ-SYS-SIM-1: Emulator / Simulator Build Support
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1666,6 +1684,11 @@
 <td>DSN-SYS-8</td>
 <td>Mandatory</td>
 </tr>
+<tr>
+<td>REQ-SYS-SIM-1</td>
+<td>DSN-SIM-LED-01, DSN-SIM-SNS-01</td>
+<td>Mandatory</td>
+</tr>
 </tbody>
 </table>
 <h2 id="requirement-categories">Requirement Categories</h2>
@@ -1772,6 +1795,22 @@
 <li>AC-4: Dynamic allocation minimized in time-critical paths</li>
 </ul>
 <hr />
+<h3 id="req-sys-sim-1-emulator-simulator-build-support">REQ-SYS-SIM-1: Emulator / Simulator Build Support</h3>
+<p><strong>Type</strong>: Design / Testability</p>
+<p><strong>Priority</strong>: Mandatory</p>
+<p><strong>Description</strong>: The system SHALL provide a build-time selectable emulator/simulator mode that replaces hardware-near modules with simulator implementations while preserving the public component APIs and runtime behavior seen by higher-level modules. Simulator implementations MUST be selectable without modifying header files or higher-level application code.</p>
+<p><strong>Rationale</strong>: Enables development and testing on host environments (QEMU) without physical hardware, improves reproducibility and CI test coverage, and enforces clean module boundaries that encapsulate hardware dependencies.</p>
+<p><strong>Acceptance Criteria</strong>:</p>
+<ul>
+<li>AC-1: A Kconfig option <code>CONFIG_TARGET_EMULATOR</code> (or equivalent) exists to enable emulator builds via <code>menuconfig</code> or <code>idf.py -DCONFIG_TARGET_EMULATOR=1 build</code>.</li>
+<li>AC-2: Simulator implementations are selected by the buildsystem (CMake) and compiled in place of hardware implementations (example: <code>distance_sensor_sim.c</code> vs <code>distance_sensor.c</code>) without requiring changes to header files or higher-layer code.</li>
+<li>AC-3: Simulator components MUST implement the complete public API of their hardware counterparts and return identical error codes and semantics for consumers (blocking queue semantics, return values, state queries).</li>
+<li>AC-4: The distance sensor simulator SHALL produce deterministic measurements performing a linear sweep from 5cm to 60cm and back with 1mm resolution, advancing once per second; measurements are published on the processed measurement queue using the same <code>distance_measurement_t</code> structure and status codes.</li>
+<li>AC-5: The LED controller simulator SHALL maintain the same in-RAM buffer semantics and <code>led_show()</code> API; physical transmission is replaced by a rate-limited terminal visualization (≈1Hz) using unobtrusive symbols (emoji or ASCII) to reflect per-pixel state.</li>
+<li>AC-6: The web server and WiFi manager MAY be left unchanged in emulator builds; lack of real WiFi events is acceptable and must not cause crashes. The emulator requirement does not mandate network stack simulation in the first iteration.</li>
+<li>AC-7: The emulator build SHALL be runnable under QEMU (or a documented emulator) and produce observable LED visualization and distance measurement output in the serial console.</li>
+<li>AC-8: Documentation in <code>docs/design/</code> and <code>docs/requirements/</code> updated to reference simulator design artifacts and provide build/run verification steps.</li>
+</ul>
 <h2 id="compliance-and-validation">Compliance and Validation</h2>
 <h3 id="traceability">Traceability</h3>
 <p>All requirements SHALL be traceable to:</p>

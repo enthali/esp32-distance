@@ -775,6 +775,30 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#simulator-design-dsn-sim" class="md-nav__link">
+    <span class="md-ellipsis">
+      Simulator Design (DSN-SIM)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Simulator Design (DSN-SIM)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dsn-sim-sns-01-distance-sensor-simulator-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      DSN-SIM-SNS-01: Distance Sensor Simulator Design
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1447,6 +1471,30 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#simulator-design-dsn-sim" class="md-nav__link">
+    <span class="md-ellipsis">
+      Simulator Design (DSN-SIM)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Simulator Design (DSN-SIM)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dsn-sim-sns-01-distance-sensor-simulator-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      DSN-SIM-SNS-01: Distance Sensor Simulator Design
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1512,6 +1560,11 @@
 <tr>
 <td>DSN-SNS-ERR-01</td>
 <td>REQ-SNS-12, REQ-SNS-13, REQ-SNS-14</td>
+<td>Mandatory</td>
+</tr>
+<tr>
+<td>DSN-SIM-SNS-01</td>
+<td>REQ-SYS-SIM-1</td>
 <td>Mandatory</td>
 </tr>
 </tbody>
@@ -1603,6 +1656,40 @@
 <li>Graceful degradation with status codes in measurement structure</li>
 </ul>
 <p>Validation: Error conditions produce correct status codes, overflow policy drops oldest correctly, system continues operation.</p>
+<h2 id="simulator-design-dsn-sim">Simulator Design (DSN-SIM)</h2>
+<h3 id="dsn-sim-sns-01-distance-sensor-simulator-design">DSN-SIM-SNS-01: Distance Sensor Simulator Design</h3>
+<p>Addresses: REQ-SYS-SIM-1</p>
+<p>Design: Provide a simulator implementation for the distance sensor that implements the full public API declared in <code>distance_sensor.h</code> while replacing ISR/GPIO timing with a deterministic simulated data producer.</p>
+<ul>
+<li>API Compatibility: The simulator SHALL implement <code>distance_sensor_init()</code>, <code>distance_sensor_start()</code>, <code>distance_sensor_get_latest()</code> and all other public functions with identical signatures and return codes.</li>
+<li>Queue Semantics: The simulator MUST produce <code>distance_measurement_t</code> entries on the processed queue with the same semantics as the hardware task (blocking consumers, identical status codes for out-of-range/timeouts when simulated).</li>
+<li>Animation Pattern: Deterministic sweep from 5cm to 60cm and back in 1mm steps, advancing once per second.</li>
+<li>Isolation: Simulator implementation SHOULD be in <code>distance_sensor_sim.c</code> and selected via CMake when <code>CONFIG_TARGET_EMULATOR=y</code> without modifying headers or higher-level application code.</li>
+</ul>
+<p>Validation: Simulator build compiles, <code>distance_sensor_get_latest()</code> receives simulated measurements at ≈1Hz, and status codes match expectations.</p>
+<p>Example simulator <code>distance_sensor_sim.c</code> snippet (for design guidance):</p>
+<pre><code class="language-c">// Simulated sensor with animated distance sweep
+static void distance_sensor_task(void* pvParameters) {
+    static uint16_t sim_distance = 50;  // Start at 5cm
+    static int8_t direction = 1;        // 1 = increasing, -1 = decreasing
+
+    while(1) {
+        // Animate distance: 5cm → 60cm → 5cm (1mm steps)
+        sim_distance += direction;
+        if (sim_distance &gt;= 600) direction = -1;  // 60cm
+        if (sim_distance &lt;= 50)  direction = 1;   // 5cm
+
+        distance_measurement_t sim_data = {
+            .distance_mm = sim_distance,
+            .timestamp_us = esp_timer_get_time(),
+            .status = DISTANCE_SENSOR_OK
+        };
+
+        xQueueSend(processed_measurement_queue, &amp;sim_data, portMAX_DELAY);
+        vTaskDelay(pdMS_TO_TICKS(1000));  // 1 second steps
+    }
+}
+</code></pre>
 
 
 
