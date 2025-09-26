@@ -37,9 +37,6 @@ static led_color_t *led_buffer = NULL;
 static led_config_t current_config = {0};
 static bool is_initialized = false;
 
-// Rate limiting for terminal output
-static uint64_t last_display_time = 0;
-static const uint64_t DISPLAY_INTERVAL_US = 500000; // 0.5 second
 // Optional status text appended to simulated display (small buffer)
 static char status_text[64] = "";
 
@@ -133,8 +130,8 @@ esp_err_t led_controller_init(const led_config_t *config)
     }
 
     is_initialized = true;
-    ESP_LOGI(TAG, "LED controller simulator initialized: %d LEDs (terminal visualization)", 
-             config->led_count);
+    // ESP_LOGI(TAG, "LED controller simulator initialized: %d LEDs (terminal visualization)", 
+    //          config->led_count);
     
     return ESP_OK;
 }
@@ -217,11 +214,6 @@ esp_err_t led_show(void)
     }
 
     // Rate limiting - only output ~1x per second to avoid terminal spam
-    uint64_t now = esp_timer_get_time();
-    if (now - last_display_time < DISPLAY_INTERVAL_US) {
-        return ESP_OK;  // Suppress output, just return success
-    }
-    last_display_time = now;
 
     // Display LED strip state using emoji blocks
     printf("[LED Strip]: ");
@@ -233,7 +225,7 @@ esp_err_t led_show(void)
     if (status_text[0] != '\0') {
         printf("  %s", status_text);
     }
-    printf("\n");
+    printf("\r");
     fflush(stdout); // Ensure immediate output
     
     return ESP_OK;

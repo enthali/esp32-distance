@@ -47,7 +47,7 @@ static uint32_t queue_overflow_counter = 0;
 // Simulation state
 static uint16_t sim_distance = 50;  // Start at 5.0cm (50mm)
 // use step of 5mm and a direction sign (+1/-1)
-static int16_t step_mm = 4;
+static int16_t step_mm = 5;
 static int8_t dir_sign = 1;        // +1 = increasing, -1 = decreasing
 
 // Last processed measurement snapshot (non-consuming)
