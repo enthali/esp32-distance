@@ -4,6 +4,7 @@
 #include "freertos/task.h"
 #include "esp_log.h"
 #include "esp_system.h"
+#include "esp_gdbstub.h"
 #include "led_controller.h"
 #include "led_running_test.h"
 #include "distance_sensor.h"
@@ -18,10 +19,20 @@ void app_main(void)
 {
     ESP_LOGI(TAG, "ESP32 Distance Measurement with LED Strip Display");
     
-    // TEMPORARY DEBUG: Trigger a controlled panic for GDB testing
-    //ESP_LOGI(TAG, "Triggering controlled panic for GDB testing...");
-    //vTaskDelay(pdMS_TO_TICKS(2000)); // Give time to see the log message
-    //assert(false); // This will trigger a panic and activate GDB stub
+    // Initialize GDB stub for debugging
+    ESP_LOGI(TAG, "Initializing GDB stub...");
+    esp_gdbstub_init();
+    ESP_LOGI(TAG, "GDB stub initialized - ready for debugging");
+    
+    // TRIGGER GDB: Breakpoint after delay for GDB connection
+    ESP_LOGI(TAG, "Starting application in 20 seconds - connect GDB now...");
+    for (int i = 20; i > 0; i--) {
+        ESP_LOGI(TAG, "GDB connection window: %d seconds remaining", i);
+        vTaskDelay(pdMS_TO_TICKS(1000));
+    }
+    ESP_LOGI(TAG, "Triggering GDB breakpoint...");
+    // Use assert to trigger panic which activates GDB stub
+    assert(false);
     
     // Code continues after GDB 'continue' command...
 

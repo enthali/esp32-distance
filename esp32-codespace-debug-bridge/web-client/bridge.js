@@ -51,10 +51,12 @@ class ESP32DebugBridge {
             // 2. Connect to WebSocket bridge
             await this.connectWebSocket();
             
-            // 3. Start data forwarding
+            // 3. Set connected state BEFORE starting data forwarding
+            this.isConnected = true;
+            
+            // 4. Start data forwarding
             this.startDataForwarding();
             
-            this.isConnected = true;
             this.updateUI();
             this.log('✅ Bridge connected successfully!', 'success');
             
@@ -88,10 +90,10 @@ class ESP32DebugBridge {
     }
     
     async connectWebSocket() {
-        // Determine WebSocket URL - WebSocket server runs on port 8081, web client on 8082
+        // Determine WebSocket URL - WebSocket server runs on port 9081, web client on 9080
         const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
         const hostname = location.hostname;
-        const wsUrl = `${protocol}//${hostname.replace('-8082.', '-8081.')}/ws`;
+        const wsUrl = `${protocol}//${hostname.replace('-9080.', '-9081.')}/ws`;
         
         this.log(`🌐 Connecting to WebSocket: ${wsUrl}`);
         
@@ -149,17 +151,28 @@ class ESP32DebugBridge {
     
     async forwardSerialToWebSocket() {
         try {
+            this.log('🔍 Starting serial read loop...');
             while (this.reader && this.isConnected) {
+                this.log('⏳ Waiting for serial data...');
                 const { value, done } = await this.reader.read();
+                
+                this.log(`📦 Received: done=${done}, value=${value ? value.length + ' bytes' : 'null'}`);
                 
                 if (done) {
                     this.log('📡 Serial stream ended');
                     break;
                 }
                 
-                if (value && this.webSocket && this.webSocket.readyState === WebSocket.OPEN) {
-                    this.webSocket.send(value);
-                    this.dataFlow.textContent = `ESP32→GDB: ${value.length}B`;
+                if (value) {
+                    // Convert binary data to text for display
+                    const text = new TextDecoder().decode(value);
+                    this.log(`📤 ESP32: ${text.trim()}`, 'serial-data');
+                    
+                    // Forward to WebSocket if connected
+                    if (this.webSocket && this.webSocket.readyState === WebSocket.OPEN) {
+                        this.webSocket.send(value);
+                        this.dataFlow.textContent = `ESP32→GDB: ${value.length}B`;
+                    }
                 }
             }
         } catch (error) {

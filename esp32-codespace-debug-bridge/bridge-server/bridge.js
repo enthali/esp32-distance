@@ -11,7 +11,7 @@ const WebSocket = require('ws');
 
 // Configuration
 const TCP_PORT = 3333;  // GDB will connect here (localhost:3333)
-const WS_PORT = 8081;   // WebSocket port (will be forwarded in Codespaces)
+const WS_PORT = 9081;   // WebSocket port (will be forwarded in Codespaces)
 const WS_PATH = '/ws';  // WebSocket endpoint path
 
 console.log('🚀 ESP32 Codespace Debug Bridge Server');
@@ -31,7 +31,7 @@ tcpServer.on('connection', (socket) => {
     
     // TCP data from GDB → forward to all WebSocket clients (browser)
     socket.on('data', (chunk) => {
-        console.log(`📤 GDB→WS: ${chunk.length} bytes`);
+        // Silent data transfer - no logging
         wss.clients.forEach(ws => {
             if (ws.readyState === WebSocket.OPEN) {
                 ws.send(chunk);
@@ -69,12 +69,12 @@ wss.on('connection', (ws, req) => {
     // WebSocket data from browser → forward to TCP (GDB)
     ws.on('message', (message) => {
         const buffer = Buffer.from(message);
-        console.log(`📥 WS→GDB: ${buffer.length} bytes`);
         
         if (tcpSocket && tcpSocket.writable) {
+            // Silent data transfer - no logging
             tcpSocket.write(buffer);
         } else {
-            console.log(`⚠️  No GDB connection available, dropping ${buffer.length} bytes`);
+            // Silently drop data when no GDB client connected
         }
     });
     
@@ -98,7 +98,7 @@ console.log(`🌐 WebSocket server listening on port ${WS_PORT}${WS_PATH}`);
 console.log('');
 console.log('📋 Next steps:');
 console.log('1. Forward port 8081 in Codespaces');
-console.log('2. Open web client: https://<codespace>-8081.githubpreview.dev/');
+console.log('2. Open web client: https://<codespace>-9081.githubpreview.dev/');
 console.log('3. Connect ESP32 via USB and click "Connect Serial & WebSocket"');
 console.log('4. In terminal: xtensa-esp32-elf-gdb build/your-app.elf');
 console.log('5. In GDB: target remote localhost:3333');
