@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <assert.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "esp_log.h"
@@ -16,6 +17,13 @@ static const char *TAG = "main";
 void app_main(void)
 {
     ESP_LOGI(TAG, "ESP32 Distance Measurement with LED Strip Display");
+    
+    // TEMPORARY DEBUG: Trigger a controlled panic for GDB testing
+    //ESP_LOGI(TAG, "Triggering controlled panic for GDB testing...");
+    //vTaskDelay(pdMS_TO_TICKS(2000)); // Give time to see the log message
+    //assert(false); // This will trigger a panic and activate GDB stub
+    
+    // Code continues after GDB 'continue' command...
 
     // Initialize configuration management first
     esp_err_t ret = config_init();

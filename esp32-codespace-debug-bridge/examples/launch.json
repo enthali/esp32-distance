@@ -1,0 +1,39 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "ESP32 Debug via Bridge",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/distance.elf",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "xtensa-esp32-elf-gdb",
+            "miDebuggerServerAddress": "localhost:3333",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Connect to ESP32 via bridge",
+                    "text": "target remote localhost:3333",
+                    "ignoreFailures": false
+                },
+                {
+                    "description": "Reset ESP32",
+                    "text": "monitor reset",
+                    "ignoreFailures": true
+                }
+            ],
+            "customLaunchSetupCommands": [],
+            "launchCompleteCommand": "exec-continue",
+            "preLaunchTask": "esp-idf: Build project"
+        }
+    ]
+}

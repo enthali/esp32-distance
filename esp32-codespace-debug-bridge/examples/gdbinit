@@ -1,0 +1,33 @@
+# ESP32 GDB initialization commands for Codespace Bridge debugging
+
+# Connect to the bridge server
+target remote localhost:3333
+
+# Set up pretty printing
+set print pretty on
+set print object on
+set print static-members on
+set print vtbl on
+set print demangle on
+set demangle-style gnu-v3
+
+# ESP32-specific settings
+set confirm off
+set pagination off
+
+# Set up common breakpoints (uncomment as needed)
+# break app_main
+# break distance_sensor_read
+# break led_controller_init
+# break wifi_manager_init
+
+# ESP32 memory regions (for reference)
+# IRAM: 0x40080000 - 0x400A0000
+# DRAM: 0x3FFB0000 - 0x40000000  
+# Flash: 0x400D0000 - 0x40400000
+
+# Initial reset and continue
+monitor reset
+continue
+
+echo ESP32 Debug Bridge connected successfully!\n

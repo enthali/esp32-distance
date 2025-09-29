@@ -1,0 +1,19 @@
+{
+  "name": "esp32-codespace-debug-bridge-server",
+  "version": "1.0.0",
+  "description": "WebSocket to TCP bridge for ESP32 debugging in Codespaces",
+  "main": "bridge.js",
+  "scripts": {
+    "start": "node bridge.js",
+    "dev": "nodemon bridge.js"
+  },
+  "dependencies": {
+    "ws": "^8.14.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": ["esp32", "debug", "codespaces", "websocket", "gdb"],
+  "author": "ESP32 Community",
+  "license": "MIT"
+}
