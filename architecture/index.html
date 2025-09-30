@@ -14,7 +14,7 @@
         <link rel="prev" href="..">
       
       
-        <link rel="next" href="../requirements/">
+        <link rel="next" href="../known-limitations/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -425,6 +425,29 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../known-limitations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Known Limitations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -434,10 +457,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
         
           
-          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
             
   
   
@@ -450,8 +473,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2_2">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
             <span class="md-nav__icon md-icon"></span>
             Requirements
           </label>
@@ -664,10 +687,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
         
           
-          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
             
   
   
@@ -680,8 +703,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2_3">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
             <span class="md-nav__icon md-icon"></span>
             Design
           </label>
@@ -848,10 +871,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
         
           
-          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
             
   
   
@@ -864,8 +887,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2_4">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
             <span class="md-nav__icon md-icon"></span>
             Tests
           </label>
@@ -940,10 +963,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6" >
         
           
-          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2_6" id="__nav_2_6_label" tabindex="0">
             
   
   
@@ -956,8 +979,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2_5">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6">
             <span class="md-nav__icon md-icon"></span>
             Planning
           </label>
@@ -1366,24 +1389,22 @@
 <h2 id="system-overview">System Overview</h2>
 <p>The project is an IoT device based on the ESP32 WROOM-32F microcontroller. It measures distance using an HC-SR04 ultrasonic sensor and visualizes results on a WS2812 LED strip. The device provides WiFi connectivity (AP/STA), a web interface (with captive portal), and is being enhanced with HTTPS security.</p>
 <h2 id="architecture-diagram">Architecture Diagram</h2>
-<pre><code class="language-mermaid">flowchart TD
-    subgraph ESP32 MCU
-        A[Distance Sensor Component&lt;br&gt;(HC-SR04)]
-        B[LED Controller Component&lt;br&gt;(WS2812)]
-        C[WiFi Manager&lt;br&gt;(AP/STA, Captive Portal)]
-        D[Web Server&lt;br&gt;(HTTP/HTTPS)]
-        E[DNS Server&lt;br&gt;(Captive Portal)]
-        F[Main Application&lt;br&gt;(FreeRTOS Tasks)]
-    end
-    A -- Distance Data --&gt; F
-    F -- LED Updates --&gt; B
-    F -- WiFi Events --&gt; C
-    C -- Network Events --&gt; F
-    C -- HTTP Requests --&gt; D
-    D -- Web UI/API --&gt; User
-    E -- DNS Requests --&gt; User
+<pre class="mermaid"><code>flowchart TD
+    A[Distance Sensor &lt;br&gt; HC-SR04]
+    B[LED Controller &lt;br&gt; WS2812]
+    C[WiFi Manager &lt;br&gt; AP/STA, Captive Portal]
+    D[Web Server &lt;br&gt; HTTP/HTTPS]
+    E[DNS Server &lt;br&gt; Captive Portal]
+    F[Main Application &lt;br&gt; FreeRTOS Tasks]
     User((User Devices))
-</code></pre>
+
+    A --&gt;|Distance Data| F
+    F --&gt;|LED Updates| B
+    F --&gt;|WiFi Events| C
+    C --&gt;|Network Events| F
+    C --&gt;|HTTP Requests| D
+    D --&gt;|Web UI/API| User
+    E --&gt;|DNS Requests| User</code></pre>
 <h2 id="key-components">Key Components</h2>
 <ul>
 <li><strong>Distance Sensor Component</strong>: Interfaces with HC-SR04, provides distance readings via FreeRTOS tasks.</li>
@@ -1457,13 +1478,13 @@
         
         
           
-          <a href="../requirements/" class="md-footer__link md-footer__link--next" aria-label="Next: Overview">
+          <a href="../known-limitations/" class="md-footer__link md-footer__link--next" aria-label="Next: Known Limitations">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Overview
+                Known Limitations
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -1516,10 +1537,14 @@
     
     
       
-      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.footer"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.footer", "content.full_width"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
       <script src="../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
+      
+        <script src="../javascripts/mermaid-init.js"></script>
       
     
   </body>

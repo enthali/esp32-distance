@@ -11,25 +11,25 @@
       
       
       
-        <link rel="prev" href="../led-controller-design/">
+        <link rel="prev" href="../architecture/">
       
       
-        <link rel="next" href="../config-design/">
+        <link rel="next" href="../requirements/">
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
     
     
       
-        <title>Display - ESP32 Distance</title>
+        <title>Known Limitations - ESP32 Distance</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.e53b48f4.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.e53b48f4.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -48,9 +48,9 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#display-design" class="md-skip">
+        <a href="#known-limitations-quirks" class="md-skip">
           Skip to content
         </a>
       
@@ -90,7 +90,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="ESP32 Distance" class="md-header__button md-logo" aria-label="ESP32 Distance" data-md-component="logo">
+    <a href=".." title="ESP32 Distance" class="md-header__button md-logo" aria-label="ESP32 Distance" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Display
+              Known Limitations
             
           </span>
         </div>
@@ -188,7 +188,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="ESP32 Distance" class="md-nav__button md-logo" aria-label="ESP32 Distance" data-md-component="logo">
+    <a href=".." title="ESP32 Distance" class="md-nav__button md-logo" aria-label="ESP32 Distance" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -206,7 +206,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href=".." class="md-nav__link">
         
   
   
@@ -306,7 +306,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../architecture/" class="md-nav__link">
+      <a href="../architecture/" class="md-nav__link">
         
   
   
@@ -334,10 +334,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../known-limitations/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Known Limitations
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -348,6 +370,53 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#captive-portal-not-so-captive" class="md-nav__link">
+    <span class="md-ellipsis">
+      📱 Captive Portal: Not-So-Captive
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#web-ui-in-emulator-no-show" class="md-nav__link">
+    <span class="md-ellipsis">
+      🖥️ Web UI in Emulator: No Show
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-oddities" class="md-nav__link">
+    <span class="md-ellipsis">
+      🦄 Other Oddities
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -398,7 +467,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../requirements/" class="md-nav__link">
+      <a href="../requirements/" class="md-nav__link">
         
   
   
@@ -421,7 +490,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../requirements/system-requirements/" class="md-nav__link">
+      <a href="../requirements/system-requirements/" class="md-nav__link">
         
   
   
@@ -444,7 +513,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../requirements/distance-sensor-requirements/" class="md-nav__link">
+      <a href="../requirements/distance-sensor-requirements/" class="md-nav__link">
         
   
   
@@ -467,7 +536,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../requirements/led-controller-requirements/" class="md-nav__link">
+      <a href="../requirements/led-controller-requirements/" class="md-nav__link">
         
   
   
@@ -490,7 +559,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../requirements/display-requirements/" class="md-nav__link">
+      <a href="../requirements/display-requirements/" class="md-nav__link">
         
   
   
@@ -513,7 +582,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../requirements/config-requirements/" class="md-nav__link">
+      <a href="../requirements/config-requirements/" class="md-nav__link">
         
   
   
@@ -536,7 +605,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../requirements/startup-test-requirements/" class="md-nav__link">
+      <a href="../requirements/startup-test-requirements/" class="md-nav__link">
         
   
   
@@ -559,7 +628,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../requirements/web-server-requirements/" class="md-nav__link">
+      <a href="../requirements/web-server-requirements/" class="md-nav__link">
         
   
   
@@ -587,20 +656,18 @@
                 
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
         
           
           <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
@@ -616,7 +683,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2_4">
             <span class="md-nav__icon md-icon"></span>
             Design
@@ -630,7 +697,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../system-design/" class="md-nav__link">
+      <a href="../design/system-design/" class="md-nav__link">
         
   
   
@@ -653,7 +720,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../distance-sensor-design/" class="md-nav__link">
+      <a href="../design/distance-sensor-design/" class="md-nav__link">
         
   
   
@@ -676,7 +743,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../led-controller-design/" class="md-nav__link">
+      <a href="../design/led-controller-design/" class="md-nav__link">
         
   
   
@@ -696,32 +763,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Display
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../design/display-design/" class="md-nav__link">
         
   
   
@@ -732,113 +777,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#design-traceability" class="md-nav__link">
-    <span class="md-ellipsis">
-      Design Traceability
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#target-design-architecture" class="md-nav__link">
-    <span class="md-ellipsis">
-      Target Design Architecture
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Target Design Architecture">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#dsn-dsp-overview-01-ws2812-hardware-integration-design" class="md-nav__link">
-    <span class="md-ellipsis">
-      DSN-DSP-OVERVIEW-01: WS2812 Hardware Integration Design
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dsn-dsp-arch-01-task-based-architecture-design" class="md-nav__link">
-    <span class="md-ellipsis">
-      DSN-DSP-ARCH-01: Task-Based Architecture Design
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dsn-dsp-arch-02-configuration-integration-design" class="md-nav__link">
-    <span class="md-ellipsis">
-      DSN-DSP-ARCH-02: Configuration Integration Design
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dsn-dsp-algo-01-distance-to-visual-mapping-algorithm-what-to-display" class="md-nav__link">
-    <span class="md-ellipsis">
-      DSN-DSP-ALGO-01: Distance-to-Visual Mapping Algorithm (WHAT to display)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dsn-dsp-algo-02-led-update-pattern-design-how-to-display" class="md-nav__link">
-    <span class="md-ellipsis">
-      DSN-DSP-ALGO-02: LED Update Pattern Design (HOW to display)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dsn-dsp-algo-03-embedded-arithmetic-architecture-design" class="md-nav__link">
-    <span class="md-ellipsis">
-      DSN-DSP-ALGO-03: Embedded Arithmetic Architecture Design
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dsn-dsp-api-01-simplified-api-design" class="md-nav__link">
-    <span class="md-ellipsis">
-      DSN-DSP-API-01: Simplified API Design
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -851,7 +789,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../config-design/" class="md-nav__link">
+      <a href="../design/config-design/" class="md-nav__link">
         
   
   
@@ -874,7 +812,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../startup-test-design/" class="md-nav__link">
+      <a href="../design/startup-test-design/" class="md-nav__link">
         
   
   
@@ -943,7 +881,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../emulator-support/" class="md-nav__link">
+      <a href="../emulator-support/" class="md-nav__link">
         
   
   
@@ -966,7 +904,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../test/config-tests/" class="md-nav__link">
+      <a href="../test/config-tests/" class="md-nav__link">
         
   
   
@@ -1035,7 +973,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../planning/Features-intended/" class="md-nav__link">
+      <a href="../planning/Features-intended/" class="md-nav__link">
         
   
   
@@ -1111,7 +1049,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../workshop/" class="md-nav__link">
+      <a href="../workshop/" class="md-nav__link">
         
   
   
@@ -1134,7 +1072,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../workshop/prerequisites/" class="md-nav__link">
+      <a href="../workshop/prerequisites/" class="md-nav__link">
         
   
   
@@ -1157,7 +1095,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../workshop/hardwaresetup/" class="md-nav__link">
+      <a href="../workshop/hardwaresetup/" class="md-nav__link">
         
   
   
@@ -1180,7 +1118,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../workshop/gettingstartet/" class="md-nav__link">
+      <a href="../workshop/gettingstartet/" class="md-nav__link">
         
   
   
@@ -1203,7 +1141,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../workshop/exercises/" class="md-nav__link">
+      <a href="../workshop/exercises/" class="md-nav__link">
         
   
   
@@ -1233,7 +1171,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/" class="md-nav__link">
+      <a href="../api/" class="md-nav__link">
         
   
   
@@ -1293,7 +1231,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../legal/impressum/" class="md-nav__link">
+      <a href="../legal/impressum/" class="md-nav__link">
         
   
   
@@ -1316,7 +1254,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../legal/datenschutz/" class="md-nav__link">
+      <a href="../legal/datenschutz/" class="md-nav__link">
         
   
   
@@ -1366,89 +1304,29 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#design-traceability" class="md-nav__link">
+  <a href="#captive-portal-not-so-captive" class="md-nav__link">
     <span class="md-ellipsis">
-      Design Traceability
+      📱 Captive Portal: Not-So-Captive
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#target-design-architecture" class="md-nav__link">
+  <a href="#web-ui-in-emulator-no-show" class="md-nav__link">
     <span class="md-ellipsis">
-      Target Design Architecture
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Target Design Architecture">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#dsn-dsp-overview-01-ws2812-hardware-integration-design" class="md-nav__link">
-    <span class="md-ellipsis">
-      DSN-DSP-OVERVIEW-01: WS2812 Hardware Integration Design
+      🖥️ Web UI in Emulator: No Show
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#dsn-dsp-arch-01-task-based-architecture-design" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#other-oddities" class="md-nav__link">
     <span class="md-ellipsis">
-      DSN-DSP-ARCH-01: Task-Based Architecture Design
+      🦄 Other Oddities
     </span>
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dsn-dsp-arch-02-configuration-integration-design" class="md-nav__link">
-    <span class="md-ellipsis">
-      DSN-DSP-ARCH-02: Configuration Integration Design
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dsn-dsp-algo-01-distance-to-visual-mapping-algorithm-what-to-display" class="md-nav__link">
-    <span class="md-ellipsis">
-      DSN-DSP-ALGO-01: Distance-to-Visual Mapping Algorithm (WHAT to display)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dsn-dsp-algo-02-led-update-pattern-design-how-to-display" class="md-nav__link">
-    <span class="md-ellipsis">
-      DSN-DSP-ALGO-02: LED Update Pattern Design (HOW to display)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dsn-dsp-algo-03-embedded-arithmetic-architecture-design" class="md-nav__link">
-    <span class="md-ellipsis">
-      DSN-DSP-ALGO-03: Embedded Arithmetic Architecture Design
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dsn-dsp-api-01-simplified-api-design" class="md-nav__link">
-    <span class="md-ellipsis">
-      DSN-DSP-API-01: Simplified API Design
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1468,131 +1346,26 @@
 
 
 
-<h1 id="display-design">Display Design</h1>
-<h2 id="design-traceability">Design Traceability</h2>
-<table>
-<thead>
-<tr>
-<th>Design ID</th>
-<th>Implements Requirement</th>
-<th>Priority</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>DSN-DSP-OVERVIEW-01</td>
-<td>REQ-DSP-OVERVIEW-01</td>
-<td>Mandatory</td>
-</tr>
-<tr>
-<td>DSN-DSP-ARCH-01</td>
-<td>REQ-DSP-IMPL-01</td>
-<td>Mandatory</td>
-</tr>
-<tr>
-<td>DSN-DSP-ARCH-02</td>
-<td>REQ-DSP-OVERVIEW-02</td>
-<td>Mandatory</td>
-</tr>
-<tr>
-<td>DSN-DSP-ALGO-01</td>
-<td>REQ-DSP-IMPL-03, REQ-DSP-VISUAL-01, REQ-DSP-VISUAL-02, REQ-DSP-VISUAL-03, REQ-DSP-VISUAL-04</td>
-<td>Mandatory</td>
-</tr>
-<tr>
-<td>DSN-DSP-ALGO-02</td>
-<td>REQ-DSP-IMPL-02</td>
-<td>Mandatory</td>
-</tr>
-<tr>
-<td>DSN-DSP-ALGO-03</td>
-<td>REQ-SYS-1</td>
-<td>Mandatory</td>
-</tr>
-<tr>
-<td>DSN-DSP-API-01</td>
-<td>REQ-DSP-IMPL-01</td>
-<td>Mandatory</td>
-</tr>
-</tbody>
-</table>
-<h2 id="target-design-architecture">Target Design Architecture</h2>
-<h3 id="dsn-dsp-overview-01-ws2812-hardware-integration-design">DSN-DSP-OVERVIEW-01: WS2812 Hardware Integration Design</h3>
-<p>Addresses: REQ-DSP-OVERVIEW-01</p>
-<p>Design: WS2812 addressable LED strip as primary display hardware with config-driven parameters.</p>
+<h1 id="known-limitations-quirks">Known Limitations &amp; Quirks 🚧</h1>
+<p>Welcome, brave explorer! Every project has its dragons—here are ours. If you run into these, don’t panic: you’re not alone, and sometimes it’s just how the (micro)chips fall.</p>
+<h2 id="captive-portal-not-so-captive">📱 Captive Portal: Not-So-Captive</h2>
 <ul>
-<li>LED count: Configurable via <code>config_manager</code> API (1-100 LEDs, validated)</li>
-<li>Brightness: Configurable via <code>config_manager</code> API (0-255, hardware PWM control)</li>
-<li>GPIO pin: Hardware-specific configuration for WS2812 data line</li>
-<li>Initialization: LED hardware initialized before task starts processing measurements</li>
-<li>Real-time operation: Continuous reactive updates as distance measurements arrive</li>
+<li><strong>What happens?</strong> When you connect to the ESP32’s WiFi, your phone/tablet might not be magically whisked away to the configuration page. Instead, you’ll need to open your browser and type <code>192.168.4.1</code>.</li>
+<li><strong>Why?</strong> Modern devices are picky about captive portals, and our ESP32 is doing its best. Some phones just won’t auto-redirect—blame the phone, not the project!</li>
+<li><strong>Will it be fixed?</strong> Probably not. It’s a common IoT quirk, and most users figure it out quickly.</li>
 </ul>
-<p>Validation: LED strip responds to configuration changes, hardware initialization successful.</p>
-<h3 id="dsn-dsp-arch-01-task-based-architecture-design">DSN-DSP-ARCH-01: Task-Based Architecture Design</h3>
-<p>Addresses: REQ-DSP-IMPL-01</p>
-<p>Design: Implement single FreeRTOS task that blocks on <code>distance_sensor_get_latest()</code>.</p>
+<h2 id="web-ui-in-emulator-no-show">🖥️ Web UI in Emulator: No Show</h2>
 <ul>
-<li>Task priority set below measurement task to ensure proper data flow hierarchy</li>
-<li>Task runs continuously until system restart</li>
-<li>Core assignment and stack size from centralized configuration</li>
-<li>Blocking wait pattern eliminates polling overhead and provides immediate response</li>
+<li><strong>What happens?</strong> If you’re running the project in an emulator, the web interface might be unreachable.</li>
+<li><strong>Why?</strong> Networking in emulators is tricky, and not all features are supported.</li>
+<li><strong>Will it be fixed?</strong> Maybe! We might open a GitHub issue for this. If you have ideas, PRs are welcome.</li>
 </ul>
-<p>Validation: Task created successfully, priority hierarchy maintained, blocks efficiently.</p>
-<h3 id="dsn-dsp-arch-02-configuration-integration-design">DSN-DSP-ARCH-02: Configuration Integration Design</h3>
-<p>Addresses: REQ-DSP-OVERVIEW-02, REQ-CFG-2</p>
-<p>Design: Use <code>config_manager</code> API for all distance range parameters.</p>
+<h2 id="other-oddities">🦄 Other Oddities</h2>
 <ul>
-<li>Obtain min/max distance values via <code>config_get_current()</code> and use <code>distance_min_mm</code> / <code>distance_max_mm</code> fields (millimeters)</li>
-<li>Cache config values locally at task startup for performance</li>
-<li>Configuration changes handled via system restart (restart-based architecture)</li>
-<li>Configuration validation responsibility belongs to <code>config_manager</code></li>
+<li>If you find a new quirk, let us know! We love a good bug hunt (and a good laugh).</li>
 </ul>
-<p>Validation: All distance parameters obtained from <code>config_manager</code> API, no separate config structures.</p>
-<h3 id="dsn-dsp-algo-01-distance-to-visual-mapping-algorithm-what-to-display">DSN-DSP-ALGO-01: Distance-to-Visual Mapping Algorithm (WHAT to display)</h3>
-<p>Addresses: REQ-DSP-IMPL-03, REQ-DSP-VISUAL-01/02/03/04</p>
-<p>Design:</p>
-<ul>
-<li>Normal range (min ≤ distance ≤ max): Green LED at calculated position using linear interpolation</li>
-<li>Formula: <code>led_index = (distance_mm - min_mm) * (led_count - 1) / (max_mm - min_mm)</code></li>
-<li>Below minimum (distance &lt; min): Red LED at position 0</li>
-<li>Above maximum (distance &gt; max): Red LED at position <code>led_count-1</code></li>
-<li>Boundary clamping ensures valid LED positions <code>[0, led_count-1]</code></li>
-<li>Single LED illumination enforced by logic</li>
-</ul>
-<p>Validation: Min distance → LED 0, max distance → LED <code>led_count-1</code>, linear interpolation between,
-            below/above range → correct red LED positions.</p>
-<h3 id="dsn-dsp-algo-02-led-update-pattern-design-how-to-display">DSN-DSP-ALGO-02: LED Update Pattern Design (HOW to display)</h3>
-<p>Addresses: REQ-DSP-IMPL-02</p>
-<p>Design:</p>
-<ul>
-<li>Step 1: <code>led_clear_all()</code> - set all LEDs to off state</li>
-<li>Step 2: <code>led_set_pixel(position, color)</code> - set desired LED from ALGO-01 decision</li>
-<li>Step 3: <code>led_show()</code> - transmit complete buffer to WS2812 strip</li>
-</ul>
-<p>WS2812 serial protocol requires complete buffer transmission; clear-and-set pattern guarantees only one LED illuminated.</p>
-<p>Validation: Only one LED illuminated after each update, WS2812 transmission successful.</p>
-<h3 id="dsn-dsp-algo-03-embedded-arithmetic-architecture-design">DSN-DSP-ALGO-03: Embedded Arithmetic Architecture Design</h3>
-<p>Addresses: REQ-SYS-1</p>
-<p>Design: Pure integer arithmetic for all distance calculations and display operations.</p>
-<ul>
-<li>Distance representation: <code>uint16_t</code> millimeters (0-65535mm)</li>
-<li>Position calculations: Multiplication before division for precision preservation</li>
-<li>Boundary checks: Integer comparisons</li>
-<li>Memory efficiency: 2-byte integers vs 4-byte floats</li>
-<li>Execution speed: Integer ALU operations vs FPU operations</li>
-<li>Deterministic timing: No floating-point precision variations</li>
-</ul>
-<p>Rationale: Avoid floating-point on resource-constrained microcontrollers unless necessary.</p>
-<p>Validation: All arithmetic operations complete within deterministic time bounds.</p>
-<h3 id="dsn-dsp-api-01-simplified-api-design">DSN-DSP-API-01: Simplified API Design</h3>
-<p>Addresses: REQ-DSP-IMPL-01</p>
-<p>Design: Single entry point for simplified lifecycle management</p>
-<ul>
-<li><code>esp_err_t display_logic_start(void)</code> - primary public function</li>
-<li>Task runs continuously until system restart</li>
-<li>No complex lifecycle management</li>
-</ul>
-<p>Validation: Single function call starts display system, no API complexity.</p>
+<hr />
+<p><em>Remember: If everything worked perfectly, it wouldn’t be called a “project.”</em></p>
 
 
 
@@ -1622,7 +1395,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../led-controller-design/" class="md-footer__link md-footer__link--prev" aria-label="Previous: LED controller">
+          <a href="../architecture/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Overview">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1632,20 +1405,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                LED controller
+                Overview
               </div>
             </div>
           </a>
         
         
           
-          <a href="../config-design/" class="md-footer__link md-footer__link--next" aria-label="Next: Configuration">
+          <a href="../requirements/" class="md-footer__link md-footer__link--next" aria-label="Next: Overview">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Configuration
+                Overview
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -1698,14 +1471,14 @@
     
     
       
-      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.footer", "content.full_width"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.footer", "content.full_width"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      <script src="../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
         <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
       
-        <script src="../../javascripts/mermaid-init.js"></script>
+        <script src="../javascripts/mermaid-init.js"></script>
       
     
   </body>
