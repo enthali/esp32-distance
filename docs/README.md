@@ -1,122 +1,34 @@
-# ESP32 Distance Sensor - Documentation
 
-This directory contains the formal documentation following OpenFastTrack (OFT) methodology for requirements engineering and traceability.
+# Welcome to the ESP32 Distance Sensor Project!
 
-## Documentation Structure
+![Project Demo](assets/images/setup.jpg)
 
-```text
-docs/
-├── README.md                           # This file - documentation overview
-├── .oft.yml                            # OpenFastTrack configuration
-├── requirements/                       # Requirements specifications (OFT format)
-│   ├── system-requirements.md          # High-level system requirements (REQ-SYS-*)
-│   ├── distance-sensor-requirements.md # HC-SR04 sensor requirements (REQ-SNS-*)
-│   ├── led-controller-requirements.md  # WS2812 LED strip requirements (REQ-LED-*)
-│   ├── display-requirements.md         # Distance display logic (REQ-DSP-*)
-│   ├── config-requirements.md          # Configuration management (REQ-CFG-*)
-│   ├── startup-test-requirements.md    # Boot sequence testing (REQ-STARTUP-*)
-│   └── web-server-requirements.md      # Web interface (REQ-WEB-*)
-├── design/                            # Design specifications with bidirectional traceability
-│   ├── system-design.md               # Overall system architecture (DSN-SYS-*)
-│   ├── distance-sensor-design.md      # Hardware interface design (DSN-SNS-*)
-│   ├── led-controller-design.md       # WS2812 timing and control (DSN-LED-*)
-│   ├── display-design.md              # Distance-to-LED mapping (DSN-DSP-*)
-│   ├── config-design.md               # Configuration system (DSN-CFG-*)
-│   └── startup-test-design.md         # Boot test implementation (DSN-STARTUP-*)
-└── test/                              # Test specifications and results
-    └── config-tests.md                # Configuration system test cases
-```
+This project brings together the ESP32, an HC-SR04 ultrasonic sensor, and a WS2812 LED strip to create a fun, interactive distance display. Whether you're here to tinker, learn embedded development, or join our hands-on workshop—you're in the right place!
 
-## OpenFastTrack (OFT) Methodology
+## 🚀 Get Started
+- **Curious?** Jump right in, fire up your codespace and explore the code, hardware, and live demos.
+- **New to ESP32?** Check out our [Getting Started Guide](workshop/gettingstartet.md) for step-by-step help.
+- **Want to build it yourself?** See the [Hardware Setup](workshop/hardwaresetup.md) and [Workshop Prerequisites](workshop/prerequisites.md).
+- **Ready for a challenge?** Try the [Workshop Exercises](workshop/README.md) and level up your skills!
 
-This project demonstrates **requirements-driven embedded development** with complete bidirectional traceability:
+## 💡 Why this project?
+- Learn modern embedded development with real hardware
+- Use GitHub Codespaces and Copilot for a seamless dev experience
+- See your code come to life—literally lighting up!
 
-### Documentation Architecture
+## 🛠️ Development Resources
 
-**Requirements Documents** (7 total):
-- **Standardized format**: Each requirement has unique ID, description, rationale, acceptance criteria, and verification method
-- **Traceability matrices**: Link requirements to design elements with priority levels
-- **Modular approach**: Component-specific requirements (sensor, LED, display, config, web, startup test)
+### Emulation & Debugging
+- **[QEMU Emulator Guide](development/qemu-emulator.md)** - Develop without hardware using full ESP32 emulation
+- **[Debugging with GDB](development/debugging.md)** - Step through code with breakpoints in Codespaces
+- **[Network Internals](development/qemu-network-internals.md)** - Deep dive into UART-based IP tunnel
 
-**Design Documents** (6 total):
-- **Implementation-focused**: Design elements map directly to code architecture
-- **Reverse traceability**: Each design element references implementing requirements
-- **ESP32-specific**: Hardware constraints, FreeRTOS patterns, ESP-IDF best practices
+### Development Environment
+- **[Dev Container Setup](development/devcontainer.md)** - GitHub Codespaces and local Docker setup
+- **Getting Started** - Build, flash, and monitor your ESP32
 
-### Traceability Examples
+## 🎯 Community & Support
+If you get stuck, don't hesitate to ask questions, open an [issue](https://github.com/enthali/esp32-distance/issues), or join the discussion on our [GitHub repository](https://github.com/enthali/esp32-distance). This is a friendly space for makers, learners, and tinkerers of all levels—everyone is welcome!
 
-```
-REQ-SNS-1 (Distance Measurement) 
-    ↓ implements
-DSN-SNS-1 (HC-SR04 Timing Implementation)
-    ↓ implements  
-components/distance_sensor/distance_sensor.c (measure_distance function)
-```
+**Have fun, experiment, and happy coding!** 🎉
 
-### Pragmatic Documentation Decisions
-
-- **Web Server**: Requirements-only approach (no design doc) since implementation primarily integrates existing ESP-IDF components
-- **System Level**: High-level requirements with detailed component breakdowns
-
-## Target Audience
-
-This project serves as a **demonstration** for:
-
-- **Embedded Systems Engineers**: Modern ESP32/IoT development with formal documentation
-- **Requirements Engineers**: OpenFastTrack methodology applied to hardware projects  
-- **AI-Assisted Development**: Using GitHub Copilot with requirements-driven development
-
-## Getting Started
-
-### Quick Navigation
-
-1. **System Overview**: Start with `requirements/system-requirements.md` for high-level understanding
-2. **Component Details**: Review individual component requirements (sensor, LED, display, config)
-3. **Implementation**: Follow design documents for technical architecture
-4. **Development Planning**: See `planning/Features-intended.md` for documentation strategy
-
-## Documentation Standards
-
-### OpenFastTrack Format
-
-Each requirement follows this structure:
-```markdown
-### REQ-XXX-N: Requirement Title
-**Type**: [Functional/Non-functional/Interface]
-**Priority**: [Mandatory/Important/Nice-to-have]  
-**Description**: SHALL statement
-**Rationale**: Why this requirement exists
-**Acceptance Criteria**: Testable conditions (AC-1, AC-2...)
-**Verification**: How to validate requirement
-```
-
-## Tools and Standards
-
-- **OpenFastTrack (OFT)**: Requirements traceability and validation framework
-- **GitHub Copilot**: AI-assisted implementation against formal specifications  
-- **ESP-IDF v5.4.1**: ESP32 development framework and component system
-- **Markdown**: Human-readable documentation with structured format
-- **Git**: Version control with OFT-friendly plain text documentation
-
-## Development Philosophy
-
-This project demonstrates that **formal documentation and agile, incremental development are complementary**, showing how:
-
-- **Structured requirements** enable better understanding and implementation
-- **Component-based architecture** naturally maps to requirements decomposition  
-- **Bidirectional traceability** ensures design decisions align with requirements
-- **Pragmatic documentation** matches effort to complexity (web server = requirements-only)
-- **Embedded systems** benefit from both engineering rigor and development efficiency
-
-### Key Insights
-
-1. **Requirements-driven development** works well for embedded systems with hardware constraints  
-2. **Component documentation** matches ESP-IDF architecture patterns 
-3. **Traceability matrices** provide valuable overview of system completeness
-4. **Pragmatic documentation decisions** prevent over-engineering while maintaining structure
-
----
-
-## Disclaimer
-
-This documentation is **not intended to be exhaustive**. The ESP32 Distance Sensor project serves as a demonstration of the chosen requirements-driven approach and documentation methodology in principle. It is designed to illustrate process and structure, not to provide a complete or production-ready reference.

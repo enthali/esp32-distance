@@ -12,6 +12,7 @@
 | DSN-LED-DATA-01 | REQ-LED-4 | Mandatory |
 | DSN-LED-MEM-01 | REQ-LED-3 | Mandatory |
 | DSN-LED-ERR-01 | REQ-LED-2, REQ-LED-3 | Mandatory |
+| DSN-SIM-LED-01 | REQ-SYS-SIM-1 | Mandatory |
 
 ## Target Design Architecture
 
@@ -119,3 +120,58 @@ Design: Comprehensive input validation and state checking with appropriate error
 - Graceful Degradation: Safe operation when not initialized (return errors, not crash)
 
 Validation: Invalid inputs return appropriate error codes, operations fail safely, system remains stable.
+
+## Simulator Design (DSN-SIM)
+
+### DSN-SIM-LED-01: LED Controller Simulator Design
+Addresses: REQ-SYS-SIM-1
+
+Design: Provide a simulator implementation for the LED controller that exposes the full public API (`led_controller.h`) while replacing RMT transmission with a rate-limited terminal visualization.
+
+- API Compatibility: The simulator SHALL implement all public functions declared in `led_controller.h` and return the same error codes and behavior as the hardware implementation.
+- Buffer Semantics: Maintain the same in-memory buffer and batch `led_show()` semantics as the hardware implementation.
+- Visualization: Rate-limited (≈1Hz) terminal output using Unicode emoji blocks (🔴🟢🔵🟡🟣⚪⚫) to represent per-pixel color state.
+- Non-intrusive: The simulator SHOULD NOT change header files, configuration, or higher-layer logic (e.g., display logic).
+
+Validation: Simulator build compiles with `CONFIG_TARGET_EMULATOR=y`, `led_show()` logs appear ~1x/sec and reflect buffer state.
+
+Example simulator `led_controller_sim.c` snippet (for design guidance):
+
+```c
+// Rate-limited output - only display ~1x per second
+static uint64_t last_display_time = 0;
+
+esp_err_t led_show(void) {
+	uint64_t now = esp_timer_get_time();
+	if (now - last_display_time < 1000000) {  // 1 second = 1,000,000 us
+		return ESP_OK;  // Suppress output, just return success
+	}
+	last_display_time = now;
+    
+	// Now do the emoji output
+	printf("\n[LED Strip]: ");
+	for (int i = 0; i < led_count; i++) {
+		led_color_t* color = &led_buffer[i];
+        
+		if (color->red > 200 && color->green < 50 && color->blue < 50) {
+			printf("🔴");  // Red
+		} else if (color->green > 200 && color->red < 50 && color->blue < 50) {
+			printf("🟢");  // Green  
+		} else if (color->blue > 200 && color->red < 50 && color->green < 50) {
+			printf("🔵");  // Blue
+		} else if (color->red > 200 && color->blue > 200 && color->green < 50) {
+			printf("🟣");  // Magenta/Purple
+		} else if (color->red > 200 && color->green > 200 && color->blue < 50) {
+			printf("🟡");  // Yellow
+		} else if (color->red + color->green + color->blue > 600) {
+			printf("⚪");  // White/bright
+		} else if (color->red + color->green + color->blue > 100) {
+			printf("🟡");  // Dim/mixed
+		} else {
+			printf("⚫");  // Off
+		}
+	}
+	printf("\n");
+	return ESP_OK;
+}
+```

@@ -1,5 +1,11 @@
+if(CONFIG_TARGET_EMULATOR)
+    set(WEB_SRCS "web_server.c" "wifi_manager_sim.c")
+else()
+    set(WEB_SRCS "web_server.c" "wifi_manager.c")
+endif()
+
 idf_component_register(
-    SRCS "web_server.c" "wifi_manager.c"
+    SRCS ${WEB_SRCS}
     INCLUDE_DIRS "."
     EMBED_FILES 
         "www/index.html"
@@ -17,6 +23,7 @@ idf_component_register(
         esp_netif 
         nvs_flash 
         json
+        netif_uart_tunnel
     PRIV_REQUIRES 
         main
 )

@@ -3,8 +3,12 @@ build/
 sdkconfig.old
 dependencies.lock
 
-# IDE files
-.vscode/
+# IDE files - ignore all VS Code files except debug configuration
+.vscode/*
+!.vscode/launch.json
+!.vscode/tasks.json
+!.vscode/settings.json
+
 .idea/
 .playwright-mcp/
 *.swp
@@ -38,6 +42,8 @@ ENV/
 # Temporary files
 *.tmp
 *.temp
+temp/
+tmp/
 
 # ESP-IDF specific
 managed_components/
@@ -61,3 +67,6 @@ ssl/
 # Certificate generation test files
 tools/test_*.pem
 tools/server_*.pem
+
+# MkDocs build output - generated site
+site/

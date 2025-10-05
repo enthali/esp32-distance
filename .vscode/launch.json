@@ -1,0 +1,34 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "QEMU ESP32 Debug",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/distance.elf",
+            "cwd": "${workspaceFolder}",
+            "MIMode": "gdb",
+            "miDebuggerPath": "xtensa-esp32-elf-gdb",
+            "miDebuggerServerAddress": "localhost:3333",
+            "preLaunchTask": "Start QEMU Debug Server",
+            "postDebugTask": "Stop QEMU",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set breakpoint pending on",
+                    "text": "-gdb-set breakpoint pending on",
+                    "ignoreFailures": false
+                }
+            ],
+            "stopAtEntry": false,
+            "externalConsole": false,
+            "logging": {
+                "engineLogging": false
+            }
+        }
+    ]
+}

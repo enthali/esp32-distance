@@ -12,6 +12,7 @@
 | DSN-SNS-ALGO-02 | REQ-SNS-4 | Mandatory |
 | DSN-SNS-API-01 | REQ-SNS-5, REQ-SNS-7 | Mandatory |
 | DSN-SNS-ERR-01 | REQ-SNS-12, REQ-SNS-13, REQ-SNS-14 | Mandatory |
+| DSN-SIM-SNS-01 | REQ-SYS-SIM-1 | Mandatory |
 
 ## Target Design Architecture
 
@@ -116,3 +117,43 @@ Design: Comprehensive error detection and recovery.
 - Graceful degradation with status codes in measurement structure
 
 Validation: Error conditions produce correct status codes, overflow policy drops oldest correctly, system continues operation.
+
+## Simulator Design (DSN-SIM)
+
+### DSN-SIM-SNS-01: Distance Sensor Simulator Design
+Addresses: REQ-SYS-SIM-1
+
+Design: Provide a simulator implementation for the distance sensor that implements the full public API declared in `distance_sensor.h` while replacing ISR/GPIO timing with a deterministic simulated data producer.
+
+- API Compatibility: The simulator SHALL implement `distance_sensor_init()`, `distance_sensor_start()`, `distance_sensor_get_latest()` and all other public functions with identical signatures and return codes.
+- Queue Semantics: The simulator MUST produce `distance_measurement_t` entries on the processed queue with the same semantics as the hardware task (blocking consumers, identical status codes for out-of-range/timeouts when simulated).
+- Animation Pattern: Deterministic sweep from 5cm to 60cm and back in 1mm steps, advancing once per second.
+- Isolation: Simulator implementation SHOULD be in `distance_sensor_sim.c` and selected via CMake when `CONFIG_TARGET_EMULATOR=y` without modifying headers or higher-level application code.
+
+Validation: Simulator build compiles, `distance_sensor_get_latest()` receives simulated measurements at ≈1Hz, and status codes match expectations.
+
+Example simulator `distance_sensor_sim.c` snippet (for design guidance):
+
+```c
+// Simulated sensor with animated distance sweep
+static void distance_sensor_task(void* pvParameters) {
+	static uint16_t sim_distance = 50;  // Start at 5cm
+	static int8_t direction = 1;        // 1 = increasing, -1 = decreasing
+    
+	while(1) {
+		// Animate distance: 5cm → 60cm → 5cm (1mm steps)
+		sim_distance += direction;
+		if (sim_distance >= 600) direction = -1;  // 60cm
+		if (sim_distance <= 50)  direction = 1;   // 5cm
+        
+		distance_measurement_t sim_data = {
+			.distance_mm = sim_distance,
+			.timestamp_us = esp_timer_get_time(),
+			.status = DISTANCE_SENSOR_OK
+		};
+        
+		xQueueSend(processed_measurement_queue, &sim_data, portMAX_DELAY);
+		vTaskDelay(pdMS_TO_TICKS(1000));  // 1 second steps
+	}
+}
+```
