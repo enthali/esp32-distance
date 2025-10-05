@@ -14,7 +14,7 @@
         <link rel="prev" href="../">
       
       
-        <link rel="next" href="../hardwaresetup/">
+        <link rel="next" href="../qemu-emulator/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Prerequisites - ESP32 Distance</title>
+        <title>Dev Container - ESP32 Distance</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#workshop-prerequisites" class="md-skip">
+        <a href="#development-container-setup" class="md-skip">
           Skip to content
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Prerequisites
+              Dev Container
             
           </span>
         </div>
@@ -225,18 +225,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
@@ -252,7 +254,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Documentation
@@ -332,18 +334,20 @@
                 
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
         
           
           <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
@@ -359,7 +363,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2_2">
             <span class="md-nav__icon md-icon"></span>
             Development
@@ -373,7 +377,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../development/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         
   
   
@@ -393,10 +397,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../development/devcontainer/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Dev Container
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -407,6 +433,143 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#development-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Development Options
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Development Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommended-github-codespaces-cloud" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommended: GitHub Codespaces (Cloud)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alternative-local-dev-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      Alternative: Local Dev Container
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-the-dev-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using the Dev Container
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Using the Dev Container">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#in-github-codespaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      In GitHub Codespaces
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#local-development-with-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      Local Development with Docker
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#container-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      Container Features
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-commands-in-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      Build Commands in Container
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hardware-flashing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hardware Flashing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Hardware Flashing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windows-usb-device-setup-local-dev-container-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      Windows USB Device Setup (Local Dev Container Only)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#benefits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Benefits
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -419,7 +582,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../development/qemu-emulator/" class="md-nav__link">
+      <a href="../qemu-emulator/" class="md-nav__link">
         
   
   
@@ -442,7 +605,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../development/debugging/" class="md-nav__link">
+      <a href="../debugging/" class="md-nav__link">
         
   
   
@@ -465,7 +628,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../development/qemu-network-internals/" class="md-nav__link">
+      <a href="../qemu-network-internals/" class="md-nav__link">
         
   
   
@@ -1098,20 +1261,18 @@
       
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
@@ -1127,7 +1288,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             Workshop
@@ -1141,7 +1302,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../../workshop/" class="md-nav__link">
         
   
   
@@ -1161,32 +1322,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Prerequisites
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../workshop/prerequisites/" class="md-nav__link">
         
   
   
@@ -1197,44 +1336,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#sw-and-licenses" class="md-nav__link">
-    <span class="md-ellipsis">
-      🖥️ SW and Licenses
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#hardware" class="md-nav__link">
-    <span class="md-ellipsis">
-      🛠️ Hardware
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1247,7 +1348,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../hardwaresetup/" class="md-nav__link">
+      <a href="../../workshop/hardwaresetup/" class="md-nav__link">
         
   
   
@@ -1270,7 +1371,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../gettingstartet/" class="md-nav__link">
+      <a href="../../workshop/gettingstartet/" class="md-nav__link">
         
   
   
@@ -1293,7 +1394,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../exercises/" class="md-nav__link">
+      <a href="../../workshop/exercises/" class="md-nav__link">
         
   
   
@@ -1456,18 +1557,117 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#sw-and-licenses" class="md-nav__link">
+  <a href="#development-options" class="md-nav__link">
     <span class="md-ellipsis">
-      🖥️ SW and Licenses
+      Development Options
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Development Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommended-github-codespaces-cloud" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommended: GitHub Codespaces (Cloud)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alternative-local-dev-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      Alternative: Local Dev Container
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-the-dev-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using the Dev Container
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Using the Dev Container">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#in-github-codespaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      In GitHub Codespaces
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#local-development-with-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      Local Development with Docker
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#container-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      Container Features
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#hardware" class="md-nav__link">
+  <a href="#build-commands-in-container" class="md-nav__link">
     <span class="md-ellipsis">
-      🛠️ Hardware
+      Build Commands in Container
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hardware-flashing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hardware Flashing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Hardware Flashing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windows-usb-device-setup-local-dev-container-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      Windows USB Device Setup (Local Dev Container Only)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#benefits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Benefits
     </span>
   </a>
   
@@ -1489,47 +1689,74 @@
 
 
 
-<h1 id="workshop-prerequisites">Workshop Prerequisites</h1>
-<h2 id="sw-and-licenses">🖥️ SW and Licenses</h2>
+<h1 id="development-container-setup">Development Container Setup</h1>
+<p>This project uses containerized development with VS Code Dev Containers and GitHub Codespaces for consistent ESP-IDF development environment.</p>
+<h2 id="development-options">Development Options</h2>
+<h3 id="recommended-github-codespaces-cloud">Recommended: GitHub Codespaces (Cloud)</h3>
 <ul>
-<li>
-<p><strong>A Supported Browser</strong></p>
-<p>To use browser-based serial port access and the ESP-IDF Web extension, you must use a browser that supports the Web Serial API. <strong>Supported browsers</strong> include the latest versions of <strong>Google Chrome</strong>, <strong>Microsoft Edge</strong>, <strong>Opera</strong>, and <strong>Arc Browser</strong>.</p>
-<p>Firefox, Safari, and most mobile browsers are <strong>not supported</strong> for direct device communication. For the best experience, use Chrome or Edge on desktop.</p>
-</li>
-<li>
-<p><strong>GitHub Account</strong></p>
-<p>You will need a GitHub account to participate in the workshop. If you do not already have one, you can sign up for free at <a href="https://github.com/">github.com</a>. The free GitHub account is sufficient for all workshop activities, including accessing the repository, using Codespaces (within the free usage quota), and collaborating with others. </p>
-</li>
-<li>
-<p><strong>GitHub Copilot Subscription</strong></p>
-<p>GitHub Copilot is an AI-powered coding assistant that helps you write code faster and with fewer errors by providing real-time code suggestions, explanations, and even generating entire functions or files. It is integrated into VS Code and Codespaces, making it easy to use during the workshop.</p>
-<p>For most workshop tasks, the free tier of Copilot is sufficient you can use Chat, Edit and Agent mode in VSCode. However, to access advanced features such as the Copilot coding agent, you will need at least a GitHub Copilot Pro subscription. The Pro subscription is available as a 30-day free trial, allowing you to fully explore Copilot's capabilities during the workshop without any cost.</p>
-</li>
-<li>
-<p><strong>GitHub Codespaces</strong></p>
-<p>GitHub Codespaces provides a cloud-based development environment pre-configured for this project. It allows you to start coding instantly in your browser or VS Code, with all dependencies (ESP-IDF, toolchain, libraries) already set up. No local installation is required. </p>
-</li>
+<li>No local setup required - works entirely in browser</li>
+<li>Pre-configured ESP-IDF v5.4.1 environment ready instantly</li>
+<li>USB device access through browser serial interface</li>
 </ul>
-<p><strong>Everything else is provided inside the preconfigured Codespaces working environment.</strong></p>
-<h2 id="hardware">🛠️ Hardware</h2>
+<h3 id="alternative-local-dev-container">Alternative: Local Dev Container</h3>
 <ul>
-<li>
-<p><strong>ESP32 WROOM-32F Development Board</strong></p>
-<p>The workshop is designed for the ESP32 WROOM-32F (4MB flash) module. This board provides WiFi/Bluetooth connectivity, multiple GPIOs, and is compatible with the HC-SR04 ultrasonic sensor and WS2812 LED strip. If you have a different ESP32 variant, most exercises will still work, but pin assignments and memory constraints may vary. No hardware is required for simulation or code review tasks, but hands-on flashing and sensor/LED testing require a physical ESP32 board.</p>
-</li>
-<li>
-<p><strong>HC-SR04 Ultrasonic Distance Sensor</strong></p>
-<p>Used for measuring distance. Connects to ESP32 GPIOs (requires 5V power, but logic-level shifting is handled on most dev boards).</p>
-</li>
-<li>
-<p><strong>WS2812 Addressable LED Strip (40 LEDs recommended)</strong></p>
-<p>Used for visualizing distance measurements. Connects to a single ESP32 GPIO (data line).</p>
-</li>
-<li>
-<p><strong>USB serial adapter</strong> for flashing </p>
-<p>Required for uploading firmware and running code on real hardware. Most ESP32 dev boards include a built-in USB-to-serial adapter, but if your board does not, you will also need a <strong>USB serial adapter</strong> (e.g., FTDI, CP2102, CH340) to flash, debug, and monitor the device via serial connection.</p>
-</li>
+<li>Uses Docker container with ESP-IDF v5.4.1 pre-installed  </li>
+<li>Requires Docker Desktop and VS Code with Dev Containers extension</li>
+<li>Identical environment across all team members and platforms</li>
+</ul>
+<h2 id="using-the-dev-container">Using the Dev Container</h2>
+<h3 id="in-github-codespaces">In GitHub Codespaces</h3>
+<ol>
+<li>Go to your GitHub repository</li>
+<li>Click "Code" → "Codespaces" → "Create codespace"</li>
+<li>Container will automatically build with ESP-IDF ready</li>
+<li>Extensions (ESP-IDF, ESP-IDF Web) will be pre-installed</li>
+</ol>
+<h3 id="local-development-with-docker">Local Development with Docker</h3>
+<ol>
+<li>Ensure Docker Desktop is running</li>
+<li>Open the project in VS Code</li>
+<li>VS Code will prompt: "Reopen in Container" → Click Yes</li>
+<li>Container builds automatically with ESP-IDF environment</li>
+</ol>
+<h2 id="container-features">Container Features</h2>
+<ul>
+<li><strong>ESP-IDF v5.4.1</strong>: Matches your local Windows version</li>
+<li><strong>Pre-configured VS Code</strong>: ESP-IDF extension settings ready</li>
+<li><strong>Web Serial Support</strong>: ESP-IDF Web extension for Codespaces flashing/monitoring  </li>
+<li><strong>Port forwarding</strong>: HTTP server (80, 443) and development ports</li>
+<li><strong>Privileged mode</strong>: USB device access for flashing (local Docker only)</li>
+</ul>
+<h2 id="build-commands-in-container">Build Commands in Container</h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># Standard ESP-IDF commands work directly</span>
+idf.py<span class="w"> </span>build
+idf.py<span class="w"> </span>flash<span class="w"> </span>monitor
+idf.py<span class="w"> </span>menuconfig
+
+<span class="c1"># Container has ESP-IDF environment pre-loaded</span>
+</code></pre></div>
+<h2 id="hardware-flashing">Hardware Flashing</h2>
+<ul>
+<li><strong>Local Docker</strong>: Hardware connected to Windows is accessible in container</li>
+<li><strong>Codespaces</strong>: Use ESP-IDF Web extension for WebSerial/WebUSB flashing</li>
+<li><strong>Mixed workflow</strong>: Build in container, flash on Windows if needed</li>
+</ul>
+<h3 id="windows-usb-device-setup-local-dev-container-only">Windows USB Device Setup (Local Dev Container Only)</h3>
+<p>For Windows users running the dev container locally (not needed for Codespaces):</p>
+<p><strong>Quick Setup</strong>: Run <code>tools/attach-esp32.ps1</code> as Administrator - script automatically finds and attaches your ESP32.</p>
+<p><strong>Manual Setup</strong> (if script doesn't work):
+1. Install usbipd-win: <code>winget install usbipd</code>
+2. Find device: <code>usbipd list</code> (look for USB-SERIAL CH340)
+3. Bind device: <code>usbipd bind --busid &lt;BUSID&gt;</code>
+4. Attach to container: <code>usbipd attach --wsl --busid &lt;BUSID&gt;</code></p>
+<p><strong>Note</strong>: GitHub Codespaces handles USB through browser serial interface - no manual setup needed.</p>
+<h2 id="benefits">Benefits</h2>
+<ul>
+<li><strong>Consistent environments</strong> across Windows, macOS, Linux, Codespaces</li>
+<li><strong>No ESP-IDF setup</strong> required for new team members</li>
+<li><strong>Isolated dependencies</strong> - container changes don't affect host system</li>
+<li><strong>Easy onboarding</strong> - clone repo, open in VS Code, start coding</li>
+<li><strong>Your Windows setup unchanged</strong> - existing workflow still works</li>
 </ul>
 
 
@@ -1577,13 +1804,13 @@
         
         
           
-          <a href="../hardwaresetup/" class="md-footer__link md-footer__link--next" aria-label="Next: Getting Started Hardware">
+          <a href="../qemu-emulator/" class="md-footer__link md-footer__link--next" aria-label="Next: QEMU Emulator">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Getting Started Hardware
+                QEMU Emulator
               </div>
             </div>
             <div class="md-footer__button md-icon">

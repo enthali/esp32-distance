@@ -1,0 +1,2536 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="This project is a proof of concept project to learn about GH Codespaces and GH Copilot including a Hands-on Workshop">
+      
+      
+      
+      
+        <link rel="prev" href="../debugging/">
+      
+      
+        <link rel="next" href="../../known-limitations/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.21">
+    
+    
+      
+        <title>Network Internals - ESP32 Distance</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.2a3383ac.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#qemu-network-internals-deep-dive" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ESP32 Distance" class="md-header__button md-logo" aria-label="ESP32 Distance" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ESP32 Distance
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Network Internals
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ESP32 Distance" class="md-nav__button md-logo" aria-label="ESP32 Distance" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ESP32 Distance
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Documentation
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Documentation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Architecture
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            Architecture
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Development
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Development
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../devcontainer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Dev Container
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qemu-emulator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    QEMU Emulator
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debugging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Debugging
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Network Internals
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Network Internals
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Architecture Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#frame-format-over-uart" class="md-nav__link">
+    <span class="md-ellipsis">
+      Frame Format (Over UART)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#initialization-sequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Initialization Sequence
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Initialization Sequence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-system-startup" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. System Startup
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packet-flow-ping-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Packet Flow - PING Example
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Packet Flow - PING Example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inbound-path-host-esp32" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inbound Path (Host → ESP32)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outbound-path-esp32-host" class="md-nav__link">
+    <span class="md-ellipsis">
+      Outbound Path (ESP32 → Host)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-implementation-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Implementation Details
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Implementation Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#direct-lwip-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Direct lwIP Integration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#static-arp-entry" class="md-nav__link">
+    <span class="md-ellipsis">
+      Static ARP Entry
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pbuf-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      pbuf Management
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error Handling
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-characteristics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance Characteristics
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Characteristics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#throughput" class="md-nav__link">
+    <span class="md-ellipsis">
+      Throughput
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bottlenecks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bottlenecks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimization-opportunities" class="md-nav__link">
+    <span class="md-ellipsis">
+      Optimization Opportunities
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debugging-tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      Debugging Tips
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Debugging Tips">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enable-verbose-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enable Verbose Logging
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitor-tun-device" class="md-nav__link">
+    <span class="md-ellipsis">
+      Monitor TUN Device
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#check-lwip-statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Check lwIP Statistics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uart-traffic-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      UART Traffic Analysis
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comparison-with-real-hardware" class="md-nav__link">
+    <span class="md-ellipsis">
+      Comparison with Real Hardware
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-issues-and-workarounds" class="md-nav__link">
+    <span class="md-ellipsis">
+      Known Issues and Workarounds
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Known Issues and Workarounds">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#issue-uart-buffer-overflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Issue: UART Buffer Overflow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-tcp-connections-timeout" class="md-nav__link">
+    <span class="md-ellipsis">
+      Issue: TCP Connections Timeout
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-arp-not-working" class="md-nav__link">
+    <span class="md-ellipsis">
+      Issue: ARP Not Working
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further Reading
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Documentation
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../known-limitations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Known Limitations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Requirements
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            Requirements
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../requirements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../requirements/system-requirements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    System
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../requirements/distance-sensor-requirements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Distance sensor
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../requirements/led-controller-requirements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LED controller
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../requirements/display-requirements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Display
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../requirements/config-requirements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../requirements/startup-test-requirements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Startup test
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../requirements/web-server-requirements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Web server
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Design
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            Design
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/system-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    System
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/distance-sensor-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Distance sensor
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/led-controller-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LED controller
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/display-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Display
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/config-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/startup-test-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Startup test
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_6" id="__nav_2_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Tests
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6">
+            <span class="md-nav__icon md-icon"></span>
+            Tests
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../emulator-support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Emulator
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../test/config-tests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Config tests
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_7" id="__nav_2_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Planning
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_7">
+            <span class="md-nav__icon md-icon"></span>
+            Planning
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../planning/Features-intended/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Features
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Workshop
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Workshop
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../workshop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../workshop/prerequisites/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Prerequisites
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../workshop/hardwaresetup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Getting Started Hardware
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../workshop/gettingstartet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Getting Started Software
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../workshop/exercises/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Exercises
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Legal
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Legal
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../legal/impressum/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Impressum
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../legal/datenschutz/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Datenschutz
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Architecture Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#frame-format-over-uart" class="md-nav__link">
+    <span class="md-ellipsis">
+      Frame Format (Over UART)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#initialization-sequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Initialization Sequence
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Initialization Sequence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-system-startup" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. System Startup
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packet-flow-ping-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Packet Flow - PING Example
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Packet Flow - PING Example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inbound-path-host-esp32" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inbound Path (Host → ESP32)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outbound-path-esp32-host" class="md-nav__link">
+    <span class="md-ellipsis">
+      Outbound Path (ESP32 → Host)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-implementation-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Implementation Details
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Implementation Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#direct-lwip-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Direct lwIP Integration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#static-arp-entry" class="md-nav__link">
+    <span class="md-ellipsis">
+      Static ARP Entry
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pbuf-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      pbuf Management
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error Handling
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-characteristics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance Characteristics
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Characteristics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#throughput" class="md-nav__link">
+    <span class="md-ellipsis">
+      Throughput
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bottlenecks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bottlenecks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimization-opportunities" class="md-nav__link">
+    <span class="md-ellipsis">
+      Optimization Opportunities
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debugging-tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      Debugging Tips
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Debugging Tips">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enable-verbose-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enable Verbose Logging
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitor-tun-device" class="md-nav__link">
+    <span class="md-ellipsis">
+      Monitor TUN Device
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#check-lwip-statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Check lwIP Statistics
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uart-traffic-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      UART Traffic Analysis
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comparison-with-real-hardware" class="md-nav__link">
+    <span class="md-ellipsis">
+      Comparison with Real Hardware
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-issues-and-workarounds" class="md-nav__link">
+    <span class="md-ellipsis">
+      Known Issues and Workarounds
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Known Issues and Workarounds">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#issue-uart-buffer-overflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Issue: UART Buffer Overflow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-tcp-connections-timeout" class="md-nav__link">
+    <span class="md-ellipsis">
+      Issue: TCP Connections Timeout
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-arp-not-working" class="md-nav__link">
+    <span class="md-ellipsis">
+      Issue: ARP Not Working
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further Reading
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Documentation
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="qemu-network-internals-deep-dive">QEMU Network Internals - Deep Dive</h1>
+<p>This document provides detailed technical information about the UART-based IP tunnel implementation for ESP32 QEMU emulation.</p>
+<h2 id="architecture-overview">Architecture Overview</h2>
+<div class="highlight"><pre><span></span><code>┌─────────────────────────────────────────────────────────────────┐
+│                        HOST (Linux)                             │
+│                                                                 │
+│  ┌──────────┐      ┌─────────────┐      ┌─────────────────┐     │
+│  │  ping    │─────▶│  tun0       │◀────▶│  TUN Bridge     │     │ 
+│  │  curl    │      │ 192.168.    │      │  (Python)       │     │
+│  └──────────┘      │ 100.1/24    │      └─────────────────┘     │
+│                    └─────────────┘               │              │
+│                                                  │ TCP:5556     │
+└──────────────────────────────────────────────────┼──────────────┘
+                                                   │
+                                                   │ QEMU chardev
+┌──────────────────────────────────────────────────┼──────────────┐
+│                     ESP32 QEMU                   │              │
+│                                                  ▼              │
+│  ┌────────────┐      ┌──────────────┐      ┌─────────────┐      │
+│  │  Web       │      │   lwIP       │      │   UART1     │      │
+│  │  Server    │◀───▶│   Stack      │◀───▶│   Driver    │      │ 
+│  │  HTTP      │      │ 192.168.     │      │             │      │
+│  │            │      │ 100.2/24     │      └─────────────┘      │
+│  └────────────┘      └──────────────┘                           │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+</code></pre></div>
+<h2 id="frame-format-over-uart">Frame Format (Over UART)</h2>
+<div class="highlight"><pre><span></span><code>┌───────────────┬────────────────────────────────────────────┐
+│ Frame Length  │           Ethernet Frame                   │
+│   (2 bytes)   │         (14-byte header + IP)              │
+│  Big Endian   │                                            │
+├───────────────┼────────────────────────────────────────────┤
+│  [HI] [LO]    │ [DST_MAC:6][SRC_MAC:6][TYPE:2][IP PACKET]  │
+└───────────────┴────────────────────────────────────────────┘
+
+Example ICMP Echo Request (98 bytes total):
+  Length: 0x00 0x62 (98 bytes)
+  Ethernet:
+    Dst MAC: 02:00:00:00:00:02 (ESP32)
+    Src MAC: 02:00:00:00:00:01 (Host)
+    Type:    0x08 0x00 (IPv4)
+  IP:
+    Version/IHL: 0x45 (IPv4, 20 byte header)
+    Protocol: 0x01 (ICMP)
+    Src IP: 192.168.100.1 (0xC0 0xA8 0x64 0x01)
+    Dst IP: 192.168.100.2 (0xC0 0xA8 0x64 0x02)
+  ICMP:
+    Type: 0x08 (Echo Request)
+    Code: 0x00
+</code></pre></div>
+<h2 id="initialization-sequence">Initialization Sequence</h2>
+<h3 id="1-system-startup">1. System Startup</h3>
+<div class="highlight"><pre><span></span><code>┌──────────────────────────────────────────────────────────────┐
+│                  ESP32 QEMU Boot                             │
+└──────────────────────────────────────────────────────────────┘
+                           │
+                           ▼
+┌──────────────────────────────────────────────────────────────┐
+│  Initialize Network Stack (wifi_manager_sim.c)               │
+│     - esp_netif_init()                                       │
+│     - esp_event_loop_create_default()                        │
+└──────────────────────────────────────────────────────────────┘
+                           │
+                           ▼
+┌──────────────────────────────────────────────────────────────┐
+│  Initialize UART Tunnel Driver (netif_uart_tunnel_sim.c)    │
+│                                                              │
+│  a) Hardware Setup:                                          │
+│     - Configure UART1: 115200 baud, GPIO 17/16              │
+│     - uart_driver_install() with 2KB RX/TX buffers          │
+│                                                              │
+│  b) Create esp_netif:                                        │
+│     - ESP_NETIF_INHERENT_DEFAULT_ETH() config               │
+│     - esp_netif_new()                                        │
+│                                                              │
+│  c) Configure Static IP:                                     │
+│     - IP: 192.168.100.2                                      │
+│     - Gateway: 192.168.100.1                                 │
+│     - Netmask: 255.255.255.0                                 │
+│                                                              │
+│  d) Direct lwIP Integration:                                 │
+│     - Get lwIP netif handle                                  │
+│     - Set MAC: 02:00:00:00:00:02                             │
+│     - Set flags: ETHARP | ETHERNET | BROADCAST               │
+│     - Register linkoutput callback                           │
+│     - Set as default netif                                   │
+│     - Add static ARP entry for gateway                       │
+│                                                              │
+│  e) Start RX Task:                                           │
+│     - xTaskCreate(uart_rx_task, priority=5)                  │
+│                                                              │
+│  f) Bring Interface Up:                                      │
+│     - netif_set_up()                                         │
+│     - netif_set_link_up()                                    │
+└──────────────────────────────────────────────────────────────┘
+                           │
+                           ▼
+┌──────────────────────────────────────────────────────────────┐
+│  Start TUN Bridge on Host                                    │
+│     - Create tun0 device                                     │
+│     - Configure IP: 192.168.100.1/24                         │
+│     - Connect to TCP:5556 (QEMU UART1)                       │
+│     - Start bidirectional forwarding                         │
+└──────────────────────────────────────────────────────────────┘
+                           │
+                           ▼
+┌──────────────────────────────────────────────────────────────┐
+│  Network Ready                                               │
+│     - Interface UP, LINK_UP                                  │
+│     - Routes configured                                      │
+│     - ARP cache populated                                    │
+└──────────────────────────────────────────────────────────────┘
+</code></pre></div>
+<h2 id="packet-flow-ping-example">Packet Flow - PING Example</h2>
+<h3 id="inbound-path-host-esp32">Inbound Path (Host → ESP32)</h3>
+<div class="highlight"><pre><span></span><code>1. Host executes: ping 192.168.100.2
+   └─▶ Kernel creates ICMP Echo Request
+       └─▶ Routes to tun0 (192.168.100.0/24 network)
+
+2. TUN Bridge (serial_tun_bridge.py)
+   ├─▶ read() from tun0 gets raw IP packet
+   ├─▶ Prepends Ethernet header:
+   │   - Dst MAC: 02:00:00:00:00:02 (ESP32)
+   │   - Src MAC: 02:00:00:00:00:01 (Host)
+   │   - EtherType: 0x0800 (IPv4)
+   ├─▶ Prepends 2-byte length (big-endian)
+   └─▶ write() to TCP socket (QEMU UART1)
+
+3. QEMU Serial Device
+   └─▶ Forwards bytes to emulated UART1 RX FIFO
+
+4. ESP32 uart_rx_task (netif_uart_tunnel_sim.c)
+   ├─▶ uart_read_bytes() reads 2-byte length header
+   ├─▶ Validates: 0 &lt; len &lt;= MAX_FRAME_SIZE
+   ├─▶ uart_read_bytes() reads complete Ethernet frame
+   ├─▶ Allocates lwIP pbuf
+   ├─▶ Copies frame to pbuf
+   └─▶ Calls netif-&gt;input(pbuf, netif)
+       └─▶ This is ethernet_input() [KEY: Direct lwIP call]
+
+5. lwIP ethernet_input()
+   ├─▶ Parses Ethernet header
+   ├─▶ Checks destination MAC (matches!)
+   ├─▶ Checks EtherType (0x0800 = IPv4)
+   ├─▶ Strips Ethernet header (14 bytes)
+   └─▶ Calls ip4_input() with IP packet
+
+6. lwIP ip4_input()
+   ├─▶ Validates IP header checksum
+   ├─▶ Checks destination IP (192.168.100.2 - matches!)
+   ├─▶ Identifies protocol (ICMP = 1)
+   └─▶ Calls icmp_input()
+
+7. lwIP icmp_input()
+   ├─▶ Validates ICMP checksum
+   ├─▶ Identifies Echo Request (type=8)
+   ├─▶ Creates Echo Reply (type=0)
+   ├─▶ Swaps src/dst IPs
+   └─▶ Calls ip4_output_if() to send response
+</code></pre></div>
+<h3 id="outbound-path-esp32-host">Outbound Path (ESP32 → Host)</h3>
+<div class="highlight"><pre><span></span><code>8. lwIP ip4_output_if()
+   ├─▶ Looks up route for 192.168.100.1
+   ├─▶ Finds default gateway on tun_netif
+   ├─▶ Checks ARP cache for 192.168.100.1
+   ├─▶ Finds static entry: 02:00:00:00:00:01
+   ├─▶ Prepends Ethernet header
+   └─▶ Calls netif-&gt;linkoutput(netif, pbuf)
+
+9. uart_linkoutput() (netif_uart_tunnel_sim.c)
+   ├─▶ Calculates total length from pbuf chain
+   ├─▶ Allocates temporary buffer
+   ├─▶ Copies all pbuf segments to contiguous buffer
+   ├─▶ Prepends 2-byte length header (big-endian)
+   ├─▶ uart_write_bytes() - length header
+   ├─▶ uart_write_bytes() - Ethernet frame
+   └─▶ Frees temporary buffer
+
+10. ESP32 UART1 → QEMU
+    └─▶ Bytes sent to TCP socket
+
+11. TUN Bridge (serial_tun_bridge.py)
+    ├─▶ read() from TCP gets length header
+    ├─▶ read() gets complete Ethernet frame
+    ├─▶ Strips Ethernet header (14 bytes)
+    ├─▶ Extracts IP packet
+    └─▶ write() to tun0
+
+12. Host Kernel
+    ├─▶ Receives ICMP Echo Reply from tun0
+    ├─▶ Matches with pending ping request
+    └─▶ Displays: &quot;64 bytes from 192.168.100.2: icmp_seq=1 ttl=64 time=X ms&quot;
+</code></pre></div>
+<h2 id="key-implementation-details">Key Implementation Details</h2>
+<h3 id="direct-lwip-integration">Direct lwIP Integration</h3>
+<p>Unlike typical ESP-IDF network interfaces that use the full <code>esp_netif</code> abstraction, this implementation integrates directly with lwIP for better control:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Get direct access to lwIP netif structure</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">netif</span><span class="o">*</span><span class="w"> </span><span class="n">lwip_netif</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">esp_netif_get_netif_impl</span><span class="p">(</span><span class="n">esp_netif_handle</span><span class="p">);</span>
+
+<span class="c1">// Set input function directly (bypasses esp_netif RX path)</span>
+<span class="n">lwip_netif</span><span class="o">-&gt;</span><span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ethernet_input</span><span class="p">;</span>
+
+<span class="c1">// Set output function (called by lwIP for TX)</span>
+<span class="n">lwip_netif</span><span class="o">-&gt;</span><span class="n">linkoutput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">uart_linkoutput</span><span class="p">;</span>
+</code></pre></div>
+<p><strong>Why Direct Integration?</strong>
+- Simpler packet flow (fewer abstraction layers)
+- Direct control over Ethernet frame handling
+- Easier debugging (fewer indirect function calls)
+- Better performance (reduced function call overhead)</p>
+<h3 id="static-arp-entry">Static ARP Entry</h3>
+<p>To avoid ARP broadcasts (which don't work well over UART):</p>
+<div class="highlight"><pre><span></span><code><span class="n">ip4_addr_t</span><span class="w"> </span><span class="n">gateway_ip</span><span class="p">;</span>
+<span class="n">IP4_ADDR</span><span class="p">(</span><span class="o">&amp;</span><span class="n">gateway_ip</span><span class="p">,</span><span class="w"> </span><span class="mi">192</span><span class="p">,</span><span class="w"> </span><span class="mi">168</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+
+<span class="k">struct</span><span class="w"> </span><span class="nc">eth_addr</span><span class="w"> </span><span class="n">gateway_mac</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="mh">0x02</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x01</span><span class="p">}};</span>
+
+<span class="c1">// Add permanent ARP entry</span>
+<span class="n">etharp_add_static_entry</span><span class="p">(</span><span class="o">&amp;</span><span class="n">gateway_ip</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">gateway_mac</span><span class="p">);</span>
+</code></pre></div>
+<p>This tells lwIP: "192.168.100.1 always has MAC 02:00:00:00:00:01" without needing ARP requests.</p>
+<h3 id="pbuf-management">pbuf Management</h3>
+<p>lwIP uses packet buffers (pbufs) for zero-copy networking:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// RX: Allocate pbuf and copy UART data</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">pbuf</span><span class="o">*</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pbuf_alloc</span><span class="p">(</span><span class="n">PBUF_RAW</span><span class="p">,</span><span class="w"> </span><span class="n">frame_len</span><span class="p">,</span><span class="w"> </span><span class="n">PBUF_POOL</span><span class="p">);</span>
+<span class="n">memcpy</span><span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">payload</span><span class="p">,</span><span class="w"> </span><span class="n">uart_buffer</span><span class="p">,</span><span class="w"> </span><span class="n">frame_len</span><span class="p">);</span>
+<span class="n">netif</span><span class="o">-&gt;</span><span class="n">input</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">netif</span><span class="p">);</span><span class="w">  </span><span class="c1">// lwIP takes ownership</span>
+
+<span class="c1">// TX: pbuf may be chained (fragmented)</span>
+<span class="n">u16_t</span><span class="w"> </span><span class="n">total_len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">pbuf</span><span class="o">*</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="p">;</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">q</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">memcpy</span><span class="p">(</span><span class="n">buffer</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">total_len</span><span class="p">,</span><span class="w"> </span><span class="n">q</span><span class="o">-&gt;</span><span class="n">payload</span><span class="p">,</span><span class="w"> </span><span class="n">q</span><span class="o">-&gt;</span><span class="n">len</span><span class="p">);</span>
+<span class="w">    </span><span class="n">total_len</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">q</span><span class="o">-&gt;</span><span class="n">len</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="error-handling">Error Handling</h3>
+<p>The implementation includes comprehensive error handling:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Frame length validation</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">frame_len</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">frame_len</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">MAX_FRAME_SIZE</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">ESP_LOGE</span><span class="p">(</span><span class="n">TAG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Invalid frame length: %d&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">frame_len</span><span class="p">);</span>
+<span class="w">    </span><span class="k">continue</span><span class="p">;</span><span class="w">  </span><span class="c1">// Skip bad frame, keep running</span>
+<span class="p">}</span>
+
+<span class="c1">// pbuf allocation failure</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">pbuf</span><span class="o">*</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pbuf_alloc</span><span class="p">(...);</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">p</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">ESP_LOGE</span><span class="p">(</span><span class="n">TAG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Failed to allocate pbuf&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">free</span><span class="p">(</span><span class="n">frame_buffer</span><span class="p">);</span>
+<span class="w">    </span><span class="k">continue</span><span class="p">;</span><span class="w">  </span><span class="c1">// Skip this packet</span>
+<span class="p">}</span>
+
+<span class="c1">// UART read timeout (handled by uart_read_bytes)</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">uart_read_bytes</span><span class="p">(</span><span class="n">UART_NUM</span><span class="p">,</span><span class="w"> </span><span class="n">buffer</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">,</span><span class="w"> </span><span class="n">pdMS_TO_TICKS</span><span class="p">(</span><span class="mi">1000</span><span class="p">));</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">len</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">ESP_LOGW</span><span class="p">(</span><span class="n">TAG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;UART read timeout or error&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">continue</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="performance-characteristics">Performance Characteristics</h2>
+<h3 id="throughput">Throughput</h3>
+<ul>
+<li><strong>UART Speed</strong>: 115200 baud = ~11.5 KB/s theoretical max</li>
+<li><strong>Actual HTTP</strong>: ~8-10 KB/s (due to protocol overhead)</li>
+<li><strong>Ping Latency</strong>: 3-8ms typical</li>
+</ul>
+<h3 id="bottlenecks">Bottlenecks</h3>
+<ol>
+<li><strong>UART Baud Rate</strong>: Limited to 115200 (QEMU constraint)</li>
+<li><strong>Frame Overhead</strong>: 16 bytes per packet (2-byte length + 14-byte Ethernet header)</li>
+<li><strong>Context Switching</strong>: FreeRTOS task scheduling adds latency</li>
+</ol>
+<h3 id="optimization-opportunities">Optimization Opportunities</h3>
+<ul>
+<li>Increase UART buffer sizes for burst traffic</li>
+<li>Use DMA for UART transfers (if QEMU supports it)</li>
+<li>Implement zero-copy where possible</li>
+<li>Batch small packets together</li>
+</ul>
+<h2 id="debugging-tips">Debugging Tips</h2>
+<h3 id="enable-verbose-logging">Enable Verbose Logging</h3>
+<p>In <code>netif_uart_tunnel_sim.c</code>:
+<div class="highlight"><pre><span></span><code><span class="cp">#define LOG_LOCAL_LEVEL ESP_LOG_DEBUG</span>
+</code></pre></div></p>
+<p>This will show every packet RX/TX:
+<div class="highlight"><pre><span></span><code>D (12345) uart_tunnel: RX: Got 98 bytes
+D (12345) uart_tunnel: RX: Ethernet dst=02:00:00:00:00:02 src=02:00:00:00:00:01 type=0x0800
+D (12345) uart_tunnel: TX: Sending 98 bytes
+</code></pre></div></p>
+<h3 id="monitor-tun-device">Monitor TUN Device</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Watch all traffic on tun0</span>
+sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>tun0<span class="w"> </span>-vvv<span class="w"> </span>-X
+
+<span class="c1"># Filter for specific traffic</span>
+sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>tun0<span class="w"> </span>icmp
+sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>tun0<span class="w"> </span>tcp<span class="w"> </span>port<span class="w"> </span><span class="m">80</span>
+</code></pre></div>
+<h3 id="check-lwip-statistics">Check lwIP Statistics</h3>
+<p>Add to your code:
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;lwip/stats.h&quot;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">print_lwip_stats</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">ESP_LOGI</span><span class="p">(</span><span class="n">TAG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;lwIP RX packets: %d&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lwip_stats</span><span class="p">.</span><span class="n">link</span><span class="p">.</span><span class="n">recv</span><span class="p">);</span>
+<span class="w">    </span><span class="n">ESP_LOGI</span><span class="p">(</span><span class="n">TAG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;lwIP TX packets: %d&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lwip_stats</span><span class="p">.</span><span class="n">link</span><span class="p">.</span><span class="n">xmit</span><span class="p">);</span>
+<span class="w">    </span><span class="n">ESP_LOGI</span><span class="p">(</span><span class="n">TAG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;lwIP errors: %d&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lwip_stats</span><span class="p">.</span><span class="n">link</span><span class="p">.</span><span class="n">err</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<h3 id="uart-traffic-analysis">UART Traffic Analysis</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Connect to UART1 directly to see raw bytes</span>
+nc<span class="w"> </span>localhost<span class="w"> </span><span class="m">5556</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>hexdump<span class="w"> </span>-C
+</code></pre></div>
+<h2 id="comparison-with-real-hardware">Comparison with Real Hardware</h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Real ESP32</th>
+<th>QEMU Emulation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Network Interface</td>
+<td>WiFi (802.11)</td>
+<td>UART tunnel</td>
+</tr>
+<tr>
+<td>Speed</td>
+<td>~1-10 Mbps</td>
+<td>~11 KB/s</td>
+</tr>
+<tr>
+<td>AP Mode</td>
+<td>Yes</td>
+<td>Simulated via IP</td>
+</tr>
+<tr>
+<td>STA Mode</td>
+<td>Yes</td>
+<td>Direct IP connectivity</td>
+</tr>
+<tr>
+<td>DNS</td>
+<td>Full support</td>
+<td>Via host system</td>
+</tr>
+<tr>
+<td>DHCP</td>
+<td>Supported</td>
+<td>Static IP only</td>
+</tr>
+<tr>
+<td>Security</td>
+<td>WPA2/WPA3</td>
+<td>No encryption (local)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="known-issues-and-workarounds">Known Issues and Workarounds</h2>
+<h3 id="issue-uart-buffer-overflow">Issue: UART Buffer Overflow</h3>
+<p><strong>Symptom</strong>: Packets dropped during high traffic
+<strong>Cause</strong>: UART RX buffer (2KB) fills faster than task can read
+<strong>Workaround</strong>: Increase buffer size in <code>uart_driver_install()</code></p>
+<h3 id="issue-tcp-connections-timeout">Issue: TCP Connections Timeout</h3>
+<p><strong>Symptom</strong>: HTTP connections hang
+<strong>Cause</strong>: lwIP TCP retransmission timeout too aggressive
+<strong>Workaround</strong>: Tune lwIP TCP timers in <code>lwipopts.h</code></p>
+<h3 id="issue-arp-not-working">Issue: ARP Not Working</h3>
+<p><strong>Symptom</strong>: Can't reach hosts beyond gateway
+<strong>Cause</strong>: Static ARP only configured for gateway
+<strong>Solution</strong>: Add more static ARP entries or enable full ARP</p>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="https://www.nongnu.org/lwip/">lwIP Documentation</a></li>
+<li><a href="https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/network/index.html">ESP-IDF Network API Guide</a></li>
+<li><a href="https://www.qemu.org/docs/master/system/devices/serial.html">QEMU Serial Device Documentation</a></li>
+</ul>
+<h2 id="related-documentation">Related Documentation</h2>
+<ul>
+<li><strong><a href="../qemu-emulator/">QEMU Emulator Guide</a></strong> - User-facing guide for running QEMU</li>
+<li><strong><a href="../debugging/">Debugging Guide</a></strong> - Using GDB with QEMU</li>
+<li><strong><a href="../devcontainer/">Development Setup</a></strong> - Setting up your environment</li>
+</ul>
+<hr />
+<p><em>Last Updated: October 5, 2025</em><br />
+<em>Status: Network fully functional with ping, HTTP, and TCP support</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../debugging/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Debugging">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Debugging
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../known-limitations/" class="md-footer__link md-footer__link--next" aria-label="Next: Known Limitations">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Known Limitations
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2025 Georg Doll - 
+<a href="/legal/impressum/">Impressum</a> | 
+<a href="/legal/datenschutz/">Datenschutz</a>
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/enthali/esp32-distance" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.footer", "content.full_width"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
+      
+        <script src="../../javascripts/mermaid-init.js"></script>
+      
+    
+  </body>
+</html>

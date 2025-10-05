@@ -11,10 +11,10 @@
       
       
       
-        <link rel="prev" href="../">
+        <link rel="prev" href="../devcontainer/">
       
       
-        <link rel="next" href="../hardwaresetup/">
+        <link rel="next" href="../debugging/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Prerequisites - ESP32 Distance</title>
+        <title>QEMU Emulator - ESP32 Distance</title>
       
     
     
@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#workshop-prerequisites" class="md-skip">
+        <a href="#qemu-emulator-guide" class="md-skip">
           Skip to content
         </a>
       
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Prerequisites
+              QEMU Emulator
             
           </span>
         </div>
@@ -225,18 +225,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
@@ -252,7 +254,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Documentation
@@ -332,18 +334,20 @@
                 
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
         
           
           <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
@@ -359,7 +363,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2_2">
             <span class="md-nav__icon md-icon"></span>
             Development
@@ -373,7 +377,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../development/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         
   
   
@@ -396,7 +400,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../development/devcontainer/" class="md-nav__link">
+      <a href="../devcontainer/" class="md-nav__link">
         
   
   
@@ -416,10 +420,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../development/qemu-emulator/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    QEMU Emulator
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -430,6 +456,305 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Start
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quick Start">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#starting-qemu" class="md-nav__link">
+    <span class="md-ellipsis">
+      Starting QEMU
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#accessing-the-web-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      Accessing the Web Interface
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Architecture Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Network Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ip-addresses" class="md-nav__link">
+    <span class="md-ellipsis">
+      IP Addresses
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ports" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ports
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How It Works
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How It Works">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-uart-based-ip-tunnel" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. UART-Based IP Tunnel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-network-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Network Stack
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-frame-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Frame Format
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-network-connectivity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing Network Connectivity
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Testing Network Connectivity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ping-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ping Test
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#http-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      HTTP Test
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitor-network-traffic" class="md-nav__link">
+    <span class="md-ellipsis">
+      Monitor Network Traffic
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Troubleshooting
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#qemu-wont-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      QEMU Won't Start
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-not-working" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Not Working
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-uart-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      No UART Output
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#port-already-in-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      Port Already in Use
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced Usage
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#debugging-network-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Debugging Network Issues
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custom-network-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Custom Network Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#running-without-gdb" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running Without GDB
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#technical-deep-dive" class="md-nav__link">
+    <span class="md-ellipsis">
+      Technical Deep Dive
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Known Limitations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next Steps
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -442,7 +767,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../development/debugging/" class="md-nav__link">
+      <a href="../debugging/" class="md-nav__link">
         
   
   
@@ -465,7 +790,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../development/qemu-network-internals/" class="md-nav__link">
+      <a href="../qemu-network-internals/" class="md-nav__link">
         
   
   
@@ -1098,20 +1423,18 @@
       
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
@@ -1127,7 +1450,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             Workshop
@@ -1141,7 +1464,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../../workshop/" class="md-nav__link">
         
   
   
@@ -1161,32 +1484,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Prerequisites
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../workshop/prerequisites/" class="md-nav__link">
         
   
   
@@ -1197,44 +1498,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#sw-and-licenses" class="md-nav__link">
-    <span class="md-ellipsis">
-      🖥️ SW and Licenses
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#hardware" class="md-nav__link">
-    <span class="md-ellipsis">
-      🛠️ Hardware
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1247,7 +1510,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../hardwaresetup/" class="md-nav__link">
+      <a href="../../workshop/hardwaresetup/" class="md-nav__link">
         
   
   
@@ -1270,7 +1533,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../gettingstartet/" class="md-nav__link">
+      <a href="../../workshop/gettingstartet/" class="md-nav__link">
         
   
   
@@ -1293,7 +1556,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../exercises/" class="md-nav__link">
+      <a href="../../workshop/exercises/" class="md-nav__link">
         
   
   
@@ -1456,18 +1719,279 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#sw-and-licenses" class="md-nav__link">
+  <a href="#quick-start" class="md-nav__link">
     <span class="md-ellipsis">
-      🖥️ SW and Licenses
+      Quick Start
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quick Start">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#starting-qemu" class="md-nav__link">
+    <span class="md-ellipsis">
+      Starting QEMU
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#accessing-the-web-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      Accessing the Web Interface
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Architecture Overview
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#hardware" class="md-nav__link">
+  <a href="#network-configuration" class="md-nav__link">
     <span class="md-ellipsis">
-      🛠️ Hardware
+      Network Configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Network Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ip-addresses" class="md-nav__link">
+    <span class="md-ellipsis">
+      IP Addresses
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ports" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ports
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How It Works
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How It Works">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-uart-based-ip-tunnel" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. UART-Based IP Tunnel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-network-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Network Stack
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-frame-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Frame Format
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-network-connectivity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing Network Connectivity
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Testing Network Connectivity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ping-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ping Test
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#http-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      HTTP Test
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitor-network-traffic" class="md-nav__link">
+    <span class="md-ellipsis">
+      Monitor Network Traffic
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Troubleshooting
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#qemu-wont-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      QEMU Won't Start
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-not-working" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Not Working
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-uart-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      No UART Output
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#port-already-in-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      Port Already in Use
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced Usage
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#debugging-network-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Debugging Network Issues
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custom-network-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Custom Network Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#running-without-gdb" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running Without GDB
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#technical-deep-dive" class="md-nav__link">
+    <span class="md-ellipsis">
+      Technical Deep Dive
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Known Limitations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next Steps
     </span>
   </a>
   
@@ -1489,47 +2013,271 @@
 
 
 
-<h1 id="workshop-prerequisites">Workshop Prerequisites</h1>
-<h2 id="sw-and-licenses">🖥️ SW and Licenses</h2>
+<h1 id="qemu-emulator-guide">QEMU Emulator Guide</h1>
+<p>The ESP32 Distance Sensor project includes full QEMU emulation support, allowing you to develop and test without physical hardware. The emulator includes complete network functionality via a UART-based IP tunnel.</p>
+<h2 id="quick-start">Quick Start</h2>
+<h3 id="starting-qemu">Starting QEMU</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># From project root</span>
+./tools/run-qemu-network.sh
+</code></pre></div>
+<p>This script automatically:
+- ✅ Builds the project (incremental, fast)
+- ✅ Starts the TUN network bridge
+- ✅ Starts the HTTP proxy for web access
+- ✅ Launches QEMU with GDB support
+- ✅ Waits for debugger connection</p>
+<h3 id="accessing-the-web-interface">Accessing the Web Interface</h3>
+<p>Once QEMU is running:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># In your browser or terminal</span>
+curl<span class="w"> </span>http://192.168.100.2/
+</code></pre></div>
+<p>Or use the HTTP proxy:
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://localhost:8080/
+</code></pre></div></p>
+<p>The web interface should be accessible at <code>http://localhost:8080</code> in your browser.</p>
+<h2 id="architecture-overview">Architecture Overview</h2>
+<div class="highlight"><pre><span></span><code>┌────────────────────────────────────────────────────────────┐
+│                    Host System (Linux)                     │
+│                                                            │
+│  ┌──────────┐    ┌───────────┐    ┌──────────────────┐    │
+│  │ Browser  │───▶│   Proxy   │───▶│   tun0 Device    │    │
+│  │  :8080   │    │   :8080   │    │  192.168.100.1   │    │
+│  └──────────┘    └───────────┘    └──────────────────┘    │
+│                                             │              │
+│                                             │              │
+│                                    ┌────────▼─────────┐    │
+│                                    │   TUN Bridge     │    │
+│                                    │   (Python)       │    │
+│                                    └────────┬─────────┘    │
+│                                             │ TCP:5556     │
+└─────────────────────────────────────────────┼──────────────┘
+                                              │
+                                              │ QEMU chardev
+┌─────────────────────────────────────────────┼──────────────┐
+│                       ESP32 QEMU            │              │
+│                                             ▼              │
+│  ┌────────────┐    ┌──────────┐    ┌──────────────┐       │
+│  │    Web     │    │   lwIP   │    │    UART1     │       │
+│  │   Server   │◄──►│  Stack   │◄──►│   Driver     │       │
+│  │   :80      │    │ 192.168. │    │              │       │
+│  │            │    │ 100.2/24 │    └──────────────┘       │
+│  └────────────┘    └──────────┘                           │
+│                                                            │
+└────────────────────────────────────────────────────────────┘
+</code></pre></div>
+<h2 id="network-configuration">Network Configuration</h2>
+<h3 id="ip-addresses">IP Addresses</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>IP Address</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Host TUN device</td>
+<td>192.168.100.1/24</td>
+<td>Gateway for emulated ESP32</td>
+</tr>
+<tr>
+<td>ESP32 QEMU</td>
+<td>192.168.100.2/24</td>
+<td>Emulated device IP</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ports">Ports</h3>
+<table>
+<thead>
+<tr>
+<th>Port</th>
+<th>Protocol</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5555</td>
+<td>TCP</td>
+<td>QEMU UART0 (console/monitor)</td>
+</tr>
+<tr>
+<td>5556</td>
+<td>TCP</td>
+<td>QEMU UART1 (IP tunnel)</td>
+</tr>
+<tr>
+<td>8080</td>
+<td>HTTP</td>
+<td>Proxy to ESP32 web server</td>
+</tr>
+<tr>
+<td>3333</td>
+<td>TCP</td>
+<td>GDB debug server</td>
+</tr>
+</tbody>
+</table>
+<h2 id="how-it-works">How It Works</h2>
+<h3 id="1-uart-based-ip-tunnel">1. UART-Based IP Tunnel</h3>
+<p>The emulator uses UART1 as a network interface:</p>
+<ol>
+<li><strong>Ethernet Frame Encapsulation</strong>: IP packets are wrapped in Ethernet frames</li>
+<li><strong>Length Prefix Protocol</strong>: Each frame is prefixed with 2-byte length (big-endian)</li>
+<li><strong>UART Transport</strong>: Frames are transmitted over UART1 (115200 baud)</li>
+<li><strong>TUN Bridge</strong>: Python script bridges UART ↔ TUN device</li>
+</ol>
+<h3 id="2-network-stack">2. Network Stack</h3>
+<div class="highlight"><pre><span></span><code>Application (Web Server)
+         ↓
+    lwIP TCP/IP Stack
+         ↓
+Custom UART Network Interface (netif_uart_tunnel_sim.c)
+         ↓
+      UART1 Driver
+         ↓
+   QEMU Serial Device
+         ↓
+    TUN Bridge (Python)
+         ↓
+      Linux TUN Device
+         ↓
+     Host Network Stack
+</code></pre></div>
+<h3 id="3-frame-format">3. Frame Format</h3>
+<div class="highlight"><pre><span></span><code>┌───────────────┬──────────────────────────────────────────┐
+│ Frame Length  │         Ethernet Frame                   │
+│   (2 bytes)   │    (14-byte header + IP packet)          │
+│  Big Endian   │                                          │
+├───────────────┼──────────────────────────────────────────┤
+│  [HI] [LO]    │ [DST_MAC:6][SRC_MAC:6][TYPE:2][IP DATA]  │
+└───────────────┴──────────────────────────────────────────┘
+</code></pre></div>
+<p><strong>Example:</strong> ICMP Echo Request (98 bytes)
+<div class="highlight"><pre><span></span><code>Length: 0x00 0x62 (98 bytes)
+Ethernet:
+  Dst MAC: 02:00:00:00:00:02 (ESP32)
+  Src MAC: 02:00:00:00:00:01 (Host)
+  Type:    0x08 0x00 (IPv4)
+IP Packet:
+  Src IP: 192.168.100.1
+  Dst IP: 192.168.100.2
+  Protocol: ICMP
+</code></pre></div></p>
+<h2 id="testing-network-connectivity">Testing Network Connectivity</h2>
+<h3 id="ping-test">Ping Test</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Ping the emulated ESP32</span>
+ping<span class="w"> </span>-c<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">192</span>.168.100.2
+</code></pre></div>
+<p>Expected output:
+<div class="highlight"><pre><span></span><code>64 bytes from 192.168.100.2: icmp_seq=1 ttl=64 time=5.2 ms
+64 bytes from 192.168.100.2: icmp_seq=2 ttl=64 time=3.8 ms
+</code></pre></div></p>
+<h3 id="http-test">HTTP Test</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Direct access</span>
+curl<span class="w"> </span>http://192.168.100.2/
+
+<span class="c1"># Via proxy</span>
+curl<span class="w"> </span>http://localhost:8080/
+</code></pre></div>
+<h3 id="monitor-network-traffic">Monitor Network Traffic</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Watch TUN device traffic</span>
+sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>tun0<span class="w"> </span>-n
+
+<span class="c1"># Monitor UART traffic in QEMU logs</span>
+<span class="c1"># Look for &quot;RX:&quot; and &quot;TX:&quot; messages</span>
+</code></pre></div>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="qemu-wont-start">QEMU Won't Start</h3>
+<p><strong>Problem:</strong> Script fails to start QEMU</p>
+<p><strong>Solutions:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># Check if QEMU is already running</span>
+ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>qemu
+
+<span class="c1"># Kill existing QEMU processes</span>
+./tools/stop_qemu.sh
+
+<span class="c1"># Rebuild and try again</span>
+idf.py<span class="w"> </span>build
+./tools/run-qemu-network.sh
+</code></pre></div></p>
+<h3 id="network-not-working">Network Not Working</h3>
+<p><strong>Problem:</strong> Can't ping or access web server</p>
+<p><strong>Checks:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># 1. Verify TUN device exists</span>
+ip<span class="w"> </span>addr<span class="w"> </span>show<span class="w"> </span>tun0
+
+<span class="c1"># 2. Check TUN bridge is running</span>
+ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>serial_tun_bridge
+
+<span class="c1"># 3. Check HTTP proxy is running</span>
+ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>http_proxy
+
+<span class="c1"># 4. Restart network stack</span>
+./tools/stop_qemu.sh
+./tools/run-qemu-network.sh
+</code></pre></div></p>
+<h3 id="no-uart-output">No UART Output</h3>
+<p><strong>Problem:</strong> No logs from QEMU</p>
+<p><strong>Solution:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># Connect to UART0 console</span>
+nc<span class="w"> </span>localhost<span class="w"> </span><span class="m">5555</span>
+
+<span class="c1"># Or use dedicated viewer</span>
+./tools/view_uart1.sh
+</code></pre></div></p>
+<h3 id="port-already-in-use">Port Already in Use</h3>
+<p><strong>Problem:</strong> Error about port 5555 or 5556 already in use</p>
+<p><strong>Solution:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># Find process using the port</span>
+lsof<span class="w"> </span>-i<span class="w"> </span>:5555
+lsof<span class="w"> </span>-i<span class="w"> </span>:5556
+
+<span class="c1"># Kill the process</span>
+<span class="nb">kill</span><span class="w"> </span>&lt;PID&gt;
+
+<span class="c1"># Or use the stop script</span>
+./tools/stop_qemu.sh
+</code></pre></div></p>
+<h2 id="advanced-usage">Advanced Usage</h2>
+<h3 id="debugging-network-issues">Debugging Network Issues</h3>
+<p>Enable verbose logging in <code>netif_uart_tunnel_sim.c</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Temporarily change log level</span>
+<span class="cp">#define LOG_LOCAL_LEVEL ESP_LOG_VERBOSE</span>
+</code></pre></div>
+<p>Then rebuild and watch detailed packet flow:
+<div class="highlight"><pre><span></span><code>idf.py<span class="w"> </span>build
+./tools/run-qemu-network.sh
+</code></pre></div></p>
+<h3 id="custom-network-configuration">Custom Network Configuration</h3>
+<p>Edit <code>main/components/netif_uart_tunnel/netif_uart_tunnel_sim.c</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Change IP address</span>
+<span class="cp">#define ESP32_IP &quot;192.168.100.2&quot;</span>
+<span class="cp">#define GATEWAY_IP &quot;192.168.100.1&quot;</span>
+<span class="cp">#define NETMASK &quot;255.255.255.0&quot;</span>
+</code></pre></div>
+<h3 id="running-without-gdb">Running Without GDB</h3>
+<p>To start QEMU without waiting for debugger:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Edit run-qemu-network.sh and remove the -d flag</span>
+idf.py<span class="w"> </span>qemu<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--qemu-extra-args<span class="o">=</span><span class="s2">&quot;-serial tcp::5555,server,nowait -serial tcp::5556,server,nowait -nographic&quot;</span>
+</code></pre></div>
+<h2 id="technical-deep-dive">Technical Deep Dive</h2>
+<p>For detailed information about the network implementation, packet flow, and lwIP integration, see <a href="../qemu-network-internals/">Network Internals</a>.</p>
+<h2 id="known-limitations">Known Limitations</h2>
 <ul>
-<li>
-<p><strong>A Supported Browser</strong></p>
-<p>To use browser-based serial port access and the ESP-IDF Web extension, you must use a browser that supports the Web Serial API. <strong>Supported browsers</strong> include the latest versions of <strong>Google Chrome</strong>, <strong>Microsoft Edge</strong>, <strong>Opera</strong>, and <strong>Arc Browser</strong>.</p>
-<p>Firefox, Safari, and most mobile browsers are <strong>not supported</strong> for direct device communication. For the best experience, use Chrome or Edge on desktop.</p>
-</li>
-<li>
-<p><strong>GitHub Account</strong></p>
-<p>You will need a GitHub account to participate in the workshop. If you do not already have one, you can sign up for free at <a href="https://github.com/">github.com</a>. The free GitHub account is sufficient for all workshop activities, including accessing the repository, using Codespaces (within the free usage quota), and collaborating with others. </p>
-</li>
-<li>
-<p><strong>GitHub Copilot Subscription</strong></p>
-<p>GitHub Copilot is an AI-powered coding assistant that helps you write code faster and with fewer errors by providing real-time code suggestions, explanations, and even generating entire functions or files. It is integrated into VS Code and Codespaces, making it easy to use during the workshop.</p>
-<p>For most workshop tasks, the free tier of Copilot is sufficient you can use Chat, Edit and Agent mode in VSCode. However, to access advanced features such as the Copilot coding agent, you will need at least a GitHub Copilot Pro subscription. The Pro subscription is available as a 30-day free trial, allowing you to fully explore Copilot's capabilities during the workshop without any cost.</p>
-</li>
-<li>
-<p><strong>GitHub Codespaces</strong></p>
-<p>GitHub Codespaces provides a cloud-based development environment pre-configured for this project. It allows you to start coding instantly in your browser or VS Code, with all dependencies (ESP-IDF, toolchain, libraries) already set up. No local installation is required. </p>
-</li>
+<li><strong>UART Speed</strong>: Limited to 115200 baud (adequate for HTTP, slow for large transfers)</li>
+<li><strong>No WiFi Simulation</strong>: Uses direct IP connectivity instead of WiFi AP/STA modes</li>
+<li><strong>Browser Caching</strong>: Web interface may cache old versions (use Ctrl+F5 to refresh)</li>
+<li><strong>QEMU Performance</strong>: Slower than real hardware, but sufficient for testing</li>
 </ul>
-<p><strong>Everything else is provided inside the preconfigured Codespaces working environment.</strong></p>
-<h2 id="hardware">🛠️ Hardware</h2>
+<h2 id="next-steps">Next Steps</h2>
 <ul>
-<li>
-<p><strong>ESP32 WROOM-32F Development Board</strong></p>
-<p>The workshop is designed for the ESP32 WROOM-32F (4MB flash) module. This board provides WiFi/Bluetooth connectivity, multiple GPIOs, and is compatible with the HC-SR04 ultrasonic sensor and WS2812 LED strip. If you have a different ESP32 variant, most exercises will still work, but pin assignments and memory constraints may vary. No hardware is required for simulation or code review tasks, but hands-on flashing and sensor/LED testing require a physical ESP32 board.</p>
-</li>
-<li>
-<p><strong>HC-SR04 Ultrasonic Distance Sensor</strong></p>
-<p>Used for measuring distance. Connects to ESP32 GPIOs (requires 5V power, but logic-level shifting is handled on most dev boards).</p>
-</li>
-<li>
-<p><strong>WS2812 Addressable LED Strip (40 LEDs recommended)</strong></p>
-<p>Used for visualizing distance measurements. Connects to a single ESP32 GPIO (data line).</p>
-</li>
-<li>
-<p><strong>USB serial adapter</strong> for flashing </p>
-<p>Required for uploading firmware and running code on real hardware. Most ESP32 dev boards include a built-in USB-to-serial adapter, but if your board does not, you will also need a <strong>USB serial adapter</strong> (e.g., FTDI, CP2102, CH340) to flash, debug, and monitor the device via serial connection.</p>
-</li>
+<li><strong><a href="../debugging/">Debugging Guide</a></strong> - Set breakpoints and step through code</li>
+<li><strong><a href="../qemu-network-internals/">Network Internals</a></strong> - Understand packet flow in detail</li>
+<li><strong><a href="../devcontainer/">Dev Container Setup</a></strong> - Configure your development environment</li>
 </ul>
 
 
@@ -1560,7 +2308,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Overview">
+          <a href="../devcontainer/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Dev Container">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1570,20 +2318,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Overview
+                Dev Container
               </div>
             </div>
           </a>
         
         
           
-          <a href="../hardwaresetup/" class="md-footer__link md-footer__link--next" aria-label="Next: Getting Started Hardware">
+          <a href="../debugging/" class="md-footer__link md-footer__link--next" aria-label="Next: Debugging">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Getting Started Hardware
+                Debugging
               </div>
             </div>
             <div class="md-footer__button md-icon">
