@@ -117,15 +117,17 @@ This document specifies requirements for the Display System, enabling visual rep
 **Type**: User Experience  
 **Priority**: Mandatory  
 **Depends**: REQ-CFG-2  
-**Description**: The display system SHALL illuminate the first LED in red when the measured distance is below the configured minimum distance threshold.
+**Description**: The display system SHALL flash every 10th LED in red with a 1-second interval when the measured distance is below the configured minimum distance threshold.
 
-**Rationale**: Provides clear visual indication when measurements are below the useful range, using red color and first position to indicate below-minimum condition.
+**Rationale**: Provides enhanced visual indication when measurements are below the useful range, using red color and a distinctive flashing pattern across multiple LEDs to create a more noticeable below-minimum condition indicator compared to a single static LED.
 
 **Acceptance Criteria**:
 
-- AC-1: First LED (position 0) is illuminated red when distance < min_distance_cm
-- AC-2: Only the first LED is illuminated (all others remain off)
-- AC-3: Display persists until measurement returns to valid range
+- AC-1: Every 10th LED (positions 0, 10, 20, 30, etc.) flashes red when distance < min_distance_cm
+- AC-2: Flash interval is 1 second (500ms on, 500ms off cycle)
+- AC-3: Only the designated 10th-position LEDs are illuminated during flash-on state (all others remain off)
+- AC-4: Flashing pattern persists until measurement returns to valid range
+- AC-5: Flash timing is consistent and does not interfere with normal distance measurement updates
 
 ---
 
