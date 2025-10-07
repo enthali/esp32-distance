@@ -1778,7 +1778,7 @@ This guide focuses on software and Codespace setup. For step-by-step instruction
 </blockquote>
 <hr />
 <h2 id="fork-the-repository-one-time">Fork the repository (one-time)</h2>
-<p>Start by forking <a href="https://github.com/enthali/esp32-distance/fork">forking</a>the main repository to your own GitHub account. This gives you a personal copy where you can make changes freely.</p>
+<p>Start by forking <a href="https://github.com/enthali/esp32-distance/fork">forking</a> the main repository to your own GitHub account. This gives you a personal copy where you can make changes freely.</p>
 <p><img alt="Fork Repository" src="../../assets/images/fork-repro.png" />
 <a href="https://github.com/enthali/esp32-distance/fork"><img alt="Fork Repository" src="../../assets/images/fork-repro.png" /></a></p>
 <p>Press <strong>"Create a new fork"</strong>.<br />
@@ -1803,8 +1803,8 @@ On the next page, simply press <strong>"Create fork"</strong>.</p>
 </ol>
 <p><img alt="Create Codespace" src="../../assets/images/create-codespace.png" /></p>
 <blockquote>
-<p><strong>Note:</strong> The initial Codespace setup can take several minutes (typically around 5 minutes). During this time, all required dependencies—including the full ESP-IDF toolchain, components (about 1GB of data), and the VS Code ESP-IDF extensions—are automatically downloaded and installed for you.  </p>
-<p>Once setup is complete, your Codespace will open in the browser with everything ready to go—no manual installation required. It’s designed to be a true out-of-the-box experience (well, at least it should be 🙂).</p>
+<p><strong>Note:</strong> The initial Codespace setup can take several minutes (typically around 5 minutes). During this time, all required dependencies—including the full ESP-IDF toolchain, components (about 1GB of data), and the VS Code ESP-IDF extensions—are automatically downloaded and installed for you.<br />
+Once setup is complete, your Codespace will open in the browser with everything ready to go—no manual installation required. It’s designed to be a true out-of-the-box experience (well, at least it should be 🙂).</p>
 <p><strong>Hint for next time:</strong> You can quickly reopen your Codespace from the GitHub repository page—just click the green <strong>"Code"</strong> button and select your existing Codespace. No need to recreate it each time!</p>
 </blockquote>
 <hr />
@@ -1823,30 +1823,26 @@ On the next page, simply press <strong>"Create fork"</strong>.</p>
 <h2 id="explore-the-codespace-interface">Explore the Codespace interface</h2>
 <p>Take a moment to get comfortable with the Codespace environment:</p>
 <ul>
-<li>
-<p><strong>Left Sidebar Icons:</strong>  </p>
-<ul>
+<li><strong>Left Sidebar Icons:</strong>  </li>
 <li><strong>Explorer:</strong> Browse and open project files and folders.</li>
 <li><strong>Search:</strong> Find text or symbols across the codebase.</li>
 <li><strong>Source Control:</strong> Manage Git version control, view changes, and commit.</li>
 <li><strong>Run &amp; Debug:</strong> Launch and debug tasks.</li>
 <li><strong>Extensions:</strong> Discover and install VS Code extensions.</li>
 <li><strong>GitHub:</strong> Access pull requests and issues.</li>
-<li><strong>ESP-IDF Explorer:</strong> Manage ESP32-specific tasks and configurations.</li>
-</ul>
+<li>
+<p><strong>ESP-IDF Explorer:</strong> Manage ESP32-specific tasks and configurations.</p>
 </li>
 <li>
 <p><strong>Bottom Bar:</strong>  </p>
-<ul>
-<li>Look for the <strong>Build</strong> icon at the bottom—click it to compile the project. The build process typically takes 1–2 minutes in the Codespace.</li>
-</ul>
 </li>
+<li>Look for the <strong>Build</strong> icon at the bottom—click it to compile the project. The build process typically takes 1–2 minutes in the Codespace.</li>
 </ul>
 <blockquote>
 <p><strong>Tip:</strong> Don’t hesitate to try out the build process now! This will verify your Codespace is set up correctly and help you spot any issues early.</p>
 </blockquote>
 <h2 id="important-post-launch-install-esp-idf-web-extension">IMPORTANT !! ⚡ Post-launch: Install ESP-IDF Web Extension</h2>
-<p>If you don't see the "Flash" and "Monitor" buttons <img alt="VS Code Flash Button" src="../../assets/images/flash-button.png" /> at the bottom of VS Code, you'll need to install the <strong>ESP-IDF Web</strong> extension for your browser. This extension enables direct serial communication between your Codespace and the ESP32 hardware using your bowsers serial port extention.</p>
+<p>If you don't see the "Flash" and "Monitor" buttons <img alt="VS Code Flash Button" src="../../assets/images/flash-button.png" /> at the bottom of VS Code, you'll need to install the <strong>ESP-IDF Web</strong> extension for your browser. This extension enables direct serial communication between your Codespace and the ESP32 hardware using your browser's serial port extension.</p>
 <h3 id="supported-browsers-for-serial-port-access">Supported Browsers for Serial Port Access</h3>
 <blockquote>
 <p><strong>Supported Browsers:</strong><br />
@@ -1860,10 +1856,12 @@ The ESP-IDF Web extension and browser-based serial port access are supported in 
 <p><strong>Not supported:</strong> Firefox, Safari, and most mobile browsers do <strong>not</strong> support the Web Serial API required for direct device communication.</p>
 <p>For the best experience, use the latest version of Chrome or Edge on desktop.</p>
 </blockquote>
-<p><strong>To install:</strong>
-1. Click the <strong>Extensions</strong> icon in the left sidebar.
-2. Search for <strong>ESP-IDF Web</strong> the extension should be pre-installed .
-3. Click the green <strong>Install in browser</strong> button.</p>
+<p><strong>To install:</strong></p>
+<ol>
+<li>Click the <strong>Extensions</strong> icon in the left sidebar.</li>
+<li>Search for <strong>ESP-IDF Web</strong> the extension should be pre-installed .</li>
+<li>Click the green <strong>Install in browser</strong> button.</li>
+</ol>
 <p><img alt="ESP-IDF Web Extension" src="../../assets/images/esp-idf-web-install.png" /></p>
 <p>You may be prompted to grant access for the extension to communicate with your device — accept this to enable flashing, monitoring and debugging.</p>
 <blockquote>

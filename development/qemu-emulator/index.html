@@ -2043,20 +2043,22 @@
 <div class="highlight"><pre><span></span><code><span class="c1"># From project root</span>
 ./tools/run-qemu-network.sh
 </code></pre></div>
-<p>This script automatically:
-- ✅ Builds the project (incremental, fast)
-- ✅ Starts the TUN network bridge
-- ✅ Starts the HTTP proxy for web access
-- ✅ Launches QEMU with GDB support
-- ✅ Waits for debugger connection</p>
+<p>This script automatically:</p>
+<ul>
+<li>✅ Builds the project (incremental, fast)</li>
+<li>✅ Starts the TUN network bridge</li>
+<li>✅ Starts the HTTP proxy for web access</li>
+<li>✅ Launches QEMU with GDB support</li>
+<li>✅ Waits for debugger connection</li>
+</ul>
 <h3 id="accessing-the-web-interface">Accessing the Web Interface</h3>
 <p>Once QEMU is running:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># In your browser or terminal</span>
 curl<span class="w"> </span>http://192.168.100.2/
 </code></pre></div>
-<p>Or use the HTTP proxy:
+<p>Or use the HTTP proxy:</p>
 <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://localhost:8080/
-</code></pre></div></p>
+</code></pre></div>
 <p>The web interface should be accessible at <code>http://localhost:8080</code> in your browser.</p>
 <h2 id="architecture-overview">Architecture Overview</h2>
 <div class="highlight"><pre><span></span><code>┌────────────────────────────────────────────────────────────┐
@@ -2178,26 +2180,26 @@ Custom UART Network Interface (netif_uart_tunnel_sim.c)
 │  [HI] [LO]    │ [DST_MAC:6][SRC_MAC:6][TYPE:2][IP DATA]  │
 └───────────────┴──────────────────────────────────────────┘
 </code></pre></div>
-<p><strong>Example:</strong> ICMP Echo Request (98 bytes)
+<p><strong>Example:</strong> ICMP Echo Request (98 bytes)</p>
 <div class="highlight"><pre><span></span><code>Length: 0x00 0x62 (98 bytes)
 Ethernet:
-  Dst MAC: 02:00:00:00:00:02 (ESP32)
-  Src MAC: 02:00:00:00:00:01 (Host)
-  Type:    0x08 0x00 (IPv4)
+     Dst MAC: 02:00:00:00:00:02 (ESP32)
+     Src MAC: 02:00:00:00:00:01 (Host)
+     Type:    0x08 0x00 (IPv4)
 IP Packet:
-  Src IP: 192.168.100.1
-  Dst IP: 192.168.100.2
-  Protocol: ICMP
-</code></pre></div></p>
+     Src IP: 192.168.100.1
+     Dst IP: 192.168.100.2
+     Protocol: ICMP
+</code></pre></div>
 <h2 id="testing-network-connectivity">Testing Network Connectivity</h2>
 <h3 id="ping-test">Ping Test</h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Ping the emulated ESP32</span>
 ping<span class="w"> </span>-c<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="m">192</span>.168.100.2
 </code></pre></div>
-<p>Expected output:
+<p>Expected output:</p>
 <div class="highlight"><pre><span></span><code>64 bytes from 192.168.100.2: icmp_seq=1 ttl=64 time=5.2 ms
 64 bytes from 192.168.100.2: icmp_seq=2 ttl=64 time=3.8 ms
-</code></pre></div></p>
+</code></pre></div>
 <h3 id="http-test">HTTP Test</h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Direct access</span>
 curl<span class="w"> </span>http://192.168.100.2/
@@ -2215,7 +2217,7 @@ sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </
 <h2 id="troubleshooting">Troubleshooting</h2>
 <h3 id="qemu-wont-start">QEMU Won't Start</h3>
 <p><strong>Problem:</strong> Script fails to start QEMU</p>
-<p><strong>Solutions:</strong>
+<p><strong>Solutions:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Check if QEMU is already running</span>
 ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>qemu
 
@@ -2225,10 +2227,10 @@ ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><sp
 <span class="c1"># Rebuild and try again</span>
 idf.py<span class="w"> </span>build
 ./tools/run-qemu-network.sh
-</code></pre></div></p>
+</code></pre></div>
 <h3 id="network-not-working">Network Not Working</h3>
 <p><strong>Problem:</strong> Can't ping or access web server</p>
-<p><strong>Checks:</strong>
+<p><strong>Checks:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># 1. Verify TUN device exists</span>
 ip<span class="w"> </span>addr<span class="w"> </span>show<span class="w"> </span>tun0
 
@@ -2241,19 +2243,19 @@ ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><sp
 <span class="c1"># 4. Restart network stack</span>
 ./tools/stop_qemu.sh
 ./tools/run-qemu-network.sh
-</code></pre></div></p>
+</code></pre></div>
 <h3 id="no-uart-output">No UART Output</h3>
 <p><strong>Problem:</strong> No logs from QEMU</p>
-<p><strong>Solution:</strong>
+<p><strong>Solution:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Connect to UART0 console</span>
 nc<span class="w"> </span>localhost<span class="w"> </span><span class="m">5555</span>
 
 <span class="c1"># Or use dedicated viewer</span>
 ./tools/view_uart1.sh
-</code></pre></div></p>
+</code></pre></div>
 <h3 id="port-already-in-use">Port Already in Use</h3>
 <p><strong>Problem:</strong> Error about port 5555 or 5556 already in use</p>
-<p><strong>Solution:</strong>
+<p><strong>Solution:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Find process using the port</span>
 lsof<span class="w"> </span>-i<span class="w"> </span>:5555
 lsof<span class="w"> </span>-i<span class="w"> </span>:5556
@@ -2263,17 +2265,17 @@ lsof<span class="w"> </span>-i<span class="w"> </span>:5556
 
 <span class="c1"># Or use the stop script</span>
 ./tools/stop_qemu.sh
-</code></pre></div></p>
+</code></pre></div>
 <h2 id="advanced-usage">Advanced Usage</h2>
 <h3 id="debugging-network-issues">Debugging Network Issues</h3>
 <p>Enable verbose logging in <code>netif_uart_tunnel_sim.c</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// Temporarily change log level</span>
 <span class="cp">#define LOG_LOCAL_LEVEL ESP_LOG_VERBOSE</span>
 </code></pre></div>
-<p>Then rebuild and watch detailed packet flow:
+<p>Then rebuild and watch detailed packet flow:</p>
 <div class="highlight"><pre><span></span><code>idf.py<span class="w"> </span>build
 ./tools/run-qemu-network.sh
-</code></pre></div></p>
+</code></pre></div>
 <h3 id="custom-network-configuration">Custom Network Configuration</h3>
 <p>Edit <code>main/components/netif_uart_tunnel/netif_uart_tunnel_sim.c</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// Change IP address</span>

@@ -74,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#known-l-web-ui-in-emulator-no-network-device" class="md-skip">
+        <a href="#known-limitations" class="md-skip">
           Skip to content
         </a>
       
@@ -569,6 +569,15 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#web-ui-in-emulator-no-network-device" class="md-nav__link">
+    <span class="md-ellipsis">
+      🖥️ Web UI in Emulator: No Network Device
+    </span>
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#captive-portal-not-so-captive" class="md-nav__link">
@@ -1488,6 +1497,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#web-ui-in-emulator-no-network-device" class="md-nav__link">
+    <span class="md-ellipsis">
+      🖥️ Web UI in Emulator: No Network Device
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#captive-portal-not-so-captive" class="md-nav__link">
     <span class="md-ellipsis">
       📱 Captive Portal: Not-So-Captive
@@ -1530,34 +1548,38 @@
 
 
 
-<h1 id="known-l-web-ui-in-emulator-no-network-device">Known L## 🖥️ Web UI in Emulator: No Network Device</h1>
+<h1 id="known-limitations">Known Limitations</h1>
+<h2 id="web-ui-in-emulator-no-network-device">🖥️ Web UI in Emulator: No Network Device</h2>
 <ul>
 <li><strong>What happens?</strong> The webserver initializes and runs in QEMU, but you can't access it from your browser.</li>
 <li><strong>Why?</strong> The Espressif QEMU fork doesn't emulate network devices (<code>open_eth</code> is not available). The HTTP server can bind to a port inside QEMU, but there's no network hardware to send/receive packets. Serial console is currently the only I/O channel.</li>
-<li><strong>Will it be fixed?</strong> </li>
+<li><strong>Will it be fixed?</strong></li>
 <li><strong>Short term</strong>: We're planning a serial HTTP tunneling solution (see <code>docs/planning/Features-Serial-HTTP-Tunneling.md</code>) that will multiplex HTTP traffic over the serial connection.</li>
 <li><strong>Long term</strong>: Network device emulation would need to be added to Espressif's QEMU fork (consider filing an issue with them).</li>
-<li><strong>Current status</strong>: The webserver code works perfectly on real hardware. In QEMU, you'll see successful initialization logs, but the webserver is not accessible via network.ations &amp; Quirks 🚧</li>
+<li><strong>Current status</strong>: The webserver code works on real hardware. In QEMU, you'll see successful initialization logs, but the webserver is not accessible via network.</li>
 </ul>
-<p>Welcome, brave explorer! Every project has its dragons—here are ours. If you run into these, don’t panic: you’re not alone, and sometimes it’s just how the (micro)chips fall.</p>
+<hr />
+<p>Welcome, brave explorer! Every project has its dragons—here are ours. If you run into these, don’t panic: you’re not alone.</p>
 <h2 id="captive-portal-not-so-captive">📱 Captive Portal: Not-So-Captive</h2>
 <ul>
-<li><strong>What happens?</strong> When you connect to the ESP32’s WiFi, your phone/tablet might not be magically whisked away to the configuration page. Instead, you’ll need to open your browser and type <code>192.168.4.1</code>.</li>
-<li><strong>Why?</strong> Modern devices are picky about captive portals, and our ESP32 is doing its best. Some phones just won’t auto-redirect—blame the phone, not the project!</li>
+<li><strong>What happens?</strong> When you connect to the ESP32’s WiFi, your phone/tablet might not be automatically redirected to the configuration page. Instead, you’ll need to open your browser and type <code>192.168.4.1</code>.</li>
+<li><strong>Why?</strong> Modern devices are picky about captive portals, and our ESP32's captive portal may not trigger an automatic redirect on all devices.</li>
 <li><strong>Will it be fixed?</strong> Probably not. It’s a common IoT quirk, and most users figure it out quickly.</li>
 </ul>
 <h2 id="web-ui-in-emulator-no-show">🖥️ Web UI in Emulator: No Show</h2>
 <ul>
 <li><strong>What happens?</strong> If you’re running the project in an emulator, the web interface might be unreachable.</li>
 <li><strong>Why?</strong> Networking in emulators is tricky, and not all features are supported.</li>
-<li><strong>Will it be fixed?</strong> Maybe! We might open a GitHub issue for this. If you have ideas, PRs are welcome.</li>
+<li><strong>Will it be fixed?</strong> Maybe. We might open a GitHub issue for this. PRs welcome.</li>
 </ul>
 <h2 id="other-oddities">🦄 Other Oddities</h2>
 <ul>
-<li>If you find a new quirk, let us know! We love a good bug hunt (and a good laugh).</li>
+<li>If you find a new quirk, let us know—we love a good bug hunt.</li>
 </ul>
 <hr />
-<p><em>Remember: If everything worked perfectly, it wouldn’t be called a “project.”</em></p>
+<blockquote>
+<p>Remember: If everything worked perfectly, it wouldn’t be called a “project.”</p>
+</blockquote>
 
 
 

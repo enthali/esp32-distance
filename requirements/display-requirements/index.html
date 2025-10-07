@@ -1849,10 +1849,12 @@
 </tr>
 </tbody>
 </table>
-<p><strong>Dependencies</strong>:
-- REQ-DSP-OVERVIEW-02 depends on REQ-CFG-1 (configuration management system)
-- REQ-DSP-VISUAL-03 depends on REQ-CFG-2 (boundary parameter configuration)
-- REQ-DSP-VISUAL-04 depends on REQ-CFG-2 (boundary parameter configuration)</p>
+<p><strong>Dependencies</strong>:</p>
+<ul>
+<li>REQ-DSP-OVERVIEW-02 depends on REQ-CFG-1 (configuration management system)</li>
+<li>REQ-DSP-VISUAL-03 depends on REQ-CFG-2 (boundary parameter configuration)</li>
+<li>REQ-DSP-VISUAL-04 depends on REQ-CFG-2 (boundary parameter configuration)</li>
+</ul>
 <hr />
 <h2 id="system-overview-requirements">System Overview Requirements</h2>
 <h3 id="req-dsp-overview-01-hardware-platform">REQ-DSP-OVERVIEW-01: Hardware Platform</h3>
@@ -1860,13 +1862,15 @@
 <strong>Priority</strong>: Mandatory<br />
 <strong>Description</strong>: The display system SHALL utilize WS2812 addressable LED strip hardware with configurable LED count and brightness as an integrated, reactive component.</p>
 <p><strong>Rationale</strong>: Establishes the hardware foundation for the visual display system, enabling flexible LED strip configurations for different deployment scenarios. The system operates reactively, automatically responding to distance measurements rather than external commands.</p>
-<p><strong>Acceptance Criteria</strong>:
-- AC-1: System supports WS2812 addressable LED strips
-- AC-2: LED count and brightness are configurable via configuration management system
-- AC-3: System validates LED count is within reasonable range (1-100 LEDs)
-- AC-4: LED strip communication uses appropriate GPIO pin configuration
-- AC-5: System initializes LED hardware before processing distance measurements
-- AC-6: System operates continuously, updating display in real-time as measurements arrive</p>
+<p><strong>Acceptance Criteria</strong>:</p>
+<ul>
+<li>AC-1: System supports WS2812 addressable LED strips</li>
+<li>AC-2: LED count and brightness are configurable via configuration management system</li>
+<li>AC-3: System validates LED count is within reasonable range (1-100 LEDs)</li>
+<li>AC-4: LED strip communication uses appropriate GPIO pin configuration</li>
+<li>AC-5: System initializes LED hardware before processing distance measurements</li>
+<li>AC-6: System operates continuously, updating display in real-time as measurements arrive</li>
+</ul>
 <hr />
 <h3 id="req-dsp-overview-02-configuration-integration">REQ-DSP-OVERVIEW-02: Configuration Integration</h3>
 <p><strong>Type</strong>: Interface<br />
@@ -1874,14 +1878,18 @@
 <strong>Depends</strong>: REQ-CFG-1<br />
 <strong>Description</strong>: The display system SHALL obtain all operational parameters from the configuration management system.</p>
 <p><strong>Rationale</strong>: Ensures centralized configuration management and eliminates hardcoded values, enabling runtime reconfiguration and consistent system behavior. Parameter validation is handled by the configuration manager. Configuration changes trigger system reset, allowing static memory allocation at startup with no runtime reallocation - preventing memory fragmentation and performance degradation in the embedded environment.</p>
-<p><strong>Acceptance Criteria</strong>:
-- AC-1: All display parameters are obtained from configuration manager
-- AC-2: System reads configuration at initialization</p>
-<p><strong>Configuration Parameters</strong>:
-- <code>led_count</code>: Number of LEDs in the strip
-- <code>led_brightness</code>: LED brightness level
-- <code>min_distance_cm</code>: Minimum distance threshold
-- <code>max_distance_cm</code>: Maximum distance threshold</p>
+<p><strong>Acceptance Criteria</strong>:</p>
+<ul>
+<li>AC-1: All display parameters are obtained from configuration manager</li>
+<li>AC-2: System reads configuration at initialization</li>
+</ul>
+<p><strong>Configuration Parameters</strong>:</p>
+<ul>
+<li><code>led_count</code>: Number of LEDs in the strip</li>
+<li><code>led_brightness</code>: LED brightness level</li>
+<li><code>min_distance_cm</code>: Minimum distance threshold</li>
+<li><code>max_distance_cm</code>: Maximum distance threshold</li>
+</ul>
 <hr />
 <h2 id="user-experience-requirements">User Experience Requirements</h2>
 <h3 id="req-dsp-visual-01-core-visualization-concept">REQ-DSP-VISUAL-01: Core Visualization Concept</h3>
@@ -1889,22 +1897,26 @@
 <strong>Priority</strong>: Mandatory<br />
 <strong>Description</strong>: The display system SHALL illuminate a single LED that represents the current measured distance with real-time updates.</p>
 <p><strong>Rationale</strong>: Provides clear, unambiguous visual feedback where users can immediately understand the current distance measurement through LED position.</p>
-<p><strong>Acceptance Criteria</strong>:
-- AC-1: Only one LED is illuminated at any given time
-- AC-2: LED position corresponds to measured distance value
-- AC-3: Display updates immediately when new measurements arrive
-- AC-4: All other LEDs remain off during operation</p>
+<p><strong>Acceptance Criteria</strong>:</p>
+<ul>
+<li>AC-1: Only one LED is illuminated at any given time</li>
+<li>AC-2: LED position corresponds to measured distance value</li>
+<li>AC-3: Display updates immediately when new measurements arrive</li>
+<li>AC-4: All other LEDs remain off during operation</li>
+</ul>
 <hr />
 <h3 id="req-dsp-visual-02-normal-range-display">REQ-DSP-VISUAL-02: Normal Range Display</h3>
 <p><strong>Type</strong>: User Experience<br />
 <strong>Priority</strong>: Mandatory<br />
 <strong>Description</strong>: The display system SHALL illuminate a green LED at a position linearly proportional to the measured distance when the measurement is within the configured range.</p>
 <p><strong>Rationale</strong>: Provides intuitive distance visualization where LED position directly correlates to distance magnitude, using green color to indicate in-range measurements.</p>
-<p><strong>Acceptance Criteria</strong>:
-- AC-1: LED color is green for measurements within valid range
-- AC-2: Minimum configured distance maps exactly to first LED (position 0)
-- AC-3: Maximum configured distance maps exactly to last LED (position led_count-1)
-- AC-4: LED position is calculated using linear interpolation between positions 0 and led_count-1</p>
+<p><strong>Acceptance Criteria</strong>:</p>
+<ul>
+<li>AC-1: LED color is green for measurements within valid range</li>
+<li>AC-2: Minimum configured distance maps exactly to first LED (position 0)</li>
+<li>AC-3: Maximum configured distance maps exactly to last LED (position led_count-1)</li>
+<li>AC-4: LED position is calculated using linear interpolation between positions 0 and led_count-1</li>
+</ul>
 <hr />
 <h3 id="req-dsp-visual-03-below-minimum-display">REQ-DSP-VISUAL-03: Below Minimum Display</h3>
 <p><strong>Type</strong>: User Experience<br />
@@ -1912,10 +1924,12 @@
 <strong>Depends</strong>: REQ-CFG-2<br />
 <strong>Description</strong>: The display system SHALL illuminate the first LED in red when the measured distance is below the configured minimum distance threshold.</p>
 <p><strong>Rationale</strong>: Provides clear visual indication when measurements are below the useful range, using red color and first position to indicate below-minimum condition.</p>
-<p><strong>Acceptance Criteria</strong>:
-- AC-1: First LED (position 0) is illuminated red when distance &lt; min_distance_cm
-- AC-2: Only the first LED is illuminated (all others remain off)
-- AC-3: Display persists until measurement returns to valid range</p>
+<p><strong>Acceptance Criteria</strong>:</p>
+<ul>
+<li>AC-1: First LED (position 0) is illuminated red when distance &lt; min_distance_cm</li>
+<li>AC-2: Only the first LED is illuminated (all others remain off)</li>
+<li>AC-3: Display persists until measurement returns to valid range</li>
+</ul>
 <hr />
 <h3 id="req-dsp-visual-04-above-maximum-display">REQ-DSP-VISUAL-04: Above Maximum Display</h3>
 <p><strong>Type</strong>: User Experience<br />
@@ -1923,10 +1937,12 @@
 <strong>Depends</strong>: REQ-CFG-2<br />
 <strong>Description</strong>: The display system SHALL illuminate the last LED in red when the measured distance is above the configured maximum distance threshold.</p>
 <p><strong>Rationale</strong>: Provides clear visual indication when measurements are above the useful range, using red color and last position to indicate above-maximum condition.</p>
-<p><strong>Acceptance Criteria</strong>:
-- AC-1: Last LED (position led_count-1) is illuminated red when distance &gt; max_distance_cm
-- AC-2: Only the last LED is illuminated (all others remain off)
-- AC-3: Display persists until measurement returns to valid range</p>
+<p><strong>Acceptance Criteria</strong>:</p>
+<ul>
+<li>AC-1: Last LED (position led_count-1) is illuminated red when distance &gt; max_distance_cm</li>
+<li>AC-2: Only the last LED is illuminated (all others remain off)</li>
+<li>AC-3: Display persists until measurement returns to valid range</li>
+</ul>
 <hr />
 <h2 id="implementation-requirements">Implementation Requirements</h2>
 <h3 id="req-dsp-impl-01-task-based-architecture">REQ-DSP-IMPL-01: Task-Based Architecture</h3>
@@ -1934,10 +1950,12 @@
 <strong>Priority</strong>: Mandatory<br />
 <strong>Description</strong>: The display system SHALL implement a FreeRTOS task that blocks waiting for new distance measurements and updates the display accordingly.</p>
 <p><strong>Rationale</strong>: Provides responsive, real-time display updates using efficient blocking I/O patterns, ensuring minimal resource usage and immediate response to sensor data.</p>
-<p><strong>Acceptance Criteria</strong>:
-- AC-1: Implementation uses FreeRTOS task for display logic
-- AC-2: Task blocks waiting for distance measurement notifications
-- AC-3: Task has appropriate priority below measurement task but above any other task for real-time response</p>
+<p><strong>Acceptance Criteria</strong>:</p>
+<ul>
+<li>AC-1: Implementation uses FreeRTOS task for display logic</li>
+<li>AC-2: Task blocks waiting for distance measurement notifications</li>
+<li>AC-3: Task has appropriate priority below measurement task but above any other task for real-time response</li>
+</ul>
 <hr />
 <h3 id="req-dsp-impl-02-led-buffer-management">REQ-DSP-IMPL-02: LED Buffer Management</h3>
 <p><strong>Type</strong>: Implementation<br />

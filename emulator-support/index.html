@@ -2138,10 +2138,12 @@
 <p>The emulator support provides hardware abstraction through separate simulator implementations that maintain identical APIs to the hardware components. This allows the same application code to run in both hardware and emulated environments without modification.</p>
 <h2 id="architecture">Architecture</h2>
 <h3 id="hardware-abstraction-strategy">Hardware Abstraction Strategy</h3>
-<p>The implementation uses a <strong>clean separation approach</strong>:
-- <strong>Same headers</strong>: Identical APIs for both hardware and simulator versions
-- <strong>Different source files</strong>: CMake selects appropriate implementation at build time
-- <strong>No #ifdef clutter</strong>: Clean, maintainable code without conditional compilation</p>
+<p>The implementation uses a <strong>clean separation approach</strong>:</p>
+<ul>
+<li><strong>Same headers</strong>: Identical APIs for both hardware and simulator versions</li>
+<li><strong>Different source files</strong>: CMake selects appropriate implementation at build time</li>
+<li><strong>No #ifdef clutter</strong>: Clean, maintainable code without conditional compilation</li>
+</ul>
 <h3 id="components">Components</h3>
 <h4 id="1-distance-sensor-simulator-distance_sensor_simc">1. Distance Sensor Simulator (<code>distance_sensor_sim.c</code>)</h4>
 <ul>
@@ -2182,20 +2184,20 @@
 </code></pre></div>
 <h3 id="cmake-integration">CMake Integration</h3>
 <p>The build system automatically selects the correct source files:</p>
-<p><strong>Distance Sensor</strong> (<code>components/distance_sensor/CMakeLists.txt</code>):
+<p><strong>Distance Sensor</strong> (<code>components/distance_sensor/CMakeLists.txt</code>):</p>
 <div class="highlight"><pre><span></span><code><span class="nb">if</span><span class="p">(</span><span class="s">CONFIG_TARGET_EMULATOR</span><span class="p">)</span>
 <span class="w">    </span><span class="nb">set</span><span class="p">(</span><span class="s">COMPONENT_SRCS</span><span class="w"> </span><span class="s2">&quot;distance_sensor_sim.c&quot;</span><span class="p">)</span>
 <span class="nb">else</span><span class="p">()</span>
 <span class="w">    </span><span class="nb">set</span><span class="p">(</span><span class="s">COMPONENT_SRCS</span><span class="w"> </span><span class="s2">&quot;distance_sensor.c&quot;</span><span class="p">)</span>
 <span class="nb">endif</span><span class="p">()</span>
-</code></pre></div></p>
-<p><strong>LED Controller</strong> (<code>components/led_controller/CMakeLists.txt</code>):
+</code></pre></div>
+<p><strong>LED Controller</strong> (<code>components/led_controller/CMakeLists.txt</code>):</p>
 <div class="highlight"><pre><span></span><code><span class="nb">if</span><span class="p">(</span><span class="s">CONFIG_TARGET_EMULATOR</span><span class="p">)</span>
 <span class="w">    </span><span class="nb">set</span><span class="p">(</span><span class="s">COMPONENT_SRCS</span><span class="w"> </span><span class="s2">&quot;led_controller_sim.c&quot;</span><span class="p">)</span>
 <span class="nb">else</span><span class="p">()</span>
 <span class="w">    </span><span class="nb">set</span><span class="p">(</span><span class="s">COMPONENT_SRCS</span><span class="w"> </span><span class="s2">&quot;led_controller.c&quot;</span><span class="p">)</span>
 <span class="nb">endif</span><span class="p">()</span>
-</code></pre></div></p>
+</code></pre></div>
 <h2 id="usage-instructions">Usage Instructions</h2>
 <h3 id="1-hardware-build-default">1. Hardware Build (Default)</h3>
 <div class="highlight"><pre><span></span><code>idf.py<span class="w"> </span>build
@@ -2241,7 +2243,7 @@ I (59000) distance_sensor_sim: Simulated distance: 59.9 cm (decreasing)
 <h3 id="color-mapping-legend">Color Mapping Legend</h3>
 <ul>
 <li>🔴 <strong>Red</strong>: Close distances (5-15cm)</li>
-<li>🟡 <strong>Yellow</strong>: Medium distances (15-35cm) </li>
+<li>🟡 <strong>Yellow</strong>: Medium distances (15-35cm)</li>
 <li>🟢 <strong>Green</strong>: Far distances (35-50cm)</li>
 <li>🔵 <strong>Blue</strong>: Maximum distances (50-60cm)</li>
 <li>⚪ <strong>White</strong>: Very bright/mixed colors</li>
@@ -2250,7 +2252,7 @@ I (59000) distance_sensor_sim: Simulated distance: 59.9 cm (decreasing)
 </ul>
 <h2 id="implementation-details">Implementation Details</h2>
 <h3 id="distance-sensor-simulator">Distance Sensor Simulator</h3>
-<p><strong>Animation Logic</strong>:
+<p><strong>Animation Logic</strong>:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// Animate distance: 5cm (50mm) → 60cm (600mm) → 5cm (50mm)</span>
 <span class="n">sim_distance</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">direction</span><span class="p">;</span>
 
@@ -2259,10 +2261,10 @@ I (59000) distance_sensor_sim: Simulated distance: 59.9 cm (decreasing)
 <span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">sim_distance</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">50</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="c1">// 5.0cm = 50mm  </span>
 <span class="w">    </span><span class="n">direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div></p>
+</code></pre></div>
 <p><strong>Queue Behavior</strong>: Identical to hardware implementation with overflow handling and statistics tracking.</p>
 <h3 id="led-controller-simulator">LED Controller Simulator</h3>
-<p><strong>Rate Limiting</strong>:
+<p><strong>Rate Limiting</strong>:</p>
 <div class="highlight"><pre><span></span><code><span class="k">static</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">last_display_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 <span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">DISPLAY_INTERVAL_US</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1000000</span><span class="p">;</span><span class="w"> </span><span class="c1">// 1 second</span>
 
@@ -2274,7 +2276,7 @@ I (59000) distance_sensor_sim: Simulated distance: 59.9 cm (decreasing)
 <span class="w">    </span><span class="n">last_display_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">now</span><span class="p">;</span>
 <span class="w">    </span><span class="c1">// ... display emoji output</span>
 <span class="p">}</span>
-</code></pre></div></p>
+</code></pre></div>
 <p><strong>Color Analysis</strong>: Intelligent mapping from RGB values to representative emoji blocks based on dominant colors and brightness levels.</p>
 <h2 id="benefits">Benefits</h2>
 <h3 id="development-advantages">Development Advantages</h3>
@@ -2317,20 +2319,24 @@ I (59000) distance_sensor_sim: Simulated distance: 59.9 cm (decreasing)
 <li>WiFi/web server components - Run unchanged</li>
 </ul>
 <h2 id="validation">Validation</h2>
-<p>The implementation has been validated for:
-- ✅ Complete API compatibility with hardware versions
-- ✅ Proper CMake conditional compilation
-- ✅ Animation logic and timing behavior<br />
-- ✅ LED visualization and rate limiting
-- ✅ Queue-based architecture and error handling
-- ✅ No security vulnerabilities introduced</p>
+<p>The implementation has been validated for:</p>
+<ul>
+<li>✅ Complete API compatibility with hardware versions</li>
+<li>✅ Proper CMake conditional compilation</li>
+<li>✅ Animation logic and timing behavior  </li>
+<li>✅ LED visualization and rate limiting</li>
+<li>✅ Queue-based architecture and error handling</li>
+<li>✅ No security vulnerabilities introduced</li>
+</ul>
 <h2 id="future-enhancements">Future Enhancements</h2>
-<p>Potential improvements for the emulator support:
-- <strong>Web Interface Preview</strong>: Show LED state in browser
-- <strong>Interactive Controls</strong>: Manual distance adjustment via keyboard
-- <strong>Performance Metrics</strong>: Queue utilization and timing statistics
-- <strong>Multiple Animation Patterns</strong>: Different test sequences
-- <strong>Color Scheme Options</strong>: Alternative emoji sets or ASCII mode</p>
+<p>Potential improvements for the emulator support:</p>
+<ul>
+<li><strong>Web Interface Preview</strong>: Show LED state in browser</li>
+<li><strong>Interactive Controls</strong>: Manual distance adjustment via keyboard</li>
+<li><strong>Performance Metrics</strong>: Queue utilization and timing statistics</li>
+<li><strong>Multiple Animation Patterns</strong>: Different test sequences</li>
+<li><strong>Color Scheme Options</strong>: Alternative emoji sets or ASCII mode</li>
+</ul>
 <hr />
 <p><em>This emulator support enables efficient development and testing of the ESP32 distance sensor project without requiring physical hardware, while maintaining complete compatibility with the production system.</em></p>
 

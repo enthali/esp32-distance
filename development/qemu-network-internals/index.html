@@ -2260,11 +2260,13 @@ Example ICMP Echo Request (98 bytes total):
 <span class="c1">// Set output function (called by lwIP for TX)</span>
 <span class="n">lwip_netif</span><span class="o">-&gt;</span><span class="n">linkoutput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">uart_linkoutput</span><span class="p">;</span>
 </code></pre></div>
-<p><strong>Why Direct Integration?</strong>
-- Simpler packet flow (fewer abstraction layers)
-- Direct control over Ethernet frame handling
-- Easier debugging (fewer indirect function calls)
-- Better performance (reduced function call overhead)</p>
+<p><strong>Why Direct Integration?</strong></p>
+<ul>
+<li>Simpler packet flow (fewer abstraction layers)</li>
+<li>Direct control over Ethernet frame handling</li>
+<li>Easier debugging (fewer indirect function calls)</li>
+<li>Better performance (reduced function call overhead)</li>
+</ul>
 <h3 id="static-arp-entry">Static ARP Entry</h3>
 <p>To avoid ARP broadcasts (which don't work well over UART):</p>
 <div class="highlight"><pre><span></span><code><span class="n">ip4_addr_t</span><span class="w"> </span><span class="n">gateway_ip</span><span class="p">;</span>
@@ -2335,14 +2337,14 @@ Example ICMP Echo Request (98 bytes total):
 </ul>
 <h2 id="debugging-tips">Debugging Tips</h2>
 <h3 id="enable-verbose-logging">Enable Verbose Logging</h3>
-<p>In <code>netif_uart_tunnel_sim.c</code>:
+<p>In <code>netif_uart_tunnel_sim.c</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="cp">#define LOG_LOCAL_LEVEL ESP_LOG_DEBUG</span>
-</code></pre></div></p>
-<p>This will show every packet RX/TX:
+</code></pre></div>
+<p>This will show every packet RX/TX:</p>
 <div class="highlight"><pre><span></span><code>D (12345) uart_tunnel: RX: Got 98 bytes
 D (12345) uart_tunnel: RX: Ethernet dst=02:00:00:00:00:02 src=02:00:00:00:00:01 type=0x0800
 D (12345) uart_tunnel: TX: Sending 98 bytes
-</code></pre></div></p>
+</code></pre></div>
 <h3 id="monitor-tun-device">Monitor TUN Device</h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Watch all traffic on tun0</span>
 sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>tun0<span class="w"> </span>-vvv<span class="w"> </span>-X
@@ -2352,7 +2354,7 @@ sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </
 sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </span>tun0<span class="w"> </span>tcp<span class="w"> </span>port<span class="w"> </span><span class="m">80</span>
 </code></pre></div>
 <h3 id="check-lwip-statistics">Check lwIP Statistics</h3>
-<p>Add to your code:
+<p>Add to your code:</p>
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;lwip/stats.h&quot;</span>
 
 <span class="kt">void</span><span class="w"> </span><span class="nf">print_lwip_stats</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -2360,7 +2362,7 @@ sudo<span class="w"> </span>tcpdump<span class="w"> </span>-i<span class="w"> </
 <span class="w">    </span><span class="n">ESP_LOGI</span><span class="p">(</span><span class="n">TAG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;lwIP TX packets: %d&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lwip_stats</span><span class="p">.</span><span class="n">link</span><span class="p">.</span><span class="n">xmit</span><span class="p">);</span>
 <span class="w">    </span><span class="n">ESP_LOGI</span><span class="p">(</span><span class="n">TAG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;lwIP errors: %d&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lwip_stats</span><span class="p">.</span><span class="n">link</span><span class="p">.</span><span class="n">err</span><span class="p">);</span>
 <span class="p">}</span>
-</code></pre></div></p>
+</code></pre></div>
 <h3 id="uart-traffic-analysis">UART Traffic Analysis</h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Connect to UART1 directly to see raw bytes</span>
 nc<span class="w"> </span>localhost<span class="w"> </span><span class="m">5556</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>hexdump<span class="w"> </span>-C

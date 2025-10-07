@@ -1677,10 +1677,7 @@
 <h3 id="testing-and-reviewing-the-solution">Testing and Reviewing the Solution</h3>
 <p>Back in VS Code, you can check out the GitHub Coding Agent's branch, build the project, and—fingers crossed—flash it to your device for testing.</p>
 <p>Be sure to review the updated requirements and design documents. The Coding Agent has established bidirectional traceability from requirements to design to code and back, ensuring every change is documented and linked.</p>
-<p>You may wonder why this is the case, as there was nothing in the prompt explicitly asking Copilot to do so.</p>
-<p>Well, there is:</p>
-<p>All implementation and documentation changes must follow the project's ESP32 Coding Standards and commit message guidelines.  </p>
-<p>Check them out in <code>.github/</code>.</p>
+<p>All implementation and documentation changes must follow the project's ESP32 Coding Standards and commit message guidelines. Check them out in <code>.github/</code>.</p>
 <p>Note that previously, there was no timing behavior for the output LEDs. The Coding Agent not only updated the LED pattern but also implemented a time-based flashing algorithm that does not interfere with the task's blocking call to receive the next measurement from the distance sensor. This ensures the new flashing behavior is robust and does not impact sensor responsiveness.</p>
 <h3 id="creative-led-pattern-ideas">Creative LED Pattern Ideas</h3>
 <p>Want to go beyond the default LED behavior? Try these creative extensions:</p>

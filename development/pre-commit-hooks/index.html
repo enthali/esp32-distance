@@ -551,6 +551,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#philosophy-quality-as-a-process-not-a-gate" class="md-nav__link">
+    <span class="md-ellipsis">
+      Philosophy: Quality as a Process, Not a Gate
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#current-hooks" class="md-nav__link">
     <span class="md-ellipsis">
       Current Hooks
@@ -559,6 +568,15 @@
   
     <nav class="md-nav" aria-label="Current Hooks">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#markdown-linting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Markdown Linting
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#mkdocs-documentation-validation" class="md-nav__link">
@@ -663,6 +681,15 @@
   <a href="#hook-not-running" class="md-nav__link">
     <span class="md-ellipsis">
       Hook Not Running
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#markdownlint-not-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      Markdownlint Not Found
     </span>
   </a>
   
@@ -1748,6 +1775,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#philosophy-quality-as-a-process-not-a-gate" class="md-nav__link">
+    <span class="md-ellipsis">
+      Philosophy: Quality as a Process, Not a Gate
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#current-hooks" class="md-nav__link">
     <span class="md-ellipsis">
       Current Hooks
@@ -1756,6 +1792,15 @@
   
     <nav class="md-nav" aria-label="Current Hooks">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#markdown-linting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Markdown Linting
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#mkdocs-documentation-validation" class="md-nav__link">
@@ -1860,6 +1905,15 @@
   <a href="#hook-not-running" class="md-nav__link">
     <span class="md-ellipsis">
       Hook Not Running
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#markdownlint-not-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      Markdownlint Not Found
     </span>
   </a>
   
@@ -2036,32 +2090,106 @@
 <p>Pre-commit hooks run automatically on <code>git commit</code> and validate changes before they are committed. This ensures:</p>
 <ul>
 <li>Documentation is always valid and buildable</li>
+<li>Markdown syntax follows consistent style guidelines</li>
 <li>Links and references are correct</li>
 <li>Code quality standards are met</li>
 <li>Both human developers and AI agents (like GitHub Copilot) follow the same quality gates</li>
 </ul>
+<h2 id="philosophy-quality-as-a-process-not-a-gate">Philosophy: Quality as a Process, Not a Gate</h2>
+<p>Pre-commit hooks are <strong>automation assistants</strong>, not quality gatekeepers. They:</p>
+<ul>
+<li><strong>Catch trivial errors</strong> so humans can focus on design and logic</li>
+<li><strong>Enforce consistency</strong> automatically (formatting, style)</li>
+<li><strong>Provide fast feedback</strong> during development, not just at "the gate"</li>
+</ul>
+<p><strong>Quality should be everywhere:</strong></p>
+<ul>
+<li>Write tests alongside code</li>
+<li>Review design before implementation</li>
+<li>Use IDE linters while editing (not just at commit time)</li>
+<li>Think about maintainability from the start</li>
+</ul>
+<p>Pre-commit hooks are the <em>last automated safety check</em>, not the <em>first time</em> you think about quality.</p>
 <h2 id="current-hooks">Current Hooks</h2>
+<h3 id="markdown-linting">Markdown Linting</h3>
+<p><strong>Hook ID</strong>: <code>markdownlint</code></p>
+<p>Validates Markdown syntax and style consistency across all documentation files.</p>
+<p><strong>Configuration</strong> (<code>.pre-commit-config.yaml</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">markdownlint</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Markdown lint</span>
+<span class="w">  </span><span class="nt">entry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">markdownlint --fix</span>
+<span class="w">  </span><span class="nt">language</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">system</span>
+<span class="w">  </span><span class="nt">types</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">markdown</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">files</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">^(docs/.*\.md|.*\.md)$</span>
+</code></pre></div>
+<p><strong>What it checks:</strong></p>
+<ul>
+<li>Consistent heading styles and hierarchy</li>
+<li>Blank lines before lists and code blocks</li>
+<li>Trailing whitespace and multiple blank lines</li>
+<li>Proper code fence formatting</li>
+<li>Link reference definitions</li>
+<li>Consistent list marker styles</li>
+</ul>
+<p><strong>When it runs:</strong></p>
+<ul>
+<li>On any <code>.md</code> file in the repository</li>
+<li>Auto-fixes issues when possible (e.g., adds missing blank lines)</li>
+<li>Runs before MkDocs validation</li>
+</ul>
+<p><strong>Configuration</strong> (<code>.markdownlint.json</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;MD013&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;MD033&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;MD041&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;MD046&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;style&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;fenced&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>Key rules:</strong></p>
+<ul>
+<li><code>MD013: false</code> - No line length limit (avoids breaking URLs)</li>
+<li><code>MD033: false</code> - Allow inline HTML (useful for tables and complex layouts)</li>
+<li><code>MD041: false</code> - Don't require H1 as first line</li>
+<li><code>MD046: fenced</code> - Enforce fenced code blocks (```) instead of indented</li>
+</ul>
+<p><strong>Output example:</strong></p>
+<div class="highlight"><pre><span></span><code>Markdown lint........................................................Failed
+- hook id: markdownlint
+- files were modified by this hook
+
+docs/planning/Features-intended.md:38:1 MD032/blanks-around-lists 
+Lists should be surrounded by blank lines [Context: &quot;**What it checks**:&quot;]
+
+Fixed automatically - please review and stage changes
+</code></pre></div>
 <h3 id="mkdocs-documentation-validation">MkDocs Documentation Validation</h3>
 <p><strong>Hook ID</strong>: <code>mkdocs-build</code></p>
 <p>Validates all documentation using MkDocs strict mode before allowing commits.</p>
-<p><strong>Configuration</strong> (<code>.pre-commit-config.yaml</code>):
+<p><strong>Configuration</strong> (<code>.pre-commit-config.yaml</code>):</p>
 <div class="highlight"><pre><span></span><code><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mkdocs-build</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MkDocs build (strict)</span>
 <span class="w">  </span><span class="nt">entry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mkdocs build --strict</span>
 <span class="w">  </span><span class="nt">language</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">system</span>
 <span class="w">  </span><span class="nt">files</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">^(docs/.*|mkdocs\.yml)$</span>
-</code></pre></div></p>
-<p><strong>What it checks</strong>:
-- Broken links between documentation files
-- Missing documentation files referenced in navigation
-- Invalid Markdown syntax
-- MkDocs configuration errors
-- Missing required metadata</p>
-<p><strong>When it runs</strong>:
-- Only when files in <code>docs/</code> directory change
-- Only when <code>mkdocs.yml</code> configuration changes
-- Skipped for code-only commits (performance optimization)</p>
-<p><strong>Output</strong>:
+</code></pre></div>
+<p><strong>What it checks:</strong></p>
+<ul>
+<li>Broken links between documentation files</li>
+<li>Missing documentation files referenced in navigation</li>
+<li>Invalid Markdown syntax</li>
+<li>MkDocs configuration errors</li>
+<li>Missing required metadata</li>
+</ul>
+<p><strong>When it runs:</strong></p>
+<ul>
+<li>Only when files in <code>docs/</code> directory change</li>
+<li>Only when <code>mkdocs.yml</code> configuration changes</li>
+<li>Skipped for code-only commits (performance optimization)</li>
+</ul>
+<p><strong>Output</strong>:</p>
 <div class="highlight"><pre><span></span><code>MkDocs build (strict)....................................................Failed
 - hook id: mkdocs-build
 - duration: 1.01s
@@ -2070,14 +2198,24 @@
 INFO    -  Cleaning site directory
 INFO    -  Building documentation to directory: /workspaces/esp32-distance/site
 WARNING -  Doc file &#39;architecture/README.md&#39; contains a link &#39;nonexistent-file.md&#39;, 
-but the target &#39;architecture/nonexistent-file.md&#39; is not found among documentation files.
+but the target &#39;architecture/nonexistent-file.md&#39; is not found among documentation f
+iles.                                                                               
 
 Aborted with 1 warnings in strict mode!
-</code></pre></div></p>
+</code></pre></div>
 <h2 id="installation">Installation</h2>
 <h3 id="automatic-devcontainer">Automatic (Devcontainer)</h3>
-<p>Pre-commit is automatically installed when the devcontainer starts via <code>.devcontainer/post-start.sh</code>:</p>
+<p>Pre-commit and related tools are automatically installed when the devcontainer builds and starts:</p>
 <ol>
+<li><strong>During container build</strong> (<code>.devcontainer/Dockerfile</code>):</li>
+<li>Installs Node.js and npm</li>
+<li>Installs <code>markdownlint-cli</code> globally via npm</li>
+<li>
+<p>Installs MkDocs and related tools in <code>/opt/venv</code></p>
+</li>
+<li>
+<p><strong>On container start</strong> (<code>.devcontainer/post-start.sh</code>):</p>
+</li>
 <li>Creates a dedicated virtualenv at <code>~/.venv-devtools</code></li>
 <li>Installs pre-commit into the virtualenv</li>
 <li>Runs <code>pre-commit install --install-hooks</code> to set up git hooks</li>
@@ -2116,6 +2254,7 @@ pre-commit<span class="w"> </span>run<span class="w"> </span>--all-files
 
 <span class="c1"># Run specific hook</span>
 pre-commit<span class="w"> </span>run<span class="w"> </span>mkdocs-build
+pre-commit<span class="w"> </span>run<span class="w"> </span>markdownlint
 
 <span class="c1"># Skip hooks for a commit (use sparingly!)</span>
 git<span class="w"> </span>commit<span class="w"> </span>--no-verify
@@ -2134,69 +2273,90 @@ git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </sp
 <h3 id="hook-not-running">Hook Not Running</h3>
 <p>If pre-commit hooks don't run automatically:</p>
 <ol>
-<li>
-<p>Check if hooks are installed:
-   <div class="highlight"><pre><span></span><code>ls<span class="w"> </span>-la<span class="w"> </span>.git/hooks/pre-commit
-</code></pre></div></p>
-</li>
-<li>
-<p>Reinstall hooks:
-   <div class="highlight"><pre><span></span><code>~/.venv-devtools/bin/pre-commit<span class="w"> </span>install<span class="w"> </span>--install-hooks
-</code></pre></div></p>
-</li>
-<li>
-<p>Verify pre-commit is in PATH:
-   <div class="highlight"><pre><span></span><code>which<span class="w"> </span>pre-commit
-<span class="c1"># Should show: /home/esp/.venv-devtools/bin/pre-commit</span>
-</code></pre></div></p>
-</li>
+<li>Check if hooks are installed:</li>
 </ol>
+<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>-la<span class="w"> </span>.git/hooks/pre-commit
+</code></pre></div>
+<ol>
+<li>Reinstall hooks:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>~/.venv-devtools/bin/pre-commit<span class="w"> </span>install<span class="w"> </span>--install-hooks
+</code></pre></div>
+<ol>
+<li>Verify pre-commit is in PATH:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>which<span class="w"> </span>pre-commit
+<span class="c1"># Should show: /home/esp/.venv-devtools/bin/pre-commit</span>
+</code></pre></div>
+<h3 id="markdownlint-not-found">Markdownlint Not Found</h3>
+<p>The devcontainer has markdownlint-cli pre-installed globally via npm. If you see "markdownlint: command not found":</p>
+<ol>
+<li>Check if markdownlint is installed:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>which<span class="w"> </span>markdownlint
+<span class="c1"># Should show: /usr/local/bin/markdownlint or similar</span>
+</code></pre></div>
+<ol>
+<li>Verify npm global packages:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>npm<span class="w"> </span>list<span class="w"> </span>-g<span class="w"> </span>--depth<span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>markdownlint
+</code></pre></div>
+<ol>
+<li>Reinstall if needed:</li>
+</ol>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>npm<span class="w"> </span>install<span class="w"> </span>-g<span class="w"> </span>markdownlint-cli
+</code></pre></div>
 <h3 id="mkdocs-not-found">MkDocs Not Found</h3>
 <p>The devcontainer has MkDocs pre-installed at <code>/opt/venv/bin/mkdocs</code>. If you see "mkdocs not found":</p>
 <ol>
-<li>
-<p>Check if mkdocs is in PATH:
-   <div class="highlight"><pre><span></span><code>which<span class="w"> </span>mkdocs
-<span class="c1"># Should show: /opt/venv/bin/mkdocs</span>
-</code></pre></div></p>
-</li>
-<li>
-<p>Verify the venv is in PATH:
-   <div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="nv">$PATH</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>/opt/venv
-</code></pre></div></p>
-</li>
-<li>
-<p>Source the profile:
-   <div class="highlight"><pre><span></span><code><span class="nb">source</span><span class="w"> </span>/etc/profile.d/venv-mkdocs.sh
-</code></pre></div></p>
-</li>
+<li>Check if mkdocs is in PATH:</li>
 </ol>
+<div class="highlight"><pre><span></span><code>which<span class="w"> </span>mkdocs
+<span class="c1"># Should show: /opt/venv/bin/mkdocs</span>
+</code></pre></div>
+<ol>
+<li>Verify the venv is in PATH:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="nv">$PATH</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>/opt/venv
+</code></pre></div>
+<ol>
+<li>Source the profile:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="nb">source</span><span class="w"> </span>/etc/profile.d/venv-mkdocs.sh
+</code></pre></div>
 <h3 id="skipping-hooks-not-recommended">Skipping Hooks (Not Recommended)</h3>
 <p>In rare cases where you need to commit without running hooks:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Skip all hooks (use with caution!)</span>
 git<span class="w"> </span>commit<span class="w"> </span>--no-verify
 
-<span class="c1"># Or set environment variable</span>
+<span class="c1"># Or skip specific hooks with environment variable</span>
 <span class="nv">SKIP</span><span class="o">=</span>mkdocs-build<span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;WIP: Draft documentation&quot;</span>
+<span class="nv">SKIP</span><span class="o">=</span>markdownlint,mkdocs-build<span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;WIP: Draft with formatting issues&quot;</span>
 </code></pre></div>
 <p><strong>Warning</strong>: Skipping hooks can introduce broken documentation into the repository. Only use this for work-in-progress commits on feature branches.</p>
 <h2 id="future-enhancements">Future Enhancements</h2>
 <h3 id="planned-hooks">Planned Hooks</h3>
-<p><strong>Requirements Validation</strong> (Coming Soon):
-- Validate OpenFastTrack requirement format
-- Check requirement ID uniqueness
-- Verify bidirectional traceability links
-- Ensure all requirements have design coverage</p>
-<p><strong>Design Document Validation</strong> (Coming Soon):
-- Validate design document structure
-- Check design-to-requirement traceability
-- Verify design-to-implementation links
-- Ensure code references are valid</p>
-<p><strong>Code Quality</strong> (Planned):
-- C code formatting with <code>clang-format</code>
-- Static analysis with <code>cppcheck</code>
-- ESP-IDF specific linting
-- Comment and documentation completeness</p>
+<p><strong>Requirements Validation</strong> (Coming Soon):</p>
+<ul>
+<li>Validate OpenFastTrack requirement format</li>
+<li>Check requirement ID uniqueness</li>
+<li>Verify bidirectional traceability links</li>
+<li>Ensure all requirements have design coverage</li>
+</ul>
+<p><strong>Design Document Validation</strong> (Coming Soon):</p>
+<ul>
+<li>Validate design document structure</li>
+<li>Check design-to-requirement traceability</li>
+<li>Verify design-to-implementation links</li>
+<li>Ensure code references are valid</li>
+</ul>
+<p><strong>Code Quality</strong> (Planned):</p>
+<ul>
+<li>C code formatting with <code>clang-format</code></li>
+<li>Static analysis with <code>cppcheck</code></li>
+<li>ESP-IDF specific linting</li>
+<li>Comment and documentation completeness</li>
+</ul>
 <h3 id="configuration-example-future">Configuration Example (Future)</h3>
 <div class="highlight"><pre><span></span><code><span class="nt">repos</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local</span>
@@ -2265,6 +2425,8 @@ git<span class="w"> </span>commit<span class="w"> </span>--no-verify
 <h3 id="dependencies">Dependencies</h3>
 <ul>
 <li><strong>Python 3</strong>: Required for pre-commit framework</li>
+<li><strong>Node.js &amp; npm</strong>: Required for markdownlint-cli (via Dockerfile)</li>
+<li><strong>markdownlint-cli</strong>: Pre-installed globally via npm (via Dockerfile)</li>
 <li><strong>MkDocs</strong>: Pre-installed in <code>/opt/venv/</code> (via Dockerfile)</li>
 <li><strong>Pre-commit</strong>: Installed in <code>~/.venv-devtools/</code> (via post-start.sh)</li>
 </ul>
@@ -2289,7 +2451,7 @@ git<span class="w"> </span>commit<span class="w"> </span>--no-verify
 <li><a href="https://github.com/itsallcode/openfasttrace">OpenFastTrack project</a> (for future requirements validation)</li>
 </ul>
 <hr />
-<p><em>Last updated: October 2025</em></p>
+<p>Last updated: October 2025</p>
 
 
 

@@ -1702,14 +1702,14 @@
 <li><strong>Error Handling</strong>: Returns <code>ESP_ERR_INVALID_STATE</code> if LED controller not initialized</li>
 <li><strong>Integration</strong>: Direct function call from main(), no separate task required</li>
 </ul>
-<p>Architecture Flow:
+<p>Architecture Flow:</p>
 <div class="highlight"><pre><span></span><code><span class="n">main</span><span class="p">()</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">led_controller_init</span><span class="p">()</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">led_running_test_single_cycle</span><span class="p">()</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">normal_operation</span><span class="p">()</span>
-</code></pre></div></p>
+</code></pre></div>
 <p>Validation: LED controller must be successfully initialized before startup test can execute.</p>
 <h3 id="dsn-startup-2-sequential-led-pattern-algorithm-design">DSN-STARTUP-2: Sequential LED Pattern Algorithm Design</h3>
 <p>Addresses: REQ-STARTUP-2</p>
 <p>Design: Single moving LED pattern implemented using sequential clear-set-show operations.</p>
-<p><strong>Core Algorithm</strong> (<code>led_running_test_single_cycle</code>):
+<p><strong>Core Algorithm</strong> (<code>led_running_test_single_cycle</code>):</p>
 <div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">led_count</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="c1">// Clear previous LED (wrap around for first LED)</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -1724,23 +1724,27 @@
 
 <span class="w">    </span><span class="n">vTaskDelay</span><span class="p">(</span><span class="n">pdMS_TO_TICKS</span><span class="p">(</span><span class="n">delay_ms</span><span class="p">));</span><span class="w">  </span><span class="c1">// Timing control</span>
 <span class="p">}</span>
-</code></pre></div></p>
-<p><strong>Design Characteristics</strong>:
-- <strong>Single LED Active</strong>: Only one LED illuminated at any time (clear previous, set current)
-- <strong>Sequential Progression</strong>: LEDs activated from index 0 to (led_count-1)
-- <strong>Configurable Color</strong>: Color parameter allows different startup patterns
-- <strong>Configurable Timing</strong>: Delay parameter controls speed (default 50ms per LED)
-- <strong>Immediate Updates</strong>: <code>led_show()</code> called after each LED change for real-time feedback</p>
-<p><strong>Current Implementation</strong>:
-- Called as: <code>led_running_test_single_cycle(LED_COLOR_GREEN, 50)</code>
-- Green color for startup indication
-- 50ms delay between LED activations
-- Single cycle (not repeating)</p>
+</code></pre></div>
+<p><strong>Design Characteristics</strong>:</p>
+<ul>
+<li><strong>Single LED Active</strong>: Only one LED illuminated at any time (clear previous, set current)</li>
+<li><strong>Sequential Progression</strong>: LEDs activated from index 0 to (led_count-1)</li>
+<li><strong>Configurable Color</strong>: Color parameter allows different startup patterns</li>
+<li><strong>Configurable Timing</strong>: Delay parameter controls speed (default 50ms per LED)</li>
+<li><strong>Immediate Updates</strong>: <code>led_show()</code> called after each LED change for real-time feedback</li>
+</ul>
+<p><strong>Current Implementation</strong>:</p>
+<ul>
+<li>Called as: <code>led_running_test_single_cycle(LED_COLOR_GREEN, 50)</code></li>
+<li>Green color for startup indication</li>
+<li>50ms delay between LED activations</li>
+<li>Single cycle (not repeating)</li>
+</ul>
 <p>Validation: LEDs light sequentially from first to last position with visible timing.</p>
 <h3 id="dsn-startup-3-startup-integration-and-cleanup-design">DSN-STARTUP-3: Startup Integration and Cleanup Design</h3>
 <p>Addresses: REQ-STARTUP-3</p>
 <p>Design: One-time execution pattern with proper LED state management.</p>
-<p><strong>Integration Pattern</strong> (from main.c):
+<p><strong>Integration Pattern</strong> (from main.c):</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// 1. Initialize LED controller</span>
 <span class="n">led_controller_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">led_config</span><span class="p">);</span>
 
@@ -1758,17 +1762,21 @@
 <span class="n">led_show</span><span class="p">();</span>
 
 <span class="c1">// 5. Continue with normal initialization</span>
-</code></pre></div></p>
-<p><strong>Design Characteristics</strong>:
-- <strong>One-Time Execution</strong>: Called once during startup, not as background task
-- <strong>State Cleanup</strong>: LEDs cleared before and after test
-- <strong>Logging Integration</strong>: ESP_LOG<em> statements for startup visibility
-- </em><em>Non-Blocking</em><em>: Executes synchronously in main thread
-- </em><em>Clean Transition</em>*: All LEDs off after test, ready for normal operation</p>
-<p><strong>Performance</strong>:
-- Total execution time for 40 LEDs: ~2 seconds (40 × 50ms)
-- Memory usage: No additional allocation beyond LED controller
-- CPU impact: Minimal, just timing delays</p>
+</code></pre></div>
+<p><strong>Design Characteristics</strong>:</p>
+<ul>
+<li><strong>One-Time Execution</strong>: Called once during startup, not as background task</li>
+<li><strong>State Cleanup</strong>: LEDs cleared before and after test</li>
+<li><strong>Logging Integration</strong>: ESP_LOG* statements for startup visibility</li>
+<li><strong>Non-Blocking</strong>: Executes synchronously in main thread</li>
+<li><strong>Clean Transition</strong>: All LEDs off after test, ready for normal operation</li>
+</ul>
+<p><strong>Performance</strong>:</p>
+<ul>
+<li>Total execution time for 40 LEDs: ~2 seconds (40 × 50ms)</li>
+<li>Memory usage: No additional allocation beyond LED controller</li>
+<li>CPU impact: Minimal, just timing delays</li>
+</ul>
 <p>Validation: Test completes within reasonable time, all LEDs cleared after completion.</p>
 <h2 id="implementation-architecture">Implementation Architecture</h2>
 <h3 id="component-structure">Component Structure</h3>
@@ -1779,7 +1787,7 @@
 </code></pre></div>
 <h3 id="api-design">API Design</h3>
 <ul>
-<li><strong>Primary Function</strong>: <code>led_running_test_single_cycle(color, delay_ms)</code> </li>
+<li><strong>Primary Function</strong>: <code>led_running_test_single_cycle(color, delay_ms)</code></li>
 <li><strong>Extended Functions</strong>: <code>led_running_test_multiple_cycles()</code>, <code>led_running_test_rainbow()</code></li>
 <li><strong>Error Handling</strong>: ESP-IDF error codes (<code>ESP_OK</code>, <code>ESP_ERR_INVALID_STATE</code>)</li>
 <li><strong>Dependencies</strong>: LED controller component</li>

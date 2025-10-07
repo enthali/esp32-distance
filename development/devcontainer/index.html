@@ -1767,11 +1767,13 @@ idf.py<span class="w"> </span>menuconfig
 <h3 id="windows-usb-device-setup-local-dev-container-only">Windows USB Device Setup (Local Dev Container Only)</h3>
 <p>For Windows users running the dev container locally (not needed for Codespaces):</p>
 <p><strong>Quick Setup</strong>: Run <code>tools/attach-esp32.ps1</code> as Administrator - script automatically finds and attaches your ESP32.</p>
-<p><strong>Manual Setup</strong> (if script doesn't work):
-1. Install usbipd-win: <code>winget install usbipd</code>
-2. Find device: <code>usbipd list</code> (look for USB-SERIAL CH340)
-3. Bind device: <code>usbipd bind --busid &lt;BUSID&gt;</code>
-4. Attach to container: <code>usbipd attach --wsl --busid &lt;BUSID&gt;</code></p>
+<p><strong>Manual Setup</strong> (if script doesn't work):</p>
+<ol>
+<li>Install usbipd-win: <code>winget install usbipd</code></li>
+<li>Find device: <code>usbipd list</code> (look for USB-SERIAL CH340)</li>
+<li>Bind device: <code>usbipd bind --busid &lt;BUSID&gt;</code></li>
+<li>Attach to container: <code>usbipd attach --wsl --busid &lt;BUSID&gt;</code></li>
+</ol>
 <p><strong>Note</strong>: GitHub Codespaces handles USB through browser serial interface - no manual setup needed.</p>
 <h2 id="benefits">Benefits</h2>
 <ul>

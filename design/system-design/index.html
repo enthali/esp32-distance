@@ -1847,42 +1847,52 @@
 <h2 id="module-specifications">Module Specifications</h2>
 <h3 id="1-led-controller-module">1. LED Controller Module</h3>
 <p><strong>Purpose</strong>: Low-level hardware abstraction for WS2812 LED strip control with RAM buffer management.</p>
-<p><strong>Hardware Interface</strong>:
-- Configurable GPIO pin for WS2812 data line (RMT backend)
-- Configurable number of individually addressable LEDs
-- 5V power supply for LED strip</p>
-<p><strong>Key Features</strong>:
-- Individual pixel control (set/get/clear)
-- RAM buffer maintains current LED state
-- Manual update trigger for performance optimization
-- Color space management (RGB)
-- Configurable LED count during initialization
-- Read capability for current LED states</p>
+<p><strong>Hardware Interface</strong>:</p>
+<ul>
+<li>Configurable GPIO pin for WS2812 data line (RMT backend)</li>
+<li>Configurable number of individually addressable LEDs</li>
+<li>5V power supply for LED strip</li>
+</ul>
+<p><strong>Key Features</strong>:</p>
+<ul>
+<li>Individual pixel control (set/get/clear)</li>
+<li>RAM buffer maintains current LED state</li>
+<li>Manual update trigger for performance optimization</li>
+<li>Color space management (RGB)</li>
+<li>Configurable LED count during initialization</li>
+<li>Read capability for current LED states</li>
+</ul>
 <p><strong>Current Status</strong>: ✅ <strong>COMPLETED</strong> - Component implemented in <code>components/led_controller/</code></p>
 <h3 id="2-distance-sensor-module">2. Distance Sensor Module</h3>
 <p><strong>Purpose</strong>: Accurate distance measurement using HC-SR04 ultrasonic sensor with interrupt-driven timing and dual-queue architecture.</p>
-<p><strong>Hardware Interface</strong>:
-- GPIO14: Trigger pin
-- GPIO13: Echo pin<br />
-- Timing-critical pulse measurement with ESP32 timers</p>
-<p><strong>Key Features</strong>:
-- Interrupt-driven measurement with precise timing control
-- Dual-queue system for non-blocking API access
-- Signal filtering and error detection (timeout, out-of-range, invalid readings)
-- Temperature compensation support
-- Queue overflow detection and statistics
-- Configurable measurement rate (default: 10Hz)
-- Background FreeRTOS task (Priority 6) for real-time operation</p>
+<p><strong>Hardware Interface</strong>:</p>
+<ul>
+<li>GPIO14: Trigger pin</li>
+<li>GPIO13: Echo pin  </li>
+<li>Timing-critical pulse measurement with ESP32 timers</li>
+</ul>
+<p><strong>Key Features</strong>:</p>
+<ul>
+<li>Interrupt-driven measurement with precise timing control</li>
+<li>Dual-queue system for non-blocking API access</li>
+<li>Signal filtering and error detection (timeout, out-of-range, invalid readings)</li>
+<li>Temperature compensation support</li>
+<li>Queue overflow detection and statistics</li>
+<li>Configurable measurement rate (default: 10Hz)</li>
+<li>Background FreeRTOS task (Priority 6) for real-time operation</li>
+</ul>
 <p><strong>Current Status</strong>: ✅ <strong>COMPLETED</strong> - Component implemented in <code>components/distance_sensor/</code></p>
 <h3 id="3-display-logic-module">3. Display Logic Module</h3>
 <p><strong>Purpose</strong>: Business logic for converting distance measurements to visual LED patterns.</p>
-<p><strong>Key Features</strong>:
-- Distance-to-LED position mapping algorithms (10cm-50cm → LEDs 0-39)
-- Multiple display modes (running LED, range indicator, error states)
-- Smooth transitions between states with real-time updates
-- Color coding for different distance ranges (green/blue normal, red errors)
-- Animation state management with FreeRTOS task (Priority 3)
-- Error visual indicators (sensor timeout, out-of-range conditions)</p>
+<p><strong>Key Features</strong>:</p>
+<ul>
+<li>Distance-to-LED position mapping algorithms (10cm-50cm → LEDs 0-39)</li>
+<li>Multiple display modes (running LED, range indicator, error states)</li>
+<li>Smooth transitions between states with real-time updates</li>
+<li>Color coding for different distance ranges (green/blue normal, red errors)</li>
+<li>Animation state management with FreeRTOS task (Priority 3)</li>
+<li>Error visual indicators (sensor timeout, out-of-range conditions)</li>
+</ul>
 <p><strong>Current Status</strong>: ✅ <strong>COMPLETED</strong> - Component implemented in <code>main/display_logic.h/c</code></p>
 <h3 id="4-web-server-module">4. Web Server Module</h3>
 <p><strong>Purpose</strong>: Remote monitoring and configuration interface with WiFi management and HTTPS security.</p>
@@ -1898,32 +1908,40 @@
 <li><strong>Reset Functionality</strong>: Clear stored credentials and restart system</li>
 <li><strong>Certificate Management</strong>: Automated self-signed certificate generation and embedding</li>
 </ul>
-<p><strong>Security Implementation</strong>:
-- HTTPS server on port 443 with embedded SSL certificates
-- HTTP redirect server on port 80 for user convenience
-- Self-signed certificates with 25-year validity period
-- Build-time certificate generation (no manual management required)
-- Certificate embedding using ESP-IDF EMBED_FILES feature</p>
+<p><strong>Security Implementation</strong>:</p>
+<ul>
+<li>HTTPS server on port 443 with embedded SSL certificates</li>
+<li>HTTP redirect server on port 80 for user convenience</li>
+<li>Self-signed certificates with 25-year validity period</li>
+<li>Build-time certificate generation (no manual management required)</li>
+<li>Certificate embedding using ESP-IDF EMBED_FILES feature</li>
+</ul>
 <p><strong>Current Status</strong>: 🔄 <strong>IN PROGRESS</strong> (Step 4.2) - HTTPS implementation underway</p>
 <h3 id="5-certificate-handler-module">5. Certificate Handler Module</h3>
 <p><strong>Purpose</strong>: Automated SSL certificate generation and management for HTTPS security.</p>
-<p><strong>Technical Implementation</strong>:
-- <strong>Build-time Generation</strong>: Certificates generated automatically during ESP-IDF build if missing
-- <strong>Dual Tool Support</strong>: OpenSSL binary (preferred) or Python cryptography library (fallback)
-- <strong>Certificate Embedding</strong>: Uses ESP-IDF EMBED_FILES to embed certificates in firmware
-- <strong>Long-term Validity</strong>: 25-year certificate validity period for device lifecycle
-- <strong>No Manual Management</strong>: Zero configuration required from developers or users</p>
-<p><strong>Certificate Properties</strong>:
-- <strong>Common Name</strong>: ESP32-Distance-Sensor
-- <strong>Organization</strong>: ESP32 Distance Project
-- <strong>Key Size</strong>: RSA 2048-bit
-- <strong>Subject Alternative Names</strong>: DNS (esp32-distance-sensor.local), IP (192.168.4.1)
-- <strong>Format</strong>: PEM format for maximum compatibility</p>
-<p><strong>Security Features</strong>:
-- Private keys never committed to version control (.gitignore exclusions)
-- Fresh certificate generation on clean builds
-- Self-signed certificates appropriate for local IoT devices
-- Standard SSL/TLS encryption for web traffic</p>
+<p><strong>Technical Implementation</strong>:</p>
+<ul>
+<li><strong>Build-time Generation</strong>: Certificates generated automatically during ESP-IDF build if missing</li>
+<li><strong>Dual Tool Support</strong>: OpenSSL binary (preferred) or Python cryptography library (fallback)</li>
+<li><strong>Certificate Embedding</strong>: Uses ESP-IDF EMBED_FILES to embed certificates in firmware</li>
+<li><strong>Long-term Validity</strong>: 25-year certificate validity period for device lifecycle</li>
+<li><strong>No Manual Management</strong>: Zero configuration required from developers or users</li>
+</ul>
+<p><strong>Certificate Properties</strong>:</p>
+<ul>
+<li><strong>Common Name</strong>: ESP32-Distance-Sensor</li>
+<li><strong>Organization</strong>: ESP32 Distance Project</li>
+<li><strong>Key Size</strong>: RSA 2048-bit</li>
+<li><strong>Subject Alternative Names</strong>: DNS (esp32-distance-sensor.local), IP (192.168.4.1)</li>
+<li><strong>Format</strong>: PEM format for maximum compatibility</li>
+</ul>
+<p><strong>Security Features</strong>:</p>
+<ul>
+<li>Private keys never committed to version control (.gitignore exclusions)</li>
+<li>Fresh certificate generation on clean builds</li>
+<li>Self-signed certificates appropriate for local IoT devices</li>
+<li>Standard SSL/TLS encryption for web traffic</li>
+</ul>
 <p><strong>Current Status</strong>: ✅ <strong>COMPLETED</strong> - Component implemented in <code>components/cert_handler/</code></p>
 <h2 id="data-flow">Data Flow</h2>
 <div class="highlight"><pre><span></span><code>HC-SR04 Sensor → Distance Sensor Module → Display Logic Module → LED Controller Module → WS2812 Strip

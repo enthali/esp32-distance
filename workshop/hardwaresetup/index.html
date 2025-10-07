@@ -1607,7 +1607,7 @@
 <p>The ESP32 Relay X2 board features two onboard relays and supports a wide input voltage range from 5V to 60V, making it suitable for 12V, 24V, or 48V systems such as solar power batteries. However, it does <strong>not</strong> include a built-in USB serial connector, so you will need an external USB-to-serial adapter for programming and debugging. If you use a different ESP32 development board with onboard USB, the external adapter is not required.</p>
 <p><img alt="ESP32" src="../../assets/images/ESP32_Relais_X2.jpg" /></p>
 <h3 id="usb-serial-adapter">USB serial adapter</h3>
-<p>Here we see a CH340 USB-A to TTL-Serial adapter. Many ESP32 development boards already include a built-in USB-to-serial adapter, so this external adapter is not required if your board has onboard USB connectivity. Use the external adapter only if your ESP32 board lacks a native USB port for programming.,</p>
+<p>Here we see a CH340 USB-A to TTL-Serial adapter. Many ESP32 development boards already include a built-in USB-to-serial adapter, so this external adapter is not required if your board has onboard USB connectivity. Use the external adapter only if your ESP32 board lacks a native USB port for programming.</p>
 <p><img alt="USB Serial Adapter" src="../../assets/images/USB%20Serial.jpg" /></p>
 <h3 id="hc-sr04-ultrasonic-distance-sensor">HC-SR04 ultrasonic distance sensor</h3>
 <p>The HC-SR04 ultrasonic distance sensor works by emitting an ultrasonic pulse from its trigger pin and then waiting for the echo signal to return. The sensor itself does not calculate distance; it simply provides a short trigger pulse input and then outputs a pulse on the echo pin whose duration corresponds to the time taken for the sound to travel to an object and back. The ESP32 microcontroller measures this echo pulse duration using a hardware timer and then calculates the distance based on the speed of sound. This approach enables accurate, non-contact distance measurement for robotics, automation, and IoT applications.</p>
@@ -1617,12 +1617,13 @@
 <p><img alt="LED Strip" src="../../assets/images/WS2812Stripe.jpg" /></p>
 <h2 id="wiring-overview">Wiring overview</h2>
 <ul>
-<li>Connect the HC-SR04 trigger pin to the <strong>GPIO13 PIN</strong> and the echo pin to <strong>GPIO12 pin</strong> on the ESP32. </li>
+<li>Connect the HC-SR04 trigger pin to the <strong>GPIO13 PIN</strong> and the echo pin to <strong>GPIO12 pin</strong> on the ESP32.</li>
 <li>Connect the HC-SR04 power to <strong>the 5V pin</strong> and ground to <strong>any GND pin</strong> of the ESP32 board. For details, see <a href="../../requirements/distance-sensor-requirements/">requirements</a>.</li>
 <li>Connect the WS2812 data line to the ESP32 <strong>GPIO12 pin</strong> (see also <a href="../../requirements/led-controller-requirements/">requirements</a>).</li>
-<li>Connect the WS2812 ground to a <strong>GND pin</strong></li>
-<li>Connect the WS2812 <strong>5V Vcc</strong> to ... well ... here's the thing the Relay X2 has no additional 5V pin available, but wait, there is a <strong>3,3 V pin</strong> and it works just fine.</li>
-<li>Connect the ESP32 module to GND and 5V of the USP Serial Adapter and <strong>crossconnect</strong> the two <strong>TX x RX</strong> lines
+<li>Connect the WS2812 ground to a <strong>GND pin</strong>.</li>
+<li>Connect the WS2812 <strong>5V Vcc</strong> to a 5V supply; if your board lacks a 5V pin, use an appropriate external 5V supply and common ground.</li>
+<li>Connect the ESP32 module to GND and 5V of the USB Serial Adapter and cross-connect the TX/RX lines.</li>
+</ul>
 <div class="highlight"><pre><span></span><code>    +-------------------+         +-------------------------+
     |   USB Serial      |         |      ESP32 Board        |
     |   Adapter (CH340) |         |    (ESP32 WROOM-32F)    |
@@ -1638,10 +1639,9 @@
     |                   |         |                         |
     +-------------------+         +-------------------------+
 </code></pre></div>
-<strong>Note:</strong> TX on the adapter connects to RX on the ESP32, and RX on the adapter connects to TX on the ESP32 (crossed lines).</li>
-</ul>
+<p><strong>Note:</strong> TX on the adapter connects to RX on the ESP32, and RX on the adapter connects to TX on the ESP32 (crossed lines).</p>
 <blockquote>
-<p><strong>Pro Tip:</strong> Double-check your wiring before plugging the USB Serial Adapter into your PC or Laptop, sounds trivial but...... better save than sorry</p>
+<p><strong>Pro Tip:</strong> Double-check your wiring before plugging the USB Serial Adapter into your PC or laptop — better safe than sorry.</p>
 </blockquote>
 
 

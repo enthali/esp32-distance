@@ -2153,11 +2153,13 @@
 <li>Select "<strong>QEMU: GDB</strong>" from the dropdown</li>
 <li>Click the green play button or press F5</li>
 </ol>
-<p>VS Code will:
-- ✅ Connect to QEMU's GDB server (port 3333)
-- ✅ Load symbols from the built ELF file
-- ✅ Break at <code>app_main()</code>
-- ✅ Show full call stack and variables</p>
+<p>VS Code will:</p>
+<ul>
+<li>✅ Connect to QEMU's GDB server (port 3333)</li>
+<li>✅ Load symbols from the built ELF file</li>
+<li>✅ Break at <code>app_main()</code></li>
+<li>✅ Show full call stack and variables</li>
+</ul>
 <h2 id="debugging-features">Debugging Features</h2>
 <h3 id="breakpoints">Breakpoints</h3>
 <p>Set breakpoints by clicking in the editor gutter (left of line numbers):</p>
@@ -2236,11 +2238,13 @@
 <span class="w">    </span><span class="p">]</span>
 <span class="p">}</span>
 </code></pre></div>
-<p><strong>Features:</strong>
-- Connects to QEMU GDB server
-- Breaks at <code>app_main()</code> automatically
-- Full source-level debugging
-- Works in GitHub Codespaces</p>
+<p><strong>Features:</strong></p>
+<ul>
+<li>Connects to QEMU GDB server</li>
+<li>Breaks at <code>app_main()</code> automatically</li>
+<li>Full source-level debugging</li>
+<li>Works in GitHub Codespaces</li>
+</ul>
 <h3 id="esp32-hardware-alternative">ESP32 Hardware (Alternative)</h3>
 <p>For debugging on real ESP32 hardware with JTAG adapter:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
@@ -2259,10 +2263,12 @@
 <span class="w">    </span><span class="p">]</span>
 <span class="p">}</span>
 </code></pre></div>
-<p><strong>Requirements:</strong>
-- ESP-PROG or similar JTAG adapter
-- OpenOCD running with appropriate configuration
-- Hardware connection (see ESP-IDF JTAG debugging guide)</p>
+<p><strong>Requirements:</strong></p>
+<ul>
+<li>ESP-PROG or similar JTAG adapter</li>
+<li>OpenOCD running with appropriate configuration</li>
+<li>Hardware connection (see ESP-IDF JTAG debugging guide)</li>
+</ul>
 <h2 id="common-debugging-scenarios">Common Debugging Scenarios</h2>
 <h3 id="debug-network-stack">Debug Network Stack</h3>
 <p>Set breakpoints in network components:</p>
@@ -2395,7 +2401,7 @@ xtensa-esp32-elf-gdb<span class="w"> </span>build/distance.elf
 <h2 id="troubleshooting">Troubleshooting</h2>
 <h3 id="debugger-wont-connect">Debugger Won't Connect</h3>
 <p><strong>Problem:</strong> VS Code can't connect to GDB server</p>
-<p><strong>Solutions:</strong>
+<p><strong>Solutions:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># 1. Check if QEMU is running</span>
 ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>qemu
 
@@ -2407,10 +2413,10 @@ nc<span class="w"> </span>-zv<span class="w"> </span>localhost<span class="w"> <
 ./tools/run-qemu-network.sh
 
 <span class="c1"># 4. Wait for QEMU to be ready (script does this automatically)</span>
-</code></pre></div></p>
+</code></pre></div>
 <h3 id="no-symbols-source-code">No Symbols / Source Code</h3>
 <p><strong>Problem:</strong> Debugger shows assembly instead of C code</p>
-<p><strong>Solutions:</strong>
+<p><strong>Solutions:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># 1. Ensure project is built with debug symbols</span>
 idf.py<span class="w"> </span>menuconfig
 <span class="c1"># Component config → Compiler options → Optimization Level → Debug (-Og)</span>
@@ -2421,21 +2427,25 @@ idf.py<span class="w"> </span>build
 
 <span class="c1"># 3. Verify ELF file exists</span>
 ls<span class="w"> </span>-lh<span class="w"> </span>build/distance.elf
-</code></pre></div></p>
+</code></pre></div>
 <h3 id="breakpoints-not-working">Breakpoints Not Working</h3>
 <p><strong>Problem:</strong> Breakpoints are ignored or show as "unverified"</p>
-<p><strong>Solutions:</strong>
-- Ensure file is actually compiled (not excluded by #ifdef)
-- Check optimization level (too high optimization can skip code)
-- Verify you're debugging the correct build
-- Try <code>thbreak</code> (temporary hardware breakpoint) instead</p>
+<p><strong>Solutions:</strong></p>
+<ul>
+<li>Ensure file is actually compiled (not excluded by #ifdef)</li>
+<li>Check optimization level (too high optimization can skip code)</li>
+<li>Verify you're debugging the correct build</li>
+<li>Try <code>thbreak</code> (temporary hardware breakpoint) instead</li>
+</ul>
 <h3 id="slow-debugging">Slow Debugging</h3>
 <p><strong>Problem:</strong> Stepping through code is very slow</p>
 <p><strong>This is normal in QEMU!</strong> QEMU emulation is slower than real hardware.</p>
-<p><strong>Tips to improve:</strong>
-- Use breakpoints instead of stepping
-- Run to cursor (Right-click → Run to Cursor)
-- Skip uninteresting functions with Step Over</p>
+<p><strong>Tips to improve:</strong></p>
+<ul>
+<li>Use breakpoints instead of stepping</li>
+<li>Run to cursor (Right-click → Run to Cursor)</li>
+<li>Skip uninteresting functions with Step Over</li>
+</ul>
 <h2 id="next-steps">Next Steps</h2>
 <ul>
 <li><strong><a href="../qemu-emulator/">QEMU Emulator Guide</a></strong> - Learn more about QEMU setup</li>
