@@ -1104,9 +1104,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-wifi-manager" class="md-nav__link">
+  <a href="#3-wifi-manager-and-network-stack" class="md-nav__link">
     <span class="md-ellipsis">
-      3. WiFi Manager
+      3. WiFi Manager and Network Stack
     </span>
   </a>
   
@@ -1846,9 +1846,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-wifi-manager" class="md-nav__link">
+  <a href="#3-wifi-manager-and-network-stack" class="md-nav__link">
     <span class="md-ellipsis">
-      3. WiFi Manager
+      3. WiFi Manager and Network Stack
     </span>
   </a>
   
@@ -2161,10 +2161,19 @@
 <li><strong>Color Mapping</strong>: Intelligent RGB-to-emoji conversion</li>
 <li><strong>Buffer Management</strong>: Same pixel operations as hardware</li>
 </ul>
-<h4 id="3-wifi-manager">3. WiFi Manager</h4>
+<h4 id="3-wifi-manager-and-network-stack">3. WiFi Manager and Network Stack</h4>
 <ul>
-<li><strong>No Changes Needed</strong>: Runs as-is without network events</li>
-<li><strong>Web Interface</strong>: Still accessible (localhost without network)</li>
+<li><strong>Full Network Implementation</strong>: Complete TCP/IP stack via UART-based IP tunnel</li>
+<li><strong>TUN Device Bridge</strong> (<code>tools/serial_tun_bridge.py</code>): Bridges QEMU UART1 to Linux TUN interface</li>
+<li>ESP32 address: <code>192.168.100.2/24</code></li>
+<li>Host TUN interface: <code>192.168.100.1/24</code></li>
+<li>Ethernet frame encapsulation for lwIP compatibility</li>
+<li><strong>HTTP Proxy</strong> (<code>tools/http_proxy.py</code>): Forwards <code>localhost:8080</code> → ESP32 web server</li>
+<li>Enables browser access via GitHub Codespaces port forwarding</li>
+<li>Automatic retry with exponential backoff</li>
+<li>Handles ESP32 restarts gracefully</li>
+<li><strong>Web Interface</strong>: Fully accessible via network tunnel (real HTTP connections, not localhost mock)</li>
+<li><strong>See Also</strong>: <a href="../development/qemu-network-internals/">Network Internals Documentation</a> for deep dive</li>
 </ul>
 <h2 id="build-configuration">Build Configuration</h2>
 <h3 id="kconfig-options">Kconfig Options</h3>
