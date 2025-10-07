@@ -10,7 +10,7 @@ Lohweg 10
 Deutschland  
 
 **Kontakt:**  
-E-Mail: georg_doll@freenet.de
+E-Mail: <georg_doll@freenet.de>
 
 ## Haftungsausschluss
 
@@ -32,4 +32,4 @@ Diese Website dokumentiert ein Open-Source-Projekt. Der Quellcode und die Dokume
 
 ---
 
-*Letzte Aktualisierung: {{date.today()}}, 2025*
+Letzte Aktualisierung: {{date.today()}}, 2025

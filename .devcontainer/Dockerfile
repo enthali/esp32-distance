@@ -23,7 +23,7 @@ RUN groupadd --gid $USER_GID $CONTAINER_USER \
 # the system-managed Python environment (avoids PEP 668 issues)
 USER root
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends python3-venv python3-pip \
+  && apt-get install -y --no-install-recommends python3-venv python3-pip nodejs npm \
   # create a system venv for documentation tools
   && python3 -m venv /opt/venv \
   && /opt/venv/bin/python -m pip install --upgrade pip setuptools wheel \
@@ -32,6 +32,8 @@ RUN apt-get update \
     "mkdocs-material>=9.0" \
     "mkdocstrings>=0.19" \
     pymdown-extensions \
+  # install markdownlint-cli for markdown validation
+  && npm install -g markdownlint-cli \
   # make the venv binaries available system-wide via /etc/profile.d
   && echo 'export PATH="/opt/venv/bin:$PATH"' > /etc/profile.d/venv-mkdocs.sh \
   && chmod +x /etc/profile.d/venv-mkdocs.sh \

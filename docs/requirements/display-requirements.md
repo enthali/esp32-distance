@@ -25,6 +25,7 @@ This document specifies requirements for the Display System, enabling visual rep
 | REQ-DSP-IMPL-03 | DSN-DSP-IMPL-03 | Mandatory |
 
 **Dependencies**:
+
 - REQ-DSP-OVERVIEW-02 depends on REQ-CFG-1 (configuration management system)
 - REQ-DSP-VISUAL-03 depends on REQ-CFG-2 (boundary parameter configuration)
 - REQ-DSP-VISUAL-04 depends on REQ-CFG-2 (boundary parameter configuration)
@@ -42,6 +43,7 @@ This document specifies requirements for the Display System, enabling visual rep
 **Rationale**: Establishes the hardware foundation for the visual display system, enabling flexible LED strip configurations for different deployment scenarios. The system operates reactively, automatically responding to distance measurements rather than external commands.
 
 **Acceptance Criteria**:
+
 - AC-1: System supports WS2812 addressable LED strips
 - AC-2: LED count and brightness are configurable via configuration management system
 - AC-3: System validates LED count is within reasonable range (1-100 LEDs)
@@ -61,10 +63,12 @@ This document specifies requirements for the Display System, enabling visual rep
 **Rationale**: Ensures centralized configuration management and eliminates hardcoded values, enabling runtime reconfiguration and consistent system behavior. Parameter validation is handled by the configuration manager. Configuration changes trigger system reset, allowing static memory allocation at startup with no runtime reallocation - preventing memory fragmentation and performance degradation in the embedded environment.
 
 **Acceptance Criteria**:
+
 - AC-1: All display parameters are obtained from configuration manager
 - AC-2: System reads configuration at initialization
 
 **Configuration Parameters**:
+
 - `led_count`: Number of LEDs in the strip
 - `led_brightness`: LED brightness level
 - `min_distance_cm`: Minimum distance threshold
@@ -83,6 +87,7 @@ This document specifies requirements for the Display System, enabling visual rep
 **Rationale**: Provides clear, unambiguous visual feedback where users can immediately understand the current distance measurement through LED position.
 
 **Acceptance Criteria**:
+
 - AC-1: Only one LED is illuminated at any given time
 - AC-2: LED position corresponds to measured distance value
 - AC-3: Display updates immediately when new measurements arrive
@@ -99,6 +104,7 @@ This document specifies requirements for the Display System, enabling visual rep
 **Rationale**: Provides intuitive distance visualization where LED position directly correlates to distance magnitude, using green color to indicate in-range measurements.
 
 **Acceptance Criteria**:
+
 - AC-1: LED color is green for measurements within valid range
 - AC-2: Minimum configured distance maps exactly to first LED (position 0)
 - AC-3: Maximum configured distance maps exactly to last LED (position led_count-1)
@@ -116,6 +122,7 @@ This document specifies requirements for the Display System, enabling visual rep
 **Rationale**: Provides enhanced visual indication when measurements are below the useful range, using red color and a distinctive flashing pattern across multiple LEDs to create a more noticeable below-minimum condition indicator compared to a single static LED.
 
 **Acceptance Criteria**:
+
 - AC-1: Every 10th LED (positions 0, 10, 20, 30, etc.) flashes red when distance < min_distance_cm
 - AC-2: Flash interval is 1 second (500ms on, 500ms off cycle)
 - AC-3: Only the designated 10th-position LEDs are illuminated during flash-on state (all others remain off)
@@ -134,6 +141,7 @@ This document specifies requirements for the Display System, enabling visual rep
 **Rationale**: Provides clear visual indication when measurements are above the useful range, using red color and last position to indicate above-maximum condition.
 
 **Acceptance Criteria**:
+
 - AC-1: Last LED (position led_count-1) is illuminated red when distance > max_distance_cm
 - AC-2: Only the last LED is illuminated (all others remain off)
 - AC-3: Display persists until measurement returns to valid range
@@ -151,6 +159,7 @@ This document specifies requirements for the Display System, enabling visual rep
 **Rationale**: Provides responsive, real-time display updates using efficient blocking I/O patterns, ensuring minimal resource usage and immediate response to sensor data.
 
 **Acceptance Criteria**:
+
 - AC-1: Implementation uses FreeRTOS task for display logic
 - AC-2: Task blocks waiting for distance measurement notifications
 - AC-3: Task has appropriate priority below measurement task but above any other task for real-time response

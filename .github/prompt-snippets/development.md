@@ -7,12 +7,14 @@ This document outlines the development workflow for the ESP32 Distance Sensor pr
 For developers new to the project:
 
 1. **Clone and setup**:
+
    ```bash
    git clone <repository-url>
    cd distance
    ```
 
 2. **Build and test**:
+
    ```powershell
    cmd /c "cd /D c:\workspace\ESP32_Projects\distance && C:\workspace\ESP32_Projects\esp\v5.4.1\esp-idf\export.bat && idf.py flash monitor"
    ```
@@ -27,6 +29,7 @@ For developers new to the project:
 ### Feature Branches
 
 Use descriptive branch names:
+
 - `feature/dns-server-extraction`
 - `fix/build-compilation-errors`
 - `enhancement/wifi-timeout-logic`
@@ -35,7 +38,7 @@ Use descriptive branch names:
 
 ### Commit Message Format
 
-```
+```text
 <type>: <description>
 
 [optional body]
@@ -83,6 +86,7 @@ idf.py fullclean build
 idf.py flash monitor
 
 # Component-specific build test
+```bash
 idf.py build --verbose
 ```
 
@@ -98,7 +102,7 @@ idf.py build --verbose
 
 ### File Organization
 
-```
+```text
 main/
 ├── main.c                 # Application entry point
 ├── wifi_manager.h/c       # WiFi management module
@@ -130,7 +134,8 @@ main/
 ### Debug Configuration
 
 Enable debugging in `sdkconfig`:
-```
+
+```text
 CONFIG_LOG_DEFAULT_LEVEL_DEBUG=y
 CONFIG_LOG_MAXIMUM_LEVEL_DEBUG=y
 ```
@@ -140,6 +145,7 @@ CONFIG_LOG_MAXIMUM_LEVEL_DEBUG=y
 ### Version Management
 
 Update version in:
+
 - `CMakeLists.txt`
 - Project documentation
 - Release notes

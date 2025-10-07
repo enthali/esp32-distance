@@ -5,11 +5,13 @@ This project uses containerized development with VS Code Dev Containers and GitH
 ## Development Options
 
 ### Recommended: GitHub Codespaces (Cloud)
+
 - No local setup required - works entirely in browser
 - Pre-configured ESP-IDF v5.4.1 environment ready instantly
 - USB device access through browser serial interface
 
 ### Alternative: Local Dev Container  
+
 - Uses Docker container with ESP-IDF v5.4.1 pre-installed  
 - Requires Docker Desktop and VS Code with Dev Containers extension
 - Identical environment across all team members and platforms
@@ -17,12 +19,14 @@ This project uses containerized development with VS Code Dev Containers and GitH
 ## Using the Dev Container
 
 ### In GitHub Codespaces
+
 1. Go to your GitHub repository
 2. Click "Code" → "Codespaces" → "Create codespace"
 3. Container will automatically build with ESP-IDF ready
 4. Extensions (ESP-IDF, ESP-IDF Web) will be pre-installed
 
 ### Local Development with Docker
+
 1. Ensure Docker Desktop is running
 2. Open the project in VS Code
 3. VS Code will prompt: "Reopen in Container" → Click Yes
@@ -60,6 +64,7 @@ For Windows users running the dev container locally (not needed for Codespaces):
 **Quick Setup**: Run `tools/attach-esp32.ps1` as Administrator - script automatically finds and attaches your ESP32.
 
 **Manual Setup** (if script doesn't work):
+
 1. Install usbipd-win: `winget install usbipd`
 2. Find device: `usbipd list` (look for USB-SERIAL CH340)
 3. Bind device: `usbipd bind --busid <BUSID>`

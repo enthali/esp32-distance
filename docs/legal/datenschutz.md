@@ -7,7 +7,7 @@ Lohweg 10
 58375 Neufahrn  
 Deutschland  
 
-E-Mail: georg_doll@freenet.de
+E-Mail: <georg_doll@freenet.de>
 
 ## Hosting und Datenverarbeitung
 
@@ -18,6 +18,7 @@ Diese Website wird auf GitHub Pages gehostet, einem Service der GitHub, Inc., 88
 **Datenverarbeitung durch GitHub:**
 
 GitHub kann beim Besuch dieser Website automatisch technische Informationen erfassen, einschließlich:
+
 - IP-Adresse
 - Browser-Typ und -Version
 - Betriebssystem
@@ -35,7 +36,7 @@ Für Auskunfts-, Berichtigungs-, Löschungs- oder andere Anfragen bezüglich der
 
 - **GitHub Support**: [https://support.github.com/](https://support.github.com/)
 - **GitHub Privacy Statement**: [https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement](https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement)
-- **GitHub Data Protection Officer**: privacy@github.com
+- **GitHub Data Protection Officer**: <privacy@github.com>
 
 Die Nutzung von GitHub Pages erfolgt auf Grundlage unserer berechtigten Interessen im Sinne des Art. 6 Abs. 1 lit. f DSGVO an einer kosteneffizienten und sicheren Bereitstellung unserer Website.
 

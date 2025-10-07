@@ -11,6 +11,7 @@ The emulator support provides hardware abstraction through separate simulator im
 ### Hardware Abstraction Strategy
 
 The implementation uses a **clean separation approach**:
+
 - **Same headers**: Identical APIs for both hardware and simulator versions
 - **Different source files**: CMake selects appropriate implementation at build time
 - **No #ifdef clutter**: Clean, maintainable code without conditional compilation
@@ -18,6 +19,7 @@ The implementation uses a **clean separation approach**:
 ### Components
 
 #### 1. Distance Sensor Simulator (`distance_sensor_sim.c`)
+
 - **API Compatibility**: Identical to hardware version (`distance_sensor.h`)
 - **Animation**: 5cm → 60cm → 5cm linear sweep with 1mm steps
 - **Timing**: Configurable interval (default 1 second for clear visualization)
@@ -25,6 +27,7 @@ The implementation uses a **clean separation approach**:
 - **Error Handling**: Complete status codes and overflow management
 
 #### 2. LED Controller Simulator (`led_controller_sim.c`)
+
 - **API Compatibility**: Identical to hardware version (`led_controller.h`)
 - **Visualization**: Unicode emoji blocks in terminal (🔴🟢🔵⚪🟡🟣⚫🟤)
 - **Rate Limiting**: Output limited to ~1Hz to prevent terminal spam
@@ -32,6 +35,7 @@ The implementation uses a **clean separation approach**:
 - **Buffer Management**: Same pixel operations as hardware
 
 #### 3. WiFi Manager
+
 - **No Changes Needed**: Runs as-is without network events
 - **Web Interface**: Still accessible (localhost without network)
 
@@ -61,6 +65,7 @@ config EMULATOR_MOCK_SENSOR
 The build system automatically selects the correct source files:
 
 **Distance Sensor** (`components/distance_sensor/CMakeLists.txt`):
+
 ```cmake
 if(CONFIG_TARGET_EMULATOR)
     set(COMPONENT_SRCS "distance_sensor_sim.c")
@@ -70,6 +75,7 @@ endif()
 ```
 
 **LED Controller** (`components/led_controller/CMakeLists.txt`):
+
 ```cmake
 if(CONFIG_TARGET_EMULATOR)
     set(COMPONENT_SRCS "led_controller_sim.c")
@@ -81,12 +87,14 @@ endif()
 ## Usage Instructions
 
 ### 1. Hardware Build (Default)
+
 ```bash
 idf.py build
 idf.py flash monitor
 ```
 
 ### 2. Emulator Build
+
 ```bash
 # Configure for emulator
 idf.py menuconfig
@@ -104,7 +112,8 @@ qemu-system-xtensa -nographic -M esp32 -kernel build/distance.elf
 ## Expected Output
 
 ### Console Logs
-```
+
+```text
 I (1000) main: ESP32 Distance Measurement with LED Strip Display
 I (1100) led_controller_sim: LED controller simulator initialized: 40 LEDs (terminal visualization)
 I (1200) distance_sensor_sim: Distance sensor simulator initialized successfully  
@@ -112,7 +121,8 @@ I (1300) distance_sensor_sim: Distance sensor simulator started (5cm→60cm→5c
 ```
 
 ### Animated Distance Readings
-```
+
+```text
 I (2000) distance_sensor_sim: Simulated distance: 5.0 cm (increasing)
 I (3000) distance_sensor_sim: Simulated distance: 5.1 cm (increasing)
 I (4000) distance_sensor_sim: Simulated distance: 5.2 cm (increasing)
@@ -122,7 +132,8 @@ I (59000) distance_sensor_sim: Simulated distance: 59.9 cm (decreasing)
 ```
 
 ### LED Strip Visualization
-```
+
+```text
 [LED Strip]: 🔴🔴🔴⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫
 
 [LED Strip]: 🟡🟡🟡🟡🟡🟡🟡🟡⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫⚫
@@ -133,8 +144,9 @@ I (59000) distance_sensor_sim: Simulated distance: 59.9 cm (decreasing)
 ```
 
 ### Color Mapping Legend
+
 - 🔴 **Red**: Close distances (5-15cm)
-- 🟡 **Yellow**: Medium distances (15-35cm) 
+- 🟡 **Yellow**: Medium distances (15-35cm)
 - 🟢 **Green**: Far distances (35-50cm)
 - 🔵 **Blue**: Maximum distances (50-60cm)
 - ⚪ **White**: Very bright/mixed colors
@@ -146,6 +158,7 @@ I (59000) distance_sensor_sim: Simulated distance: 59.9 cm (decreasing)
 ### Distance Sensor Simulator
 
 **Animation Logic**:
+
 ```c
 // Animate distance: 5cm (50mm) → 60cm (600mm) → 5cm (50mm)
 sim_distance += direction;
@@ -162,6 +175,7 @@ if (sim_distance >= 600) {  // 60.0cm = 600mm
 ### LED Controller Simulator  
 
 **Rate Limiting**:
+
 ```c
 static uint64_t last_display_time = 0;
 static const uint64_t DISPLAY_INTERVAL_US = 1000000; // 1 second
@@ -181,6 +195,7 @@ esp_err_t led_show(void) {
 ## Benefits
 
 ### Development Advantages
+
 - **No Hardware Dependencies**: Develop without physical ESP32, sensors, or LEDs
 - **Fast Iteration**: Quick build-test cycles without flashing hardware
 - **Visual Feedback**: Clear terminal visualization of system behavior
@@ -188,12 +203,14 @@ esp_err_t led_show(void) {
 - **Cross-Platform**: Develop on any system with QEMU support
 
 ### Testing Advantages
+
 - **Predictable Behavior**: Animated patterns for systematic testing
 - **Integration Testing**: Full system testing without hardware setup
 - **Algorithm Validation**: Test LED display logic and distance mapping
 - **Performance Analysis**: Monitor queue behavior and timing
 
 ### Educational Benefits
+
 - **System Understanding**: Clear visualization of sensor-to-display pipeline
 - **Algorithm Learning**: See distance mapping and color gradients in action
 - **Real-time Concepts**: Observe queue-based architecture behavior
@@ -201,15 +218,18 @@ esp_err_t led_show(void) {
 ## Files Modified/Created
 
 ### New Files
+
 - `main/Kconfig.projbuild` - Build configuration options
 - `main/components/distance_sensor/distance_sensor_sim.c` - Distance sensor simulator
 - `main/components/led_controller/led_controller_sim.c` - LED controller simulator
 
 ### Modified Files
+
 - `main/components/distance_sensor/CMakeLists.txt` - Conditional source selection
 - `main/components/led_controller/CMakeLists.txt` - Conditional source selection
 
 ### Unchanged Files
+
 - All header files (`.h`) - APIs remain identical
 - Main application logic - No changes needed
 - WiFi/web server components - Run unchanged
@@ -217,6 +237,7 @@ esp_err_t led_show(void) {
 ## Validation
 
 The implementation has been validated for:
+
 - ✅ Complete API compatibility with hardware versions
 - ✅ Proper CMake conditional compilation
 - ✅ Animation logic and timing behavior  
@@ -227,6 +248,7 @@ The implementation has been validated for:
 ## Future Enhancements
 
 Potential improvements for the emulator support:
+
 - **Web Interface Preview**: Show LED state in browser
 - **Interactive Controls**: Manual distance adjustment via keyboard
 - **Performance Metrics**: Queue utilization and timing statistics

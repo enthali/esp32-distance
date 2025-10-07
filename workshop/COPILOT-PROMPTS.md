@@ -9,6 +9,7 @@ Template:
 "Please create an issue in my forked repository with the title: '[REQ-<REQUIREMENT_ID>] Change: <short description>'.
 
 In the issue body:
+
 - Requirement ID: REQ-<REQUIREMENT_ID>
 - New description: <full new requirement description>
 - Acceptance criteria:
@@ -29,6 +30,7 @@ Also instruct a GitHub Coding Agent to perform these changes and open a PR."
 Template:
 
 "Create an issue: 'DES-<DESIGN_ID> Update for REQ-<REQUIREMENT_ID>' with the task:
+
 - Update `/docs/design/DES-<DESIGN_ID>.md` with:
   - Mapping to requirement ID: REQ-<REQUIREMENT_ID>
   - Detailed description of the LED animation and the state machine
@@ -43,6 +45,7 @@ Please instruct the Coding Agent to complete the change and propose a PR."
 Template:
 
 "Create an issue 'CODE-REQ-<REQUIREMENT_ID>: LED animation update' and do the following:
+
 - Implement a new function `set_led_mode(mode)` in `src/led_controller.*` that supports three modes: `SAFE`, `NORMAL`, `ALERT`.
 - Triggers: distance < 10cm => ALERT, 10–40cm => NORMAL, >40cm => SAFE.
 - Ensure all new commits reference `REQ-<REQUIREMENT_ID>` and link the PR description to the requirement file `docs/requirements/REQ-<REQUIREMENT_ID>.md` and design file `docs/design/DES-<DESIGN_ID>.md`.
@@ -51,6 +54,7 @@ Template:
 Please instruct the Coding Agent to apply the changes and open a PR."
 
 ## Notes for participants
+
 - Replace placeholders (`<...>`) with real IDs/texts.
 - Provide clear acceptance criteria — this helps the coding agent.
 - Use exact file paths and module names from the reference repo.

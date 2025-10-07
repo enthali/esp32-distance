@@ -22,11 +22,12 @@
 				"extensions.ignoreRecommendations": true
 			},
 			"extensions": [
-			"espressif.esp-idf-extension",
-			"espressif.esp-idf-web",
-			"ms-vscode.cpptools",
-			"ms-vscode.cpptools-extension-pack"
-		]
+		"espressif.esp-idf-extension",
+		"espressif.esp-idf-web",
+		"ms-vscode.cpptools",
+		"ms-vscode.cpptools-extension-pack",
+		"DavidAnson.vscode-markdownlint"
+	]
 		},
 		"codespaces": {
 			"openFiles": [

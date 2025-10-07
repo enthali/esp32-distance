@@ -1,0 +1,24 @@
+repos:
+  - repo: local
+    hooks:
+      - id: markdownlint
+        name: Markdown lint
+        # markdownlint-cli is available globally via npm in the devcontainer
+        entry: markdownlint --fix
+        language: system
+        types: [markdown]
+        # Only run on markdown files in docs/ and root-level markdown files
+        files: ^(docs/.*\.md|.*\.md)$
+        stages: [pre-commit]
+      - id: mkdocs-build
+        name: MkDocs build (strict)
+        # mkdocs is available in /opt/venv/bin in the devcontainer
+        # Quiet mode suppresses INFO/DEBUG, only shows WARNING/ERROR
+        entry: mkdocs build --strict
+        language: system
+        pass_filenames: false
+        # Only run if docs/ or mkdocs.yml changed (skip for code-only commits)
+        files: ^(docs/.*|mkdocs\.yml)$
+        require_serial: true
+        verbose: true
+        stages: [pre-commit]

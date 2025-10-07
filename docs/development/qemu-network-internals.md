@@ -4,7 +4,7 @@ This document provides detailed technical information about the UART-based IP tu
 
 ## Architecture Overview
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────────┐
 │                        HOST (Linux)                             │
 │                                                                 │
@@ -32,7 +32,7 @@ This document provides detailed technical information about the UART-based IP tu
 
 ## Frame Format (Over UART)
 
-```
+```text
 ┌───────────────┬────────────────────────────────────────────┐
 │ Frame Length  │           Ethernet Frame                   │
 │   (2 bytes)   │         (14-byte header + IP)              │
@@ -61,7 +61,7 @@ Example ICMP Echo Request (98 bytes total):
 
 ### 1. System Startup
 
-```
+```text
 ┌──────────────────────────────────────────────────────────────┐
 │                  ESP32 QEMU Boot                             │
 └──────────────────────────────────────────────────────────────┘
@@ -128,7 +128,7 @@ Example ICMP Echo Request (98 bytes total):
 
 ### Inbound Path (Host → ESP32)
 
-```
+```text
 1. Host executes: ping 192.168.100.2
    └─▶ Kernel creates ICMP Echo Request
        └─▶ Routes to tun0 (192.168.100.0/24 network)
@@ -177,7 +177,7 @@ Example ICMP Echo Request (98 bytes total):
 
 ### Outbound Path (ESP32 → Host)
 
-```
+```text
 8. lwIP ip4_output_if()
    ├─▶ Looks up route for 192.168.100.1
    ├─▶ Finds default gateway on tun_netif
@@ -229,6 +229,7 @@ lwip_netif->linkoutput = uart_linkoutput;
 ```
 
 **Why Direct Integration?**
+
 - Simpler packet flow (fewer abstraction layers)
 - Direct control over Ethernet frame handling
 - Easier debugging (fewer indirect function calls)
@@ -321,12 +322,14 @@ if (len <= 0) {
 ### Enable Verbose Logging
 
 In `netif_uart_tunnel_sim.c`:
+
 ```c
 #define LOG_LOCAL_LEVEL ESP_LOG_DEBUG
 ```
 
 This will show every packet RX/TX:
-```
+
+```text
 D (12345) uart_tunnel: RX: Got 98 bytes
 D (12345) uart_tunnel: RX: Ethernet dst=02:00:00:00:00:02 src=02:00:00:00:00:01 type=0x0800
 D (12345) uart_tunnel: TX: Sending 98 bytes
@@ -346,6 +349,7 @@ sudo tcpdump -i tun0 tcp port 80
 ### Check lwIP Statistics
 
 Add to your code:
+
 ```c
 #include "lwip/stats.h"
 

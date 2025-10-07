@@ -27,16 +27,19 @@ If `idf.py` is not found, you need to set up the ESP-IDF environment first.
 ### Standard Build Process
 
 1. **Set Target**:
+
    ```bash
    idf.py set-target esp32
    ```
 
 2. **Build Project**:
+
    ```bash
    idf.py build
    ```
 
 3. **Flash and Monitor**:
+
    ```bash
    idf.py flash monitor
    ```
@@ -50,6 +53,7 @@ cmd /c "cd /D c:\workspace\ESP32_Projects\distance && C:\workspace\ESP32_Project
 ```
 
 **Command Breakdown**:
+
 - `cmd /c`: Executes command in Windows Command Prompt
 - `cd /D c:\workspace\ESP32_Projects\distance`: Changes to project directory
 - `C:\workspace\ESP32_Projects\esp\v5.4.1\esp-idf\export.bat`: Sets up ESP-IDF environment
@@ -58,16 +62,19 @@ cmd /c "cd /D c:\workspace\ESP32_Projects\distance && C:\workspace\ESP32_Project
 ### Alternative Commands
 
 **Build Only**:
+
 ```powershell
 cmd /c "cd /D c:\workspace\ESP32_Projects\distance && C:\workspace\ESP32_Projects\esp\v5.4.1\esp-idf\export.bat && idf.py build"
 ```
 
 **Flash Only**:
+
 ```powershell
 cmd /c "cd /D c:\workspace\ESP32_Projects\distance && C:\workspace\ESP32_Projects\esp\v5.4.1\esp-idf\export.bat && idf.py flash"
 ```
 
 **Monitor Only**:
+
 ```powershell
 cmd /c "cd /D c:\workspace\ESP32_Projects\distance && C:\workspace\ESP32_Projects\esp\v5.4.1\esp-idf\export.bat && idf.py monitor"
 ```
@@ -146,12 +153,14 @@ idf.py build
 ### Custom Components
 
 This project includes custom components in the `components/` directory:
+
 - `distance_sensor/`: HC-SR04 ultrasonic sensor interface
 - `led_controller/`: WS2812 LED strip control
 
 ### Main Application Modules
 
 Located in `main/` directory:
+
 - `wifi_manager.c`: WiFi connectivity and captive portal
 - `web_server.c`: HTTP server implementation
 - `dns_server.c`: DNS server for captive portal
@@ -162,12 +171,14 @@ Located in `main/` directory:
 #### Flash Memory Configuration
 
 This project is configured for ESP32 modules with **4MB flash memory**:
+
 - **Flash Size**: 4MB (CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y)
 - **Partition Table**: Single App Large (maximizes application space)
 - **Free Flash**: ~41% available for application growth
 - **HTTPS Ready**: Sufficient space for SSL/TLS certificates and HTTPS implementation
 
 **Memory Usage Summary** (after optimization):
+
 - Used flash: ~59% (vs 86% with 2MB config)
 - Free flash: ~41% (vs 14% with 2MB config)
 - IRAM usage: ~76% (sufficient headroom)
@@ -176,11 +187,13 @@ This project is configured for ESP32 modules with **4MB flash memory**:
 #### Configuration Verification
 
 To verify flash configuration:
+
 ```bash
 idf.py size
 ```
 
 To modify flash settings:
+
 ```bash
 idf.py menuconfig
 # Navigate to: Serial flasher config > Flash size
@@ -190,6 +203,7 @@ idf.py menuconfig
 #### Key Configuration Options
 
 Key configuration options in `sdkconfig`:
+
 - WiFi stack configuration
 - FreeRTOS task stack sizes
 - LED strip timing parameters

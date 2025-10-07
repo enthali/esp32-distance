@@ -60,7 +60,6 @@ This document specifies detailed requirements for the Configuration Management S
 - AC-5: No additional user-configurable magic numbers remain in source files outside the centralized configuration.
 - AC-6: Each configuration value documented with purpose and valid range as shown in Configuration Categories; storage/encoding details are in the design document.
 
-
 **Configuration Categories**:
 
 The following logical parameter categories are required; concrete macro names, default values, and on-device encoding are specified in `docs/design/config-design.md`.
@@ -203,7 +202,6 @@ bool config_is_valid_range(const char* param_name, int32_t value, int32_t min_va
 - AC-4: Invalid parameters rejected with specific error messages
 - AC-5: Validation performed before NVS save operations
 - AC-6: Validation errors logged with parameter name and attempted value
-
 
 **Parameter Validation Ranges**:
 

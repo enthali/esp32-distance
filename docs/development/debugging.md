@@ -23,6 +23,7 @@ Simply press **F5** or use the Debug panel:
 3. Click the green play button or press F5
 
 VS Code will:
+
 - ✅ Connect to QEMU's GDB server (port 3333)
 - ✅ Load symbols from the built ELF file
 - ✅ Break at `app_main()`
@@ -59,7 +60,7 @@ Monitor variables in real-time:
 
 View the complete function call hierarchy:
 
-```
+```text
 #0  distance_sensor_read() at distance_sensor.c:45
 #1  sensor_task() at main.c:123
 #2  vPortTaskWrapper() at port.c:168
@@ -99,6 +100,7 @@ The project includes two debug configurations in `.vscode/launch.json`:
 ```
 
 **Features:**
+
 - Connects to QEMU GDB server
 - Breaks at `app_main()` automatically
 - Full source-level debugging
@@ -127,6 +129,7 @@ For debugging on real ESP32 hardware with JTAG adapter:
 ```
 
 **Requirements:**
+
 - ESP-PROG or similar JTAG adapter
 - OpenOCD running with appropriate configuration
 - Hardware connection (see ESP-IDF JTAG debugging guide)
@@ -315,6 +318,7 @@ Or in VS Code: Right-click breakpoint → Edit Breakpoint → Add condition
 **Problem:** VS Code can't connect to GDB server
 
 **Solutions:**
+
 ```bash
 # 1. Check if QEMU is running
 ps aux | grep qemu
@@ -334,6 +338,7 @@ nc -zv localhost 3333
 **Problem:** Debugger shows assembly instead of C code
 
 **Solutions:**
+
 ```bash
 # 1. Ensure project is built with debug symbols
 idf.py menuconfig
@@ -352,6 +357,7 @@ ls -lh build/distance.elf
 **Problem:** Breakpoints are ignored or show as "unverified"
 
 **Solutions:**
+
 - Ensure file is actually compiled (not excluded by #ifdef)
 - Check optimization level (too high optimization can skip code)
 - Verify you're debugging the correct build
@@ -364,6 +370,7 @@ ls -lh build/distance.elf
 **This is normal in QEMU!** QEMU emulation is slower than real hardware.
 
 **Tips to improve:**
+
 - Use breakpoints instead of stepping
 - Run to cursor (Right-click → Run to Cursor)
 - Skip uninteresting functions with Step Over

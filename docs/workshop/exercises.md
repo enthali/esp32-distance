@@ -10,7 +10,7 @@ Before starting, follow the steps in the hardware setup and getting started sect
 
 Open the GitHub Copilot Chat window in your codespace and enter the following prompt:
 
-```
+```text
 I want you to create an issue on GitHub that we will then assign to the GitHub coding agent: We want to change the behavior of the system. Right now, when the measurement is below the minimum threshold, the first LED is red. However, I want every 10th LED to flash red with a 1-second frequency. Please update the requirements document ([requirements display](../requirements/display-requirements.md)), update and extend the design document ([design docs](../design/display-design.md)), and implement the solution.
 ```
 
@@ -28,7 +28,7 @@ Now you have two options to proceed:
 2. **Assign via Copilot Chat Prompt**  
     Alternatively, enter the following prompt in Copilot Chat to request assignment:
 
-    ```
+    ```text
     Please assign the new issue to the GitHub coding agent.
     ```
 
@@ -59,14 +59,7 @@ Back in VS Code, you can check out the GitHub Coding Agent's branch, build the p
 
 Be sure to review the updated requirements and design documents. The Coding Agent has established bidirectional traceability from requirements to design to code and back, ensuring every change is documented and linked.
 
-You may wonder why this is the case, as there was nothing in the prompt explicitly asking Copilot to do so.
-
-Well, there is:
-
-All implementation and documentation changes must follow the project's ESP32 Coding Standards and commit message guidelines.  
-
-
-Check them out in `.github/`.
+All implementation and documentation changes must follow the project's ESP32 Coding Standards and commit message guidelines. Check them out in `.github/`.
 
 Note that previously, there was no timing behavior for the output LEDs. The Coding Agent not only updated the LED pattern but also implemented a time-based flashing algorithm that does not interfere with the task's blocking call to receive the next measurement from the distance sensor. This ensures the new flashing behavior is robust and does not impact sensor responsiveness.
 

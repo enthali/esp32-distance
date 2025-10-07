@@ -3,16 +3,15 @@
 
 ## 🖥️ SW and Licenses
 
-
 - **A Supported Browser**
 
     To use browser-based serial port access and the ESP-IDF Web extension, you must use a browser that supports the Web Serial API. **Supported browsers** include the latest versions of **Google Chrome**, **Microsoft Edge**, **Opera**, and **Arc Browser**.
-    
+
     Firefox, Safari, and most mobile browsers are **not supported** for direct device communication. For the best experience, use Chrome or Edge on desktop.
 
 - **GitHub Account**
 
-    You will need a GitHub account to participate in the workshop. If you do not already have one, you can sign up for free at [github.com](https://github.com/). The free GitHub account is sufficient for all workshop activities, including accessing the repository, using Codespaces (within the free usage quota), and collaborating with others. 
+    You will need a GitHub account to participate in the workshop. If you do not already have one, you can sign up for free at [github.com](https://github.com/). The free GitHub account is sufficient for all workshop activities, including accessing the repository, using Codespaces (within the free usage quota), and collaborating with others.
 
 - **GitHub Copilot Subscription**
 
@@ -22,8 +21,7 @@
 
 - **GitHub Codespaces**
 
-    GitHub Codespaces provides a cloud-based development environment pre-configured for this project. It allows you to start coding instantly in your browser or VS Code, with all dependencies (ESP-IDF, toolchain, libraries) already set up. No local installation is required. 
-
+    GitHub Codespaces provides a cloud-based development environment pre-configured for this project. It allows you to start coding instantly in your browser or VS Code, with all dependencies (ESP-IDF, toolchain, libraries) already set up. No local installation is required.
 
 **Everything else is provided inside the preconfigured Codespaces working environment.**
 
@@ -41,6 +39,6 @@
 
     Used for visualizing distance measurements. Connects to a single ESP32 GPIO (data line).
 
-- **USB serial adapter** for flashing 
+- **USB serial adapter** for flashing
 
     Required for uploading firmware and running code on real hardware. Most ESP32 dev boards include a built-in USB-to-serial adapter, but if your board does not, you will also need a **USB serial adapter** (e.g., FTDI, CP2102, CH340) to flash, debug, and monitor the device via serial connection.

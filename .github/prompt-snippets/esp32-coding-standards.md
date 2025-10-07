@@ -3,6 +3,7 @@
 ## General C Coding Guidelines
 
 ### Naming Conventions
+
 - **Functions**: `snake_case` (e.g., `distance_sensor_init()`, `led_strip_update()`)
 - **Variables**: `snake_case` (e.g., `sensor_distance`, `led_count`)
 - **Constants**: `UPPER_SNAKE_CASE` (e.g., `MAX_DISTANCE`, `LED_PIN`)
@@ -10,12 +11,14 @@
 - **Structs/Enums**: `snake_case_t` (e.g., `wifi_config_t`, `sensor_data_t`)
 
 ### ESP-IDF Specific Conventions
+
 - **Component prefixes**: Use component name as prefix (e.g., `distance_sensor_read()`)
 - **ESP-IDF functions**: Follow ESP-IDF naming (e.g., `esp_wifi_init()`, `esp_http_server_start()`)
 - **Error handling**: Always use `ESP_ERROR_CHECK()` for critical operations
 - **Logging**: Use ESP_LOG macros with appropriate log levels
 
 ### Memory Management
+
 ```c
 // Prefer stack allocation for small, temporary data
 uint8_t buffer[64];
@@ -36,6 +39,7 @@ if (ret != ESP_OK) {
 ```
 
 ### Error Handling Patterns
+
 ```c
 // Standard ESP-IDF error handling
 esp_err_t my_function(void) {
@@ -56,6 +60,7 @@ cleanup:
 ```
 
 ### Logging Standards
+
 ```c
 // Define TAG at top of file
 static const char* TAG = "DISTANCE_SENSOR";
@@ -68,6 +73,7 @@ ESP_LOGD(TAG, "Debug info: pin=%d, timeout=%d", pin, timeout);
 ```
 
 ### GPIO and Hardware Interface
+
 ```c
 // Document pin assignments clearly
 #define TRIGGER_PIN    GPIO_NUM_5
@@ -86,6 +92,7 @@ ESP_ERROR_CHECK(gpio_config(&io_conf));
 ```
 
 ### FreeRTOS Task Guidelines
+
 ```c
 // Use proper task priorities (0-25, higher = more priority)
 #define SENSOR_TASK_PRIORITY    5
@@ -102,7 +109,8 @@ xTaskCreate(sensor_task, "sensor_task", SENSOR_TASK_STACK_SIZE,
 ```
 
 ### Component Structure
-```
+
+```text
 components/my_component/
 ├── CMakeLists.txt
 ├── include/
@@ -112,6 +120,7 @@ components/my_component/
 ```
 
 ### Header File Guards
+
 ```c
 #ifndef MY_COMPONENT_H
 #define MY_COMPONENT_H
@@ -132,6 +141,7 @@ extern "C" {
 ```
 
 ### Function Documentation
+
 ```c
 /**
  * @brief Read distance from HC-SR04 sensor
@@ -147,6 +157,7 @@ esp_err_t distance_sensor_read(uint16_t* distance_cm);
 ```
 
 ### File Documentation
+
 ```c
 /**
  * @file distance_sensor.c
@@ -161,12 +172,14 @@ esp_err_t distance_sensor_read(uint16_t* distance_cm);
 ```
 
 **Documentation Requirements:**
+
 - **Every function must have a Doxygen comment** explaining purpose, parameters, and return values
 - **Every file must have a header comment** describing the module's purpose
 - **Complex algorithms must include inline comments** explaining the logic
 - **Hardware dependencies must be documented** (pin assignments, timing constraints)
 
 ### Configuration Management
+
 ```c
 // Use Kconfig for configurable parameters
 #ifdef CONFIG_DISTANCE_SENSOR_MAX_RANGE_CM
@@ -179,6 +192,7 @@ esp_err_t distance_sensor_read(uint16_t* distance_cm);
 ## ESP32-Specific Best Practices
 
 ### IRAM Usage
+
 ```c
 // Only use IRAM_ATTR for time-critical interrupt handlers
 IRAM_ATTR void gpio_isr_handler(void* arg) {
@@ -187,6 +201,7 @@ IRAM_ATTR void gpio_isr_handler(void* arg) {
 ```
 
 ### WiFi Event Handling
+
 ```c
 // Proper event handler registration
 ESP_ERROR_CHECK(esp_event_handler_register(WIFI_EVENT, ESP_EVENT_ANY_ID,
@@ -196,12 +211,14 @@ ESP_ERROR_CHECK(esp_event_handler_register(IP_EVENT, IP_EVENT_STA_GOT_IP,
 ```
 
 ### Memory Efficiency
+
 - Use `const` for read-only data to place it in flash
 - Use appropriate data types (`uint8_t` vs `uint32_t`)
 - Consider using packed structs for wire protocols
 - Free allocated memory promptly
 
 ### Component Dependencies
+
 ```cmake
 # In CMakeLists.txt
 idf_component_register(
@@ -219,6 +236,7 @@ idf_component_register(
 Instead of separate design documents, embed design documentation directly in source code using structured comments for requirements traceability.
 
 #### File-Level Design Documentation
+
 ```c
 /**
  * @file display_logic.c
@@ -238,6 +256,7 @@ Instead of separate design documents, embed design documentation directly in sou
 ```
 
 #### Function-Level Design Documentation
+
 ```c
 /**
  * @brief Main display task - implements REQ-DSP-IMPL-01
@@ -257,6 +276,7 @@ void display_task(void* pvParameters) {
 ```
 
 #### Algorithm Design Documentation
+
 ```c
 /**
  * @brief Calculate LED position from distance - implements REQ-DSP-IMPL-03
@@ -277,6 +297,7 @@ uint8_t calculate_led_position(float distance_cm) {
 ```
 
 #### Benefits of Code-Embedded Design Documentation
+
 - **Always Current**: Design documentation can't drift from implementation
 - **Single Source of Truth**: No synchronization issues between docs and code
 - **Developer-Friendly**: Engineers actually read and maintain header comments

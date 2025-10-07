@@ -49,7 +49,7 @@ A: Agent stoppen, Branch prüfen, Änderungen manuell anpassen. PR-Review-Prozes
 - Bevor du Änderungen pushst: lokal Commit-Nachricht im Format beachten (siehe `/.github/prompt-snippets/commit-message.md`).
 - Vorschlag für den ersten lokalen Commit (nach Korrekturen):
 
-```
+```bash
 git checkout -b workshop
 git add workshop/README.md
 git commit -m "docs(workshop): Überarbeite Workshop-README (DE)"

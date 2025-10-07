@@ -54,4 +54,6 @@ flowchart TD
 
 ---
 
-_Last updated: 2024-06_
+## Last updated
+
+2025-10

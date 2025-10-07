@@ -4,7 +4,7 @@ This document contains **unnumbered** feature intentions that may or may not be 
 
 ---
 
-### Workshop (1.5h): GitHub Codespaces & Copilot Demo 🛠️ **(currently in development)**
+## Workshop (1.5h): GitHub Codespaces & Copilot Demo 🛠️ **(currently in development)**
 
 - **Introduction & Setup**: Quick overview of the ESP32 Distance Project and Codespaces environment.
 - **Codespaces Walkthrough**: Launching, configuring, and navigating a Codespace for embedded development. Compiling for emulation and target device
@@ -20,8 +20,7 @@ This document contains **unnumbered** feature intentions that may or may not be 
 - 💭 **Mixed Mode Support**: HTTPS for production, HTTP fallback for development
 - 💭 **Browser Compatibility**: Handle self-signed certificate warnings appropriately
 
-
-### OTA Firmware Updates 💭 **INTENDED**
+## OTA Firmware Updates 💭 **INTENDED**
 
 - **Over-The-Air Updates**: ESP32 OTA partition scheme and update mechanism
 - **Version Management**: Firmware versioning and rollback capability
@@ -29,16 +28,12 @@ This document contains **unnumbered** feature intentions that may or may not be 
 - **Security**: Signed firmware updates and secure boot
 - **User Interface**: Web-based firmware update with progress indication
 
-### Security Hardening 💭 **INTENDED**
+## Security Hardening 💭 **INTENDED**
 
 - **WiFi Security**: WPA3 support and strong encryption
 - **Web Interface Security**: HTTPS, session management, CSRF protection
 - **Access Control**: Basic authentication for configuration pages
 - **Network Security**: Firewall rules and secure communication
 - **Credential Protection**: Encrypted storage of sensitive data
-
-
-
-
 
 Each requirements document should use the `REQ-<AREA>-<NUMBER>` ID format and reference corresponding design documents for traceability.

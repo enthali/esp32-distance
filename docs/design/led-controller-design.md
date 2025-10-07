@@ -17,6 +17,7 @@
 ## Target Design Architecture
 
 ### DSN-LED-ARCH-01: RMT Peripheral Hardware Abstraction Design
+
 Addresses: REQ-LED-1
 
 Design: ESP32 RMT (Remote Control) peripheral abstraction for WS2812 timing generation.
@@ -30,6 +31,7 @@ Design: ESP32 RMT (Remote Control) peripheral abstraction for WS2812 timing gene
 Validation: RMT channel created successfully, timing parameters match WS2812 datasheet, transmission completes without errors.
 
 ### DSN-LED-ARCH-02: RAM Buffer Architecture Design
+
 Addresses: REQ-LED-2, REQ-LED-3
 
 Design: In-memory LED state buffer for performance optimization and atomic updates.
@@ -43,6 +45,7 @@ Design: In-memory LED state buffer for performance optimization and atomic updat
 Validation: Buffer allocates correctly for configured LED count, updates modify only buffer until show, memory freed on cleanup.
 
 ### DSN-LED-API-01: Pixel-Level Control API Design
+
 Addresses: REQ-LED-2
 
 Design: Individual LED pixel manipulation with bounds checking and color utilities.
@@ -57,6 +60,7 @@ Design: Individual LED pixel manipulation with bounds checking and color utiliti
 Validation: Index validation prevents buffer overruns, color values stored accurately, predefined colors work correctly.
 
 ### DSN-LED-API-02: Batch Operations API Design
+
 Addresses: REQ-LED-2, REQ-LED-4
 
 Design: Efficient batch operations for common patterns and hardware updates.
@@ -70,6 +74,7 @@ Design: Efficient batch operations for common patterns and hardware updates.
 Validation: Clear all zeros entire buffer, show triggers RMT transmission, utilities produce correct colors.
 
 ### DSN-LED-TIMING-01: WS2812 Timing Specification Design
+
 Addresses: REQ-LED-1
 
 Design: Precise WS2812 protocol timing using RMT encoder configuration.
@@ -83,6 +88,7 @@ Design: Precise WS2812 protocol timing using RMT encoder configuration.
 Validation: Timing measurements match WS2812 datasheet specifications, LED strips respond correctly.
 
 ### DSN-LED-DATA-01: Color Representation and Conversion Design
+
 Addresses: REQ-LED-4
 
 Design: RGB color representation with GRB hardware conversion for WS2812 compatibility.
@@ -96,6 +102,7 @@ Design: RGB color representation with GRB hardware conversion for WS2812 compati
 Validation: Color values convert correctly RGB→GRB, brightness scaling maintains color ratios, no precision loss.
 
 ### DSN-LED-MEM-01: Dynamic Memory Management Design
+
 Addresses: REQ-LED-3
 
 Design: Controlled dynamic allocation with proper cleanup and error handling.
@@ -109,6 +116,7 @@ Design: Controlled dynamic allocation with proper cleanup and error handling.
 Validation: Memory allocated correctly, no leaks after deinitialization, error paths clean up properly.
 
 ### DSN-LED-ERR-01: Error Handling and Validation Design
+
 Addresses: REQ-LED-2, REQ-LED-3
 
 Design: Comprehensive input validation and state checking with appropriate error codes.
@@ -124,6 +132,7 @@ Validation: Invalid inputs return appropriate error codes, operations fail safel
 ## Simulator Design (DSN-SIM)
 
 ### DSN-SIM-LED-01: LED Controller Simulator Design
+
 Addresses: REQ-SYS-SIM-1
 
 Design: Provide a simulator implementation for the LED controller that exposes the full public API (`led_controller.h`) while replacing RMT transmission with a rate-limited terminal visualization.
@@ -142,36 +151,36 @@ Example simulator `led_controller_sim.c` snippet (for design guidance):
 static uint64_t last_display_time = 0;
 
 esp_err_t led_show(void) {
-	uint64_t now = esp_timer_get_time();
-	if (now - last_display_time < 1000000) {  // 1 second = 1,000,000 us
-		return ESP_OK;  // Suppress output, just return success
-	}
-	last_display_time = now;
+ uint64_t now = esp_timer_get_time();
+ if (now - last_display_time < 1000000) {  // 1 second = 1,000,000 us
+  return ESP_OK;  // Suppress output, just return success
+ }
+ last_display_time = now;
     
-	// Now do the emoji output
-	printf("\n[LED Strip]: ");
-	for (int i = 0; i < led_count; i++) {
-		led_color_t* color = &led_buffer[i];
+ // Now do the emoji output
+ printf("\n[LED Strip]: ");
+ for (int i = 0; i < led_count; i++) {
+  led_color_t* color = &led_buffer[i];
         
-		if (color->red > 200 && color->green < 50 && color->blue < 50) {
-			printf("🔴");  // Red
-		} else if (color->green > 200 && color->red < 50 && color->blue < 50) {
-			printf("🟢");  // Green  
-		} else if (color->blue > 200 && color->red < 50 && color->green < 50) {
-			printf("🔵");  // Blue
-		} else if (color->red > 200 && color->blue > 200 && color->green < 50) {
-			printf("🟣");  // Magenta/Purple
-		} else if (color->red > 200 && color->green > 200 && color->blue < 50) {
-			printf("🟡");  // Yellow
-		} else if (color->red + color->green + color->blue > 600) {
-			printf("⚪");  // White/bright
-		} else if (color->red + color->green + color->blue > 100) {
-			printf("🟡");  // Dim/mixed
-		} else {
-			printf("⚫");  // Off
-		}
-	}
-	printf("\n");
-	return ESP_OK;
+  if (color->red > 200 && color->green < 50 && color->blue < 50) {
+   printf("🔴");  // Red
+  } else if (color->green > 200 && color->red < 50 && color->blue < 50) {
+   printf("🟢");  // Green  
+  } else if (color->blue > 200 && color->red < 50 && color->green < 50) {
+   printf("🔵");  // Blue
+  } else if (color->red > 200 && color->blue > 200 && color->green < 50) {
+   printf("🟣");  // Magenta/Purple
+  } else if (color->red > 200 && color->green > 200 && color->blue < 50) {
+   printf("🟡");  // Yellow
+  } else if (color->red + color->green + color->blue > 600) {
+   printf("⚪");  // White/bright
+  } else if (color->red + color->green + color->blue > 100) {
+   printf("🟡");  // Dim/mixed
+  } else {
+   printf("⚫");  // Off
+  }
+ }
+ printf("\n");
+ return ESP_OK;
 }
 ```

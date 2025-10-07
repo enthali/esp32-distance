@@ -1,5 +1,5 @@
 
-# 🎉 Welcome to the ESP32 Distance Sensor Project!
+# 🎉 Welcome to the ESP32 Distance Sensor Project
 
 [![Project Demo](docs/assets/images/setup.jpg)](https://enthali.github.io/esp32-distance/)
 
@@ -64,9 +64,10 @@ This project brings together the ESP32, an HC-SR04 ultrasonic sensor, and a WS28
 **Prerequisites**: Just a browser that supports serial connections (Chrome/Edge recommended)
 
 ### 🚀 Quick Start
+
 1. **Clone the repository**
 2. **Open in GitHub Codespaces** (recommended) or use a local VS Code devcontainer
-3. **Connect ESP32** via USB 
+3. **Connect ESP32** via USB
 4. **Build and flash**: `idf.py -p /dev/ttyUSB0 build flash monitor`
 
 > **Note:** The first setup may take a few minutes as the container and toolchain are prepared, but after that, you're ready to build and run your code instantly.
@@ -119,4 +120,3 @@ Start exploring, build something cool, or join the workshop. If you get stuck, a
 **Have fun, experiment, and happy coding!** 🎉
 
 ESP32 embedded development demo featuring ESP-IDF, FreeRTOS, OpenFastTrack requirements engineering, and cloud based development (Github codespaces) and of cause Vibe Coding :) with GitHub Copilot.
-

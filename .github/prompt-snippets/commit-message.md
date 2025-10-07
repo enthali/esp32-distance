@@ -1,7 +1,8 @@
 # Commit Message Guidelines
 
 ## Format
-```
+
+```xml
 <type>(<scope>): <subject>
 
 <body>
@@ -10,6 +11,7 @@
 ```
 
 ## Types
+
 - **feat**: New feature
 - **fix**: Bug fix
 - **docs**: Documentation changes
@@ -21,6 +23,7 @@
 - **security**: Security improvements
 
 ## ESP32 Project Specific Scopes
+
 - **sensor**: Distance sensor related changes
 - **led**: LED controller changes
 - **wifi**: WiFi manager and networking
@@ -33,7 +36,8 @@
 ## Examples
 
 ### Feature Addition
-```
+
+```text
 feat(https): Implement certificate generation and embedding
 
 - Add CMake script for automated certificate generation
@@ -43,7 +47,8 @@ feat(https): Implement certificate generation and embedding
 ```
 
 ### Bug Fix
-```
+
+```text
 fix(sensor): Resolve HC-SR04 timeout handling
 
 - Add proper timeout validation for echo pin
@@ -53,7 +58,8 @@ fix(sensor): Resolve HC-SR04 timeout handling
 ```
 
 ### Memory Optimization
-```
+
+```text
 perf(memory): Optimize flash configuration for 4MB modules
 
 - Updated sdkconfig to use 4MB flash size
@@ -63,7 +69,8 @@ perf(memory): Optimize flash configuration for 4MB modules
 ```
 
 ### Documentation
-```
+
+```text
 docs(build): Update build instructions with flash configuration
 
 - Document 4MB flash memory configuration
@@ -73,7 +80,8 @@ docs(build): Update build instructions with flash configuration
 ```
 
 ### Component Refactoring
-```
+
+```text
 refactor(component): Extract WiFi manager monitoring logic
 
 - Move WiFi connection monitoring to wifi_manager.c
@@ -83,18 +91,21 @@ refactor(component): Extract WiFi manager monitoring logic
 ```
 
 ## Subject Line Rules
+
 - Use imperative mood ("Add" not "Added")
 - No period at the end
 - Maximum 50 characters
 - Capitalize first letter
 
 ## Body Guidelines
+
 - Explain what and why, not how
 - Use bullet points for multiple changes
 - Reference issue numbers when applicable
 - Include testing notes for critical changes
 
 ## Footer
+
 - Reference related issues: `Closes #123`
 - Note breaking changes: `BREAKING CHANGE: ...`
 - Co-author attribution: `Co-authored-by: Name <email>`

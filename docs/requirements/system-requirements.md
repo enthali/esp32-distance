@@ -185,7 +185,6 @@ Requirements are categorized using the following prefixes:
 - AC-7: The emulator build SHALL be runnable under QEMU (or a documented emulator) and produce observable LED visualization and distance measurement output in the serial console.
 - AC-8: Documentation in `docs/design/` and `docs/requirements/` updated to reference simulator design artifacts and provide build/run verification steps.
 
-
 ## Compliance and Validation
 
 ### Traceability

@@ -21,7 +21,7 @@ This document describes the technical architecture and implementation details fo
 
 ## System Architecture
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────┐
 │                        Main Application                      │
 ├─────────────────────────────────────────────────────────────┤
@@ -48,11 +48,13 @@ This document describes the technical architecture and implementation details fo
 **Purpose**: Low-level hardware abstraction for WS2812 LED strip control with RAM buffer management.
 
 **Hardware Interface**:
+
 - Configurable GPIO pin for WS2812 data line (RMT backend)
 - Configurable number of individually addressable LEDs
 - 5V power supply for LED strip
 
 **Key Features**:
+
 - Individual pixel control (set/get/clear)
 - RAM buffer maintains current LED state
 - Manual update trigger for performance optimization
@@ -67,11 +69,13 @@ This document describes the technical architecture and implementation details fo
 **Purpose**: Accurate distance measurement using HC-SR04 ultrasonic sensor with interrupt-driven timing and dual-queue architecture.
 
 **Hardware Interface**:
+
 - GPIO14: Trigger pin
 - GPIO13: Echo pin  
 - Timing-critical pulse measurement with ESP32 timers
 
 **Key Features**:
+
 - Interrupt-driven measurement with precise timing control
 - Dual-queue system for non-blocking API access
 - Signal filtering and error detection (timeout, out-of-range, invalid readings)
@@ -87,6 +91,7 @@ This document describes the technical architecture and implementation details fo
 **Purpose**: Business logic for converting distance measurements to visual LED patterns.
 
 **Key Features**:
+
 - Distance-to-LED position mapping algorithms (10cm-50cm → LEDs 0-39)
 - Multiple display modes (running LED, range indicator, error states)
 - Smooth transitions between states with real-time updates
@@ -113,6 +118,7 @@ This document describes the technical architecture and implementation details fo
 - **Certificate Management**: Automated self-signed certificate generation and embedding
 
 **Security Implementation**:
+
 - HTTPS server on port 443 with embedded SSL certificates
 - HTTP redirect server on port 80 for user convenience
 - Self-signed certificates with 25-year validity period
@@ -126,6 +132,7 @@ This document describes the technical architecture and implementation details fo
 **Purpose**: Automated SSL certificate generation and management for HTTPS security.
 
 **Technical Implementation**:
+
 - **Build-time Generation**: Certificates generated automatically during ESP-IDF build if missing
 - **Dual Tool Support**: OpenSSL binary (preferred) or Python cryptography library (fallback)
 - **Certificate Embedding**: Uses ESP-IDF EMBED_FILES to embed certificates in firmware
@@ -133,6 +140,7 @@ This document describes the technical architecture and implementation details fo
 - **No Manual Management**: Zero configuration required from developers or users
 
 **Certificate Properties**:
+
 - **Common Name**: ESP32-Distance-Sensor
 - **Organization**: ESP32 Distance Project
 - **Key Size**: RSA 2048-bit
@@ -140,6 +148,7 @@ This document describes the technical architecture and implementation details fo
 - **Format**: PEM format for maximum compatibility
 
 **Security Features**:
+
 - Private keys never committed to version control (.gitignore exclusions)
 - Fresh certificate generation on clean builds
 - Self-signed certificates appropriate for local IoT devices

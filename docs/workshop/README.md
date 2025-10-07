@@ -1,4 +1,4 @@
-# 👋 Welcome to the ESP32 Distance Sensor Workshop!
+# 👋 Welcome to the ESP32 Distance Sensor Workshop
 
 [![Workshop Setup](../assets/images/setup.jpg)](../assets/images/setup.jpg)
 
@@ -19,6 +19,7 @@ If you have a private GitHub account and the required hardware on your desk, you
 ## 🚦 How to get started
 
 All you need is:
+
 - A GitHub account (free or Pro)
 - The required hardware ([see hardware setup](hardwaresetup.md))
 - A supported browser ([see prerequisites](prerequisites.md))
@@ -28,6 +29,7 @@ Then follow our [Getting Started Guide](gettingstartet.md) for step-by-step inst
 ---
 
 ## 💡 What you'll learn
+
 - Modern embedded development with ESP32, FreeRTOS, and ESP-IDF
 - Using GitHub Codespaces for instant cloud-based dev environments
 - Leveraging Copilot and coding agents for rapid prototyping
@@ -36,9 +38,11 @@ Then follow our [Getting Started Guide](gettingstartet.md) for step-by-step inst
 ---
 
 ## 🛠️ Workshop Materials
-All exercises, guides, and resources are in this folder (or at least thats the Idea). If you get stuck, ask questions, open an issue, or join the discussion. This is a friendly space for makers, learners, and tinkerers of all levels.
+
+All exercises, guides, and resources are in this folder (or at least that's the idea). If you get stuck, ask questions, open an issue, or join the discussion. This is a friendly space for makers, learners, and tinkerers of all levels.
 
 **Have fun, experiment, and happy coding!** 🎉
-9. **Use Copilot/Coding-Agents for assistance**  
 
-    Leverage GitHub Copilot and Copilot Chat to help with code suggestions, explanations, and troubleshooting as you work through the tasks.
+## Tips
+
+- Use GitHub Copilot and Copilot Chat to help with code suggestions, explanations, and troubleshooting as you work through the tasks.

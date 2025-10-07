@@ -11,6 +11,7 @@
 ## Target Design Architecture
 
 ### DSN-STARTUP-1: LED Controller Dependency Design
+
 Addresses: REQ-STARTUP-1
 
 Design: Startup test executes after LED controller initialization in main() function.
@@ -21,6 +22,7 @@ Design: Startup test executes after LED controller initialization in main() func
 - **Integration**: Direct function call from main(), no separate task required
 
 Architecture Flow:
+
 ```c
 main() → led_controller_init() → led_running_test_single_cycle() → normal_operation()
 ```
@@ -28,11 +30,13 @@ main() → led_controller_init() → led_running_test_single_cycle() → normal_
 Validation: LED controller must be successfully initialized before startup test can execute.
 
 ### DSN-STARTUP-2: Sequential LED Pattern Algorithm Design
+
 Addresses: REQ-STARTUP-2
 
 Design: Single moving LED pattern implemented using sequential clear-set-show operations.
 
 **Core Algorithm** (`led_running_test_single_cycle`):
+
 ```c
 for (uint16_t i = 0; i < led_count; i++) {
     // Clear previous LED (wrap around for first LED)
@@ -51,6 +55,7 @@ for (uint16_t i = 0; i < led_count; i++) {
 ```
 
 **Design Characteristics**:
+
 - **Single LED Active**: Only one LED illuminated at any time (clear previous, set current)
 - **Sequential Progression**: LEDs activated from index 0 to (led_count-1)
 - **Configurable Color**: Color parameter allows different startup patterns
@@ -58,6 +63,7 @@ for (uint16_t i = 0; i < led_count; i++) {
 - **Immediate Updates**: `led_show()` called after each LED change for real-time feedback
 
 **Current Implementation**:
+
 - Called as: `led_running_test_single_cycle(LED_COLOR_GREEN, 50)`
 - Green color for startup indication
 - 50ms delay between LED activations
@@ -66,11 +72,13 @@ for (uint16_t i = 0; i < led_count; i++) {
 Validation: LEDs light sequentially from first to last position with visible timing.
 
 ### DSN-STARTUP-3: Startup Integration and Cleanup Design
+
 Addresses: REQ-STARTUP-3
 
 Design: One-time execution pattern with proper LED state management.
 
 **Integration Pattern** (from main.c):
+
 ```c
 // 1. Initialize LED controller
 led_controller_init(&led_config);
@@ -92,6 +100,7 @@ led_show();
 ```
 
 **Design Characteristics**:
+
 - **One-Time Execution**: Called once during startup, not as background task
 - **State Cleanup**: LEDs cleared before and after test
 - **Logging Integration**: ESP_LOG* statements for startup visibility
@@ -99,6 +108,7 @@ led_show();
 - **Clean Transition**: All LEDs off after test, ready for normal operation
 
 **Performance**:
+
 - Total execution time for 40 LEDs: ~2 seconds (40 × 50ms)
 - Memory usage: No additional allocation beyond LED controller
 - CPU impact: Minimal, just timing delays
@@ -108,7 +118,8 @@ Validation: Test completes within reasonable time, all LEDs cleared after comple
 ## Implementation Architecture
 
 ### Component Structure
-```
+
+```text
 main/components/startup_tests/
 ├── led_running_test.h          // Public API
 ├── led_running_test.c          // Implementation  
@@ -116,7 +127,8 @@ main/components/startup_tests/
 ```
 
 ### API Design
-- **Primary Function**: `led_running_test_single_cycle(color, delay_ms)` 
+
+- **Primary Function**: `led_running_test_single_cycle(color, delay_ms)`
 - **Extended Functions**: `led_running_test_multiple_cycles()`, `led_running_test_rainbow()`
 - **Error Handling**: ESP-IDF error codes (`ESP_OK`, `ESP_ERR_INVALID_STATE`)
 - **Dependencies**: LED controller component

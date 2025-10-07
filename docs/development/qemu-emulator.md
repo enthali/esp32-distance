@@ -12,6 +12,7 @@ The ESP32 Distance Sensor project includes full QEMU emulation support, allowing
 ```
 
 This script automatically:
+
 - ✅ Builds the project (incremental, fast)
 - ✅ Starts the TUN network bridge
 - ✅ Starts the HTTP proxy for web access
@@ -28,6 +29,7 @@ curl http://192.168.100.2/
 ```
 
 Or use the HTTP proxy:
+
 ```bash
 curl http://localhost:8080/
 ```
@@ -36,7 +38,7 @@ The web interface should be accessible at `http://localhost:8080` in your browse
 
 ## Architecture Overview
 
-```
+```text
 ┌────────────────────────────────────────────────────────────┐
 │                    Host System (Linux)                     │
 │                                                            │
@@ -98,7 +100,7 @@ The emulator uses UART1 as a network interface:
 
 ### 2. Network Stack
 
-```
+```text
 Application (Web Server)
          ↓
     lwIP TCP/IP Stack
@@ -118,7 +120,7 @@ Custom UART Network Interface (netif_uart_tunnel_sim.c)
 
 ### 3. Frame Format
 
-```
+```text
 ┌───────────────┬──────────────────────────────────────────┐
 │ Frame Length  │         Ethernet Frame                   │
 │   (2 bytes)   │    (14-byte header + IP packet)          │
@@ -129,16 +131,17 @@ Custom UART Network Interface (netif_uart_tunnel_sim.c)
 ```
 
 **Example:** ICMP Echo Request (98 bytes)
-```
+
+```text
 Length: 0x00 0x62 (98 bytes)
 Ethernet:
-  Dst MAC: 02:00:00:00:00:02 (ESP32)
-  Src MAC: 02:00:00:00:00:01 (Host)
-  Type:    0x08 0x00 (IPv4)
+     Dst MAC: 02:00:00:00:00:02 (ESP32)
+     Src MAC: 02:00:00:00:00:01 (Host)
+     Type:    0x08 0x00 (IPv4)
 IP Packet:
-  Src IP: 192.168.100.1
-  Dst IP: 192.168.100.2
-  Protocol: ICMP
+     Src IP: 192.168.100.1
+     Dst IP: 192.168.100.2
+     Protocol: ICMP
 ```
 
 ## Testing Network Connectivity
@@ -151,7 +154,8 @@ ping -c 4 192.168.100.2
 ```
 
 Expected output:
-```
+
+```text
 64 bytes from 192.168.100.2: icmp_seq=1 ttl=64 time=5.2 ms
 64 bytes from 192.168.100.2: icmp_seq=2 ttl=64 time=3.8 ms
 ```
@@ -183,6 +187,7 @@ sudo tcpdump -i tun0 -n
 **Problem:** Script fails to start QEMU
 
 **Solutions:**
+
 ```bash
 # Check if QEMU is already running
 ps aux | grep qemu
@@ -200,6 +205,7 @@ idf.py build
 **Problem:** Can't ping or access web server
 
 **Checks:**
+
 ```bash
 # 1. Verify TUN device exists
 ip addr show tun0
@@ -220,6 +226,7 @@ ps aux | grep http_proxy
 **Problem:** No logs from QEMU
 
 **Solution:**
+
 ```bash
 # Connect to UART0 console
 nc localhost 5555
@@ -233,6 +240,7 @@ nc localhost 5555
 **Problem:** Error about port 5555 or 5556 already in use
 
 **Solution:**
+
 ```bash
 # Find process using the port
 lsof -i :5555
@@ -257,6 +265,7 @@ Enable verbose logging in `netif_uart_tunnel_sim.c`:
 ```
 
 Then rebuild and watch detailed packet flow:
+
 ```bash
 idf.py build
 ./tools/run-qemu-network.sh
