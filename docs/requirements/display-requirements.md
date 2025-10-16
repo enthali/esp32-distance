@@ -23,12 +23,19 @@ This document specifies requirements for the Display System, enabling visual rep
 | REQ-DSP-IMPL-01 | DSN-DSP-IMPL-01 | Mandatory |
 | REQ-DSP-IMPL-02 | DSN-DSP-IMPL-02 | Mandatory |
 | REQ-DSP-IMPL-03 | DSN-DSP-IMPL-03 | Mandatory |
+| REQ-DSP-ANIM-01 | DSN-DSP-ANIM-02 | Mandatory |
+| REQ-DSP-ANIM-02 | DSN-DSP-ANIM-02 | Mandatory |
+| REQ-DSP-ANIM-03 | DSN-DSP-ANIM-03 | Mandatory |
+| REQ-DSP-ANIM-04 | DSN-DSP-ANIM-03 | Mandatory |
+| REQ-DSP-ANIM-05 | DSN-DSP-ANIM-04 | Mandatory |
+| REQ-DSP-IMPL-04 | DSN-DSP-ANIM-01 | Mandatory |
 
 **Dependencies**:
 
 - REQ-DSP-OVERVIEW-02 depends on REQ-CFG-1 (configuration management system)
 - REQ-DSP-VISUAL-03 depends on REQ-CFG-2 (boundary parameter configuration)
 - REQ-DSP-VISUAL-04 depends on REQ-CFG-2 (boundary parameter configuration)
+- REQ-DSP-IMPL-04 depends on REQ-DSP-ANIM-01, REQ-DSP-ANIM-02, REQ-DSP-ANIM-03, REQ-DSP-ANIM-05
 
 ---
 
@@ -199,22 +206,128 @@ This document specifies requirements for the Display System, enabling visual rep
 
 ---
 
+## Animation Requirements
+
+### REQ-DSP-ANIM-01: Running Light Animation for "Too Far" Zone
+
+**Type**: User Experience  
+**Priority**: Mandatory  
+**Description**: The display system SHALL provide a running light animation for the "too far" zone (LEDs 14-39) that guides the driver to move forward into the ideal parking position.
+
+**Rationale**: Provides clear directional guidance to the driver when they are too far from the ideal position, using animation to indicate the direction they should move.
+
+**Acceptance Criteria**:
+
+- AC-1: Animation runs at 10 fps (100ms per LED step)
+- AC-2: LED color is green (safe to move forward)
+- AC-3: Animation direction is toward LED 13 (approaching ideal zone)
+- AC-4: Animation loops continuously while vehicle remains in zone
+- AC-5: Single LED moves from measurement position toward LED 13
+
+---
+
+### REQ-DSP-ANIM-02: Running Light Animation for "Too Close" Zone
+
+**Type**: User Experience  
+**Priority**: Mandatory  
+**Description**: The display system SHALL provide a running light animation for the "too close" zone (LEDs 0-9) that warns the driver they need to back up away from the wall.
+
+**Rationale**: Provides clear warning and directional guidance when the driver is too close to the wall, using red color and animation to indicate urgency and direction.
+
+**Acceptance Criteria**:
+
+- AC-1: Animation runs at 10 fps (100ms per LED step)
+- AC-2: LED color is red (warning - too close)
+- AC-3: Animation direction is toward LED 10 (retreating from wall)
+- AC-4: Animation loops continuously while vehicle remains in zone
+- AC-5: Single LED moves from measurement position toward LED 10
+
+---
+
+### REQ-DSP-ANIM-03: Steady 4-LED Display for Ideal Zone
+
+**Type**: User Experience  
+**Priority**: Mandatory  
+**Description**: The display system SHALL display 4 steady red LEDs (LEDs 10-13) when the vehicle is in the ideal parking position, with no animation or blinking.
+
+**Rationale**: Provides clear, unambiguous visual confirmation that the parking position is perfect. Steady display (no animation) indicates "stop here" to the driver.
+
+**Acceptance Criteria**:
+
+- AC-1: LEDs 10, 11, 12, and 13 illuminate in red
+- AC-2: No animation or blinking occurs
+- AC-3: Display remains steady while vehicle is in ideal zone
+- AC-4: All other LEDs remain off
+
+---
+
+### REQ-DSP-ANIM-04: Green LED for Out-of-Range (Far)
+
+**Type**: User Experience  
+**Priority**: Mandatory  
+**Description**: The display system SHALL illuminate LED 39 in green (not red) when the distance measurement is beyond the maximum configured range or when the sensor reports out-of-range.
+
+**Rationale**: Green color indicates safe distance - vehicle is still outside the garage and it is safe to enter. Changed from red to avoid confusing "too far but safe" with error conditions.
+
+**Acceptance Criteria**:
+
+- AC-1: LED 39 illuminates in green when distance > max_distance_cm
+- AC-2: LED 39 illuminates in green for DISTANCE_SENSOR_OUT_OF_RANGE status
+- AC-3: Indicates safe distance to enter garage
+- AC-4: No animation occurs (steady green)
+
+---
+
+### REQ-DSP-ANIM-05: Blinking Pattern for Emergency (Too Close)
+
+**Type**: User Experience  
+**Priority**: Mandatory  
+**Description**: The display system SHALL display a blinking pattern on every 10th LED (positions 0, 10, 20, 30) when the distance measurement is below the minimum configured range, indicating immediate danger.
+
+**Rationale**: Emergency warning pattern that is highly visible and distinct from all other display modes. Indicates that the vehicle is dangerously close to the wall and immediate action is required.
+
+**Acceptance Criteria**:
+
+- AC-1: LEDs at positions 0, 10, 20, 30 blink simultaneously
+- AC-2: Blink frequency is 1 Hz (500ms ON, 500ms OFF)
+- AC-3: LED color is red
+- AC-4: Pattern continues until distance increases above minimum threshold
+
+---
+
+### REQ-DSP-IMPL-04: Animation Timing and State Machine
+
+**Type**: Implementation  
+**Priority**: Mandatory  
+**Description**: The display system SHALL implement an animation state machine with timing control that is independent of the distance measurement rate, ensuring smooth animations and responsive state transitions.
+
+**Rationale**: Animations must run smoothly regardless of how fast or slow distance measurements arrive. State machine provides clean separation of concerns between measurement processing and animation rendering.
+
+**Acceptance Criteria**:
+
+- AC-1: State transitions occur within 100ms of mode change
+- AC-2: Animation timing is independent of measurement update rate
+- AC-3: System supports all 5 display modes (static, running forward, running backward, blink pattern, ideal steady)
+- AC-4: Smooth transitions between modes without flicker or visual artifacts
+
+---
+
 ## Requirements Summary
 
-**Total Requirements**: 9  
+**Total Requirements**: 15  
 
 - **System Overview**: 2 requirements
-- **User Experience**: 4 requirements  
-- **Implementation**: 3 requirements
+- **User Experience**: 9 requirements  
+- **Implementation**: 4 requirements
 
 **Requirement Types**:
 
 - **System**: 1 requirement
 - **Interface**: 1 requirement
-- **User Experience**: 4 requirements
-- **Implementation**: 3 requirements
+- **User Experience**: 9 requirements
+- **Implementation**: 4 requirements
 
 **Priority Distribution**:
 
-- **Mandatory**: 9 requirements
+- **Mandatory**: 15 requirements
 - **Optional**: 0 requirements

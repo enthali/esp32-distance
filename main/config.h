@@ -94,7 +94,46 @@ extern "C" {
  * @note Range: 10-255 (0=off, 255=max brightness)
  * @requirement REQ-CFG-1 AC-2
  */
-#define DEFAULT_LED_BRIGHTNESS          128      
+#define DEFAULT_LED_BRIGHTNESS          128
+
+// =============================================================================
+// LED DISPLAY ANIMATION CONFIGURATION
+// =============================================================================
+
+/**
+ * @brief Ideal parking zone start LED position
+ * @note LED 10 is the beginning of the ideal parking zone
+ * @requirement REQ-DSP-ANIM-03
+ */
+#define IDEAL_ZONE_START                10
+
+/**
+ * @brief Ideal parking zone end LED position
+ * @note LED 13 is the end of the ideal parking zone
+ * @requirement REQ-DSP-ANIM-03
+ */
+#define IDEAL_ZONE_END                  13
+
+/**
+ * @brief Animation step time in milliseconds (10 fps)
+ * @note Time between LED animation steps for running light effect
+ * @requirement REQ-DSP-ANIM-01, REQ-DSP-ANIM-02
+ */
+#define ANIMATION_STEP_MS               100
+
+/**
+ * @brief Blink period in milliseconds (1 Hz)
+ * @note Time for each blink state (on/off) in emergency mode
+ * @requirement REQ-DSP-ANIM-05
+ */
+#define BLINK_PERIOD_MS                 500
+
+/**
+ * @brief Blink LED spacing pattern
+ * @note Every 10th LED blinks in emergency mode
+ * @requirement REQ-DSP-ANIM-05
+ */
+#define BLINK_LED_SPACING               10      
 
 // =============================================================================
 // WIFI CONFIGURATION (User Configurable)

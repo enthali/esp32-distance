@@ -11,6 +11,10 @@
 | DSN-DSP-ALGO-02 | REQ-DSP-IMPL-02 | Mandatory |
 | DSN-DSP-ALGO-03 | REQ-SYS-1 | Mandatory |
 | DSN-DSP-API-01 | REQ-DSP-IMPL-01 | Mandatory |
+| DSN-DSP-ANIM-01 | REQ-DSP-IMPL-04 | Mandatory |
+| DSN-DSP-ANIM-02 | REQ-DSP-ANIM-01, REQ-DSP-ANIM-02 | Mandatory |
+| DSN-DSP-ANIM-03 | REQ-DSP-ANIM-03, REQ-DSP-ANIM-04 | Mandatory |
+| DSN-DSP-ANIM-04 | REQ-DSP-ANIM-05 | Mandatory |
 
 ## Target Design Architecture
 
@@ -116,3 +120,146 @@ Design: Single entry point for simplified lifecycle management
 - No complex lifecycle management
 
 Validation: Single function call starts display system, no API complexity.
+
+## Animation Design Architecture
+
+### DSN-DSP-ANIM-01: Animation State Machine Architecture
+
+Addresses: REQ-DSP-IMPL-04
+
+Design: State machine with timing control independent of measurement rate
+
+Architecture Components:
+- **State Structure**: `display_state_t` maintains current mode, animation position, timing
+- **Display Modes**: 5 distinct modes (static, running forward/backward, blink, ideal steady)
+- **Timing Control**: FreeRTOS tick-based timing for frame-rate control
+- **State Transitions**: Mode changes within 100ms based on LED position zones
+- **Rendering Pipeline**: Separate update (state) and render (display) phases
+
+State Machine Flow:
+1. Measurement arrives → Calculate LED position → Determine mode from zone
+2. Mode change → Initialize animation state (position, target, timing)
+3. Animation loop → Update state based on timing → Render to LEDs
+4. Continuous → State updates at animation rate, independent of measurements
+
+Zone-to-Mode Mapping:
+- LEDs 0-9 (too close) → `DISPLAY_MODE_RUNNING_BACKWARD`
+- LEDs 10-13 (ideal) → `DISPLAY_MODE_IDEAL_STEADY`
+- LEDs 14-39 (too far) → `DISPLAY_MODE_RUNNING_FORWARD`
+- Below minimum distance → `DISPLAY_MODE_BLINK_PATTERN`
+- Above maximum distance → `DISPLAY_MODE_STATIC` (green LED 39)
+
+Timing Architecture:
+- Task runs at 20Hz check rate (50ms intervals)
+- Animation updates occur at mode-specific rates (10fps running, 1Hz blink)
+- LED updates only when animation state changes (reduces unnecessary RMT transmissions)
+
+Validation: Mode transitions < 100ms, animations smooth at specified frame rates, independent of measurement timing.
+
+### DSN-DSP-ANIM-02: Running Light Animation Algorithm
+
+Addresses: REQ-DSP-ANIM-01, REQ-DSP-ANIM-02
+
+Design: Single LED "runner" that moves from measurement position toward ideal zone boundary
+
+Algorithm:
+```
+1. Initialize: current_position = measurement_position
+2. Set target based on mode:
+   - RUNNING_FORWARD (too far): target = IDEAL_ZONE_END (LED 13)
+   - RUNNING_BACKWARD (too close): target = IDEAL_ZONE_START (LED 10)
+3. Animation step (every 100ms):
+   - If current_position < target: current_position++
+   - Else if current_position > target: current_position--
+   - Else (reached target): current_position = measurement_position (loop)
+4. Render: Clear all LEDs, set current_position to color, show
+```
+
+Color Selection:
+- Forward animation (too far): GREEN (safe to move forward)
+- Backward animation (too close): RED (warning - back up)
+
+Loop Behavior:
+- Animation continuously moves toward target
+- Upon reaching target, immediately jumps back to measurement position
+- Creates continuous "guiding" effect toward ideal zone
+
+Performance:
+- Single LED illuminated per frame (minimal RMT transmission)
+- Integer position arithmetic (no floating point)
+- 10 fps provides smooth motion without excessive CPU usage
+
+Validation: Single LED moves smoothly at 10fps, correct direction toward ideal zone, loops continuously.
+
+### DSN-DSP-ANIM-03: Zone Boundary Definitions
+
+Addresses: REQ-DSP-ANIM-03, REQ-DSP-ANIM-04
+
+Design: Fixed LED positions define parking zones with specific display behaviors
+
+Zone Layout (40 LEDs, 0-39):
+```
+[0-9]    = TOO CLOSE   → Running backward animation (red) toward LED 10
+[10-13]  = IDEAL ZONE  → Steady 4 red LEDs (no animation)
+[14-39]  = TOO FAR     → Running forward animation (green) toward LED 13
+> max    = OUT OF RANGE → Steady green LED at position 39
+< min    = EMERGENCY   → Blinking pattern LEDs 0,10,20,30
+```
+
+Ideal Zone Design:
+- Positions 10-13 (4 LEDs) provide clear target area
+- Steady red illumination indicates "stop here"
+- No animation prevents confusion (animation = "keep moving")
+- Central to strip for balanced parking guidance
+
+Boundary Detection:
+- `led_index >= 10 && led_index <= 13` → Ideal zone
+- `led_index < 10` → Too close zone
+- `led_index > 13` → Too far zone
+
+Out-of-Range Handling:
+- Distance > max_distance: Green LED 39 (safe to enter)
+- Distance < min_distance: Emergency blink pattern
+- Changed from red to green for "too far" to indicate safety
+
+Validation: Zone boundaries at LEDs 10-13, correct mode selection, ideal zone has 4 steady LEDs.
+
+### DSN-DSP-ANIM-04: Blink Pattern Implementation
+
+Addresses: REQ-DSP-ANIM-05
+
+Design: Simultaneous blinking of every 10th LED for emergency warning
+
+Pattern Specification:
+- LED positions: 0, 10, 20, 30 (every 10th LED)
+- Frequency: 1 Hz (500ms ON, 500ms OFF)
+- Color: Red (danger warning)
+- Synchronization: All pattern LEDs blink together
+
+Implementation:
+```
+1. State: blink_state (boolean) tracks ON/OFF
+2. Timer: Toggle blink_state every 500ms
+3. Render ON state: 
+   - for (i = 0; i < led_count; i += 10): set_pixel(i, RED)
+4. Render OFF state:
+   - All LEDs off (clear_all)
+```
+
+Rationale for Pattern:
+- Every 10th LED ensures visibility across entire strip
+- 1 Hz blink rate is standard for emergency warnings
+- Simultaneous blinking creates strong visual impact
+- Red color indicates immediate danger
+
+Trigger Condition:
+- Activated when `distance_mm < config.distance_min_mm`
+- Indicates vehicle is dangerously close to wall
+- Persists until distance increases above minimum
+
+Performance:
+- Blink state update every 500ms (low CPU overhead)
+- Pattern LEDs calculated dynamically based on led_count
+- Works with any strip length (minimum 4 LEDs for full pattern)
+
+Validation: LEDs 0,10,20,30 blink together at 1Hz in red when distance < minimum.
