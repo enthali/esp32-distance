@@ -312,7 +312,7 @@ static void update_led_display(const distance_measurement_t *measurement)
  *
  * Continuously waits for distance measurements and updates LED display with animations.
  * Runs at priority 3 (between distance sensor priority 6 and test priority 2).
- * Uses non-blocking pattern with timeout to allow animation updates.
+ * Uses polling pattern to balance measurement processing and animation updates.
  * 
  * Implements REQ-DSP-IMPL-04: Animation timing independent of measurement rate
  */
@@ -334,29 +334,33 @@ static void display_logic_task(void *pvParameters)
 
     distance_measurement_t measurement;
     
-    // Animation update interval (50ms = 20fps check rate, actual animations run at their own rates)
+    // Animation update interval (50ms = 20fps check rate for smooth animations)
     const TickType_t animation_check_interval = pdMS_TO_TICKS(50);
 
     while (1)
     {
-        // Try to get new measurement with timeout to allow animation updates
-        // This enables animations to continue even if measurements are slow
-        esp_err_t result = distance_sensor_get_latest(&measurement);
-        
-        if (result == ESP_OK)
+        // Check for new measurement without blocking
+        // This allows animations to continue smoothly
+        if (distance_sensor_has_new_measurement())
         {
-            // New measurement received, update display logic
-            update_led_display(&measurement);
+            // New measurement available, process it
+            if (distance_sensor_get_latest(&measurement) == ESP_OK)
+            {
+                // Update display logic based on new measurement
+                update_led_display(&measurement);
 
-            ESP_LOGD(TAG, "Processed distance: %d mm, status: %d, mode: %d",
-                     measurement.distance_mm, measurement.status, display_state.mode);
+                ESP_LOGD(TAG, "Processed distance: %d mm, status: %d, mode: %d",
+                         measurement.distance_mm, measurement.status, display_state.mode);
+            }
         }
         
         // Update animation state and render (REQ-DSP-IMPL-04)
+        // This runs independently of measurement rate for smooth animations
         update_animation_state();
         render_display_state();
         
-        // Small delay to prevent CPU spinning and allow other tasks to run
+        // Delay to achieve 20Hz animation check rate
+        // Allows other tasks to run and prevents CPU spinning
         vTaskDelay(animation_check_interval);
     }
 }
