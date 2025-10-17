@@ -409,8 +409,7 @@ CONFIG_PARTITION_TABLE_MD5=y
 #
 # ESP32 Distance Project Configuration
 #
-CONFIG_TARGET_EMULATOR=y
-CONFIG_EMULATOR_MOCK_SENSOR=y
+# CONFIG_TARGET_EMULATOR is not set
 # end of ESP32 Distance Project Configuration
 
 #
