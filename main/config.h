@@ -101,25 +101,25 @@ extern "C" {
 // =============================================================================
 
 /**
- * @brief Ideal parking zone start LED position
- * @note LED 10 is the beginning of the ideal parking zone
- * @requirement REQ-DSP-ANIM-03
+ * @brief Target animation duration in milliseconds
+ * @note Running light animations complete in ~1 second for consistent UX
+ * @requirement REQ-DSP-ANIM-01 AC-1, REQ-DSP-ANIM-02 AC-1
  */
-#define IDEAL_ZONE_START                10
+#define ANIMATION_DURATION_MS           1000
 
 /**
- * @brief Ideal parking zone end LED position
- * @note LED 13 is the end of the ideal parking zone
- * @requirement REQ-DSP-ANIM-03
+ * @brief Minimum animation step delay (maximum frame rate)
+ * @note 20ms = 50fps maximum for smooth but not jarring animation
+ * @requirement REQ-DSP-ANIM-01 AC-1b, REQ-DSP-ANIM-02 AC-1b
  */
-#define IDEAL_ZONE_END                  13
+#define ANIMATION_STEP_MIN_MS           20
 
 /**
- * @brief Animation step time in milliseconds (10 fps)
- * @note Time between LED animation steps for running light effect
- * @requirement REQ-DSP-ANIM-01, REQ-DSP-ANIM-02
+ * @brief Maximum animation step delay (minimum frame rate)
+ * @note 200ms = 5fps minimum to prevent sluggish appearance
+ * @requirement REQ-DSP-ANIM-01 AC-1b, REQ-DSP-ANIM-02 AC-1b
  */
-#define ANIMATION_STEP_MS               100
+#define ANIMATION_STEP_MAX_MS           200
 
 /**
  * @brief Blink period in milliseconds (1 Hz)

@@ -36,11 +36,38 @@ static display_state_t display_state = {
     .target_position = 0,
     .measurement_position = 0,
     .last_update = 0,
-    .blink_state = false
+    .blink_state = false,
+    .step_delay_ms = ANIMATION_STEP_MIN_MS,
+    .ideal_zone_start = 0,
+    .ideal_zone_end = 0
 };
 
 /**
- * @brief Determine display mode based on LED position
+ * @brief Calculate dynamic ideal zone boundaries based on LED count
+ * 
+ * Implements REQ-DSP-ANIM-03 AC-5, AC-5a, AC-5b
+ * 
+ * @param led_count Total number of LEDs in strip
+ * @param zone_start Output: start position of ideal zone
+ * @param zone_end Output: end position of ideal zone
+ */
+static void calculate_ideal_zone(uint16_t led_count, uint8_t* zone_start, uint8_t* zone_end)
+{
+    // REQ-DSP-ANIM-03 AC-5a: Zone size = 10% of LEDs, minimum 4
+    uint8_t zone_size = (led_count / 10 > 4) ? led_count / 10 : 4;
+    
+    // REQ-DSP-ANIM-03 AC-5b: Zone center at 25% position
+    uint8_t zone_center = led_count / 4;
+    
+    *zone_start = zone_center - (zone_size / 2);
+    *zone_end = *zone_start + zone_size - 1;
+    
+    ESP_LOGI(TAG, "Ideal zone for %d LEDs: %d-%d (%d LEDs at 25%% position)", 
+             led_count, *zone_start, *zone_end, zone_size);
+}
+
+/**
+ * @brief Determine display mode based on LED position with dynamic zones
  * 
  * Implements zone detection logic (DSN-DSP-ANIM-03)
  * 
@@ -49,30 +76,42 @@ static display_state_t display_state = {
  */
 static display_mode_t determine_display_mode(int led_index)
 {
-    // REQ-DSP-ANIM-03: Ideal zone (LEDs 10-13) → steady 4 red LEDs
-    if (led_index >= IDEAL_ZONE_START && led_index <= IDEAL_ZONE_END) {
+    // Calculate ideal zone on first call or when LED count changes
+    static uint16_t cached_led_count = 0;
+    uint16_t current_led_count = led_get_count();
+    
+    if (cached_led_count != current_led_count) {
+        calculate_ideal_zone(current_led_count, 
+                            &display_state.ideal_zone_start,
+                            &display_state.ideal_zone_end);
+        cached_led_count = current_led_count;
+    }
+    
+    // REQ-DSP-ANIM-03: Ideal zone (dynamic boundaries) → steady red LEDs
+    if (led_index >= display_state.ideal_zone_start && 
+        led_index <= display_state.ideal_zone_end) {
         return DISPLAY_MODE_IDEAL_STEADY;
     }
-    // REQ-DSP-ANIM-02: Too close zone (LEDs 0-9) → running light toward LED 10
-    else if (led_index < IDEAL_ZONE_START) {
+    // REQ-DSP-ANIM-02: Too close zone → running light toward ideal zone start
+    else if (led_index < display_state.ideal_zone_start) {
         return DISPLAY_MODE_RUNNING_BACKWARD;
     }
-    // REQ-DSP-ANIM-01: Too far zone (LEDs 14-39) → running light toward LED 13
+    // REQ-DSP-ANIM-01: Too far zone → running light toward ideal zone end
     else {
         return DISPLAY_MODE_RUNNING_FORWARD;
     }
 }
 
 /**
- * @brief Render ideal zone display (4 steady LEDs)
+ * @brief Render ideal zone display (steady LEDs)
  * 
- * Implements REQ-DSP-ANIM-03: Steady 4-LED display for ideal zone
+ * Implements REQ-DSP-ANIM-03: Steady LED display for ideal zone with dynamic boundaries
  */
 static void render_ideal_zone(void)
 {
     led_clear_all();
-    // Display 4 steady RED LEDs (LEDs 10-13)
-    for (int i = IDEAL_ZONE_START; i <= IDEAL_ZONE_END; i++) {
+    // Display steady RED LEDs in dynamically calculated ideal zone
+    for (int i = display_state.ideal_zone_start; i <= display_state.ideal_zone_end; i++) {
         led_set_pixel(i, LED_COLOR_RED);
     }
     led_show();
@@ -112,9 +151,38 @@ static void render_blink_pattern(void)
 }
 
 /**
+ * @brief Calculate dynamic step delay for constant animation duration
+ * 
+ * Implements REQ-DSP-ANIM-01 AC-1a, AC-1b and REQ-DSP-ANIM-02 AC-1a, AC-1b
+ * 
+ * @param steps_to_target Number of LED steps to reach target
+ * @return Step delay in milliseconds, clamped to reasonable range
+ */
+static uint32_t calculate_step_delay(uint32_t steps_to_target)
+{
+    if (steps_to_target == 0) {
+        return ANIMATION_STEP_MIN_MS;
+    }
+    
+    // REQ-DSP-ANIM-01 AC-1: Target duration ~1 second
+    uint32_t step_delay_ms = ANIMATION_DURATION_MS / steps_to_target;
+    
+    // REQ-DSP-ANIM-01 AC-1b: Clamp to reasonable range
+    if (step_delay_ms < ANIMATION_STEP_MIN_MS) {
+        step_delay_ms = ANIMATION_STEP_MIN_MS;  // Max 50fps
+    }
+    if (step_delay_ms > ANIMATION_STEP_MAX_MS) {
+        step_delay_ms = ANIMATION_STEP_MAX_MS;  // Min 5fps
+    }
+    
+    return step_delay_ms;
+}
+
+/**
  * @brief Update animation state based on timing
  * 
  * Implements REQ-DSP-IMPL-04: Animation timing independent of measurement rate
+ * Implements DSN-DSP-ANIM-02: Running light with dynamic timing
  */
 static void update_animation_state(void)
 {
@@ -124,8 +192,8 @@ static void update_animation_state(void)
     switch (display_state.mode) {
         case DISPLAY_MODE_RUNNING_FORWARD:
         case DISPLAY_MODE_RUNNING_BACKWARD:
-            // REQ-DSP-ANIM-01, REQ-DSP-ANIM-02: 10 fps (100ms per step)
-            if (elapsed >= pdMS_TO_TICKS(ANIMATION_STEP_MS)) {
+            // REQ-DSP-ANIM-01, REQ-DSP-ANIM-02: Dynamic step delay for ~1 second animation
+            if (elapsed >= pdMS_TO_TICKS(display_state.step_delay_ms)) {
                 // Move animation position one step toward target
                 if (display_state.current_position < display_state.target_position) {
                     display_state.current_position++;
@@ -134,6 +202,12 @@ static void update_animation_state(void)
                 } else {
                     // Reached target, loop back to measurement position
                     display_state.current_position = display_state.measurement_position;
+                    
+                    // Recalculate step delay for new loop (distance may have changed)
+                    uint32_t steps = (display_state.current_position > display_state.target_position) ?
+                                    display_state.current_position - display_state.target_position :
+                                    display_state.target_position - display_state.current_position;
+                    display_state.step_delay_ms = calculate_step_delay(steps);
                 }
                 display_state.last_update = current_time;
             }
@@ -231,17 +305,32 @@ static void update_led_display(const distance_measurement_t *measurement)
                     display_state.current_position = led_index;
                     display_state.last_update = xTaskGetTickCount();
                     
-                    // Set animation target based on mode
+                    // Set animation target based on mode using dynamic zone boundaries
                     if (new_mode == DISPLAY_MODE_RUNNING_FORWARD) {
-                        display_state.target_position = IDEAL_ZONE_END;
+                        // REQ-DSP-ANIM-01: Animate toward ideal zone end
+                        display_state.target_position = display_state.ideal_zone_end;
                     } else if (new_mode == DISPLAY_MODE_RUNNING_BACKWARD) {
-                        display_state.target_position = IDEAL_ZONE_START;
+                        // REQ-DSP-ANIM-02: Animate toward ideal zone start
+                        display_state.target_position = display_state.ideal_zone_start;
+                    }
+                    
+                    // Calculate dynamic step delay for constant ~1 second animation
+                    // REQ-DSP-ANIM-01 AC-1a, REQ-DSP-ANIM-02 AC-1a
+                    if (new_mode == DISPLAY_MODE_RUNNING_FORWARD || 
+                        new_mode == DISPLAY_MODE_RUNNING_BACKWARD) {
+                        uint32_t steps = (display_state.current_position > display_state.target_position) ?
+                                        display_state.current_position - display_state.target_position :
+                                        display_state.target_position - display_state.current_position;
+                        display_state.step_delay_ms = calculate_step_delay(steps);
+                        
+                        ESP_LOGD(TAG, "Distance %d mm → LED %d, target %d, steps %lu, delay %lu ms",
+                                 measurement->distance_mm, led_index, 
+                                 display_state.target_position, steps, display_state.step_delay_ms);
                     }
                     
                     const char *mode_name = (new_mode == DISPLAY_MODE_IDEAL_STEADY) ? "ideal" :
                                            (new_mode == DISPLAY_MODE_RUNNING_FORWARD) ? "too far" : "too close";
-                    ESP_LOGD(TAG, "Distance %d mm → LED %d (%s zone)", 
-                             measurement->distance_mm, led_index, mode_name);
+                    ESP_LOGD(TAG, "Mode changed to %s zone", mode_name);
                 } else {
                     // Same mode, just update measurement position
                     display_state.measurement_position = led_index;
@@ -321,13 +410,17 @@ static void display_logic_task(void *pvParameters)
     ESP_LOGI(TAG, "Display logic task started with animations (Priority: %d, Core: %d)",
              uxTaskPriorityGet(NULL), xPortGetCoreID());
 
+    // Calculate and log dynamic ideal zone boundaries
+    uint16_t led_count = led_get_count();
+    calculate_ideal_zone(led_count, &display_state.ideal_zone_start, &display_state.ideal_zone_end);
+    
     // Get current configuration to log the range
     system_config_t config;
     if (config_get_current(&config) == ESP_OK) {
-        ESP_LOGI(TAG, "Distance range: %.1f-%.1fcm → LEDs 0-39",
-                 config.distance_min_mm / 10.0, config.distance_max_mm / 10.0);
-        ESP_LOGI(TAG, "Ideal zone: LEDs %d-%d, Animations: 10fps, Blink: 1Hz",
-                 IDEAL_ZONE_START, IDEAL_ZONE_END);
+        ESP_LOGI(TAG, "Distance range: %.1f-%.1fcm → LEDs 0-%d",
+                 config.distance_min_mm / 10.0, config.distance_max_mm / 10.0, led_count - 1);
+        ESP_LOGI(TAG, "Ideal zone: LEDs %d-%d (dynamic), Animation: ~1s constant duration, Blink: 1Hz",
+                 display_state.ideal_zone_start, display_state.ideal_zone_end);
     } else {
         ESP_LOGW(TAG, "Could not get configuration, using defaults");
     }

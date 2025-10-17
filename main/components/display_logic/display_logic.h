@@ -77,6 +77,9 @@ extern "C"
         uint8_t measurement_position;    ///< LED position from distance measurement
         TickType_t last_update;          ///< Last animation update time
         bool blink_state;                ///< Blink on/off state
+        uint32_t step_delay_ms;          ///< Dynamic step delay for constant animation duration (REQ-DSP-ANIM-01 AC-1a)
+        uint8_t ideal_zone_start;        ///< Dynamic ideal zone start boundary (REQ-DSP-ANIM-03 AC-5)
+        uint8_t ideal_zone_end;          ///< Dynamic ideal zone end boundary (REQ-DSP-ANIM-03 AC-5)
     } display_state_t;
 
     /**
