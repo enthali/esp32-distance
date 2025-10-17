@@ -145,6 +145,78 @@ You are working on an ESP32-based IoT distance sensor project that measures dist
 4. **Test certificate acceptance** across different browsers
 5. **Document security configuration** for end users
 
+## Quality Gates for Coding Agent
+
+### Pre-commit Quality Checks
+
+This project uses automated quality gates to ensure documentation and code quality. All changes **must pass pre-commit checks** before merging.
+
+#### Automated CI Checks
+
+**GitHub Actions will automatically run** on all PRs and commits to main branches:
+
+- **Markdown linting**: Checks syntax, formatting, and style consistency
+- **MkDocs build validation**: Ensures documentation builds without errors
+- **Link verification**: Validates all internal and external links
+
+**Environment Setup**: The `.github/actions/setup-coding-agent-env/action.yml` ensures all required tools are available in CI.
+
+#### Required Tools
+
+When working on documentation changes, ensure these tools work:
+
+1. **markdownlint-cli**: Markdown syntax and style validation
+2. **mkdocs**: Documentation build system with strict mode
+3. **pre-commit**: Automated hook management
+
+#### How to Pass Quality Checks
+
+**If you encounter CI failures:**
+
+1. **Review the GitHub Actions log** for specific errors
+2. **Run pre-commit locally** to see detailed output:
+
+   ```bash
+   pre-commit run --all-files --show-diff-on-failure
+   ```
+
+3. **Fix common issues:**
+   - Add blank lines before/after lists and code blocks
+   - Remove trailing whitespace
+   - Fix broken links in documentation
+   - Ensure proper heading hierarchy
+
+4. **Commit fixes** and push - CI will re-run automatically
+
+#### Quality Check Workflow
+
+```text
+Your Changes → Commit → Push → PR → CI runs pre-commit
+                                    ↓
+                              Pass? → ✅ Ready for review
+                                    ↓
+                              Fail? → ❌ Fix issues → Push fixes → CI re-runs
+```
+
+#### Documentation Standards
+
+When modifying Markdown files:
+
+- **Always add blank lines** around lists, code blocks, and headings
+- **Use fenced code blocks** with language specifiers: ` ```yaml `
+- **Validate links** before committing
+- **Test MkDocs build** locally: `mkdocs build --strict`
+
+#### If Tools Are Not Available
+
+If pre-commit tools are not available in your environment:
+
+1. **Document in PR description** that manual quality check is required
+2. **Request maintainer to run checks** locally or in CI
+3. **Review CI output** carefully and address all reported issues
+
+**Note:** The CI pipeline is the **authoritative quality gate**. All PRs must pass CI checks before merging, regardless of local environment setup.
+
 ## Build Environment
 
 Always use the correct build environment setup for Windows:

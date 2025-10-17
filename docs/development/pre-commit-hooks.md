@@ -396,6 +396,113 @@ repos:
 - **Forces iterative fixes** until documentation is valid
 - **Maintains quality** regardless of who (or what) is committing
 
+---
+
+## GitHub Actions CI Integration
+
+### Automatic Quality Checks
+
+Pre-commit hooks run **automatically on all pull requests** via GitHub Actions:
+
+**Workflow**: `.github/workflows/pre-commit.yml`
+
+```yaml
+name: Pre-commit Quality Gates
+
+on:
+  pull_request:
+    branches: ['main', 'develop']
+  push:
+    branches: ['main', 'develop', 'copilot/**']
+```
+
+**What it does:**
+
+1. Sets up Python 3.12 and Node.js 20
+2. Installs all required tools (pre-commit, mkdocs, markdownlint)
+3. Runs all pre-commit hooks with `--all-files`
+4. Reports results in GitHub PR checks
+5. Blocks merge if checks fail
+
+### Environment Setup Action
+
+**Location**: `.github/actions/setup-coding-agent-env/action.yml`
+
+This custom GitHub Action ensures **consistent tool installation** across:
+
+- **GitHub Coding Agent** environments
+- **CI/CD pipelines**
+- **Manual workflow runs**
+
+**Installed tools:**
+
+- Python: `pre-commit`, `mkdocs`, `mkdocs-material`, `mkdocstrings`
+- Node.js: `markdownlint-cli`
+
+### Coding Agent Integration
+
+**How it works for GitHub Copilot Coding Agent:**
+
+1. **Agent creates commits** on a feature branch
+2. **Agent pushes to GitHub** and opens PR
+3. **GitHub Actions runs automatically** on the PR
+4. **Pre-commit hooks validate** all changes
+5. **If checks fail**: Agent can see errors in CI logs and fix them
+6. **If checks pass**: PR is ready for human review
+
+**Key benefit:** The Coding Agent doesn't need local pre-commit installation - CI provides the quality gate!
+
+### Required Status Checks
+
+To enforce quality gates, configure branch protection rules in:
+
+Repository Settings → Branches → Branch protection rules → main
+
+Required status checks:
+
+- ✅ `quality-checks / Documentation & Code Quality`
+
+This ensures **no code can be merged** without passing pre-commit validation.
+
+### Troubleshooting CI Failures
+
+When CI pre-commit checks fail:
+
+1. **View the GitHub Actions log**:
+   - Go to PR → Checks → Pre-commit Quality Gates
+   - Expand failed steps to see detailed error messages
+
+2. **Common failures:**
+   - `markdownlint`: Missing blank lines, trailing whitespace
+   - `mkdocs-build`: Broken links, invalid YAML frontmatter, missing pages
+
+3. **Fix locally:**
+
+   ```bash
+   # Run pre-commit to see errors
+   pre-commit run --all-files --show-diff-on-failure
+   
+   # Let pre-commit auto-fix issues
+   pre-commit run --all-files
+   
+   # Commit fixes
+   git add -A
+   git commit -m "fix: Apply pre-commit auto-fixes"
+   git push
+   ```
+
+4. **CI re-runs automatically** after push
+
+### Manual CI Trigger
+
+To manually trigger pre-commit CI on your branch:
+
+```bash
+# Create an empty commit to trigger CI
+git commit --allow-empty -m "chore: Trigger CI checks"
+git push
+```
+
 ## Technical Details
 
 ### File Structure

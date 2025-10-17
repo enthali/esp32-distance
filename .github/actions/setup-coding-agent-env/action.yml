@@ -1,0 +1,46 @@
+name: 'Setup Coding Agent Environment'
+description: 'Install tools for quality gates (pre-commit, mkdocs, markdownlint)'
+author: 'ESP32 Distance Project'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+        # Note: No cache for pip since we don't have requirements.txt
+        # Tools are installed directly via pip install in next step
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        # Note: No cache for npm since we install global packages
+    
+    - name: Install Python tools
+      shell: bash
+      run: |
+        echo "Installing Python-based quality tools..."
+        python -m pip install --upgrade pip
+        pip install --no-cache-dir \
+          pre-commit \
+          mkdocs>=1.5 \
+          mkdocs-material>=9.0 \
+          mkdocstrings>=0.19 \
+          pymdown-extensions
+    
+    - name: Install Node.js tools
+      shell: bash
+      run: |
+        echo "Installing Node.js-based quality tools..."
+        npm install -g markdownlint-cli
+    
+    - name: Verify installations
+      shell: bash
+      run: |
+        echo "Verifying tool installations..."
+        pre-commit --version
+        mkdocs --version
+        markdownlint --version
+        echo "✅ All quality tools installed successfully"

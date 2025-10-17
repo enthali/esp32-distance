@@ -1,0 +1,58 @@
+name: Pre-commit Quality Gates
+
+on:
+  pull_request:
+    branches: ['main', 'develop']
+  push:
+    branches: ['main', 'develop', 'copilot/**', 'fix/**', 'feat/**']
+
+jobs:
+  quality-checks:
+    name: Documentation & Code Quality
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for better pre-commit analysis
+      
+      - name: Setup environment
+        uses: ./.github/actions/setup-coding-agent-env
+      
+      - name: Cache pre-commit hooks
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
+          restore-keys: |
+            pre-commit-
+      
+      - name: Run pre-commit hooks
+        run: |
+          echo "Running pre-commit quality checks..."
+          pre-commit run --all-files --show-diff-on-failure
+        env:
+          SKIP: no-commit-to-branch  # Allow CI to run on protected branches
+      
+      - name: Generate quality report
+        if: failure()
+        run: |
+          echo "## ❌ Pre-commit Quality Checks Failed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "The following quality checks failed:" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Common Issues" >> $GITHUB_STEP_SUMMARY
+          echo "- **Markdown linting**: Check for missing blank lines, trailing whitespace" >> $GITHUB_STEP_SUMMARY
+          echo "- **MkDocs build**: Verify documentation structure and links" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Run locally: \`pre-commit run --all-files\`" >> $GITHUB_STEP_SUMMARY
+      
+      - name: Post success summary
+        if: success()
+        run: |
+          echo "## ✅ All Quality Checks Passed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- Markdown linting: ✅" >> $GITHUB_STEP_SUMMARY
+          echo "- MkDocs build validation: ✅" >> $GITHUB_STEP_SUMMARY
+          echo "- Documentation integrity: ✅" >> $GITHUB_STEP_SUMMARY
