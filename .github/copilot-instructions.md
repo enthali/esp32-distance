@@ -147,6 +147,35 @@ You are working on an ESP32-based IoT distance sensor project that measures dist
 
 ## Quality Gates for Coding Agent
 
+### ⚠️ CRITICAL: Run Quality Checks BEFORE Every Commit
+
+**MANDATORY WORKFLOW for GitHub Copilot Coding Agent:**
+
+```bash
+# 1. BEFORE committing ANY documentation changes:
+markdownlint --fix docs/**/*.md *.md
+
+# 2. BEFORE committing changes affecting docs/ or mkdocs.yml:
+mkdocs build --strict
+
+# 3. If you have pre-commit installed (check with: which pre-commit):
+pre-commit run --all-files --show-diff-on-failure
+
+# 4. ONLY commit if ALL checks pass!
+# 5. If checks fail: FIX the issues, then run checks again
+# 6. Repeat until all checks pass
+```
+
+**WHY THIS IS CRITICAL:**
+
+- You run in a GitHub Actions environment where these tools are available
+- CI runs AFTER you commit (too late to fix)
+- You will be offline when CI reports errors
+- Failed CI blocks PR merge
+- Human maintainer has to manually fix your mistakes
+
+**NEVER skip these checks!** Run them BEFORE git commit, not after!
+
 ### Pre-commit Quality Checks
 
 This project uses automated quality gates to ensure documentation and code quality. All changes **must pass pre-commit checks** before merging.
