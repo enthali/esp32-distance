@@ -212,17 +212,19 @@ This document specifies requirements for the Display System, enabling visual rep
 
 **Type**: User Experience  
 **Priority**: Mandatory  
-**Description**: The display system SHALL provide a running light animation for the "too far" zone (LEDs 14-39) that guides the driver to move forward into the ideal parking position.
+**Description**: The display system SHALL provide a running light animation for the "too far" zone that guides the driver to move forward into the ideal parking position with consistent animation duration regardless of distance.
 
-**Rationale**: Provides clear directional guidance to the driver when they are too far from the ideal position, using animation to indicate the direction they should move.
+**Rationale**: Provides clear directional guidance to the driver when they are too far from the ideal position, using animation to indicate the direction they should move. Consistent animation duration (~1 second) provides predictable UX and prevents jarring speed changes as vehicle approaches ideal zone.
 
 **Acceptance Criteria**:
 
-- AC-1: Animation runs at 10 fps (100ms per LED step)
+- AC-1: Animation completes in ~1 second regardless of distance to ideal zone
+- AC-1a: Step delay dynamically calculated based on steps_to_target (distance to ideal zone boundary)
+- AC-1b: Step delay clamped between 20ms (50fps max) and 200ms (5fps min) for smooth animation
 - AC-2: LED color is green (safe to move forward)
-- AC-3: Animation direction is toward LED 13 (approaching ideal zone)
+- AC-3: Animation direction is toward ideal zone end boundary (dynamically calculated)
 - AC-4: Animation loops continuously while vehicle remains in zone
-- AC-5: Single LED moves from measurement position toward LED 13
+- AC-5: Single LED moves from measurement position toward ideal zone boundary
 
 ---
 
@@ -230,34 +232,39 @@ This document specifies requirements for the Display System, enabling visual rep
 
 **Type**: User Experience  
 **Priority**: Mandatory  
-**Description**: The display system SHALL provide a running light animation for the "too close" zone (LEDs 0-9) that warns the driver they need to back up away from the wall.
+**Description**: The display system SHALL provide a running light animation for the "too close" zone that warns the driver they need to back up away from the wall with consistent animation duration regardless of distance.
 
-**Rationale**: Provides clear warning and directional guidance when the driver is too close to the wall, using red color and animation to indicate urgency and direction.
+**Rationale**: Provides clear warning and directional guidance when the driver is too close to the wall, using red color and animation to indicate urgency and direction. Consistent animation duration (~1 second) provides predictable UX and prevents jarring speed changes as vehicle moves away from wall.
 
 **Acceptance Criteria**:
 
-- AC-1: Animation runs at 10 fps (100ms per LED step)
+- AC-1: Animation completes in ~1 second regardless of distance to ideal zone
+- AC-1a: Step delay dynamically calculated based on steps_to_target (distance to ideal zone boundary)
+- AC-1b: Step delay clamped between 20ms (50fps max) and 200ms (5fps min) for smooth animation
 - AC-2: LED color is red (warning - too close)
-- AC-3: Animation direction is toward LED 10 (retreating from wall)
+- AC-3: Animation direction is toward ideal zone start boundary (dynamically calculated)
 - AC-4: Animation loops continuously while vehicle remains in zone
-- AC-5: Single LED moves from measurement position toward LED 10
+- AC-5: Single LED moves from measurement position toward ideal zone boundary
 
 ---
 
-### REQ-DSP-ANIM-03: Steady 4-LED Display for Ideal Zone
+### REQ-DSP-ANIM-03: Steady LED Display for Ideal Zone
 
 **Type**: User Experience  
 **Priority**: Mandatory  
-**Description**: The display system SHALL display 4 steady red LEDs (LEDs 10-13) when the vehicle is in the ideal parking position, with no animation or blinking.
+**Description**: The display system SHALL display steady red LEDs in the ideal zone when the vehicle is in the ideal parking position, with no animation or blinking. The ideal zone size and position SHALL be calculated dynamically based on LED strip configuration.
 
-**Rationale**: Provides clear, unambiguous visual confirmation that the parking position is perfect. Steady display (no animation) indicates "stop here" to the driver.
+**Rationale**: Provides clear, unambiguous visual confirmation that the parking position is perfect. Steady display (no animation) indicates "stop here" to the driver. Dynamic zone calculation ensures the system adapts to different LED strip lengths (20-100 LEDs) while maintaining consistent user experience.
 
 **Acceptance Criteria**:
 
-- AC-1: LEDs 10, 11, 12, and 13 illuminate in red
+- AC-1: LEDs in dynamically calculated ideal zone illuminate in red
 - AC-2: No animation or blinking occurs
 - AC-3: Display remains steady while vehicle is in ideal zone
 - AC-4: All other LEDs remain off
+- AC-5: Ideal zone boundaries calculated dynamically based on LED count
+- AC-5a: Zone size = 10% of total LEDs (minimum 4 LEDs)
+- AC-5b: Zone center positioned at 25% of LED strip length
 
 ---
 

@@ -142,16 +142,20 @@ State Machine Flow:
 3. Animation loop → Update state based on timing → Render to LEDs
 4. Continuous → State updates at animation rate, independent of measurements
 
-Zone-to-Mode Mapping:
-- LEDs 0-9 (too close) → `DISPLAY_MODE_RUNNING_BACKWARD`
-- LEDs 10-13 (ideal) → `DISPLAY_MODE_IDEAL_STEADY`
-- LEDs 14-39 (too far) → `DISPLAY_MODE_RUNNING_FORWARD`
+Zone-to-Mode Mapping (Dynamic Zones):
+- LEDs 0 to (ideal_start - 1) → `DISPLAY_MODE_RUNNING_BACKWARD`
+- LEDs ideal_start to ideal_end → `DISPLAY_MODE_IDEAL_STEADY`
+- LEDs (ideal_end + 1) to (count - 1) → `DISPLAY_MODE_RUNNING_FORWARD`
 - Below minimum distance → `DISPLAY_MODE_BLINK_PATTERN`
-- Above maximum distance → `DISPLAY_MODE_STATIC` (green LED 39)
+- Above maximum distance → `DISPLAY_MODE_STATIC` (green LED at last position)
 
 Timing Architecture:
 - Task runs at 20Hz check rate (50ms intervals)
-- Animation updates occur at mode-specific rates (10fps running, 1Hz blink)
+- Animation updates occur at dynamic rates based on distance to target:
+  - Running animations: 5-50fps (20-200ms step delay) for ~1 second total duration
+  - Blink pattern: 1Hz (500ms period)
+- Step delay calculated per animation: `step_delay_ms = 1000ms / steps_to_target`
+- Step delay clamped to 20-200ms range for smooth, responsive animations
 - LED updates only when animation state changes (reduces unnecessary RMT transmissions)
 
 Validation: Mode transitions < 100ms, animations smooth at specified frame rates, independent of measurement timing.
@@ -160,19 +164,25 @@ Validation: Mode transitions < 100ms, animations smooth at specified frame rates
 
 Addresses: REQ-DSP-ANIM-01, REQ-DSP-ANIM-02
 
-Design: Single LED "runner" that moves from measurement position toward ideal zone boundary
+Design: Single LED "runner" with dynamic timing that moves from measurement position toward ideal zone boundary in constant duration
 
 Algorithm:
 ```
 1. Initialize: current_position = measurement_position
 2. Set target based on mode:
-   - RUNNING_FORWARD (too far): target = IDEAL_ZONE_END (LED 13)
-   - RUNNING_BACKWARD (too close): target = IDEAL_ZONE_START (LED 10)
-3. Animation step (every 100ms):
+   - RUNNING_FORWARD (too far): target = ideal_zone_end (dynamically calculated)
+   - RUNNING_BACKWARD (too close): target = ideal_zone_start (dynamically calculated)
+3. Calculate dynamic step delay:
+   - steps_to_target = abs(target_position - current_position)
+   - step_delay_ms = ANIMATION_DURATION_MS / steps_to_target (target: 1000ms)
+   - Clamp step_delay_ms:
+     * if step_delay_ms < ANIMATION_STEP_MIN_MS: step_delay_ms = ANIMATION_STEP_MIN_MS (20ms = 50fps max)
+     * if step_delay_ms > ANIMATION_STEP_MAX_MS: step_delay_ms = ANIMATION_STEP_MAX_MS (200ms = 5fps min)
+4. Animation step (every step_delay_ms):
    - If current_position < target: current_position++
    - Else if current_position > target: current_position--
-   - Else (reached target): current_position = measurement_position (loop)
-4. Render: Clear all LEDs, set current_position to color, show
+   - Else (reached target): current_position = measurement_position (loop), recalculate step_delay_ms
+5. Render: Clear all LEDs, set current_position to color, show
 ```
 
 Color Selection:
@@ -182,47 +192,92 @@ Color Selection:
 Loop Behavior:
 - Animation continuously moves toward target
 - Upon reaching target, immediately jumps back to measurement position
+- Step delay recalculated on each loop for dynamic distance changes
 - Creates continuous "guiding" effect toward ideal zone
+
+Dynamic Timing Benefits:
+- Constant animation duration (~1 second) regardless of distance to ideal zone
+- Prevents jarring speed changes as vehicle approaches target
+- Adapts to different LED strip lengths (20-100 LEDs)
+- Smooth animation maintained through min/max delay clamping
 
 Performance:
 - Single LED illuminated per frame (minimal RMT transmission)
-- Integer position arithmetic (no floating point)
-- 10 fps provides smooth motion without excessive CPU usage
+- Integer arithmetic for step delay calculation (no floating point)
+- Dynamic FPS adapts to distance (5-50fps range)
+- CPU-efficient: fewer updates when far away, more when close
 
-Validation: Single LED moves smoothly at 10fps, correct direction toward ideal zone, loops continuously.
+Validation: Animation completes in ~1 second regardless of starting distance, smooth motion, correct direction toward ideal zone, loops continuously.
 
 ### DSN-DSP-ANIM-03: Zone Boundary Definitions
 
 Addresses: REQ-DSP-ANIM-03, REQ-DSP-ANIM-04
 
-Design: Fixed LED positions define parking zones with specific display behaviors
+Design: Dynamic LED zone calculation that adapts to LED strip configuration
 
-Zone Layout (40 LEDs, 0-39):
+Dynamic Ideal Zone Calculation:
 ```
-[0-9]    = TOO CLOSE   → Running backward animation (red) toward LED 10
-[10-13]  = IDEAL ZONE  → Steady 4 red LEDs (no animation)
-[14-39]  = TOO FAR     → Running forward animation (green) toward LED 13
-> max    = OUT OF RANGE → Steady green LED at position 39
-< min    = EMERGENCY   → Blinking pattern LEDs 0,10,20,30
+ideal_zone_size = max(led_count / 10, 4)   // 10% of LEDs, minimum 4
+ideal_zone_center = led_count / 4          // 25% position along strip
+ideal_zone_start = ideal_zone_center - (ideal_zone_size / 2)
+ideal_zone_end = ideal_zone_start + ideal_zone_size - 1
+```
+
+Zone Layout Examples:
+
+**20 LEDs (0-19):**
+```
+[0-2]   = TOO CLOSE   → Running backward animation (red) toward LED 3
+[3-6]   = IDEAL ZONE  → Steady 4 red LEDs (no animation)
+[7-19]  = TOO FAR     → Running forward animation (green) toward LED 6
+```
+
+**40 LEDs (0-39):**
+```
+[0-7]   = TOO CLOSE   → Running backward animation (red) toward LED 8
+[8-11]  = IDEAL ZONE  → Steady 4 red LEDs (no animation)
+[12-39] = TOO FAR     → Running forward animation (green) toward LED 11
+```
+
+**60 LEDs (0-59):**
+```
+[0-11]  = TOO CLOSE   → Running backward animation (red) toward LED 12
+[12-17] = IDEAL ZONE  → Steady 6 red LEDs (no animation)
+[18-59] = TOO FAR     → Running forward animation (green) toward LED 17
+```
+
+**100 LEDs (0-99):**
+```
+[0-19]  = TOO CLOSE   → Running backward animation (red) toward LED 20
+[20-29] = IDEAL ZONE  → Steady 10 red LEDs (no animation)
+[30-99] = TOO FAR     → Running forward animation (green) toward LED 29
 ```
 
 Ideal Zone Design:
-- Positions 10-13 (4 LEDs) provide clear target area
+- Zone size scales with LED count (10% of total, minimum 4 LEDs)
+- Center positioned at 25% of strip length for consistent positioning
 - Steady red illumination indicates "stop here"
 - No animation prevents confusion (animation = "keep moving")
-- Central to strip for balanced parking guidance
+- Adapts to different garage sizes and LED strip configurations
 
 Boundary Detection:
-- `led_index >= 10 && led_index <= 13` → Ideal zone
-- `led_index < 10` → Too close zone
-- `led_index > 13` → Too far zone
+- `led_index >= ideal_zone_start && led_index <= ideal_zone_end` → Ideal zone
+- `led_index < ideal_zone_start` → Too close zone
+- `led_index > ideal_zone_end` → Too far zone
+- Boundaries calculated once at initialization or when LED count changes
 
 Out-of-Range Handling:
-- Distance > max_distance: Green LED 39 (safe to enter)
+- Distance > max_distance: Green LED at last position (safe to enter)
 - Distance < min_distance: Emergency blink pattern
 - Changed from red to green for "too far" to indicate safety
 
-Validation: Zone boundaries at LEDs 10-13, correct mode selection, ideal zone has 4 steady LEDs.
+Dynamic Calculation Benefits:
+- Adapts to LED strip length (configurable 1-100 LEDs)
+- Maintains consistent UX across different hardware configurations
+- Zone center always at 25% position (consistent parking reference point)
+- Zone size proportional to strip length (10% provides adequate target area)
+
+Validation: Zone boundaries calculated correctly for various LED counts, correct mode selection, ideal zone size adapts to strip length.
 
 ### DSN-DSP-ANIM-04: Blink Pattern Implementation
 
