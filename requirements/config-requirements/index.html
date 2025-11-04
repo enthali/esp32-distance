@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.22">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.23">
     
     
       
@@ -1930,7 +1930,7 @@
 <ul>
 <li>AC-1: Distance sensor parameters (min, max, measurement interval, sensor timeout, ambient temperature, smoothing factor) centralized in device configuration and persistent storage. Implementation-specific names, types, and on-device scaling conventions are defined in <code>docs/design/config-design.md</code>.</li>
 <li>AC-2: LED controller parameters (LED count, LED brightness) centralized in device configuration and persistent storage.</li>
-<li>AC-3: WiFi parameters (AP channel, AP max connections, STA retry, STA timeout) centralized in device configuration and persistent storage.</li>
+<li>AC-3: User-facing WiFi parameters (SSID, password) centralized in device configuration and persistent storage. Component-internal WiFi parameters (channel selection, internal retry logic, timeout implementation) remain in WiFi component.</li>
 <li>AC-4: All parameters listed in the Configuration Categories section below SHALL be part of the centralized configuration (logical grouping). Concrete on-device representation and default macro names are specified in <code>docs/design/config-design.md</code>.</li>
 <li>AC-5: No additional user-configurable magic numbers remain in source files outside the centralized configuration.</li>
 <li>AC-6: Each configuration value documented with purpose and valid range as shown in Configuration Categories; storage/encoding details are in the design document.</li>
@@ -1940,35 +1940,42 @@
 <ul>
 <li>Distance sensor configuration: minimum/maximum measurement ranges, measurement interval, sensor timeout, ambient temperature override, smoothing factor</li>
 <li>LED controller configuration: LED count, LED brightness</li>
-<li>WiFi configuration: SSID, password, AP/channel settings, retry and timeout values</li>
+<li>WiFi configuration (user-facing only): SSID, password for station mode connection</li>
 </ul>
 <p><strong>Scope Definition</strong>:</p>
 <ul>
-<li><strong>Included in config.h</strong>: User-configurable parameters, system behavior settings, timing intervals, network parameters</li>
-<li><strong>Excluded from config.h</strong>: Hardware timing specifications (WS2812 bit timing), ESP-IDF task stack sizes, protocol constants (HTTP status codes), component-internal buffer sizes</li>
+<li><strong>Included in config.h</strong>: User-configurable parameters that affect user experience (distance ranges, LED count/brightness, WiFi SSID/password), system behavior settings visible to users</li>
+<li><strong>Excluded from config.h</strong>: Hardware timing specifications (WS2812 bit timing), ESP-IDF task stack sizes, protocol constants (HTTP status codes), component-internal buffer sizes, component-internal networking parameters (WiFi channel selection, internal retry mechanisms, connection timeouts)</li>
 </ul>
 <p><strong>Note</strong>: This selective approach maintains component encapsulation while centralizing parameters that affect system behavior or user experience.</p>
 <h3 id="req-cfg-2-use-of-centralized-configuration">REQ-CFG-2: Use of Centralized Configuration</h3>
 <p><strong>Type</strong>: Implementation<br />
 <strong>Priority</strong>: Mandatory<br />
 <strong>Depends</strong>: REQ-CFG-1<br />
-<strong>Description</strong>: All system modules SHALL use centralized configuration values defined in REQ-CFG-1 for parameters specified in the centralized configuration header, while retaining module-specific constants for hardware and protocol specifications.</p>
-<p><strong>Rationale</strong>: Ensures consistent use of configurable parameters across the system while allowing modules to maintain their own module-specific constants.</p>
+<strong>Description</strong>: All system modules SHALL use centralized configuration values defined in REQ-CFG-1 through a single, consistent access pattern: components receive configuration structure at initialization time, and runtime configuration changes trigger system restart to ensure consistent state across all components.</p>
+<p><strong>Rationale</strong>: Ensures consistent use of configurable parameters across the system while allowing modules to maintain their own module-specific constants. Single configuration access pattern prevents inconsistencies between initialization-time and runtime configuration access, simplifying component implementation and ensuring all components operate with synchronized configuration state.</p>
+<p><strong>Configuration Access Pattern</strong>:</p>
+<ul>
+<li><strong>Initialization</strong>: Components receive configuration structure pointer during initialization (e.g., <code>component_init(const config_t *config)</code>)</li>
+<li><strong>Runtime Changes</strong>: Configuration modifications through web interface or API trigger graceful system restart to reinitialize all components with new configuration</li>
+<li><strong>Justification</strong>: Static configuration at initialization enables predictable memory allocation, eliminates runtime reconfiguration complexity, and ensures all components remain synchronized</li>
+</ul>
 <p><strong>Acceptance Criteria</strong>:</p>
 <ul>
-<li>AC-1: All modules SHALL reference config.h for parameters defined therein</li>
-<li>AC-2: Modules SHALL NOT define local copies of centrally-defined configuration values</li>
-<li>AC-3: Modules MAY retain hardware-specific constants (WS2812 timing, task stack sizes, etc.)</li>
-<li>AC-4: Modules MAY retain protocol-specific constants (HTTP status codes, buffer sizes, etc.)</li>
-<li>AC-5: Build process SHALL validate no duplicate definitions of centralized parameters</li>
-<li>AC-6: Each centralized parameter SHALL be used consistently across all referencing modules</li>
-<li>AC-7: Module documentation SHALL clearly distinguish between centralized and local parameters</li>
+<li>AC-1: All components SHALL receive configuration via initialization function parameter</li>
+<li>AC-2: Components SHALL NOT access configuration manager APIs during runtime operation</li>
+<li>AC-3: Components SHALL store required configuration values locally during initialization</li>
+<li>AC-4: Configuration changes through web UI or API SHALL trigger controlled system restart</li>
+<li>AC-5: Modules MAY retain hardware-specific constants (WS2812 timing, task stack sizes, etc.)</li>
+<li>AC-6: Modules MAY retain protocol-specific constants (HTTP status codes, buffer sizes, etc.)</li>
+<li>AC-7: Build process SHALL validate no duplicate definitions of centralized parameters</li>
+<li>AC-8: Each centralized parameter SHALL be used consistently across all referencing components</li>
 </ul>
 <p><strong>Scope Clarification</strong>:</p>
 <ul>
-<li><strong>Centralized Parameters</strong>: All user-configurable values defined in config.h (distance ranges, LED settings, WiFi parameters)</li>
-<li><strong>Local Parameters</strong>: Hardware timings, protocol constants, module-internal buffer sizes, task priorities</li>
-<li><strong>Example</strong>: <code>DEFAULT_LED_COUNT</code> must come from config.h, but <code>WS2812_T0H_NS</code> remains in led_controller component</li>
+<li><strong>Centralized Parameters</strong>: All user-configurable values defined in config.h (distance ranges, LED settings, WiFi SSID/password)</li>
+<li><strong>Local Parameters</strong>: Hardware timings, protocol constants, module-internal buffer sizes, task priorities, WiFi channel settings</li>
+<li><strong>Example</strong>: <code>DEFAULT_LED_COUNT</code> passed at init, but <code>WS2812_T0H_NS</code> remains in led_controller component</li>
 </ul>
 <hr />
 <h2 id="dynamic-configuration-management">Dynamic Configuration Management</h2>
@@ -2043,16 +2050,18 @@
 <p><strong>Type</strong>: Implementation<br />
 <strong>Priority</strong>: Mandatory<br />
 <strong>Depends</strong>: REQ-CFG-3<br />
-<strong>Description</strong>: The system SHALL validate all configuration parameters in the runtime configuration structure against defined ranges before acceptance.</p>
-<p><strong>Rationale</strong>: Prevents invalid configurations that could cause system malfunction or instability by enforcing parameter bounds and inter-parameter relationships.</p>
+<strong>Description</strong>: The system SHALL validate all configuration parameters in the runtime configuration structure against defined ranges before acceptance. The configuration manager owns primary validation logic, and the web interface (REQ-CFG-7, REQ-CFG-8) is considered part of the configuration management subsystem for user experience purposes.</p>
+<p><strong>Rationale</strong>: Prevents invalid configurations that could cause system malfunction or instability by enforcing parameter bounds and inter-parameter relationships. Primary validation in configuration manager ensures data integrity regardless of source (web UI, API, or programmatic). Web interface validation provides immediate user feedback and is architecturally part of the configuration management system.</p>
 <p><strong>Acceptance Criteria</strong>:</p>
 <ul>
-<li>AC-1: All integer parameters validated against min/max ranges as specified below</li>
-<li>AC-2: All fixed-point parameters validated against min/max ranges as specified below</li>
-<li>AC-3: Inter-parameter validation (e.g., distance_min_mm &lt; distance_max_mm, sensor_timeout_ms &lt; measurement_interval_ms)</li>
-<li>AC-4: Invalid parameters rejected with specific error messages</li>
-<li>AC-5: Validation performed before NVS save operations</li>
-<li>AC-6: Validation errors logged with parameter name and attempted value</li>
+<li>AC-1: Configuration manager SHALL perform authoritative validation on all parameter changes</li>
+<li>AC-2: All integer parameters validated against min/max ranges as specified below</li>
+<li>AC-3: All fixed-point parameters validated against min/max ranges as specified below</li>
+<li>AC-4: Inter-parameter validation (e.g., distance_min_mm &lt; distance_max_mm, sensor_timeout_ms &lt; measurement_interval_ms)</li>
+<li>AC-5: Invalid parameters rejected with specific error messages</li>
+<li>AC-6: Validation performed before NVS save operations</li>
+<li>AC-7: Validation errors logged with parameter name and attempted value</li>
+<li>AC-8: Web interface (REQ-CFG-7) MAY perform client-side validation for user experience, but SHALL NOT bypass server-side validation</li>
 </ul>
 <p><strong>Parameter Validation Ranges</strong>:</p>
 <p>The system SHALL validate parameters against the following human-oriented ranges. The design document <code>docs/design/config-design.md</code> specifies exact on-device representations and any fixed-point scaling used for storage.</p>

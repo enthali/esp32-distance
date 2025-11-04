@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.22">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.23">
     
     
       
@@ -1996,7 +1996,9 @@
 </table>
 <p><strong>Dependencies</strong>:</p>
 <ul>
+<li>REQ-DSP-OVERVIEW-01 depends on REQ-LED-1 (LED hardware initialization)</li>
 <li>REQ-DSP-OVERVIEW-02 depends on REQ-CFG-1 (configuration management system)</li>
+<li>REQ-DSP-VISUAL-01 depends on REQ-SNS-11 (processed distance measurements with smoothing)</li>
 <li>REQ-DSP-VISUAL-03 depends on REQ-CFG-2 (boundary parameter configuration)</li>
 <li>REQ-DSP-VISUAL-04 depends on REQ-CFG-2 (boundary parameter configuration)</li>
 </ul>
@@ -2005,15 +2007,16 @@
 <h3 id="req-dsp-overview-01-hardware-platform">REQ-DSP-OVERVIEW-01: Hardware Platform</h3>
 <p><strong>Type</strong>: System<br />
 <strong>Priority</strong>: Mandatory<br />
-<strong>Description</strong>: The display system SHALL utilize WS2812 addressable LED strip hardware with configurable LED count and brightness as an integrated, reactive component.</p>
-<p><strong>Rationale</strong>: Establishes the hardware foundation for the visual display system, enabling flexible LED strip configurations for different deployment scenarios. The system operates reactively, automatically responding to distance measurements rather than external commands.</p>
+<strong>Depends</strong>: REQ-LED-1<br />
+<strong>Description</strong>: The display system SHALL utilize WS2812 addressable LED strip hardware through the LED controller component API as an integrated, reactive component. LED count and brightness are configurable via configuration management system.</p>
+<p><strong>Rationale</strong>: Establishes the hardware foundation for the visual display system, enabling flexible LED strip configurations for different deployment scenarios. The system operates reactively, automatically responding to distance measurements rather than external commands. Display system uses LED controller API for all hardware access, maintaining clear separation of concerns.</p>
 <p><strong>Acceptance Criteria</strong>:</p>
 <ul>
-<li>AC-1: System supports WS2812 addressable LED strips</li>
+<li>AC-1: Display system uses LED controller component API for all LED hardware access</li>
 <li>AC-2: LED count and brightness are configurable via configuration management system</li>
 <li>AC-3: System validates LED count is within reasonable range (1-100 LEDs)</li>
-<li>AC-4: LED strip communication uses appropriate GPIO pin configuration</li>
-<li>AC-5: System initializes LED hardware before processing distance measurements</li>
+<li>AC-4: LED controller component handles all GPIO pin configuration and timing</li>
+<li>AC-5: Display system depends on LED controller initialization completing successfully</li>
 <li>AC-6: System operates continuously, updating display in real-time as measurements arrive</li>
 </ul>
 <hr />
@@ -2040,14 +2043,16 @@
 <h3 id="req-dsp-visual-01-core-visualization-concept">REQ-DSP-VISUAL-01: Core Visualization Concept</h3>
 <p><strong>Type</strong>: User Experience<br />
 <strong>Priority</strong>: Mandatory<br />
-<strong>Description</strong>: The display system SHALL illuminate a single LED that represents the current measured distance with real-time updates.</p>
-<p><strong>Rationale</strong>: Provides clear, unambiguous visual feedback where users can immediately understand the current distance measurement through LED position.</p>
+<strong>Depends</strong>: REQ-SNS-11<br />
+<strong>Description</strong>: The display system SHALL illuminate a single LED that represents the current measured distance with real-time updates. The display system consumes processed distance measurements from the distance sensor component without additional filtering or smoothing.</p>
+<p><strong>Rationale</strong>: Provides clear, unambiguous visual feedback where users can immediately understand the current distance measurement through LED position. The distance sensor component owns all measurement processing, filtering, and smoothing (REQ-SNS-11); the display system is responsible solely for visual representation of processed measurements, maintaining clear separation of concerns.</p>
 <p><strong>Acceptance Criteria</strong>:</p>
 <ul>
-<li>AC-1: Only one LED is illuminated at any given time</li>
-<li>AC-2: LED position corresponds to measured distance value</li>
-<li>AC-3: Display updates immediately when new measurements arrive</li>
-<li>AC-4: All other LEDs remain off during operation</li>
+<li>AC-1: Only one LED is illuminated at any given time (excluding animation layers)</li>
+<li>AC-2: LED position corresponds to processed distance measurement value from sensor component</li>
+<li>AC-3: Display updates immediately when new processed measurements arrive from sensor queue</li>
+<li>AC-4: Display system SHALL NOT apply additional smoothing or filtering to distance measurements</li>
+<li>AC-5: Display system uses distance measurements directly from sensor component's processed measurement queue</li>
 </ul>
 <hr />
 <h3 id="req-dsp-visual-02-dual-layer-display-with-position-and-animation">REQ-DSP-VISUAL-02: Dual-Layer Display with Position and Animation</h3>

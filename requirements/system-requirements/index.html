@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.22">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.23">
     
     
       
@@ -757,18 +757,27 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#req-sys-7-error-handling-and-recovery" class="md-nav__link">
+  <a href="#req-sys-7-startup-sequence-orchestration" class="md-nav__link">
     <span class="md-ellipsis">
-      REQ-SYS-7: Error Handling and Recovery
+      REQ-SYS-7: Startup Sequence Orchestration
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#req-sys-8-memory-management" class="md-nav__link">
+  <a href="#req-sys-8-error-handling-and-recovery" class="md-nav__link">
     <span class="md-ellipsis">
-      REQ-SYS-8: Memory Management
+      REQ-SYS-8: Error Handling and Recovery
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#req-sys-9-memory-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      REQ-SYS-9: Memory Management
     </span>
   </a>
   
@@ -1737,18 +1746,27 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#req-sys-7-error-handling-and-recovery" class="md-nav__link">
+  <a href="#req-sys-7-startup-sequence-orchestration" class="md-nav__link">
     <span class="md-ellipsis">
-      REQ-SYS-7: Error Handling and Recovery
+      REQ-SYS-7: Startup Sequence Orchestration
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#req-sys-8-memory-management" class="md-nav__link">
+  <a href="#req-sys-8-error-handling-and-recovery" class="md-nav__link">
     <span class="md-ellipsis">
-      REQ-SYS-8: Memory Management
+      REQ-SYS-8: Error Handling and Recovery
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#req-sys-9-memory-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      REQ-SYS-9: Memory Management
     </span>
   </a>
   
@@ -1883,11 +1901,16 @@
 </tr>
 <tr>
 <td>REQ-SYS-7</td>
-<td>DSN-SYS-7</td>
+<td>DSN-SYS-BOOT-01</td>
 <td>Mandatory</td>
 </tr>
 <tr>
 <td>REQ-SYS-8</td>
+<td>DSN-SYS-7</td>
+<td>Mandatory</td>
+</tr>
+<tr>
+<td>REQ-SYS-9</td>
 <td>DSN-SYS-8</td>
 <td>Mandatory</td>
 </tr>
@@ -1977,7 +2000,34 @@
 <li>AC-3: Components provide well-defined APIs</li>
 <li>AC-4: Main application coordinates components without tight coupling</li>
 </ul>
-<h3 id="req-sys-7-error-handling-and-recovery">REQ-SYS-7: Error Handling and Recovery</h3>
+<h3 id="req-sys-7-startup-sequence-orchestration">REQ-SYS-7: Startup Sequence Orchestration</h3>
+<p><strong>Type</strong>: System<br />
+<strong>Priority</strong>: Mandatory<br />
+<strong>Description</strong>: The system SHALL execute a well-defined startup sequence that initializes all subsystems in proper dependency order, performs system health checks, and transitions to normal operation only after all critical components are ready.</p>
+<p><strong>Rationale</strong>: Complex embedded systems with multiple components require careful initialization orchestration to ensure all dependencies are met before operation begins. Clear startup sequence prevents race conditions, ensures configuration is loaded before components use it, and provides visual feedback to users.</p>
+<p><strong>Acceptance Criteria</strong>:</p>
+<ul>
+<li>AC-1: Startup sequence SHALL execute in the following order:</li>
+<li>Hardware initialization (GPIO, peripherals)</li>
+<li>Configuration system initialization and loading from NVS (REQ-CFG-4, REQ-CFG-5)</li>
+<li>Component initialization with configuration (LED controller, distance sensor, WiFi, web server)</li>
+<li>Visual boot test sequence (REQ-STARTUP-2)</li>
+<li>Transition to normal operation (distance measurement and display)</li>
+<li>AC-2: Each initialization stage SHALL complete successfully before proceeding to next stage</li>
+<li>AC-3: Initialization failures SHALL be logged with specific component and error information</li>
+<li>AC-4: Critical initialization failures SHALL prevent transition to normal operation</li>
+<li>AC-5: Non-critical failures (e.g., WiFi connection) SHALL allow system to proceed with degraded functionality</li>
+<li>AC-6: Visual boot sequence provides user feedback that initialization succeeded</li>
+<li>AC-7: Total startup time from power-on to normal operation SHALL be &lt; 10 seconds</li>
+</ul>
+<p><strong>Dependencies</strong>:</p>
+<ul>
+<li>Hardware initialization depends on ESP-IDF system initialization</li>
+<li>Component initialization depends on configuration loading (REQ-CFG-4, REQ-CFG-5)</li>
+<li>Visual boot test depends on LED controller initialization (REQ-STARTUP-1, REQ-STARTUP-2)</li>
+<li>Normal operation depends on distance sensor and display subsystems being ready</li>
+</ul>
+<h3 id="req-sys-8-error-handling-and-recovery">REQ-SYS-8: Error Handling and Recovery</h3>
 <p><strong>Type</strong>: Reliability<br />
 <strong>Priority</strong>: Mandatory<br />
 <strong>Description</strong>: The system SHALL handle errors gracefully and attempt recovery.</p>
@@ -1989,7 +2039,7 @@
 <li>AC-3: System logs errors for diagnostics</li>
 <li>AC-4: Watchdog timer prevents system hang</li>
 </ul>
-<h3 id="req-sys-8-memory-management">REQ-SYS-8: Memory Management</h3>
+<h3 id="req-sys-9-memory-management">REQ-SYS-9: Memory Management</h3>
 <p><strong>Type</strong>: Performance<br />
 <strong>Priority</strong>: Mandatory<br />
 <strong>Description</strong>: The system SHALL manage memory efficiently within ESP32 constraints.</p>

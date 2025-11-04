@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.22">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.23">
     
     
       
@@ -1693,14 +1693,16 @@
 <h3 id="req-led-3-configurable-led-count">REQ-LED-3: Configurable LED Count</h3>
 <p><strong>Type</strong>: Functional<br />
 <strong>Priority</strong>: Mandatory<br />
-<strong>Description</strong>: The system SHALL support configurable LED strip lengths to accommodate different hardware deployments and installation requirements.</p>
-<p><strong>Rationale</strong>: Different installations may use varying LED strip lengths; system must be flexible for deployment scenarios.</p>
+<strong>Depends</strong>: REQ-CFG-1<br />
+<strong>Description</strong>: The system SHALL support configurable LED strip lengths to accommodate different hardware deployments and installation requirements. LED count is a user-configurable parameter managed by the configuration system (REQ-CFG-1).</p>
+<p><strong>Rationale</strong>: Different installations may use varying LED strip lengths; system must be flexible for deployment scenarios. LED count is a user-facing parameter that affects system behavior and visual representation, therefore it belongs in centralized configuration management.</p>
 <p><strong>Acceptance Criteria</strong>:</p>
 <ul>
-<li>AC-1: LED count SHALL be configurable during system initialization</li>
-<li>AC-2: System SHALL support LED counts from 1 to at least 100 LEDs</li>
-<li>AC-3: System SHALL validate LED count parameters during configuration</li>
-<li>AC-4: All LED positions within configured count SHALL be controllable</li>
+<li>AC-1: LED count SHALL be obtained from centralized configuration system (REQ-CFG-1)</li>
+<li>AC-2: LED controller SHALL receive LED count during initialization via configuration structure</li>
+<li>AC-3: System SHALL support LED counts from 1 to at least 100 LEDs</li>
+<li>AC-4: Configuration system SHALL validate LED count parameters (validation owned by REQ-CFG-6)</li>
+<li>AC-5: All LED positions within configured count SHALL be controllable</li>
 </ul>
 <p><strong>Verification</strong>: Test with different LED counts, verify all configured LEDs are controllable and out-of-range access is prevented.</p>
 <h3 id="req-led-4-accurate-color-display">REQ-LED-4: Accurate Color Display</h3>
