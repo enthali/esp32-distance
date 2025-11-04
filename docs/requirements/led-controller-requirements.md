@@ -67,16 +67,18 @@ This document specifies the essential requirements for WS2812 LED strip control,
 
 **Type**: Functional  
 **Priority**: Mandatory  
-**Description**: The system SHALL support configurable LED strip lengths to accommodate different hardware deployments and installation requirements.
+**Depends**: REQ-CFG-1  
+**Description**: The system SHALL support configurable LED strip lengths to accommodate different hardware deployments and installation requirements. LED count is a user-configurable parameter managed by the configuration system (REQ-CFG-1).
 
-**Rationale**: Different installations may use varying LED strip lengths; system must be flexible for deployment scenarios.
+**Rationale**: Different installations may use varying LED strip lengths; system must be flexible for deployment scenarios. LED count is a user-facing parameter that affects system behavior and visual representation, therefore it belongs in centralized configuration management.
 
 **Acceptance Criteria**:
 
-- AC-1: LED count SHALL be configurable during system initialization
-- AC-2: System SHALL support LED counts from 1 to at least 100 LEDs
-- AC-3: System SHALL validate LED count parameters during configuration
-- AC-4: All LED positions within configured count SHALL be controllable
+- AC-1: LED count SHALL be obtained from centralized configuration system (REQ-CFG-1)
+- AC-2: LED controller SHALL receive LED count during initialization via configuration structure
+- AC-3: System SHALL support LED counts from 1 to at least 100 LEDs
+- AC-4: Configuration system SHALL validate LED count parameters (validation owned by REQ-CFG-6)
+- AC-5: All LED positions within configured count SHALL be controllable
 
 **Verification**: Test with different LED counts, verify all configured LEDs are controllable and out-of-range access is prevented.
 

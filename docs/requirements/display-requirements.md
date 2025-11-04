@@ -31,7 +31,9 @@ This document specifies requirements for the Display System, enabling visual rep
 
 **Dependencies**:
 
+- REQ-DSP-OVERVIEW-01 depends on REQ-LED-1 (LED hardware initialization)
 - REQ-DSP-OVERVIEW-02 depends on REQ-CFG-1 (configuration management system)
+- REQ-DSP-VISUAL-01 depends on REQ-SNS-11 (processed distance measurements with smoothing)
 - REQ-DSP-VISUAL-03 depends on REQ-CFG-2 (boundary parameter configuration)
 - REQ-DSP-VISUAL-04 depends on REQ-CFG-2 (boundary parameter configuration)
 
@@ -43,17 +45,18 @@ This document specifies requirements for the Display System, enabling visual rep
 
 **Type**: System  
 **Priority**: Mandatory  
-**Description**: The display system SHALL utilize WS2812 addressable LED strip hardware with configurable LED count and brightness as an integrated, reactive component.
+**Depends**: REQ-LED-1  
+**Description**: The display system SHALL utilize WS2812 addressable LED strip hardware through the LED controller component API as an integrated, reactive component. LED count and brightness are configurable via configuration management system.
 
-**Rationale**: Establishes the hardware foundation for the visual display system, enabling flexible LED strip configurations for different deployment scenarios. The system operates reactively, automatically responding to distance measurements rather than external commands.
+**Rationale**: Establishes the hardware foundation for the visual display system, enabling flexible LED strip configurations for different deployment scenarios. The system operates reactively, automatically responding to distance measurements rather than external commands. Display system uses LED controller API for all hardware access, maintaining clear separation of concerns.
 
 **Acceptance Criteria**:
 
-- AC-1: System supports WS2812 addressable LED strips
+- AC-1: Display system uses LED controller component API for all LED hardware access
 - AC-2: LED count and brightness are configurable via configuration management system
 - AC-3: System validates LED count is within reasonable range (1-100 LEDs)
-- AC-4: LED strip communication uses appropriate GPIO pin configuration
-- AC-5: System initializes LED hardware before processing distance measurements
+- AC-4: LED controller component handles all GPIO pin configuration and timing
+- AC-5: Display system depends on LED controller initialization completing successfully
 - AC-6: System operates continuously, updating display in real-time as measurements arrive
 
 ---
@@ -87,16 +90,18 @@ This document specifies requirements for the Display System, enabling visual rep
 
 **Type**: User Experience  
 **Priority**: Mandatory  
-**Description**: The display system SHALL illuminate a single LED that represents the current measured distance with real-time updates.
+**Depends**: REQ-SNS-11  
+**Description**: The display system SHALL illuminate a single LED that represents the current measured distance with real-time updates. The display system consumes processed distance measurements from the distance sensor component without additional filtering or smoothing.
 
-**Rationale**: Provides clear, unambiguous visual feedback where users can immediately understand the current distance measurement through LED position.
+**Rationale**: Provides clear, unambiguous visual feedback where users can immediately understand the current distance measurement through LED position. The distance sensor component owns all measurement processing, filtering, and smoothing (REQ-SNS-11); the display system is responsible solely for visual representation of processed measurements, maintaining clear separation of concerns.
 
 **Acceptance Criteria**:
 
-- AC-1: Only one LED is illuminated at any given time
-- AC-2: LED position corresponds to measured distance value
-- AC-3: Display updates immediately when new measurements arrive
-- AC-4: All other LEDs remain off during operation
+- AC-1: Only one LED is illuminated at any given time (excluding animation layers)
+- AC-2: LED position corresponds to processed distance measurement value from sensor component
+- AC-3: Display updates immediately when new processed measurements arrive from sensor queue
+- AC-4: Display system SHALL NOT apply additional smoothing or filtering to distance measurements
+- AC-5: Display system uses distance measurements directly from sensor component's processed measurement queue
 
 ---
 

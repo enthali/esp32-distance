@@ -28,8 +28,9 @@ The ESP32 Distance Sensor system is an IoT device that:
 | REQ-SYS-4      | DSN-SYS-4        | Mandatory |
 | REQ-SYS-5      | DSN-SYS-5        | Mandatory |
 | REQ-SYS-6      | DSN-SYS-6        | Mandatory |
-| REQ-SYS-7      | DSN-SYS-7        | Mandatory |
-| REQ-SYS-8      | DSN-SYS-8        | Mandatory |
+| REQ-SYS-7      | DSN-SYS-BOOT-01  | Mandatory |
+| REQ-SYS-8      | DSN-SYS-7        | Mandatory |
+| REQ-SYS-9      | DSN-SYS-8        | Mandatory |
 | REQ-SYS-SIM-1  | DSN-SIM-LED-01, DSN-SIM-SNS-01 | Mandatory |
 
 ## Requirement Categories
@@ -132,7 +133,37 @@ Requirements are categorized using the following prefixes:
 - AC-3: Components provide well-defined APIs
 - AC-4: Main application coordinates components without tight coupling
 
-### REQ-SYS-7: Error Handling and Recovery
+### REQ-SYS-7: Startup Sequence Orchestration
+
+**Type**: System  
+**Priority**: Mandatory  
+**Description**: The system SHALL execute a well-defined startup sequence that initializes all subsystems in proper dependency order, performs system health checks, and transitions to normal operation only after all critical components are ready.
+
+**Rationale**: Complex embedded systems with multiple components require careful initialization orchestration to ensure all dependencies are met before operation begins. Clear startup sequence prevents race conditions, ensures configuration is loaded before components use it, and provides visual feedback to users.
+
+**Acceptance Criteria**:
+
+- AC-1: Startup sequence SHALL execute in the following order:
+  1. Hardware initialization (GPIO, peripherals)
+  2. Configuration system initialization and loading from NVS (REQ-CFG-4, REQ-CFG-5)
+  3. Component initialization with configuration (LED controller, distance sensor, WiFi, web server)
+  4. Visual boot test sequence (REQ-STARTUP-2)
+  5. Transition to normal operation (distance measurement and display)
+- AC-2: Each initialization stage SHALL complete successfully before proceeding to next stage
+- AC-3: Initialization failures SHALL be logged with specific component and error information
+- AC-4: Critical initialization failures SHALL prevent transition to normal operation
+- AC-5: Non-critical failures (e.g., WiFi connection) SHALL allow system to proceed with degraded functionality
+- AC-6: Visual boot sequence provides user feedback that initialization succeeded
+- AC-7: Total startup time from power-on to normal operation SHALL be < 10 seconds
+
+**Dependencies**:
+
+- Hardware initialization depends on ESP-IDF system initialization
+- Component initialization depends on configuration loading (REQ-CFG-4, REQ-CFG-5)
+- Visual boot test depends on LED controller initialization (REQ-STARTUP-1, REQ-STARTUP-2)
+- Normal operation depends on distance sensor and display subsystems being ready
+
+### REQ-SYS-8: Error Handling and Recovery
 
 **Type**: Reliability  
 **Priority**: Mandatory  
@@ -147,7 +178,7 @@ Requirements are categorized using the following prefixes:
 - AC-3: System logs errors for diagnostics
 - AC-4: Watchdog timer prevents system hang
 
-### REQ-SYS-8: Memory Management
+### REQ-SYS-9: Memory Management
 
 **Type**: Performance  
 **Priority**: Mandatory  
