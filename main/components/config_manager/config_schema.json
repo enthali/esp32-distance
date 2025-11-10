@@ -15,10 +15,22 @@
       "order": 2
     },
     {
+      "id": "display",
+      "label": "📊 Display Settings",
+      "description": "LED strip and distance visualization",
+      "order": 3
+    },
+    {
+      "id": "sensor",
+      "label": "📡 Sensor Settings",
+      "description": "HC-SR04 distance sensor configuration",
+      "order": 4
+    },
+    {
       "id": "device",
       "label": "🔧 Device Settings",
       "description": "Device-specific configuration",
-      "order": 3
+      "order": 5
     }
   ],
   "parameters": [
@@ -76,40 +88,118 @@
       "key": "led_count",
       "type": "integer",
       "label": "LED Count",
-      "description": "Number of LEDs in strip (example parameter)",
-      "default": 60,
+      "description": "Number of LEDs in strip (40 typical for distance display)",
+      "default": 40,
       "required": true,
       "min": 1,
       "max": 300,
       "step": 1,
-      "group": "device",
+      "group": "display",
       "order": 1
     },
     {
       "key": "led_bright",
       "type": "integer",
       "label": "LED Brightness",
-      "description": "Global brightness level (example parameter)",
+      "description": "Global brightness level (0-255)",
       "default": 128,
       "required": true,
       "min": 10,
       "max": 255,
       "step": 5,
-      "group": "device",
+      "group": "display",
       "order": 2
+    },
+    {
+      "key": "dist_min_mm",
+      "type": "integer",
+      "label": "Minimum Distance (mm)",
+      "description": "Minimum distance mapped to first LED (100mm = 10cm)",
+      "default": 100,
+      "required": true,
+      "min": 20,
+      "max": 2000,
+      "step": 10,
+      "group": "display",
+      "order": 3
+    },
+    {
+      "key": "dist_max_mm",
+      "type": "integer",
+      "label": "Maximum Distance (mm)",
+      "description": "Maximum distance mapped to last LED (500mm = 50cm)",
+      "default": 500,
+      "required": true,
+      "min": 100,
+      "max": 4000,
+      "step": 10,
+      "group": "display",
+      "order": 4
+    },
+    {
+      "key": "meas_interval_ms",
+      "type": "integer",
+      "label": "Measurement Interval (ms)",
+      "description": "Time between sensor measurements (100ms = 10Hz)",
+      "default": 100,
+      "required": true,
+      "min": 50,
+      "max": 1000,
+      "step": 10,
+      "group": "sensor",
+      "order": 1
+    },
+    {
+      "key": "sens_timeout_ms",
+      "type": "integer",
+      "label": "Sensor Timeout (ms)",
+      "description": "Maximum wait for echo response (30ms for HC-SR04)",
+      "default": 30,
+      "required": true,
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "group": "sensor",
+      "order": 2
+    },
+    {
+      "key": "temp_c_x10",
+      "type": "integer",
+      "label": "Temperature (°C × 10)",
+      "description": "Temperature for speed of sound compensation (200 = 20.0°C)",
+      "default": 200,
+      "required": true,
+      "min": -100,
+      "max": 500,
+      "step": 10,
+      "group": "sensor",
+      "order": 3
+    },
+    {
+      "key": "smooth_factor",
+      "type": "integer",
+      "label": "Smoothing Factor (0-1000)",
+      "description": "EMA filter alpha: 0=max smooth, 1000=no smooth, 300=balanced",
+      "default": 300,
+      "required": true,
+      "min": 0,
+      "max": 1000,
+      "step": 10,
+      "group": "sensor",
+      "order": 4
     },
     {
       "key": "device_name",
       "type": "string",
       "label": "Device Name",
       "description": "Friendly name for this device",
-      "default": "ESP32-Device",
+      "default": "ESP32-Distance",
       "required": true,
       "minLength": 1,
       "maxLength": 32,
       "pattern": "^[a-zA-Z0-9_\\-]{1,32}$",
       "group": "device",
-      "order": 3
+      "order": 1
     }
   ]
 }
