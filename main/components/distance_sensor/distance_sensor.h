@@ -99,25 +99,23 @@ extern "C"
     } distance_measurement_t;
 
     /**
-     * @brief Distance sensor configuration
-     */
-    typedef struct
-    {
-        gpio_num_t trigger_pin;           ///< Trigger pin (default: GPIO14)
-        gpio_num_t echo_pin;              ///< Echo pin (default: GPIO15)
-        uint32_t measurement_interval_ms; ///< Measurement interval (default: 100ms)
-        uint32_t timeout_ms;              ///< Echo timeout (default: 30ms)
-        int16_t temperature_c_x10;        ///< Temperature for speed of sound compensation in tenths (default: 200 = 20.0°C)
-        uint16_t smoothing_factor;        ///< EMA smoothing factor: 0=heavy smoothing, 1000=no smoothing (default: 300 = 0.3)
-    } distance_sensor_config_t;
-
-    /**
      * @brief Initialize the distance sensor
      *
-     * @param config Sensor configuration, or NULL for defaults
+     * Loads configuration from config_manager automatically.
+     * Configuration parameters are read from NVS using these keys:
+     * - measurement_interval_ms: Time between measurements
+     * - sensor_timeout_ms: Maximum time to wait for echo
+     * - temperature_c_x10: Temperature compensation (tenths of Celsius)
+     * - smoothing_factor: EMA filter alpha value (0-1000)
+     *
+     * @param trigger_pin GPIO pin for HC-SR04 trigger signal
+     * @param echo_pin GPIO pin for HC-SR04 echo signal
      * @return esp_err_t ESP_OK on success
+     * @return ESP_ERR_INVALID_STATE if config_manager not initialized
+     * @return ESP_ERR_INVALID_ARG if pins are invalid
+     * @return ESP_ERR_* for other configuration or hardware errors
      */
-    esp_err_t distance_sensor_init(const distance_sensor_config_t *config);
+    esp_err_t distance_sensor_init(gpio_num_t trigger_pin, gpio_num_t echo_pin);
 
     /**
      * @brief Start distance measurements

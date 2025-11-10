@@ -57,6 +57,7 @@
  */
 
 #include "distance_sensor.h"
+#include "config_manager.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/queue.h"
@@ -78,6 +79,22 @@
 // #define DISTANCE_SENSOR_MEASUREMENT_LOGS
 
 static const char *TAG = "distance_sensor";
+
+/**
+ * @brief Distance sensor configuration (PRIVATE)
+ * 
+ * This struct is NOT part of the public API.
+ * Configuration is loaded from config_manager during distance_sensor_init().
+ */
+typedef struct
+{
+    gpio_num_t trigger_pin;           ///< Trigger pin (default: GPIO14)
+    gpio_num_t echo_pin;              ///< Echo pin (default: GPIO13)
+    uint32_t measurement_interval_ms; ///< Measurement interval (default: 100ms)
+    uint32_t timeout_ms;              ///< Echo timeout (default: 30ms)
+    int16_t temperature_c_x10;        ///< Temperature for speed of sound compensation in tenths (default: 200 = 20.0°C)
+    uint16_t smoothing_factor;        ///< EMA smoothing factor: 0=heavy smoothing, 1000=no smoothing (default: 300 = 0.3)
+} distance_sensor_config_t;
 
 // Configuration
 static distance_sensor_config_t sensor_config;
@@ -135,15 +152,6 @@ static volatile bool measurement_in_progress = false;
  * - Processed queue: Size 5 with automatic overflow (remove oldest)
  * - Statistics tracking for monitoring queue health
  */
-
-// Default configuration
-static const distance_sensor_config_t default_config = {
-    .trigger_pin = GPIO_NUM_14,
-    .echo_pin = GPIO_NUM_13,
-    .measurement_interval_ms = 100, // 100ms for normal operation (10 Hz measurement rate)
-    .timeout_ms = 30,
-    .temperature_c_x10 = 200,    // 20.0°C = 200 tenths
-    .smoothing_factor = 300};    // 0.3 * 1000 = 300
 
 /**
  * @brief GPIO ISR handler for echo pin - REAL-TIME CRITICAL
@@ -411,62 +419,63 @@ static void distance_sensor_task(void *pvParameters)
     }
 }
 
-esp_err_t distance_sensor_init(const distance_sensor_config_t *config)
+esp_err_t distance_sensor_init(gpio_num_t trigger_pin, gpio_num_t echo_pin)
 {
-#ifdef DISTANCE_SENSOR_DEBUG
-    ESP_LOGI(TAG, "DEBUG: distance_sensor_init called with config=%p", (void *)config);
-    ESP_LOGI(TAG, "DEBUG: Struct size: %zu bytes", sizeof(distance_sensor_config_t));
-    ESP_LOGI(TAG, "DEBUG: Field offsets: trigger_pin=%zu, echo_pin=%zu, interval=%zu, timeout=%zu, temp=%zu, alpha=%zu",
-             offsetof(distance_sensor_config_t, trigger_pin),
-             offsetof(distance_sensor_config_t, echo_pin),
-             offsetof(distance_sensor_config_t, measurement_interval_ms),
-             offsetof(distance_sensor_config_t, timeout_ms),
-             offsetof(distance_sensor_config_t, temperature_c_x10),
-             offsetof(distance_sensor_config_t, smoothing_factor));
-    ESP_LOGI(TAG, "DEBUG: default_config.smoothing_factor=%d",
-             default_config.smoothing_factor);
-#endif
-
-    // Use default config if none provided
-    if (config == NULL)
-    {
-#ifdef DISTANCE_SENSOR_DEBUG
-        ESP_LOGI(TAG, "DEBUG: Using default config");
-#endif
-        sensor_config = default_config;
+    ESP_LOGI(TAG, "Initializing distance sensor (loading config from NVS)...");
+    
+    // Store hardware pin configuration from parameters
+    sensor_config.trigger_pin = trigger_pin;
+    sensor_config.echo_pin = echo_pin;
+    
+    ESP_LOGI(TAG, "Hardware pins: Trigger=GPIO%d, Echo=GPIO%d", trigger_pin, echo_pin);
+    
+    // Load measurement interval from config_manager
+    int32_t meas_int_ms = 0;
+    esp_err_t ret = config_get_int32("meas_int_ms", &meas_int_ms);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to read meas_int_ms from config: %s", esp_err_to_name(ret));
+        return ret;
     }
-    else
-    {
-#ifdef DISTANCE_SENSOR_DEBUG
-        ESP_LOGI(TAG, "DEBUG: Using provided config, smoothing_factor=%d",
-                 config->smoothing_factor);
-#endif
-        sensor_config = *config;
+    sensor_config.measurement_interval_ms = (uint32_t)meas_int_ms;
+    
+    // Load sensor timeout from config_manager
+    int32_t sens_timeout_ms = 0;
+    ret = config_get_int32("sens_timeout_ms", &sens_timeout_ms);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to read sens_timeout_ms from config: %s", esp_err_to_name(ret));
+        return ret;
     }
-
-#ifdef DISTANCE_SENSOR_DEBUG
-    ESP_LOGI(TAG, "DEBUG: Config after copy - smoothing_factor=%d",
-             sensor_config.smoothing_factor);
-#endif
-
-    // Validate smoothing factor parameter (0-1000 range)
-    if (sensor_config.smoothing_factor > 1000)
-    {
-        sensor_config.smoothing_factor = 1000;
-        ESP_LOGW(TAG, "Smoothing factor cannot exceed 1000, using 1000 (no smoothing)");
+    sensor_config.timeout_ms = (uint32_t)sens_timeout_ms;
+    
+    // Load temperature compensation from config_manager
+    int16_t temp_c_x10 = 0;
+    ret = config_get_int16("temp_c_x10", &temp_c_x10);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to read temp_c_x10 from config: %s", esp_err_to_name(ret));
+        return ret;
     }
-    // Note: smoothing_factor is uint16_t, so it cannot be negative
-
-#ifdef DISTANCE_SENSOR_DEBUG
-    ESP_LOGI(TAG, "DEBUG: Config after validation - smoothing_factor=%d", sensor_config.smoothing_factor);
-#endif
-
+    sensor_config.temperature_c_x10 = temp_c_x10;
+    
+    // Load smoothing factor from config_manager
+    int16_t smooth_factor = 0;
+    ret = config_get_int16("smooth_factor", &smooth_factor);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to read smooth_factor from config: %s", esp_err_to_name(ret));
+        return ret;
+    }
+    sensor_config.smoothing_factor = (uint16_t)smooth_factor;
+    
+    ESP_LOGI(TAG, "Configuration loaded from NVS:");
+    ESP_LOGI(TAG, "  Trigger Pin: GPIO%d (fixed)", sensor_config.trigger_pin);
+    ESP_LOGI(TAG, "  Echo Pin: GPIO%d (fixed)", sensor_config.echo_pin);
+    ESP_LOGI(TAG, "  Measurement Interval: %lu ms", sensor_config.measurement_interval_ms);
+    ESP_LOGI(TAG, "  Sensor Timeout: %lu ms", sensor_config.timeout_ms);
+    ESP_LOGI(TAG, "  Temperature: %d (%.1f°C)", sensor_config.temperature_c_x10, sensor_config.temperature_c_x10 / 10.0f);
+    ESP_LOGI(TAG, "  Smoothing Factor: %d (%.1f%%)", sensor_config.smoothing_factor, sensor_config.smoothing_factor / 10.0f);
+    
     // Initialize EMA filter state
     previous_smoothed_value_mm = 0;
     smoothing_initialized = false;
-
-    ESP_LOGI(TAG, "Initializing distance sensor (trigger: GPIO%d, echo: GPIO%d, smoothing_factor: %d)",
-             sensor_config.trigger_pin, sensor_config.echo_pin, sensor_config.smoothing_factor);
 
     // Configure trigger pin as output
     gpio_config_t trigger_conf = {

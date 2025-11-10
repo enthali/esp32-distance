@@ -137,7 +137,7 @@
       "order": 4
     },
     {
-      "key": "meas_interval_ms",
+      "key": "meas_int_ms",
       "type": "integer",
       "label": "Measurement Interval (ms)",
       "description": "Time between sensor measurements (100ms = 10Hz)",

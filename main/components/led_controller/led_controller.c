@@ -7,6 +7,7 @@
  */
 
 #include "led_controller.h"
+#include "config_manager.h"
 #include "esp_log.h"
 #include "driver/rmt_tx.h"
 #include "driver/rmt_encoder.h"
@@ -21,6 +22,20 @@ static const char *TAG = "led_controller";
 #define WS2812_T1H_TICKS 64     // 0.8us high for bit 1
 #define WS2812_T1L_TICKS 32     // 0.4us low for bit 1
 #define WS2812_RESET_TICKS 4000 // 50us reset pulse
+
+/**
+ * @brief LED strip configuration structure (PRIVATE)
+ * 
+ * This struct is NOT part of the public API.
+ * Configuration is loaded from config_manager during led_controller_init().
+ */
+typedef struct
+{
+    gpio_num_t gpio_pin;       ///< GPIO pin for WS2812 data line
+    uint16_t led_count;        ///< Number of LEDs in the strip
+    int rmt_channel;           ///< RMT channel number (0 to 7)
+    uint8_t brightness;        ///< Global brightness (0-255)
+} led_config_t;
 
 // Internal state
 static led_color_t *led_buffer = NULL;
@@ -111,31 +126,58 @@ static esp_err_t configure_rmt_channel(void)
     return ESP_OK;
 }
 
-esp_err_t led_controller_init(const led_config_t *config)
+esp_err_t led_controller_init(gpio_num_t data_pin)
 {
-    if (config == NULL)
-    {
-        ESP_LOGE(TAG, "Configuration cannot be NULL");
-        return ESP_ERR_INVALID_ARG;
-    }
-
     if (is_initialized)
     {
         ESP_LOGW(TAG, "LED controller already initialized");
         return ESP_ERR_INVALID_STATE;
     }
 
-    if (config->led_count == 0 || config->led_count > 1000)
-    {
-        ESP_LOGE(TAG, "Invalid LED count: %d", config->led_count);
+    ESP_LOGI(TAG, "Initializing LED controller (loading config from NVS)...");
+    
+    // Store hardware pin configuration from parameter
+    current_config.gpio_pin = data_pin;
+    current_config.rmt_channel = 0;  // RMT channel hardcoded
+    
+    ESP_LOGI(TAG, "Hardware: GPIO%d, RMT channel %d", data_pin, current_config.rmt_channel);
+    
+    // Load LED count from config_manager
+    int32_t led_count = 0;
+    esp_err_t ret = config_get_int32("led_count", &led_count);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to read led_count from config: %s", esp_err_to_name(ret));
+        return ret;
+    }
+    
+    if (led_count <= 0 || led_count > 1000) {
+        ESP_LOGE(TAG, "Invalid LED count from config: %ld", led_count);
         return ESP_ERR_INVALID_ARG;
     }
-
-    // Store configuration
-    current_config = *config;
+    current_config.led_count = (uint16_t)led_count;
+    
+    // Load brightness from config_manager
+    int32_t led_bright = 0;
+    ret = config_get_int32("led_bright", &led_bright);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to read led_bright from config: %s", esp_err_to_name(ret));
+        return ret;
+    }
+    
+    if (led_bright < 0 || led_bright > 255) {
+        ESP_LOGE(TAG, "Invalid brightness from config: %ld", led_bright);
+        return ESP_ERR_INVALID_ARG;
+    }
+    current_config.brightness = (uint8_t)led_bright;
+    
+    ESP_LOGI(TAG, "Configuration loaded from NVS:");
+    ESP_LOGI(TAG, "  GPIO Pin: %d (fixed)", current_config.gpio_pin);
+    ESP_LOGI(TAG, "  RMT Channel: %d (fixed)", current_config.rmt_channel);
+    ESP_LOGI(TAG, "  LED Count: %d", current_config.led_count);
+    ESP_LOGI(TAG, "  Brightness: %d", current_config.brightness);
 
     // Allocate LED buffer
-    led_buffer = (led_color_t *)malloc(config->led_count * sizeof(led_color_t));
+    led_buffer = (led_color_t *)malloc(current_config.led_count * sizeof(led_color_t));
     if (led_buffer == NULL)
     {
         ESP_LOGE(TAG, "Failed to allocate LED buffer");
@@ -143,7 +185,7 @@ esp_err_t led_controller_init(const led_config_t *config)
     }
 
     // Configure RMT
-    esp_err_t ret = configure_rmt_channel();
+    ret = configure_rmt_channel();
     if (ret != ESP_OK)
     {
         free(led_buffer);

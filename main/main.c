@@ -41,9 +41,8 @@
 #include "web_server.h"
 #include "wifi_manager.h"
 
-// Hardware pin definitions
+// Hardware pin definitions (project-specific configuration)
 #define LED_DATA_PIN        GPIO_NUM_19    // WS2812 data line
-#define LED_RMT_CHANNEL     0              // RMT channel for LED control
 #define DISTANCE_TRIGGER_PIN GPIO_NUM_14   // HC-SR04 trigger
 #define DISTANCE_ECHO_PIN    GPIO_NUM_13   // HC-SR04 echo
 
@@ -60,8 +59,8 @@ void app_main(void)
 {
     ESP_LOGI(TAG, "");
     ESP_LOGI(TAG, "╔════════════════════════════════════════════════╗");
-    ESP_LOGI(TAG, "║    ESP32 Distance Sensor - Starting...       ║");
-    ESP_LOGI(TAG, "║    WiFi + Web Config + LED Visualization     ║");
+    ESP_LOGI(TAG, "║    ESP32 Distance Sensor - Starting...         ║");
+    ESP_LOGI(TAG, "║    WiFi + Web Config + LED Visualization       ║");
     ESP_LOGI(TAG, "╚════════════════════════════════════════════════╝");
     ESP_LOGI(TAG, "ESP-IDF Version: %s", esp_get_idf_version());
     
@@ -85,14 +84,11 @@ void app_main(void)
     
     // Step 3: Initialize LED controller
     // REQ_DISPLAY_1: WS2812 LED strip support
+    // Configuration (led_count, brightness) loaded from config_manager
     ESP_LOGI(TAG, "Initializing LED controller...");
-    led_config_t led_config = {
-        .gpio_pin = LED_DATA_PIN,
-        .led_count = 40,        // Will be read from config during display_logic_start()
-        .rmt_channel = LED_RMT_CHANNEL
-    };
-    ESP_ERROR_CHECK(led_controller_init(&led_config));
-    ESP_LOGI(TAG, "✓ LED controller initialized (%d LEDs)", led_get_count());
+    ESP_ERROR_CHECK(led_controller_init(LED_DATA_PIN));
+    ESP_LOGI(TAG, "✓ LED controller initialized (%d LEDs on GPIO%d)", 
+             led_get_count(), LED_DATA_PIN);
     
     // Step 4: Run startup test sequence
     // REQ_STARTUP_2: Visual boot sequence - demonstrates all LEDs working
@@ -106,19 +102,13 @@ void app_main(void)
     
     // Step 5: Initialize distance sensor
     // REQ_DISTANCE_SENSOR_1: HC-SR04 ultrasonic measurements
+    // Configuration (interval, timeout, etc.) loaded from config_manager
     ESP_LOGI(TAG, "Initializing distance sensor...");
-    distance_sensor_config_t sensor_config = {
-        .trigger_pin = DISTANCE_TRIGGER_PIN,
-        .echo_pin = DISTANCE_ECHO_PIN,
-        .measurement_interval_ms = 100,  // Default 10Hz
-        .timeout_ms = 30,                 // Default 30ms timeout
-        .temperature_c_x10 = 200,         // Default 20.0°C
-        .smoothing_factor = 300           // Default 0.3 EMA alpha
-    };
-    ESP_ERROR_CHECK(distance_sensor_init(&sensor_config));
+    ESP_ERROR_CHECK(distance_sensor_init(DISTANCE_TRIGGER_PIN, DISTANCE_ECHO_PIN));
     ESP_ERROR_CHECK(distance_sensor_start());
     ESP_LOGI(TAG, "✓ Distance sensor initialized and started");
-    ESP_LOGI(TAG, "  Hardware: Trigger=GPIO%d, Echo=GPIO%d", DISTANCE_TRIGGER_PIN, DISTANCE_ECHO_PIN);
+    ESP_LOGI(TAG, "  Hardware: Trigger=GPIO%d, Echo=GPIO%d", 
+             DISTANCE_TRIGGER_PIN, DISTANCE_ECHO_PIN);
     
     // Step 6: Initialize WiFi manager and web server
     // Handles both STA mode (connect to WiFi) and AP mode (captive portal)

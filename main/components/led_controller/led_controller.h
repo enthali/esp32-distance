@@ -42,18 +42,6 @@ extern "C"
     } led_color_t;
 
     /**
-     * @brief LED strip configuration structure
-     *
-     * Configuration parameters for initializing the LED controller.
-     */
-    typedef struct
-    {
-        gpio_num_t gpio_pin;       ///< GPIO pin for WS2812 data line
-        uint16_t led_count;        ///< Number of LEDs in the strip
-        int rmt_channel;           ///< RMT channel number (0 to 7)
-    } led_config_t;
-
-    /**
      * @brief Predefined color constants
      *
      * Common colors for convenience. Use led_color_rgb() for custom colors.
@@ -70,16 +58,22 @@ extern "C"
     /**
      * @brief Initialize the LED controller
      *
-     * Initializes the RMT peripheral, allocates RAM buffer, and configures GPIO.
-     * Must be called before any other LED controller functions.
-     *
-     * @param config Pointer to LED strip configuration
-     * @return ESP_OK on success, ESP_ERR_* on failure
+     * Loads configuration from config_manager automatically.
+     * Configuration parameters read from NVS:
+     * - led_count: Number of LEDs in strip
+     * - led_bright: Global brightness (0-255)
+     * 
+     * @param data_pin GPIO pin for WS2812 data line
+     * @return ESP_OK on success
+     * @return ESP_ERR_INVALID_STATE if config_manager not initialized
+     * @return ESP_ERR_INVALID_ARG if pin is invalid
+     * @return ESP_ERR_* for configuration or hardware errors
      *
      * @note This function allocates memory for the LED buffer (3 bytes per LED)
      * @note Only one LED controller instance is supported
+     * @note RMT channel 0 is used (hardcoded)
      */
-    esp_err_t led_controller_init(const led_config_t *config);
+    esp_err_t led_controller_init(gpio_num_t data_pin);
 
     /**
      * @brief Deinitialize the LED controller
