@@ -1,14 +1,25 @@
 /**
  * @file main.c
- * @brief ESP32 Template - Application Entry Point with Web Configuration
+ * @brief ESP32 Distance Sensor - Application Entry Point
  * 
- * This template provides:
+ * This application provides:
+ * - Distance measurement with HC-SR04 ultrasonic sensor
+ * - Real-time LED strip visualization (WS2812)
+ * - Web interface with captive portal for configuration
  * - WiFi connectivity (STA mode with AP fallback)
- * - Web-based configuration interface (captive portal)
- * - Configuration management (NVS storage)
- * - QEMU network support (UART tunnel for emulation)
+ * - JSON-based configuration management
  * 
- * Customize the web interface and add your application logic.
+ * SYSTEM ARCHITECTURE:
+ * - Distance Sensor Task (priority 5): Continuous HC-SR04 measurements
+ * - Display Logic Task (priority 3): LED visualization from measurements  
+ * - Web Server Task: HTTP interface for config and monitoring
+ * - WiFi Manager Task: Network connectivity management
+ * 
+ * REQUIREMENTS TRACEABILITY:
+ * - REQ_DISPLAY_1: WS2812 LED strip support
+ * - REQ_DISTANCE_SENSOR_1: HC-SR04 measurements
+ * - REQ_CONFIG_JSON_1: JSON schema-based configuration
+ * - REQ_STARTUP_2: Visual boot sequence
  */
 
 #include <stdio.h>
@@ -19,34 +30,44 @@
 #include "esp_timer.h"
 #include "nvs_flash.h"
 
-// Template components
+// Application components - Distance Sensor System
+#include "led_controller.h"
+#include "led_running_test.h"
+#include "distance_sensor.h"
+#include "display_logic.h"
 #include "config_manager.h"
+
+// Web interface components
 #include "web_server.h"
 #include "wifi_manager.h"
 
-#ifdef CONFIG_IDF_TARGET_ESP32
-    // QEMU network support (only for emulator)
-    // Note: wifi_manager_sim.c handles netif_uart_tunnel initialization
-#endif
+// Hardware pin definitions
+#define LED_DATA_PIN        GPIO_NUM_19    // WS2812 data line
+#define LED_RMT_CHANNEL     0              // RMT channel for LED control
+#define DISTANCE_TRIGGER_PIN GPIO_NUM_14   // HC-SR04 trigger
+#define DISTANCE_ECHO_PIN    GPIO_NUM_13   // HC-SR04 echo
 
 static const char *TAG = "main";
 
 /**
  * @brief Main application entry point
  * 
- * Initializes the ESP32 template with web-based configuration.
- * The device will:
- * 1. Try to connect to saved WiFi (STA mode)
- * 2. Fall back to AP mode with captive portal if connection fails
- * 3. Provide web interface for configuration and monitoring
+ * Initializes the ESP32 distance sensor system with web configuration interface.
+ * System starts with LED boot sequence, then initializes distance measurement,
+ * LED visualization, and web configuration interface.
  */
 void app_main(void)
 {
-    ESP_LOGI(TAG, "ESP32 Template Starting...");
+    ESP_LOGI(TAG, "");
+    ESP_LOGI(TAG, "╔════════════════════════════════════════════════╗");
+    ESP_LOGI(TAG, "║    ESP32 Distance Sensor - Starting...       ║");
+    ESP_LOGI(TAG, "║    WiFi + Web Config + LED Visualization     ║");
+    ESP_LOGI(TAG, "╚════════════════════════════════════════════════╝");
     ESP_LOGI(TAG, "ESP-IDF Version: %s", esp_get_idf_version());
     
-    // Initialize NVS (Non-Volatile Storage)
+    // Step 1: Initialize NVS (Non-Volatile Storage)
     // Required for WiFi credentials and configuration storage
+    ESP_LOGI(TAG, "Initializing NVS Flash...");
     esp_err_t ret = nvs_flash_init();
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
         ESP_LOGW(TAG, "NVS partition was truncated and needs to be erased");
@@ -54,46 +75,101 @@ void app_main(void)
         ret = nvs_flash_init();
     }
     ESP_ERROR_CHECK(ret);
-    ESP_LOGI(TAG, "NVS Flash initialized successfully");
+    ESP_LOGI(TAG, "✓ NVS Flash initialized");
     
-    // Initialize configuration manager
+    // Step 2: Initialize configuration manager
+    // Uses JSON schema from config_schema.json for all parameters
     ESP_LOGI(TAG, "Initializing configuration manager...");
     ESP_ERROR_CHECK(config_init());
+    ESP_LOGI(TAG, "✓ Configuration manager initialized");
     
-#ifdef CONFIG_IDF_TARGET_ESP32
-    // QEMU Build: Use simulator WiFi manager with UART tunnel
-    // The WiFi manager simulator will initialize the web server internally
-    ESP_LOGI(TAG, "Initializing WiFi manager (QEMU/simulator mode)...");
+    // Step 3: Initialize LED controller
+    // REQ_DISPLAY_1: WS2812 LED strip support
+    ESP_LOGI(TAG, "Initializing LED controller...");
+    led_config_t led_config = {
+        .gpio_pin = LED_DATA_PIN,
+        .led_count = 40,        // Will be read from config during display_logic_start()
+        .rmt_channel = LED_RMT_CHANNEL
+    };
+    ESP_ERROR_CHECK(led_controller_init(&led_config));
+    ESP_LOGI(TAG, "✓ LED controller initialized (%d LEDs)", led_get_count());
+    
+    // Step 4: Run startup test sequence
+    // REQ_STARTUP_2: Visual boot sequence - demonstrates all LEDs working
+    ESP_LOGI(TAG, "Running LED startup test...");
+    led_clear_all();
+    led_show();
+    ESP_ERROR_CHECK(led_running_test_single_cycle(LED_COLOR_GREEN, 50));
+    led_clear_all();
+    led_show();
+    ESP_LOGI(TAG, "✓ LED startup test completed");
+    
+    // Step 5: Initialize distance sensor
+    // REQ_DISTANCE_SENSOR_1: HC-SR04 ultrasonic measurements
+    ESP_LOGI(TAG, "Initializing distance sensor...");
+    distance_sensor_config_t sensor_config = {
+        .trigger_pin = DISTANCE_TRIGGER_PIN,
+        .echo_pin = DISTANCE_ECHO_PIN,
+        .measurement_interval_ms = 100,  // Default 10Hz
+        .timeout_ms = 30,                 // Default 30ms timeout
+        .temperature_c_x10 = 200,         // Default 20.0°C
+        .smoothing_factor = 300           // Default 0.3 EMA alpha
+    };
+    ESP_ERROR_CHECK(distance_sensor_init(&sensor_config));
+    ESP_ERROR_CHECK(distance_sensor_start());
+    ESP_LOGI(TAG, "✓ Distance sensor initialized and started");
+    ESP_LOGI(TAG, "  Hardware: Trigger=GPIO%d, Echo=GPIO%d", DISTANCE_TRIGGER_PIN, DISTANCE_ECHO_PIN);
+    
+    // Step 6: Initialize WiFi manager and web server
+    // Handles both STA mode (connect to WiFi) and AP mode (captive portal)
+    ESP_LOGI(TAG, "Initializing WiFi manager...");
     ESP_ERROR_CHECK(wifi_manager_init());
     ESP_ERROR_CHECK(wifi_manager_start());
+    ESP_LOGI(TAG, "✓ WiFi manager initialized");
+    
+#ifdef CONFIG_IDF_TARGET_ESP32
+    ESP_LOGI(TAG, "QEMU/Simulator mode: WiFi manager will initialize web server");
 #else
-    // Real Hardware: Initialize web server with WiFi manager
-    ESP_LOGI(TAG, "Initializing web server...");
+    ESP_LOGI(TAG, "Hardware mode: Initializing web server...");
     web_server_config_t web_config = WEB_SERVER_DEFAULT_CONFIG();
     ESP_ERROR_CHECK(web_server_init(&web_config));
     ESP_ERROR_CHECK(web_server_start());
+    ESP_LOGI(TAG, "✓ Web server initialized");
 #endif
     
-    ESP_LOGI(TAG, "Template initialized successfully");
+    // Step 7: Start display logic
+    // REQ_DISPLAY_1 + REQ_DISPLAY_3: LED visualization of distance measurements
+    ESP_LOGI(TAG, "Starting display logic...");
+    ESP_ERROR_CHECK(display_logic_start());
+    ESP_LOGI(TAG, "✓ Display logic started - monitoring distance measurements");
+    
+    // System initialized successfully
     ESP_LOGI(TAG, "");
-    ESP_LOGI(TAG, "==============================================");
-    ESP_LOGI(TAG, "  ESP32 Project Template - Web Configured");
-    ESP_LOGI(TAG, "  ");
-    ESP_LOGI(TAG, "  Access web interface:");
-    ESP_LOGI(TAG, "  - STA mode: http://<device-ip>");
-    ESP_LOGI(TAG, "  - AP mode:  http://192.168.4.1");
-    ESP_LOGI(TAG, "  - QEMU:     http://localhost:8080");
-    ESP_LOGI(TAG, "==============================================");
+    ESP_LOGI(TAG, "╔════════════════════════════════════════════════╗");
+    ESP_LOGI(TAG, "║          System Ready!                        ║");
+    ESP_LOGI(TAG, "║  Distance: Monitoring                        ║");
+    ESP_LOGI(TAG, "║  LED Display: READY                          ║");
+    ESP_LOGI(TAG, "║  Web Interface: http://192.168.4.1          ║");
+    ESP_LOGI(TAG, "║  Captive Portal: Auto (AP mode)              ║");
+    ESP_LOGI(TAG, "╚════════════════════════════════════════════════╝");
     ESP_LOGI(TAG, "");
     
-    // Main application loop
-    // Add your custom application logic here
+    // Main monitoring loop
+    // Lightweight periodic health checks and logging
     while (1) {
-        vTaskDelay(pdMS_TO_TICKS(10000));
+        vTaskDelay(pdMS_TO_TICKS(10000));  // 10 second interval
         
-        // Example: Monitor system health
-        ESP_LOGI(TAG, "System uptime: %lu seconds, Free heap: %lu bytes",
-                 (unsigned long)(esp_timer_get_time() / 1000000),
-                 (unsigned long)esp_get_free_heap_size());
+        // Monitor system health
+        distance_sensor_monitor();  // Check for queue overflows
+        wifi_manager_monitor();      // Check WiFi connection status
+        
+        // Log system metrics
+        uint32_t heap_free = esp_get_free_heap_size();
+        uint32_t heap_min = esp_get_minimum_free_heap_size();
+        uint32_t uptime_s = (uint32_t)(esp_timer_get_time() / 1000000);
+        
+        ESP_LOGD(TAG, "Uptime: %lu s | Heap: %lu/%lu bytes | Overflows: %lu",
+                 uptime_s, heap_free, heap_min,
+                 distance_sensor_get_queue_overflows());
     }
 }
