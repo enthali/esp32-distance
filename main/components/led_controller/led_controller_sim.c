@@ -390,25 +390,3 @@ uint16_t led_get_all_colors(led_color_t* output_buffer, uint16_t max_count)
     ESP_LOGW(TAG, "Failed to acquire snapshot mutex in led_get_all_colors()");
     return 0;
 }
-
-uint16_t led_get_all_colors(led_color_t* output_buffer, uint16_t max_count)
-{
-    if (!is_initialized || output_buffer == NULL || max_count == 0)
-    {
-        return 0;
-    }
-
-    uint16_t copy_count = (max_count < current_config.led_count) ? max_count : current_config.led_count;
-
-    // Thread-safe read from snapshot buffer
-    if (snapshot_mutex != NULL && xSemaphoreTake(snapshot_mutex, pdMS_TO_TICKS(100)))
-    {
-        memcpy(output_buffer, led_buffer_snapshot, copy_count * sizeof(led_color_t));
-        xSemaphoreGive(snapshot_mutex);
-        return copy_count;
-    }
-
-    // Fallback: mutex timeout - return 0 to indicate error
-    ESP_LOGW(TAG, "Failed to acquire snapshot mutex in led_get_all_colors()");
-    return 0;
-}

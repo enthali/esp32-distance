@@ -17,6 +17,7 @@
 #include "wifi_manager.h"
 #include "config_manager.h"
 #include "distance_sensor.h"
+#include "led_controller.h"
 #include "esp_log.h"
 #include "esp_system.h"
 #include "esp_timer.h"
@@ -638,6 +639,15 @@ esp_err_t web_server_init(const web_server_config_t *config)
     ret = httpd_register_uri_handler(server, &distance_uri);
     ESP_LOGI(TAG, "Registered handler for '/api/distance' - %s", ret == ESP_OK ? "OK" : esp_err_to_name(ret));
 
+    // LED state endpoint
+    httpd_uri_t led_state_uri = {
+        .uri = "/api/led/state",
+        .method = HTTP_GET,
+        .handler = led_state_handler,
+        .user_ctx = NULL};
+    ret = httpd_register_uri_handler(server, &led_state_uri);
+    ESP_LOGI(TAG, "Registered handler for '/api/led/state' - %s", ret == ESP_OK ? "OK" : esp_err_to_name(ret));
+
     // Register CORS preflight handler for all API endpoints
     httpd_uri_t options_uri = {
         .uri = "/api/*",
@@ -1206,6 +1216,108 @@ static esp_err_t distance_data_handler(httpd_req_t *req)
     cJSON_Delete(json);
 
     ESP_LOGD(TAG, "Distance data sent successfully");
+    return ESP_OK;
+}
+
+/**
+ * @brief GET /api/led/state - Get current LED strip state
+ * 
+ * Returns JSON with all LED colors as hex strings for visualization.
+ * Example response: {"led_count":40,"colors":"FF0000 00FF00 000000 ..."}
+ * 
+ * Uses led_get_all_colors() for thread-safe snapshot read.
+ */
+static esp_err_t led_state_handler(httpd_req_t *req)
+{
+    ESP_LOGD(TAG, "Handling GET /api/led/state");
+
+    // Set CORS headers
+    httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*");
+    httpd_resp_set_hdr(req, "Content-Type", "application/json");
+
+    // Get LED count
+    uint16_t led_count = led_get_count();
+    if (led_count == 0) {
+        ESP_LOGE(TAG, "LED controller not initialized");
+        httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "LED controller not initialized");
+        return ESP_FAIL;
+    }
+
+    // Allocate buffer for LED snapshot
+    led_color_t *led_snapshot = malloc(led_count * sizeof(led_color_t));
+    if (led_snapshot == NULL) {
+        ESP_LOGE(TAG, "Failed to allocate LED snapshot buffer");
+        httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "Memory allocation failed");
+        return ESP_FAIL;
+    }
+
+    // Get thread-safe snapshot
+    uint16_t actual_count = led_get_all_colors(led_snapshot, led_count);
+    if (actual_count == 0) {
+        ESP_LOGE(TAG, "Failed to read LED colors");
+        free(led_snapshot);
+        httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "Failed to read LED state");
+        return ESP_FAIL;
+    }
+
+    // Build hex string: "RRGGBB RRGGBB RRGGBB ..." (7 chars per LED)
+    size_t hex_size = actual_count * 7 + 1; // 6 hex + 1 space per LED, + null terminator
+    char *hex_string = malloc(hex_size);
+    if (hex_string == NULL) {
+        ESP_LOGE(TAG, "Failed to allocate hex string buffer");
+        free(led_snapshot);
+        httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "Memory allocation failed");
+        return ESP_FAIL;
+    }
+
+    // Convert LED colors to hex string
+    char *pos = hex_string;
+    for (uint16_t i = 0; i < actual_count; i++) {
+        int written = sprintf(pos, "%02X%02X%02X", 
+                             led_snapshot[i].red,
+                             led_snapshot[i].green,
+                             led_snapshot[i].blue);
+        pos += written;
+        
+        // Add space separator (except for last LED)
+        if (i < actual_count - 1) {
+            *pos++ = ' ';
+        }
+    }
+    *pos = '\0'; // Null terminate
+
+    free(led_snapshot); // Done with snapshot
+
+    // Create JSON response
+    cJSON *json = cJSON_CreateObject();
+    if (json == NULL) {
+        ESP_LOGE(TAG, "Failed to create JSON object");
+        free(hex_string);
+        httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "JSON creation failed");
+        return ESP_FAIL;
+    }
+
+    cJSON_AddNumberToObject(json, "led_count", actual_count);
+    cJSON_AddStringToObject(json, "colors", hex_string);
+
+    free(hex_string); // Done with hex string
+
+    // Convert to JSON string and send
+    char *json_string = cJSON_PrintUnformatted(json);
+    if (json_string == NULL) {
+        ESP_LOGE(TAG, "Failed to print JSON");
+        cJSON_Delete(json);
+        httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "JSON serialization failed");
+        return ESP_FAIL;
+    }
+
+    httpd_resp_send(req, json_string, HTTPD_RESP_USE_STRLEN);
+
+    // Cleanup
+    free(json_string);
+    cJSON_Delete(json);
+
+    ESP_LOGD(TAG, "LED state sent successfully (%d LEDs)", actual_count);
     return ESP_OK;
 }
 

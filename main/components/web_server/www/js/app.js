@@ -128,6 +128,12 @@ async function refreshData() {
             updateElement('distance-value', `-- cm (${distanceData.status})`);
         }
         
+        // Fetch LED state
+        const ledData = await apiCall('/api/led/state');
+        if (ledData && ledData.colors) {
+            updateLEDStrip(ledData.colors, ledData.led_count);
+        }
+        
         // Fetch system health
         const healthData = await apiCall('/api/system/health');
         
@@ -148,6 +154,26 @@ async function refreshData() {
         updateElement('distance-value', '-- cm (no connection)');
         updateElement('wifi-status', 'Connection Error');
     }
+}
+
+function updateLEDStrip(colorsHex, ledCount) {
+    const ledStripElement = document.getElementById('led-strip');
+    if (!ledStripElement) return;
+    
+    // Parse hex colors: "FF0000 00FF00 000000 ..."
+    const colors = colorsHex.split(' ');
+    
+    // Build LED visualization
+    let html = '';
+    for (let i = 0; i < colors.length && i < ledCount; i++) {
+        const color = colors[i];
+        if (color && color.length === 6) {
+            const style = `background-color: #${color}; width: ${100 / ledCount}%; height: 30px; display: inline-block; border: 1px solid #333;`;
+            html += `<div class="led-pixel" style="${style}" title="LED ${i + 1}: #${color}"></div>`;
+        }
+    }
+    
+    ledStripElement.innerHTML = html || 'No LED data';
 }
 
 function updateElement(id, value) {
