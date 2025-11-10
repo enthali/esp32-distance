@@ -16,6 +16,7 @@
 #include "web_server.h"
 #include "wifi_manager.h"
 #include "config_manager.h"
+#include "distance_sensor.h"
 #include "esp_log.h"
 #include "esp_system.h"
 #include "esp_timer.h"
@@ -62,8 +63,8 @@ static esp_err_t config_reset_handler(httpd_req_t *req);
 static esp_err_t wifi_status_handler(httpd_req_t *req);
 static esp_err_t system_health_handler(httpd_req_t *req);
 
-// Distance sensor data endpoint - DISABLED in template
-// static esp_err_t distance_data_handler(httpd_req_t *req);
+// Distance sensor data endpoint
+static esp_err_t distance_data_handler(httpd_req_t *req);
 
 // CORS support for API endpoints
 static esp_err_t cors_preflight_handler(httpd_req_t *req);
@@ -625,8 +626,14 @@ esp_err_t web_server_init(const web_server_config_t *config)
     ret = httpd_register_uri_handler(server, &system_health_uri);
     ESP_LOGI(TAG, "Registered handler for '/api/system/health' - %s", ret == ESP_OK ? "OK" : esp_err_to_name(ret));
 
-    // Distance data endpoint disabled in template - users should implement their own sensor endpoints
-    // Example code available in git history for reference
+    // Distance data endpoint
+    httpd_uri_t distance_uri = {
+        .uri = "/api/distance",
+        .method = HTTP_GET,
+        .handler = distance_data_handler,
+        .user_ctx = NULL};
+    ret = httpd_register_uri_handler(server, &distance_uri);
+    ESP_LOGI(TAG, "Registered handler for '/api/distance' - %s", ret == ESP_OK ? "OK" : esp_err_to_name(ret));
 
     // Register CORS preflight handler for all API endpoints
     httpd_uri_t options_uri = {
@@ -1127,18 +1134,77 @@ static esp_err_t system_health_handler(httpd_req_t *req)
 /**
  * @brief GET /api/distance - Get current distance measurement
  * 
- * NOTE: This handler is disabled in the template version.
- * Users should implement their own sensor data endpoints based on their hardware.
+ * Returns JSON with current distance reading and sensor status.
+ * Example response (success): {"status":"ok","distance_cm":25.3}
+ * Example response (error): {"status":"timeout","distance_cm":0}
  */
-/*
 static esp_err_t distance_data_handler(httpd_req_t *req)
 {
-    // Template: Implement your own sensor data endpoint here
-    httpd_resp_set_type(req, "application/json");
+    ESP_LOGD(TAG, "Handling GET /api/distance");
+
+    // Set CORS headers
     httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*");
-    return httpd_resp_send(req, "{\"error\":\"Not implemented in template\"}", HTTPD_RESP_USE_STRLEN);
+    httpd_resp_set_hdr(req, "Content-Type", "application/json");
+
+    // Create JSON response
+    cJSON *json = cJSON_CreateObject();
+    if (json == NULL) {
+        ESP_LOGE(TAG, "Failed to create JSON object");
+        httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "Memory allocation failed");
+        return ESP_FAIL;
+    }
+
+    // Get latest distance measurement
+    distance_measurement_t measurement;
+    esp_err_t ret = distance_sensor_get_latest(&measurement);
+    
+    if (ret == ESP_OK && measurement.status == DISTANCE_SENSOR_OK) {
+        // Successful reading - convert mm to cm
+        float distance_cm = measurement.distance_mm / 10.0f;
+        cJSON_AddStringToObject(json, "status", "ok");
+        cJSON_AddNumberToObject(json, "distance_cm", distance_cm);
+    } else {
+        // Error or no data - return appropriate status
+        const char *status_str = "error";
+        switch (measurement.status) {
+            case DISTANCE_SENSOR_TIMEOUT:
+                status_str = "timeout";
+                break;
+            case DISTANCE_SENSOR_OUT_OF_RANGE:
+                status_str = "out_of_range";
+                break;
+            case DISTANCE_SENSOR_NO_ECHO:
+                status_str = "no_echo";
+                break;
+            case DISTANCE_SENSOR_INVALID_READING:
+                status_str = "invalid";
+                break;
+            default:
+                status_str = "error";
+                break;
+        }
+        cJSON_AddStringToObject(json, "status", status_str);
+        cJSON_AddNumberToObject(json, "distance_cm", 0);
+    }
+
+    // Convert to string and send
+    char *json_string = cJSON_PrintUnformatted(json);
+    if (json_string == NULL) {
+        ESP_LOGE(TAG, "Failed to print JSON");
+        cJSON_Delete(json);
+        httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "JSON serialization failed");
+        return ESP_FAIL;
+    }
+
+    httpd_resp_send(req, json_string, HTTPD_RESP_USE_STRLEN);
+
+    // Cleanup
+    free(json_string);
+    cJSON_Delete(json);
+
+    ESP_LOGD(TAG, "Distance data sent successfully");
+    return ESP_OK;
 }
-*/
 
 /**
  * @brief OPTIONS /api/ wildcard - CORS preflight handler

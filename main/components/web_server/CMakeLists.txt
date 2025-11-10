@@ -17,6 +17,7 @@ idf_component_register(
     REQUIRES 
         cert_handler 
         config_manager
+        distance_sensor
         esp_wifi 
         esp_http_server 
         esp_https_server 
