@@ -6,31 +6,25 @@
       "id": "wifi",
       "label": "📶 WiFi Settings",
       "description": "Network configuration",
-      "order": 1
+      "order": 4
     },
     {
       "id": "ap",
       "label": "📡 Access Point Settings",
       "description": "Fallback AP configuration",
-      "order": 2
+      "order": 5
     },
     {
       "id": "display",
       "label": "📊 Display Settings",
       "description": "LED strip and distance visualization",
-      "order": 3
+      "order": 2
     },
     {
       "id": "sensor",
       "label": "📡 Sensor Settings",
       "description": "HC-SR04 distance sensor configuration",
-      "order": 4
-    },
-    {
-      "id": "device",
-      "label": "🔧 Device Settings",
-      "description": "Device-specific configuration",
-      "order": 5
+      "order": 3
     }
   ],
   "parameters": [
@@ -62,8 +56,8 @@
     {
       "key": "ap_ssid",
       "type": "string",
-      "label": "AP SSID",
-      "description": "Access Point name when device can't connect to WiFi",
+      "label": "Device Name",
+      "description": "Friendly name shown as Access Point SSID",
       "default": "ESP32-Setup",
       "required": true,
       "minLength": 1,
@@ -187,19 +181,6 @@
       "step": 10,
       "group": "sensor",
       "order": 4
-    },
-    {
-      "key": "device_name",
-      "type": "string",
-      "label": "Device Name",
-      "description": "Friendly name for this device",
-      "default": "ESP32-Distance",
-      "required": true,
-      "minLength": 1,
-      "maxLength": 32,
-      "pattern": "^[a-zA-Z0-9_\\-]{1,32}$",
-      "group": "device",
-      "order": 1
     }
   ]
 }
