@@ -119,28 +119,34 @@ async function apiCall(endpoint, options = {}) {
 // Dashboard-specific functions
 async function refreshData() {
     try {
-        // Fetch WiFi status
-        const statusData = await apiCall('/api/status');
-        
-        // Update WiFi status
-        updateElement('wifi-status', statusData.wifi_mode || 'Disconnected');
-        updateElement('wifi-ssid', statusData.ssid || '--');
-        updateElement('wifi-ip', statusData.ip_address || '--');
-        updateElement('wifi-rssi', statusData.rssi ? `${statusData.rssi} dBm` : '--');
+        // Fetch distance measurement
+        const distanceData = await apiCall('/api/distance');
+        if (distanceData.status === 'ok') {
+            updateElement('distance-value', `${distanceData.distance_cm.toFixed(1)} cm`);
+        } else {
+            // Show timeout or error state
+            updateElement('distance-value', `-- cm (${distanceData.status})`);
+        }
         
         // Fetch system health
         const healthData = await apiCall('/api/system/health');
         
+        // Update WiFi status from health endpoint
+        if (healthData.wifi) {
+            updateElement('wifi-status', healthData.wifi.status || 'Unknown');
+            updateElement('wifi-ssid', healthData.wifi.ssid || '--');
+            updateElement('wifi-rssi', healthData.wifi.rssi ? `${healthData.wifi.rssi} dBm` : '--');
+        }
+        
         // Update system information
-        updateElement('system-uptime', formatUptime(healthData.uptime_sec || 0));
-        updateElement('system-heap', formatBytes(healthData.free_heap || 0));
-        updateElement('system-idf', healthData.idf_version || '--');
-        updateElement('system-chip', healthData.chip_model || 'ESP32');
+        updateElement('system-uptime', formatUptime(Math.floor(healthData.uptime_seconds || 0)));
+        updateElement('system-heap', formatBytes(healthData.free_heap_bytes || 0));
+        updateElement('system-firmware', healthData.firmware_version || '--');
         
     } catch (error) {
         console.error('Failed to fetch data:', error);
-        // Don't show notification for every failed refresh
-        updateElement('wifi-status', 'Error');
+        updateElement('distance-value', '-- cm (no connection)');
+        updateElement('wifi-status', 'Connection Error');
     }
 }
 
