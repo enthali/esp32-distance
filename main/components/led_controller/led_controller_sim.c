@@ -55,7 +55,7 @@ static bool is_initialized = false;
 
 // Rate limiting for display updates (prevent terminal spam)
 static uint64_t last_display_time = 0;
-static const uint64_t DISPLAY_INTERVAL_US = 1000000; // 1 second
+static const uint64_t DISPLAY_INTERVAL_US = 250000; // 250 ms
 
 // Optional status text appended to simulated display (small buffer)
 static char status_text[64] = "";
@@ -279,7 +279,7 @@ esp_err_t led_show(void)
     }
     
     // Output to console (stdout)
-    printf("%s\n", output);
+    printf("%s\r", output);
     fflush(stdout);
     
     return ESP_OK;
