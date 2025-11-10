@@ -11,6 +11,10 @@ This section contains system and component requirements following Sphinx-Needs m
    req_web_server
    req_config_manager_json
    req_netif_tunnel
+   req_distance_sensor
+   req_led_controller
+   req_display
+   req_startup_test
 
 Overview
 --------

@@ -11,6 +11,10 @@ This section contains detailed design specifications for system components follo
    spec_config_manager_json
    spec_config_webpage
    spec_web_server
+   spec_distance_sensor
+   spec_led_controller
+   spec_display
+   spec_startup_test
 
 Overview
 --------
