@@ -11,9 +11,8 @@
  * 
  * SYSTEM ARCHITECTURE:
  * - Distance Sensor Task (priority 5): Continuous HC-SR04 measurements
- * - Display Logic Task (priority 3): LED visualization from measurements  
- * - Web Server Task: HTTP interface for config and monitoring
- * - WiFi Manager Task: Network connectivity management
+ * - Display Logic Task (priority 3): LED visualization from measurements 
+ * - WiFi Manager Task: Network connectivity and web server lifecycle management
  * 
  * REQUIREMENTS TRACEABILITY:
  * - REQ_DISPLAY_1: WS2812 LED strip support
