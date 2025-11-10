@@ -28,7 +28,6 @@
 #include "esp_log.h"
 #include "esp_system.h"
 #include "esp_timer.h"
-#include "nvs_flash.h"
 
 // Application components - Distance Sensor System
 #include "led_controller.h"
@@ -38,7 +37,6 @@
 #include "config_manager.h"
 
 // Web interface components
-#include "web_server.h"
 #include "wifi_manager.h"
 
 // Hardware pin definitions (project-specific configuration)
@@ -64,25 +62,14 @@ void app_main(void)
     ESP_LOGI(TAG, "╚════════════════════════════════════════════════╝");
     ESP_LOGI(TAG, "ESP-IDF Version: %s", esp_get_idf_version());
     
-    // Step 1: Initialize NVS (Non-Volatile Storage)
-    // Required for WiFi credentials and configuration storage
-    ESP_LOGI(TAG, "Initializing NVS Flash...");
-    esp_err_t ret = nvs_flash_init();
-    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
-        ESP_LOGW(TAG, "NVS partition was truncated and needs to be erased");
-        ESP_ERROR_CHECK(nvs_flash_erase());
-        ret = nvs_flash_init();
-    }
-    ESP_ERROR_CHECK(ret);
-    ESP_LOGI(TAG, "✓ NVS Flash initialized");
-    
-    // Step 2: Initialize configuration manager
+    // Step 1: Initialize configuration manager
+    // Internally initializes NVS and loads configuration from storage
     // Uses JSON schema from config_schema.json for all parameters
     ESP_LOGI(TAG, "Initializing configuration manager...");
     ESP_ERROR_CHECK(config_init());
-    ESP_LOGI(TAG, "✓ Configuration manager initialized");
+    ESP_LOGI(TAG, "✓ Configuration manager initialized (NVS ready)");
     
-    // Step 3: Initialize LED controller
+    // Step 2: Initialize LED controller
     // REQ_DISPLAY_1: WS2812 LED strip support
     // Configuration (led_count, brightness) loaded from config_manager
     ESP_LOGI(TAG, "Initializing LED controller...");
@@ -90,7 +77,7 @@ void app_main(void)
     ESP_LOGI(TAG, "✓ LED controller initialized (%d LEDs on GPIO%d)", 
              led_get_count(), LED_DATA_PIN);
     
-    // Step 4: Run startup test sequence
+    // Step 3: Run startup test sequence
     // REQ_STARTUP_2: Visual boot sequence - demonstrates all LEDs working
     ESP_LOGI(TAG, "Running LED startup test...");
     led_clear_all();
@@ -100,7 +87,7 @@ void app_main(void)
     led_show();
     ESP_LOGI(TAG, "✓ LED startup test completed");
     
-    // Step 5: Initialize distance sensor
+    // Step 4: Initialize distance sensor
     // REQ_DISTANCE_SENSOR_1: HC-SR04 ultrasonic measurements
     // Configuration (interval, timeout, etc.) loaded from config_manager
     ESP_LOGI(TAG, "Initializing distance sensor...");
@@ -110,24 +97,17 @@ void app_main(void)
     ESP_LOGI(TAG, "  Hardware: Trigger=GPIO%d, Echo=GPIO%d", 
              DISTANCE_TRIGGER_PIN, DISTANCE_ECHO_PIN);
     
-    // Step 6: Initialize WiFi manager and web server
+    // Step 5: Initialize WiFi manager and web server
     // Handles both STA mode (connect to WiFi) and AP mode (captive portal)
+    // WiFi manager automatically starts web server in both modes:
+    //   - AP mode: Web server on 192.168.4.1 (captive portal)
+    //   - STA mode: Web server on network IP (after connection)
     ESP_LOGI(TAG, "Initializing WiFi manager...");
     ESP_ERROR_CHECK(wifi_manager_init());
     ESP_ERROR_CHECK(wifi_manager_start());
-    ESP_LOGI(TAG, "✓ WiFi manager initialized");
+    ESP_LOGI(TAG, "✓ WiFi manager initialized (web server lifecycle managed automatically)");
     
-#ifdef CONFIG_IDF_TARGET_ESP32
-    ESP_LOGI(TAG, "QEMU/Simulator mode: WiFi manager will initialize web server");
-#else
-    ESP_LOGI(TAG, "Hardware mode: Initializing web server...");
-    web_server_config_t web_config = WEB_SERVER_DEFAULT_CONFIG();
-    ESP_ERROR_CHECK(web_server_init(&web_config));
-    ESP_ERROR_CHECK(web_server_start());
-    ESP_LOGI(TAG, "✓ Web server initialized");
-#endif
-    
-    // Step 7: Start display logic
+    // Step 6: Start display logic
     // REQ_DISPLAY_1 + REQ_DISPLAY_3: LED visualization of distance measurements
     ESP_LOGI(TAG, "Starting display logic...");
     ESP_ERROR_CHECK(display_logic_start());
@@ -135,13 +115,13 @@ void app_main(void)
     
     // System initialized successfully
     ESP_LOGI(TAG, "");
-    ESP_LOGI(TAG, "╔════════════════════════════════════════════════╗");
-    ESP_LOGI(TAG, "║          System Ready!                        ║");
-    ESP_LOGI(TAG, "║  Distance: Monitoring                        ║");
-    ESP_LOGI(TAG, "║  LED Display: READY                          ║");
-    ESP_LOGI(TAG, "║  Web Interface: http://192.168.4.1          ║");
-    ESP_LOGI(TAG, "║  Captive Portal: Auto (AP mode)              ║");
-    ESP_LOGI(TAG, "╚════════════════════════════════════════════════╝");
+    ESP_LOGI(TAG, "╔════════════════════════════════════════════╗");
+    ESP_LOGI(TAG, "║          System Ready!                     ║");
+    ESP_LOGI(TAG, "║  Distance: Monitoring                      ║");
+    ESP_LOGI(TAG, "║  LED Display: READY                        ║");
+    ESP_LOGI(TAG, "║  Web Interface: http://192.168.4.1         ║");
+    ESP_LOGI(TAG, "║  Captive Portal: Auto (AP mode)            ║");
+    ESP_LOGI(TAG, "╚════════════════════════════════════════════╝");
     ESP_LOGI(TAG, "");
     
     // Main monitoring loop
