@@ -178,6 +178,26 @@ extern "C"
      */
     bool led_is_initialized(void);
 
+    /**
+     * @brief Get snapshot of all LED colors (thread-safe)
+     *
+     * Returns a snapshot of the current LED state that was last sent to the
+     * physical LEDs via led_show(). This function is thread-safe and can be
+     * called from any task (e.g., web server, monitoring tasks).
+     *
+     * The snapshot represents the actual visible state of the LEDs, not
+     * intermediate buffer states that haven't been transmitted yet.
+     *
+     * @param output_buffer Pointer to buffer to receive LED colors
+     * @param max_count Maximum number of LEDs to copy (buffer size)
+     * @return Number of LEDs actually copied, or 0 on error
+     *
+     * @note Caller must allocate output_buffer with size >= led_count * sizeof(led_color_t)
+     * @note This function uses mutex protection and may block briefly
+     * @note Returns stable snapshot that matches physical LED state
+     */
+    uint16_t led_get_all_colors(led_color_t* output_buffer, uint16_t max_count);
+
 #ifdef __cplusplus
 }
 #endif

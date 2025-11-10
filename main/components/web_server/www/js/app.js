@@ -5,7 +5,7 @@
 
 // Global configuration
 const CONFIG = {
-    refreshInterval: 5000,  // 5 seconds
+    refreshInterval: 1000,  // 1 second - real-time updates
     notificationDuration: 3000,  // 3 seconds
     apiTimeout: 10000  // 10 seconds
 };

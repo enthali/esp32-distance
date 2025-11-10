@@ -28,6 +28,8 @@
 #include "config_manager.h"
 #include "esp_log.h"
 #include "esp_timer.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/semphr.h"
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -50,6 +52,8 @@ typedef struct
 
 // Internal state - same structure as hardware version
 static led_color_t *led_buffer = NULL;
+static led_color_t *led_buffer_snapshot = NULL;
+static SemaphoreHandle_t snapshot_mutex = NULL;
 static led_config_t current_config = {0};
 static bool is_initialized = false;
 
@@ -154,11 +158,32 @@ esp_err_t led_controller_init(gpio_num_t data_pin)
     ESP_LOGI(TAG, "  LED Count: %d", current_config.led_count);
     ESP_LOGI(TAG, "  [Simulator: brightness, GPIO, RMT ignored]");
 
-    // Allocate LED buffer
+    // Allocate LED buffers
     led_buffer = malloc(current_config.led_count * sizeof(led_color_t));
     if (led_buffer == NULL)
     {
         ESP_LOGE(TAG, "Failed to allocate LED buffer");
+        return ESP_ERR_NO_MEM;
+    }
+
+    led_buffer_snapshot = malloc(current_config.led_count * sizeof(led_color_t));
+    if (led_buffer_snapshot == NULL)
+    {
+        ESP_LOGE(TAG, "Failed to allocate LED snapshot buffer");
+        free(led_buffer);
+        led_buffer = NULL;
+        return ESP_ERR_NO_MEM;
+    }
+
+    // Create snapshot mutex
+    snapshot_mutex = xSemaphoreCreateMutex();
+    if (snapshot_mutex == NULL)
+    {
+        ESP_LOGE(TAG, "Failed to create snapshot mutex");
+        free(led_buffer);
+        free(led_buffer_snapshot);
+        led_buffer = NULL;
+        led_buffer_snapshot = NULL;
         return ESP_ERR_NO_MEM;
     }
 
@@ -167,6 +192,9 @@ esp_err_t led_controller_init(gpio_num_t data_pin)
     {
         led_buffer[i] = LED_COLOR_OFF;
     }
+    
+    // Initialize snapshot to same state
+    memcpy(led_buffer_snapshot, led_buffer, current_config.led_count * sizeof(led_color_t));
 
     is_initialized = true;
     ESP_LOGI(TAG, "LED controller simulator initialized: %d LEDs (terminal visualization)", 
@@ -188,6 +216,18 @@ esp_err_t led_controller_deinit(void)
     {
         free(led_buffer);
         led_buffer = NULL;
+    }
+    
+    if (led_buffer_snapshot != NULL)
+    {
+        free(led_buffer_snapshot);
+        led_buffer_snapshot = NULL;
+    }
+    
+    if (snapshot_mutex != NULL)
+    {
+        vSemaphoreDelete(snapshot_mutex);
+        snapshot_mutex = NULL;
     }
 
     // Clear configuration
@@ -282,6 +322,12 @@ esp_err_t led_show(void)
     printf("%s\r", output);
     fflush(stdout);
     
+    // Update snapshot after "display" (simulator equivalent to hardware transmission)
+    if (snapshot_mutex != NULL && xSemaphoreTake(snapshot_mutex, pdMS_TO_TICKS(10))) {
+        memcpy(led_buffer_snapshot, led_buffer, current_config.led_count * sizeof(led_color_t));
+        xSemaphoreGive(snapshot_mutex);
+    }
+    
     return ESP_OK;
 }
 
@@ -321,4 +367,48 @@ uint16_t led_get_count(void)
 bool led_is_initialized(void)
 {
     return is_initialized;
+}
+
+uint16_t led_get_all_colors(led_color_t* output_buffer, uint16_t max_count)
+{
+    if (!is_initialized || output_buffer == NULL || max_count == 0)
+    {
+        return 0;
+    }
+
+    uint16_t copy_count = (max_count < current_config.led_count) ? max_count : current_config.led_count;
+
+    // Thread-safe read from snapshot buffer
+    if (snapshot_mutex != NULL && xSemaphoreTake(snapshot_mutex, pdMS_TO_TICKS(100)))
+    {
+        memcpy(output_buffer, led_buffer_snapshot, copy_count * sizeof(led_color_t));
+        xSemaphoreGive(snapshot_mutex);
+        return copy_count;
+    }
+
+    // Fallback: mutex timeout - return 0 to indicate error
+    ESP_LOGW(TAG, "Failed to acquire snapshot mutex in led_get_all_colors()");
+    return 0;
+}
+
+uint16_t led_get_all_colors(led_color_t* output_buffer, uint16_t max_count)
+{
+    if (!is_initialized || output_buffer == NULL || max_count == 0)
+    {
+        return 0;
+    }
+
+    uint16_t copy_count = (max_count < current_config.led_count) ? max_count : current_config.led_count;
+
+    // Thread-safe read from snapshot buffer
+    if (snapshot_mutex != NULL && xSemaphoreTake(snapshot_mutex, pdMS_TO_TICKS(100)))
+    {
+        memcpy(output_buffer, led_buffer_snapshot, copy_count * sizeof(led_color_t));
+        xSemaphoreGive(snapshot_mutex);
+        return copy_count;
+    }
+
+    // Fallback: mutex timeout - return 0 to indicate error
+    ESP_LOGW(TAG, "Failed to acquire snapshot mutex in led_get_all_colors()");
+    return 0;
 }

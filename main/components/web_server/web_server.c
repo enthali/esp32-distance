@@ -66,6 +66,9 @@ static esp_err_t system_health_handler(httpd_req_t *req);
 // Distance sensor data endpoint
 static esp_err_t distance_data_handler(httpd_req_t *req);
 
+// LED state data endpoint
+static esp_err_t led_state_handler(httpd_req_t *req);
+
 // CORS support for API endpoints
 static esp_err_t cors_preflight_handler(httpd_req_t *req);
 
