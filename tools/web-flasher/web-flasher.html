@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP32 Web Flasher</title>
+    <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #e74c3c;
+            padding-bottom: 10px;
+        }
+        .info {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        esp-web-install-button {
+            display: inline-block;
+            margin: 20px 0;
+        }
+        .feature-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .feature-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .feature-list li:before {
+            content: "✓ ";
+            color: #4caf50;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        .button-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 ESP32 Web Flasher</h1>
+        <p id="project-info" style="color: #666; margin-top: -10px; font-size: 14px;">Loading project info...</p>
+        
+        <div class="info">
+            <strong>ℹ️ Browser-Based Flashing</strong>
+            <p>Flash your ESP32 directly from your browser using Web Serial API. No drivers or command-line tools needed!</p>
+        </div>
+
+        <div class="warning">
+            <strong>⚠️ Requirements</strong>
+            <ul>
+                <li>Chrome, Edge, or Opera browser (Web Serial API support required)</li>
+                <li>ESP32 connected via USB to your computer</li>
+                <li>Latest firmware build completed (<code>idf.py build</code>)</li>
+            </ul>
+        </div>
+
+        <div class="button-container">
+            <esp-web-install-button id="install-button" manifest="/build/flasher-manifest.json">
+                <button slot="activate" style="
+                    background: #e74c3c;
+                    color: white;
+                    padding: 15px 40px;
+                    font-size: 18px;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                ">
+                    🔌 Connect and Flash ESP32
+                </button>
+            </esp-web-install-button>
+        </div>
+
+        <div id="debug-info" style="
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            display: none;
+        ">
+            <strong>Debug Info:</strong>
+            <div id="debug-content"></div>
+        </div>
+
+        <script>
+            // Debug logging
+            const debugDiv = document.getElementById('debug-info');
+            const debugContent = document.getElementById('debug-content');
+            const button = document.getElementById('install-button');
+            
+            function log(msg) {
+                console.log(msg);
+                debugContent.innerHTML += `<div>${new Date().toISOString()}: ${msg}</div>`;
+                debugDiv.style.display = 'block';
+            }
+
+            // Set manifest with cache busting
+            const manifestUrl = `/build/flasher-manifest.json?t=${Date.now()}`;
+            button.setAttribute('manifest', manifestUrl);
+            log(`Manifest URL: ${manifestUrl}`);
+
+            // Test manifest accessibility
+            fetch(manifestUrl)
+                .then(response => {
+                    log(`Manifest fetch status: ${response.status}`);
+                    return response.json();
+                })
+                .then(data => {
+                    log(`✅ Manifest loaded: ${data.name} v${data.version}`);
+                    log(`Builds: ${data.builds.length}`);
+                    log(`Parts: ${data.builds[0].parts.length}`);
+                    
+                    // Update project info in header
+                    const projectInfo = document.getElementById('project-info');
+                    if (projectInfo) {
+                        projectInfo.textContent = `Project: ${data.name} v${data.version}`;
+                    }
+                    
+                    // Test if binary files are accessible
+                    data.builds[0].parts.forEach((part, idx) => {
+                        const url = new URL(part.path, manifestUrl).href;
+                        log(`Testing part ${idx}: ${url}`);
+                        fetch(url, {method: 'HEAD'})
+                            .then(r => log(`  ${r.ok ? '✅' : '❌'} ${part.path} (${r.status})`))
+                            .catch(e => log(`  ❌ ${part.path}: ${e.message}`));
+                    });
+                })
+                .catch(error => {
+                    log(`❌ Manifest error: ${error.message}`);
+                    const projectInfo = document.getElementById('project-info');
+                    if (projectInfo) {
+                        projectInfo.textContent = 'Could not load project info';
+                        projectInfo.style.color = '#d32f2f';
+                    }
+                });
+
+            // Listen for errors
+            button.addEventListener('error', (e) => {
+                log(`❌ Install error: ${e.detail || e.message}`);
+            });
+        </script>
+
+        <h2>📋 Features</h2>
+        <ul class="feature-list">
+            <li>Flash bootloader, partition table, and application in one click</li>
+            <li>View serial console output directly in browser</li>
+            <li>Automatic port detection and connection</li>
+            <li>Progress indication during flashing</li>
+            <li>No Python or esptool installation required</li>
+        </ul>
+
+        <h2>🔧 How to Use</h2>
+        <ol>
+            <li><strong>Build your firmware:</strong> Run <code>idf.py build</code> in the terminal</li>
+            <li><strong>Connect ESP32:</strong> Plug your ESP32 into a USB port</li>
+            <li><strong>Click the button above</strong> and select your ESP32's serial port</li>
+            <li><strong>Install:</strong> Follow the on-screen prompts to flash</li>
+            <li><strong>Monitor:</strong> View serial output directly in the browser</li>
+        </ol>
+
+        <h2>📖 Troubleshooting</h2>
+        <div class="info">
+            <p><strong>Port not appearing?</strong></p>
+            <ul>
+                <li>Check USB cable connection</li>
+                <li>Try a different USB port</li>
+                <li>Verify ESP32 drivers are installed on your host machine</li>
+                <li>Close other applications using the serial port (Arduino IDE, PuTTY, etc.)</li>
+            </ul>
+            <p><strong>Flash failed?</strong></p>
+            <ul>
+                <li>Hold BOOT button on ESP32 while connecting</li>
+                <li>Try pressing RESET button before flashing</li>
+                <li>Verify firmware was built successfully</li>
+            </ul>
+        </div>
+
+        <h2>🔗 Technical Details</h2>
+        <p>This web flasher uses <a href="https://esphome.github.io/esp-web-tools/" target="_blank">ESP Web Tools</a>, 
+           which implements esptool functionality directly in the browser using the Web Serial API.</p>
+        <p><strong>Manifest location:</strong> <code>./manifest.json</code></p>
+        <p><strong>Firmware builds:</strong> <code>../build/</code></p>
+    </div>
+</body>
+</html>

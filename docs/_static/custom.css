@@ -1,0 +1,51 @@
+/* Custom CSS for Sphinx-Needs in Furo Dark Mode */
+
+/* Fix Sphinx-Needs requirement boxes in dark mode */
+body[data-theme="dark"] .need {
+    background-color: var(--color-background-secondary) !important;
+    border-color: var(--color-foreground-border) !important;
+    color: var(--color-foreground-primary) !important;
+}
+
+body[data-theme="dark"] .need_head {
+    background-color: var(--color-background-primary) !important;
+    color: var(--color-foreground-primary) !important;
+}
+
+body[data-theme="dark"] .need .needs_id,
+body[data-theme="dark"] .need .needs_title {
+    color: var(--color-brand-primary) !important;
+}
+
+body[data-theme="dark"] .need .needs_data {
+    color: var(--color-foreground-secondary) !important;
+}
+
+body[data-theme="dark"] .need .needs_content {
+    color: var(--color-foreground-primary) !important;
+}
+
+/* Fix table readability in dark mode */
+body[data-theme="dark"] .needs_table {
+    background-color: var(--color-background-secondary) !important;
+}
+
+body[data-theme="dark"] .needs_table th {
+    background-color: var(--color-background-primary) !important;
+    color: var(--color-foreground-primary) !important;
+    border-color: var(--color-foreground-border) !important;
+}
+
+body[data-theme="dark"] .needs_table td {
+    color: var(--color-foreground-primary) !important;
+    border-color: var(--color-foreground-border) !important;
+}
+
+/* Fix links in needs in dark mode */
+body[data-theme="dark"] .need a {
+    color: var(--color-brand-primary) !important;
+}
+
+body[data-theme="dark"] .need a:hover {
+    color: var(--color-brand-content) !important;
+}

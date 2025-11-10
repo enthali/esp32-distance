@@ -1,0 +1,50 @@
+# Line ending normalization for cross-platform development
+* text=auto
+
+# Explicitly declare text files you want to always be normalized and converted
+# to native line endings on checkout
+*.c text
+*.h text
+*.cpp text
+*.hpp text
+*.py text
+*.js text
+*.html text
+*.css text
+*.md text
+*.txt text
+*.yml text
+*.yaml text
+*.json text
+*.cmake text
+*.sh text eol=lf
+
+# PowerShell scripts should use CRLF on Windows
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+
+# Declare files that will always have CRLF line endings on checkout
+*.sln text eol=crlf
+
+# Declare files that will always have LF line endings on checkout  
+*.dsp text eol=lf
+*.dsw text eol=lf
+Makefile text eol=lf
+
+# Binary files
+*.bin binary
+*.elf binary
+*.o binary
+*.a binary
+*.so binary
+*.dll binary
+*.exe binary
+*.img binary
+*.ico binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.pdf binary
+*.zip binary
+*.tar.gz binary

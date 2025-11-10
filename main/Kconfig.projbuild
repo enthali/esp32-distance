@@ -1,0 +1,20 @@
+menu "Build Target Configuration"
+
+    config TARGET_EMULATOR
+        bool "Build for QEMU emulator"
+        default n
+        help
+            Build firmware optimized for QEMU emulation. When enabled,
+            the build includes emulator-specific drivers and configurations.
+            When disabled, builds for physical ESP32 hardware deployment.
+
+    config EMULATOR_MOCK_DATA
+        bool "Use mocked data in emulator"
+        depends on TARGET_EMULATOR
+        default y
+        help
+            Replaces physical hardware interface drivers with pseudo-virtualized
+            emulation inputs. This enables testing application logic with
+            simulated sensor data and peripheral responses.
+
+endmenu

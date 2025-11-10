@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP32 Template - Settings</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="stylesheet" href="/css/style.css?v=2">
+    <style>
+        .settings-form {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .config-section {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .config-section h3 {
+            margin: 0 0 15px 0;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #34495e;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .form-group .help-text {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-top: 3px;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-secondary {
+            background-color: #95a5a6;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #7f8c8d;
+        }
+        
+        .btn-danger {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+        
+        .btn-success {
+            background-color: #27ae60;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #229954;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 4px;
+            color: white;
+            font-weight: 600;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.3s ease;
+        }
+        
+        .notification.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .notification.success {
+            background-color: #27ae60;
+        }
+        
+        .notification.error {
+            background-color: #e74c3c;
+        }
+        
+        .notification.warning {
+            background-color: #f39c12;
+        }
+        
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            transform: translate(-50%, -50%);
+        }
+        
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        .loading-spinner {
+            text-align: center;
+            padding: 40px 20px;
+            color: #7f8c8d;
+            font-size: 16px;
+        }
+        
+        .loading-spinner::before {
+            content: '';
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">ESP32 Template</div>
+        <div class="nav-links">
+            <a href="/index.html" class="nav-btn">Dashboard</a>
+            <a href="/wifi-setup.html" class="nav-btn">WiFi</a>
+            <a href="/settings.html" class="nav-btn active">Settings</a>
+        </div>
+    </nav>
+    
+    <main class="container">
+        <h2>System Configuration</h2>
+        
+        <form id="settings-form" class="settings-form">
+            <!-- Configuration sections will be dynamically generated from JSON schema -->
+            <div id="dynamic-config">
+                <div class="loading-spinner">Loading configuration schema...</div>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button type="button" onclick="loadConfiguration()" class="btn btn-secondary" id="reload-btn">🔄 Reload</button>
+                <button type="submit" class="btn btn-success" id="save-btn">💾 Save</button>
+                <button type="button" onclick="resetToDefaults()" class="btn btn-danger" id="reset-btn">🔄 Reset to Defaults</button>
+            </div>
+        </form>
+    </main>
+    
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 ESP32 Template Project</p>
+            <p>
+                <a href="https://github.com/enthali/esp32-template" target="_blank" rel="noopener">
+                    View on GitHub
+                </a>
+            </p>
+        </div>
+    </footer>
+    
+    <script src="/js/app.js?v=2"></script>
+    <script>
+        let configSchema = null;
+        
+        // Load configuration on page load
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Load schema first, then build form, then load values
+            await loadSchema();
+            buildFormFromSchema();
+            await loadConfiguration();
+            
+            // Add form validation
+            document.getElementById('settings-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveConfiguration();
+            });
+        });
+        
+        async function loadSchema() {
+            try {
+                console.log('Loading schema from /api/config/schema...');
+                const response = await fetch('/api/config/schema');
+                console.log('Schema response status:', response.status);
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                configSchema = await response.json();
+                console.log('Configuration schema loaded successfully:', configSchema);
+            } catch (error) {
+                console.error('ERROR loading schema:', error);
+                console.error('Error stack:', error.stack);
+                showNotification('Failed to load configuration schema: ' + error.message, 'error');
+                throw error;
+            }
+        }
+        
+        function buildFormFromSchema() {
+            if (!configSchema || !configSchema.parameters) {
+                showNotification('Invalid configuration schema', 'error');
+                return;
+            }
+            
+            const container = document.getElementById('dynamic-config');
+            container.innerHTML = '';
+            
+            // Group fields by group
+            const groups = {};
+            configSchema.parameters.forEach(param => {
+                const group = param.group || 'General';
+                if (!groups[group]) {
+                    groups[group] = [];
+                }
+                groups[group].push(param);
+            });
+            
+            // Build lookup map for group metadata from schema
+            const groupMetadata = {};
+            if (configSchema.groups) {
+                configSchema.groups.forEach(g => {
+                    groupMetadata[g.id] = {
+                        label: g.label,
+                        description: g.description,
+                        order: g.order
+                    };
+                });
+            }
+            
+            // Build sections for each group (sorted by order)
+            const sortedGroupNames = Object.keys(groups).sort((a, b) => {
+                const orderA = groupMetadata[a]?.order || 999;
+                const orderB = groupMetadata[b]?.order || 999;
+                return orderA - orderB;
+            });
+            
+            sortedGroupNames.forEach(groupName => {
+                const section = document.createElement('div');
+                section.className = 'config-section';
+                
+                const heading = document.createElement('h3');
+                // Use label from schema, fallback to generated label
+                const groupLabel = groupMetadata[groupName]?.label || `${capitalizeFirst(groupName)} Settings`;
+                heading.textContent = groupLabel;
+                section.appendChild(heading);
+                
+                const formRow = document.createElement('div');
+                formRow.className = 'form-row';
+                
+                groups[groupName].forEach(param => {
+                    const formGroup = createFormGroup(param);
+                    formRow.appendChild(formGroup);
+                });
+                
+                section.appendChild(formRow);
+                container.appendChild(section);
+            });
+        }
+        
+        function createFormGroup(param) {
+            const formGroup = document.createElement('div');
+            formGroup.className = 'form-group';
+            
+            const label = document.createElement('label');
+            label.setAttribute('for', param.key);
+            label.textContent = param.label || capitalizeFirst(param.key.replace(/_/g, ' '));
+            formGroup.appendChild(label);
+            
+            const input = document.createElement('input');
+            input.id = param.key;
+            input.name = param.key;
+            
+            // Set input type based on parameter type
+            switch (param.type) {
+                case 'string':
+                    input.type = param.key.includes('pass') ? 'password' : 'text';
+                    // Schema has validation properties at top level, not nested
+                    if (param.minLength !== undefined) {
+                        input.minLength = param.minLength;
+                    }
+                    if (param.maxLength !== undefined) {
+                        input.maxLength = param.maxLength;
+                    }
+                    if (param.pattern) {
+                        input.pattern = param.pattern;
+                    }
+                    break;
+                case 'integer':
+                    input.type = 'number';
+                    // Schema has validation properties at top level, not nested
+                    if (param.min !== undefined) {
+                        input.min = param.min;
+                    }
+                    if (param.max !== undefined) {
+                        input.max = param.max;
+                    }
+                    break;
+                case 'boolean':
+                    input.type = 'checkbox';
+                    break;
+            }
+            
+            if (param.description) {
+                input.placeholder = param.description;
+            }
+            
+            formGroup.appendChild(input);
+            
+            // Build help text with description and validation info
+            if (param.description || param.type === 'string' || param.type === 'integer') {
+                const helpText = document.createElement('div');
+                helpText.className = 'help-text';
+                
+                let helpParts = [];
+                if (param.description) {
+                    helpParts.push(param.description);
+                }
+                
+                // Add validation info for strings
+                if (param.type === 'string') {
+                    let validationInfo = [];
+                    if (param.minLength !== undefined && param.maxLength !== undefined) {
+                        validationInfo.push(`Length: ${param.minLength}-${param.maxLength} characters`);
+                    } else if (param.minLength !== undefined) {
+                        validationInfo.push(`Min length: ${param.minLength} characters`);
+                    } else if (param.maxLength !== undefined) {
+                        validationInfo.push(`Max length: ${param.maxLength} characters`);
+                    }
+                    if (validationInfo.length > 0) {
+                        helpParts.push(`(${validationInfo.join(', ')})`);
+                    }
+                }
+                
+                // Add validation info for integers
+                if (param.type === 'integer') {
+                    let validationInfo = [];
+                    if (param.min !== undefined && param.max !== undefined) {
+                        validationInfo.push(`Range: ${param.min}-${param.max}`);
+                    } else if (param.min !== undefined) {
+                        validationInfo.push(`Min: ${param.min}`);
+                    } else if (param.max !== undefined) {
+                        validationInfo.push(`Max: ${param.max}`);
+                    }
+                    if (validationInfo.length > 0) {
+                        helpParts.push(`(${validationInfo.join(', ')})`);
+                    }
+                }
+                
+                helpText.textContent = helpParts.join(' ');
+                formGroup.appendChild(helpText);
+            }
+            
+            return formGroup;
+        }
+        
+        function capitalizeFirst(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+        
+        async function loadConfiguration() {
+            try {
+                console.log('Loading configuration from /api/config...');
+                setLoading(true);
+                const response = await fetch('/api/config');
+                console.log('Response status:', response.status);
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const config = await response.json();
+                console.log('Configuration loaded:', config);
+                populateFormFromValues(config);
+            } catch (error) {
+                console.error('ERROR loading configuration:', error);
+                console.error('Error stack:', error.stack);
+                showNotification('Failed to load configuration: ' + error.message, 'error');
+            } finally {
+                setLoading(false);
+            }
+        }
+        
+        let saveInProgress = false; // Prevent double-submit
+        
+        async function saveConfiguration() {
+            // Prevent duplicate submissions
+            if (saveInProgress) {
+                console.warn('Save already in progress, ignoring duplicate request');
+                return;
+            }
+            
+            try {
+                saveInProgress = true;
+                setLoading(true);
+                const config = getFormDataFromSchema();
+                
+                console.log('Sending configuration:', config);
+                
+                const response = await fetch('/api/config', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(config)
+                });
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`HTTP ${response.status}: ${errorText}`);
+                }
+                
+                const result = await response.json();
+                
+                // Show success message
+                showNotification('✅ ' + result.message, 'success');
+                
+                // Show reboot countdown modal
+                showRebootCountdown();
+                
+                // Wait 6 seconds for device to restart and come back online
+                // Device restarts after 3.5s, needs ~2.5s to boot and start WiFi
+                setTimeout(() => {
+                    console.log('Reloading page after device restart...');
+                    window.location.reload();
+                }, 6000);
+                
+            } catch (error) {
+                console.error('Failed to save configuration:', error);
+                showNotification('Failed to save configuration: ' + error.message, 'error');
+                // Re-enable on error
+                setLoading(false);
+                saveInProgress = false;
+            }
+        }
+        
+        function resetToDefaults() {
+            if (!confirm('Reset form to default values? (Not saved until you click Save)')) {
+                return;
+            }
+            
+            // Load default values from schema into form (does NOT save to device!)
+            if (!configSchema || !configSchema.parameters) {
+                showNotification('Schema not loaded', 'error');
+                return;
+            }
+            
+            const defaults = {};
+            configSchema.parameters.forEach(param => {
+                defaults[param.key] = param.default;
+            });
+            
+            populateFormFromValues(defaults);
+            showNotification('Form reset to default values. Click Save to apply.', 'info');
+        }
+        
+        function populateFormFromValues(configArray) {
+            if (!Array.isArray(configArray)) {
+                console.error('Config is not an array:', configArray);
+                return;
+            }
+            
+            // Process structured JSON array: [{key, type, value}, ...]
+            configArray.forEach(entry => {
+                if (!entry.key || !entry.type) {
+                    console.warn('Skipping invalid entry:', entry);
+                    return;
+                }
+                
+                const input = document.getElementById(entry.key);
+                if (!input) {
+                    console.warn('Input not found for key:', entry.key);
+                    return;
+                }
+                
+                const value = entry.value;
+                
+                // Update form field based on type
+                if (entry.type === 'boolean') {
+                    input.checked = value === true;
+                } else if (entry.key.includes('pass')) {
+                    // Never populate password fields for security (already masked by server)
+                    input.value = '';
+                } else if (entry.type === 'integer') {
+                    input.value = value || 0;
+                } else if (entry.type === 'string') {
+                    input.value = value || '';
+                } else {
+                    input.value = value || '';
+                }
+            });
+        }
+        
+        function getFormDataFromSchema() {
+            if (!configSchema || !configSchema.parameters) {
+                return [];
+            }
+            
+            // Build structured JSON array: [{key, type, value}, ...]
+            const configArray = [];
+            
+            configSchema.parameters.forEach(param => {
+                const input = document.getElementById(param.key);
+                if (!input) {
+                    console.warn('Input not found for key:', param.key);
+                    return;
+                }
+                
+                let value;
+                
+                if (param.type === 'boolean') {
+                    value = input.checked;
+                } else if (param.type === 'integer') {
+                    value = parseInt(input.value);
+                    if (isNaN(value)) {
+                        console.warn('Invalid integer for', param.key, '- using default:', param.default);
+                        value = param.default || 0;
+                    }
+                } else {
+                    // String type
+                    value = input.value.trim();
+                    // Skip empty passwords (don't send to server)
+                    if (param.key.includes('pass') && value === '') {
+                        return;
+                    }
+                }
+                
+                // Add to structured array
+                configArray.push({
+                    key: param.key,
+                    type: param.type,
+                    value: value
+                });
+            });
+            
+            return configArray;
+        }
+        
+        function setLoading(loading) {
+            const form = document.getElementById('settings-form');
+            const saveBtn = document.getElementById('save-btn');
+            const reloadBtn = document.getElementById('reload-btn');
+            const resetBtn = document.getElementById('reset-btn');
+            
+            if (loading) {
+                form.classList.add('loading');
+                saveBtn.disabled = true;
+                reloadBtn.disabled = true;
+                resetBtn.disabled = true;
+            } else {
+                form.classList.remove('loading');
+                saveBtn.disabled = false;
+                reloadBtn.disabled = false;
+                resetBtn.disabled = false;
+            }
+        }
+        
+        function showNotification(message, type = 'success') {
+            // Remove any existing notifications
+            const existing = document.querySelector('.notification');
+            if (existing) {
+                existing.remove();
+            }
+            
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            // Show notification
+            setTimeout(() => notification.classList.add('show'), 100);
+            
+            // Hide notification after 5 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, 5000);
+        }
+
+        function showRebootCountdown() {
+            // Create modal overlay
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 9999;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            `;
+            
+            // Create modal content
+            const content = document.createElement('div');
+            content.style.cssText = `
+                background: white;
+                padding: 40px;
+                border-radius: 12px;
+                text-align: center;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+                max-width: 400px;
+            `;
+            
+            content.innerHTML = `
+                <div style="font-size: 48px; margin-bottom: 20px;">🔄</div>
+                <h2 style="margin: 0 0 10px 0; color: #333;">Device Restarting...</h2>
+                <p style="color: #666; margin-bottom: 20px;">Applying new configuration</p>
+                <div style="font-size: 48px; font-weight: bold; color: #0066cc; margin: 20px 0;">
+                    <span id="countdown">6</span>
+                </div>
+                <p style="color: #999; font-size: 14px;">Page will reload automatically</p>
+            `;
+            
+            modal.appendChild(content);
+            document.body.appendChild(modal);
+            
+            // Countdown timer
+            let seconds = 6;
+            const countdownElement = document.getElementById('countdown');
+            
+            const countdownInterval = setInterval(() => {
+                seconds--;
+                if (countdownElement) {
+                    countdownElement.textContent = seconds;
+                }
+                if (seconds <= 0) {
+                    clearInterval(countdownInterval);
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

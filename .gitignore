@@ -1,0 +1,83 @@
+# ESP-IDF Build artifacts
+build/
+sdkconfig.old
+dependencies.lock
+
+# Project generated files
+main/components/config_manager/config_factory_generated.c
+
+# IDE files - ignore all VS Code files except debug configuration
+.vscode/*
+!.vscode/launch.json
+!.vscode/tasks.json
+!.vscode/settings.json
+!.vscode/c_cpp_properties.json
+!.vscode/mcp.json
+!.vscode/mcp.json.example
+
+.idea/
+.playwright-mcp/
+*.swp
+*.swo
+*~
+*.code-workspace
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv/
+
+# Logs
+*.log
+
+# Devcontainer lifecycle marker files
+.on-*-ran
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+tmp/
+
+# ESP-IDF specific
+managed_components/
+
+# Custom project ignores
+# Add any project-specific files to ignore here
+
+# HTTPS Certificates and Private Keys - NEVER commit these!
+*.pem
+*.key
+*.crt
+*.cert
+*.p12
+*.pfx
+server_cert.pem
+server_key.pem
+# Only ignore the generated certificate files, not the component code
+components/cert_handler/certs/
+ssl/
+
+# Certificate generation test files
+tools/test_*.pem
+tools/server_*.pem
+
+# Sphinx build output - generated documentation site
+site/
+docs/_build/
+docs/.doctrees/

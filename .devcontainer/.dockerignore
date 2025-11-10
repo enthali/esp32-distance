@@ -1,0 +1,37 @@
+# Build artifacts
+build/
+dist/
+*.bin
+*.elf
+*.map
+*.o
+*.a
+
+# Logs and temporary files
+*.log
+logs/
+tmp/
+temp/
+
+# Git
+.git/
+.gitignore
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Documentation (not needed in container)
+docs/
+*.md
+README*
+
+# Tools (Windows-specific)
+tools/*.bat
+tools/*.ps1
+
+# Certificates (embedded during build)
+certs/
+*.crt
+*.key
+*.pem

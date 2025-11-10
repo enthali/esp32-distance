@@ -1,0 +1,49 @@
+name: 'Setup Coding Agent Environment'
+description: 'Install tools for quality gates (pre-commit, sphinx, markdownlint)'
+author: 'ESP32 Distance Project'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+        # Note: No cache for pip since we don't have requirements.txt
+        # Tools are installed directly via pip install in next step
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        # Note: No cache for npm since we install global packages
+    
+    - name: Install Python tools
+      shell: bash
+      run: |
+        echo "Installing Python-based quality tools..."
+        python -m pip install --upgrade pip
+        pip install --no-cache-dir \
+          pre-commit \
+          sphinx>=8.0 \
+          sphinx-needs>=6.0 \
+          sphinx-rtd-theme>=3.0 \
+          furo>=2025.0 \
+          myst-parser>=4.0 \
+          sphinxcontrib-plantuml>=0.31 \
+          graphviz>=0.20
+    
+    - name: Install Node.js tools
+      shell: bash
+      run: |
+        echo "Installing Node.js-based quality tools..."
+        npm install -g markdownlint-cli
+    
+    - name: Verify installations
+      shell: bash
+      run: |
+        echo "Verifying tool installations..."
+        pre-commit --version
+        sphinx-build --version
+        markdownlint --version
+        echo "✅ All quality tools installed successfully"

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- ESP32 chip representation -->
+  <rect x="10" y="10" width="80" height="80" rx="8" fill="#1a1a1a" stroke="#00d4ff" stroke-width="3"/>
+  
+  <!-- Antenna symbol -->
+  <path d="M 50 21 L 50 33" stroke="#00d4ff" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="50" cy="35" r="3" fill="#00d4ff"/>
+  <path d="M 40 30 Q 45 25, 50 25 Q 55 25, 60 30" stroke="#00d4ff" stroke-width="2" fill="none"/>
+  <path d="M 35 28 Q 42.5 20, 50 20 Q 57.5 20, 65 28" stroke="#00d4ff" stroke-width="2" fill="none"/>
+  
+  <!-- Chip pins -->
+  <rect x="5" y="30" width="5" height="3" fill="#00d4ff"/>
+  <rect x="5" y="40" width="5" height="3" fill="#00d4ff"/>
+  <rect x="5" y="50" width="5" height="3" fill="#00d4ff"/>
+  <rect x="5" y="60" width="5" height="3" fill="#00d4ff"/>
+  <rect x="5" y="70" width="5" height="3" fill="#00d4ff"/>
+  
+  <rect x="90" y="30" width="5" height="3" fill="#00d4ff"/>
+  <rect x="90" y="40" width="5" height="3" fill="#00d4ff"/>
+  <rect x="90" y="50" width="5" height="3" fill="#00d4ff"/>
+  <rect x="90" y="60" width="5" height="3" fill="#00d4ff"/>
+  <rect x="90" y="70" width="5" height="3" fill="#00d4ff"/>
+  
+  <!-- ESP32 text -->
+  <text x="50" y="60" font-family="monospace" font-size="14" font-weight="bold" fill="#00d4ff" text-anchor="middle">ESP</text>
+  <text x="50" y="75" font-family="monospace" font-size="12" font-weight="bold" fill="#00d4ff" text-anchor="middle">32</text>
+</svg>

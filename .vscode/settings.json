@@ -1,0 +1,9 @@
+{
+  "idf.pythonInstallPath": "/usr/bin/python3",
+  "python.defaultInterpreterPath": "/opt/esp/python_env/idf5.4_py3.12_env/bin/python3",
+  "python.analysis.diagnosticMode": "openFilesOnly",
+  "python.languageServer": "None",
+  "python.terminal.activateEnvironment": false,
+  "python-envs.pythonProjects": [],
+  "idf.flashType": "UART"
+}

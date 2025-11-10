@@ -1,0 +1,66 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.183.0/containers/ubuntu
+{
+	"name": "ESP-IDF Codespaces",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"args": {
+			"DOCKER_TAG": "v5.4.1"
+		}
+	},
+
+	// Enable Desktop-Lite feature
+	"features": {
+		"ghcr.io/devcontainers/features/desktop-lite:1": {
+			// optional: Set resolution or password
+			// "password": "vscode",
+			// "webPort": 6080,
+			// "vncPort": 5901,
+			// "screenResolution": "1280x800"
+		}
+	},
+
+	// Forward noVNC, documentation server, and web-flasher ports
+	"forwardPorts": [6080, 8000, 8001],
+	"portsAttributes": {
+		"6080": { "label": "noVNC (Desktop)" },
+		"8000": { "label": "Documentation Server" },
+		"8001": { "label": "Web Flasher" }
+	},	// execute on container creation and start used for setup of graphical environment and network tuneling
+	"postCreateCommand": "bash ./tools/devcontainer/on-create.sh",
+	"postStartCommand": "bash ./tools/devcontainer/on-start.sh",
+	"postAttachCommand": "bash ./tools/devcontainer/on-attach.sh",
+
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"terminal.integrated.defaultProfile.linux": "bash",
+				"idf.espIdfPath": "/opt/esp/idf",
+				"idf.customExtraPaths": "",
+				"idf.pythonBinPath": "/opt/esp/python_env/idf5.4_py3.12_env/bin/python",
+				"idf.toolsPath": "/opt/esp",
+				"idf.gitPath": "/usr/bin/git",
+				"idf.buildPath": "${containerWorkspaceFolder}/build",
+				"idf.showOnboardingOnInit": false,
+				"extensions.ignoreRecommendations": true
+			},
+			"extensions": [
+		"espressif.esp-idf-extension",
+		"espressif.esp-idf-web",
+		"ms-vscode.cpptools",
+		"ms-vscode.cpptools-extension-pack",
+		"ms-python.python",
+		"DavidAnson.vscode-markdownlint",
+		"github.copilot",
+		"github.copilot-chat",
+		"github.vscode-github-actions"
+	]
+		},
+		"codespaces": {
+			"openFiles": [
+				"README.md"
+			]
+		}
+	},
+	"runArgs": ["--privileged"]
+}
