@@ -2,6 +2,19 @@
  * @file led_controller.h
  * @brief WS2812 LED Strip Controller for ESP32
  *
+ * REQUIREMENTS TRACEABILITY:
+ *   - REQ_LED_1: WS2812 LED strip support and hardware initialization
+ *   - REQ_LED_2: Individual pixel control
+ *   - REQ_LED_3: Configurable LED count
+ *   - REQ_LED_4: Accurate color display
+ *   - REQ_LED_5: LED state read API
+ *   - REQ_CFG_1: Configuration integration
+ *
+ * DESIGN TRACEABILITY:
+ *   - SPEC_LED_ARCH_1: RMT peripheral hardware abstraction
+ *   - SPEC_LED_API_1: Pixel-level control API
+ *   - SPEC_LED_API_2: Color utility functions
+ *
  * Hardware abstraction layer for WS2812 addressable LED strips using ESP32 RMT peripheral.
  * Provides low-level control with RAM buffer management for efficient updates.
  *

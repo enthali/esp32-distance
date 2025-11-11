@@ -23,8 +23,18 @@ Component APIs
    :maxdepth: 3
    :caption: API Documentation
    
-   api_config_manager
 
+
+
+
+
+   api_config_manager
+   api_led_controller
+   api_distance_sensor
+   api_display_logic
+   api_startup_tests
    api_netif_uart_tunnel
    api_cert_handler
+   api_web_server
+   api_wifi_manager
 

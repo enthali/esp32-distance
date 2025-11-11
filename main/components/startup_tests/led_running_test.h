@@ -2,6 +2,26 @@
  * @file led_running_test.h
  * @brief Running LED Test for LED Controller
  *
+ * REQUIREMENTS TRACEABILITY:
+ *   - REQ_STARTUP_1: LED controller initialization before test
+ *   - REQ_STARTUP_2: Visual boot sequence (sequential LED lighting)
+ *   - REQ_STARTUP_3: Rainbow/advanced test patterns
+ *   - REQ_LED_1: LED hardware support
+ *   - REQ_LED_2: Individual pixel control
+ *
+ * DESIGN TRACEABILITY:
+ *   - SPEC_STARTUP_1: LED controller dependency design
+ *   - SPEC_STARTUP_2: Visual boot sequence implementation
+ *
+ * ARCHITECTURE NOTES:
+ *   - Test functions are called after LED controller initialization in main()
+ *   - Effects run synchronously, blocking until complete
+ *   - Uses led_controller API for all LED operations
+ *   - No separate task/thread required; runs in main context
+ *
+ * AUTHOR: ESP32 Distance Project
+ * DATE: 2025-11-11
+ *
  * Test functions for running light effects on the LED strip.
  */
 

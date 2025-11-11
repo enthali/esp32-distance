@@ -2,6 +2,23 @@
  * @file distance_sensor.h
  * @brief HC-SR04 Ultrasonic Distance Sensor Driver
  *
+ * REQUIREMENTS TRACEABILITY:
+ *   - REQ_SNS_1: Component initialization (GPIO, ISR, queues)
+ *   - REQ_SNS_2: Trigger pulse generation
+ *   - REQ_SNS_3: Real-time timestamp capture (ISR)
+ *   - REQ_SNS_4: Measurement processing, filtering, validation
+ *   - REQ_SNS_5: Temperature compensation
+ *   - REQ_SNS_6: Queue overflow handling
+ *   - REQ_SNS_7: Health monitoring
+ *   - REQ_SNS_8: API blocking/read semantics
+ *   - REQ_SNS_9: Race condition safety
+ *   - REQ_SNS_10: Statistics and diagnostics
+ *
+ * DESIGN TRACEABILITY:
+ *   - SPEC_SNS_ARCH_1: Dual-queue real-time architecture
+ *   - SPEC_SNS_ALGO_1: Distance calculation and filtering
+ *   - SPEC_SNS_API_1: API blocking/read semantics
+ *
  * Interrupt-driven driver with dual-queue architecture for real-time performance.
  *
  * ARCHITECTURE OVERVIEW:
@@ -101,6 +118,15 @@ extern "C"
     /**
      * @brief Initialize the distance sensor
      *
+     * REQUIREMENTS TRACEABILITY:
+     *   - REQ_SNS_1: Initialization (GPIO, ISR, queues)
+     *   - REQ_SNS_5: Temperature compensation
+     *   - REQ_SNS_6: Queue overflow handling
+     *   - REQ_SNS_9: Race condition safety
+     *
+     * DESIGN TRACEABILITY:
+     *   - SPEC_SNS_ARCH_1: Dual-queue architecture
+     *
      * Loads configuration from config_manager automatically.
      * Configuration parameters are read from NVS using these keys:
      * - measurement_interval_ms: Time between measurements
@@ -120,6 +146,15 @@ extern "C"
     /**
      * @brief Start distance measurements
      *
+     * REQUIREMENTS TRACEABILITY:
+     *   - REQ_SNS_2: Trigger pulse generation
+     *   - REQ_SNS_3: ISR timestamp capture
+     *   - REQ_SNS_4: Measurement processing
+     *   - REQ_SNS_8: API blocking/read semantics
+     *
+     * DESIGN TRACEABILITY:
+     *   - SPEC_SNS_ARCH_1: Dual-queue architecture
+     *
      * Creates the measurement task that triggers sensors and processes results.
      *
      * @return esp_err_t ESP_OK on success
@@ -129,12 +164,25 @@ extern "C"
     /**
      * @brief Stop distance measurements
      *
+     * REQUIREMENTS TRACEABILITY:
+     *   - REQ_SNS_8: API blocking/read semantics
+     *
+     * DESIGN TRACEABILITY:
+     *   - SPEC_SNS_API_1: API blocking/read semantics
+     *
      * @return esp_err_t ESP_OK on success
      */
     esp_err_t distance_sensor_stop(void);
 
     /**
      * @brief Get the latest distance measurement (blocking)
+     *
+     * REQUIREMENTS TRACEABILITY:
+     *   - REQ_SNS_8: API blocking/read semantics
+     *   - REQ_SNS_9: Race condition safety
+     *
+     * DESIGN TRACEABILITY:
+     *   - SPEC_SNS_API_1: API blocking/read semantics
      *
      * Waits on the internal queue until a new measurement is available.
      * This function will block until new data arrives from the sensor task.
@@ -147,6 +195,12 @@ extern "C"
     /**
      * @brief Check if new measurement is available
      *
+     * REQUIREMENTS TRACEABILITY:
+     *   - REQ_SNS_8: API blocking/read semantics
+     *
+     * DESIGN TRACEABILITY:
+     *   - SPEC_SNS_API_1: API blocking/read semantics
+     *
      * @return true if new measurement is available, false otherwise
      */
     bool distance_sensor_has_new_measurement(void);
@@ -154,12 +208,26 @@ extern "C"
     /**
      * @brief Get queue overflow statistics
      *
+     * REQUIREMENTS TRACEABILITY:
+     *   - REQ_SNS_6: Queue overflow handling
+     *   - REQ_SNS_10: Statistics and diagnostics
+     *
+     * DESIGN TRACEABILITY:
+     *   - SPEC_SNS_ARCH_1: Dual-queue architecture
+     *
      * @return uint32_t Number of measurements discarded due to queue overflow
      */
     uint32_t distance_sensor_get_queue_overflows(void);
 
     /**
      * @brief Perform lightweight sensor health monitoring
+     *
+     * REQUIREMENTS TRACEABILITY:
+     *   - REQ_SNS_7: Health monitoring
+     *   - REQ_SNS_10: Statistics and diagnostics
+     *
+     * DESIGN TRACEABILITY:
+     *   - SPEC_SNS_ARCH_1: Dual-queue architecture
      *
      * This function should be called periodically (every 5-10 seconds) from main.c.
      * It performs the same monitoring that was previously done in main.c but
@@ -175,6 +243,12 @@ extern "C"
 
     /**
      * @brief Check if sensor is running
+     *
+     * REQUIREMENTS TRACEABILITY:
+     *   - REQ_SNS_8: API blocking/read semantics
+     *
+     * DESIGN TRACEABILITY:
+     *   - SPEC_SNS_API_1: API blocking/read semantics
      *
      * @return true if sensor task is running, false otherwise
      */
