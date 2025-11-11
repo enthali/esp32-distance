@@ -66,6 +66,7 @@
 #include "esp_log.h"
 #include "esp_rom_sys.h"
 #include "esp_check.h"
+#include "nvs.h"
 #include <stddef.h> // For offsetof macro
 
 // Debug configuration - comment out to disable detailed debug output
@@ -429,39 +430,59 @@ esp_err_t distance_sensor_init(gpio_num_t trigger_pin, gpio_num_t echo_pin)
     
     ESP_LOGI(TAG, "Hardware pins: Trigger=GPIO%d, Echo=GPIO%d", trigger_pin, echo_pin);
     
-    // Load measurement interval from config_manager
+    // Load measurement interval from config_manager (default: 100ms)
     int32_t meas_int_ms = 0;
     esp_err_t ret = config_get_int32("meas_int_ms", &meas_int_ms);
     if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "Failed to read meas_int_ms from config: %s", esp_err_to_name(ret));
-        return ret;
+        if (ret == ESP_ERR_NVS_NOT_FOUND) {
+            ESP_LOGW(TAG, "meas_int_ms not found in NVS, using default: 100ms");
+            meas_int_ms = 100;  // Default 100ms interval
+        } else {
+            ESP_LOGE(TAG, "Failed to read meas_int_ms from config: %s", esp_err_to_name(ret));
+            return ret;
+        }
     }
     sensor_config.measurement_interval_ms = (uint32_t)meas_int_ms;
     
-    // Load sensor timeout from config_manager
+    // Load sensor timeout from config_manager (default: 30ms)
     int32_t sens_timeout_ms = 0;
     ret = config_get_int32("sens_timeout_ms", &sens_timeout_ms);
     if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "Failed to read sens_timeout_ms from config: %s", esp_err_to_name(ret));
-        return ret;
+        if (ret == ESP_ERR_NVS_NOT_FOUND) {
+            ESP_LOGW(TAG, "sens_timeout_ms not found in NVS, using default: 30ms");
+            sens_timeout_ms = 30;  // Default 30ms timeout
+        } else {
+            ESP_LOGE(TAG, "Failed to read sens_timeout_ms from config: %s", esp_err_to_name(ret));
+            return ret;
+        }
     }
     sensor_config.timeout_ms = (uint32_t)sens_timeout_ms;
     
-    // Load temperature compensation from config_manager
-    int16_t temp_c_x10 = 0;
-    ret = config_get_int16("temp_c_x10", &temp_c_x10);
+    // Load temperature compensation from config_manager (default: 200 = 20.0°C)
+    int32_t temp_c_x10 = 0;
+    ret = config_get_int32("temp_c_x10", &temp_c_x10);
     if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "Failed to read temp_c_x10 from config: %s", esp_err_to_name(ret));
-        return ret;
+        if (ret == ESP_ERR_NVS_NOT_FOUND) {
+            ESP_LOGW(TAG, "temp_c_x10 not found in NVS, using default: 200 (20.0°C)");
+            temp_c_x10 = 200;  // Default to 20°C
+        } else {
+            ESP_LOGE(TAG, "Failed to read temp_c_x10 from config: %s", esp_err_to_name(ret));
+            return ret;
+        }
     }
-    sensor_config.temperature_c_x10 = temp_c_x10;
+    sensor_config.temperature_c_x10 = (int16_t)temp_c_x10;
     
-    // Load smoothing factor from config_manager
-    int16_t smooth_factor = 0;
-    ret = config_get_int16("smooth_factor", &smooth_factor);
+    // Load smoothing factor from config_manager (default: 300 = balanced smoothing)
+    int32_t smooth_factor = 0;
+    ret = config_get_int32("smooth_factor", &smooth_factor);
     if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "Failed to read smooth_factor from config: %s", esp_err_to_name(ret));
-        return ret;
+        if (ret == ESP_ERR_NVS_NOT_FOUND) {
+            ESP_LOGW(TAG, "smooth_factor not found in NVS, using default: 300");
+            smooth_factor = 300;  // Default balanced smoothing
+        } else {
+            ESP_LOGE(TAG, "Failed to read smooth_factor from config: %s", esp_err_to_name(ret));
+            return ret;
+        }
     }
     sensor_config.smoothing_factor = (uint16_t)smooth_factor;
     

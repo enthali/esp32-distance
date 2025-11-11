@@ -7,7 +7,7 @@
             "type": "cppdbg",
             "request": "launch",
             // NOTE: If you change the project name in CMakeLists.txt, update this path accordingly
-            "program": "${workspaceFolder}/build/esp32-template.elf",
+            "program": "${workspaceFolder}/build/esp32-distance.elf",
             "cwd": "${workspaceFolder}",
             "MIMode": "gdb",
             "miDebuggerPath": "xtensa-esp32-elf-gdb",

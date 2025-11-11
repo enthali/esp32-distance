@@ -100,6 +100,31 @@
                 "showReuseMessage": true
             },
             "problemMatcher": []
+        },
+        {
+            "label": "Start Web Flasher",
+            "type": "shell",
+            "command": "${workspaceFolder}/tools/web-flasher/start-web-flasher.sh",
+            "isBackground": true,
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^$",
+                    "file": 1,
+                    "message": 2
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": ".*Starting ESP Web Flasher.*",
+                    "endsPattern": ".*Server running at.*|.*Serving at.*"
+                }
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": false
+            }
         }
     ]
 }

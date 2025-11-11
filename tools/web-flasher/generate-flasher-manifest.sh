@@ -17,14 +17,10 @@ if [ ! -d "$BUILD_DIR" ]; then
     exit 1
 fi
 
-# Get project name from CMakeLists.txt
-# Try to extract from set(PROJECT_NAME ...) or project() command
+# Extract project name from CMakeLists.txt
 PROJECT_NAME=$(grep -oP 'set\(PROJECT_NAME\s+"?\K[^")]+' "$PROJECT_DIR/CMakeLists.txt" | head -1 | tr -d ' ')
 if [ -z "$PROJECT_NAME" ]; then
-    PROJECT_NAME=$(grep -oP 'project\(\K[^)]+' "$PROJECT_DIR/CMakeLists.txt" | head -1 | tr -d ' ')
-fi
-if [ -z "$PROJECT_NAME" ]; then
-    PROJECT_NAME="esp32-template"
+    PROJECT_NAME="esp32-distance"
 fi
 
 # Get version from CMakeLists.txt or use default

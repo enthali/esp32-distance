@@ -39,7 +39,7 @@
 #include "wifi_manager.h"
 
 // Hardware pin definitions (project-specific configuration)
-#define LED_DATA_PIN        GPIO_NUM_19    // WS2812 data line
+#define LED_DATA_PIN         GPIO_NUM_12   // WS2812 data line
 #define DISTANCE_TRIGGER_PIN GPIO_NUM_14   // HC-SR04 trigger
 #define DISTANCE_ECHO_PIN    GPIO_NUM_13   // HC-SR04 echo
 

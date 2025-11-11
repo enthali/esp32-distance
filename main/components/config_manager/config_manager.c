@@ -119,15 +119,9 @@ esp_err_t config_init(void) {
     config_initialized = true;
     ESP_LOGI(TAG, "Configuration manager initialized successfully");
     
-    // Check if NVS is empty (first boot) - test for ap_ssid which always exists
-    char test_buffer[64];
-    size_t test_len = sizeof(test_buffer);
-    ret = nvs_get_str(config_nvs_handle, "ap_ssid", test_buffer, &test_len);
-    if (ret == ESP_ERR_NVS_NOT_FOUND) {
-        // First boot - write factory defaults
-        ESP_LOGI(TAG, "First boot detected, writing factory defaults...");
-        config_factory_reset();
-    }
+    // Validate configuration completeness (auto-generated check)
+    // If any required keys are missing, factory defaults are written and system restarts
+    config_validate_or_reset();
     
     return ESP_OK;
 }
