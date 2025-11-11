@@ -8,7 +8,7 @@ This guide covers all aspects of developing with the ESP32 Template, from settin
    :caption: Development Topics:
 
    devcontainer
-   gui-development
+   pre-commit-hooks
    qemu-emulator
    web-flasher
    debugging

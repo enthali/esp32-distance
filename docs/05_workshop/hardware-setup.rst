@@ -461,7 +461,7 @@ Once your hardware is assembled and tested:
 
 1. **Return to Getting Started:** Continue at :doc:`getting-started` Step 7 (Flash firmware)
 2. **Start Workshop Exercises:** Proceed to :doc:`exercises` for hands-on challenges
-3. **Read Architecture Docs:** Understand the system at :doc:`../03_architecture/index`
+3. **Understand the System:** Read the :doc:`../01_overview/introduction` and :doc:`../11_requirements/index`
 
 Need Help?
 ----------

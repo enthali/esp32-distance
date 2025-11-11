@@ -1,37 +1,27 @@
 Debugging Guide
 ===============
 
-The ESP32 Template supports full GDB debugging in both emulator (QEMU) and hardware modes. This guide focuses on QEMU debugging since it's fully supported in GitHub Codespaces.
+The ESP32 Distance Sensor project supports full GDB debugging in both emulator (QEMU) and hardware modes. This guide focuses on QEMU debugging since it's fully supported in GitHub Codespaces.
 
 Quick Start: Debugging in QEMU
 -------------------------------
 
-1. Start QEMU Debug Server
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**It's as simple as pressing F5!**
 
-The QEMU emulator automatically starts with GDB support enabled:
+1. Open your source file in VS Code (e.g., ``main/main.c``)
+2. Set breakpoints by clicking in the gutter (left of line numbers)
+3. Press **F5** (or click the green play button in Debug panel)
 
-.. code-block:: bash
+That's it! VS Code automatically:
 
-   ./tools/run-qemu-network.sh
+- ✅ Builds your project if needed
+- ✅ Starts QEMU in debug mode
+- ✅ Connects GDB debugger
+- ✅ Breaks at your breakpoints
+- ✅ Stops QEMU when you stop debugging
 
-This starts QEMU in debug mode, waiting for a debugger connection on port 3333.
-
-2. Start Debugging in VS Code
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Simply press **F5** or use the Debug panel:
-
-1. Open the Debug view (Ctrl+Shift+D / Cmd+Shift+D)
-2. Select "**QEMU: GDB**" from the dropdown
-3. Click the green play button or press F5
-
-VS Code will:
-
-- ✅ Connect to QEMU's GDB server (port 3333)
-- ✅ Load symbols from the built ELF file
-- ✅ Break at ``app_main()``
-- ✅ Show full call stack and variables
+.. tip::
+   **No manual setup needed!** The ``preLaunchTask`` in ``.vscode/launch.json`` automatically runs QEMU debug server before attaching the debugger.
 
 Debugging Features
 ------------------
@@ -134,29 +124,39 @@ For production projects, see `ESP-IDF JTAG Debugging <https://docs.espressif.com
 Debug Configuration
 -------------------
 
-QEMU Debug Configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~
+How It Works
+~~~~~~~~~~~~
 
-The ``.vscode/launch.json`` contains the QEMU debug configuration:
+The ``.vscode/launch.json`` configuration handles everything automatically:
 
 .. code-block:: json
 
    {
-       "name": "QEMU: GDB",
-       "type": "cppdbg",
-       "request": "launch",
-       "program": "${workspaceFolder}/build/esp32-template.elf",
-       "cwd": "${workspaceFolder}",
-       "MIMode": "gdb",
-       "miDebuggerPath": "xtensa-esp32-elf-gdb",
-       "miDebuggerServerAddress": "localhost:3333"
+       "name": "QEMU ESP32 Debug (with Graphics)",
+       "preLaunchTask": "Run QEMU Debug",      // Starts QEMU before debugging
+       "postDebugTask": "Stop QEMU",            // Stops QEMU when you stop debugging
+       "miDebuggerServerAddress": "localhost:3333"  // GDB connects here
    }
 
-**Key Settings:**
+**What happens when you press F5:**
 
-- **program**: Path to ELF file with debug symbols
-- **miDebuggerPath**: GDB executable (ESP32 toolchain)
-- **miDebuggerServerAddress**: QEMU GDB server (port 3333)
+1. ``preLaunchTask`` runs: QEMU starts in debug mode (waits for GDB)
+2. GDB connects to QEMU on port 3333
+3. Your breakpoints are set
+4. Program runs until it hits a breakpoint
+5. When you stop debugging, ``postDebugTask`` stops QEMU cleanly
+
+.. note::
+   You don't need to manually start QEMU! The VS Code tasks handle it automatically.
+
+Customization
+~~~~~~~~~~~~~
+
+If you need to modify the ELF file path (e.g., after renaming your project):
+
+.. code-block:: json
+
+   "program": "${workspaceFolder}/build/your-project-name.elf"
 
 Advanced Debugging
 ------------------
