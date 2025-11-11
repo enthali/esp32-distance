@@ -114,6 +114,24 @@ esp_err_t config_commit(void);
  */
 void config_write_factory_defaults(void);
 
+/**
+ * @brief Validate configuration completeness and reset if needed
+ * 
+ * Checks if all required configuration keys exist in NVS.
+ * If any mandatory keys are missing, writes factory defaults and restarts the system.
+ * 
+ * This function is auto-generated from config_schema.json.
+ * 
+ * @return true if configuration is complete
+ * @return false if factory reset was triggered (system will restart)
+ * 
+ * @note Should be called after config_init() during application startup.
+ * @note If factory reset is triggered, function does not return (system restarts).
+ * 
+ * @requirement REQ_CFG_JSON_12
+ */
+bool config_validate_or_reset(void);
+
 // =============================================================================
 // STRING PARAMETER ACCESS (REQ_CFG_JSON_7)
 // =============================================================================

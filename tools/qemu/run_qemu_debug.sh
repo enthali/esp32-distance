@@ -31,7 +31,7 @@ QEMU_PID=$!
 echo -e "${YELLOW}QEMU build/start process running with PID: ${QEMU_PID}${NC}"
 
 # Wait for ELF file to exist (created by build process)
-ELF_FILE="${PROJECT_DIR}/build/esp32-template.elf"
+ELF_FILE="${PROJECT_DIR}/build/esp32-distance.elf"
 echo -e "${YELLOW}Waiting for build to complete...${NC}"
 while [ ! -f "${ELF_FILE}" ]; do
     sleep 0.5

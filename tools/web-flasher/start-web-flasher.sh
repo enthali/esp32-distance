@@ -36,7 +36,7 @@ else
     # Check if app binary exists (extract project name first)
     PROJECT_NAME=$(grep -oP 'set\(PROJECT_NAME\s+"?\K[^")]+' "$PROJECT_DIR/CMakeLists.txt" | head -1 | tr -d ' ')
     if [ -z "$PROJECT_NAME" ]; then
-        PROJECT_NAME="esp32-template"
+        PROJECT_NAME="esp32-distance"
     fi
     
     if [ ! -f "$PROJECT_DIR/build/${PROJECT_NAME}.bin" ]; then

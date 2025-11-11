@@ -35,10 +35,13 @@ def generate_factory_defaults(schema_file: str, output_file: str) -> None:
     
     # Build structured JSON array: [{key, type, value}, ...]
     config_entries = []
+    required_keys = []  # Track all keys for validation function
+    
     for field in schema['parameters']:
         key = field['key']
         ftype = field['type']
         default = field['default']
+        required = field.get('required', False)
         
         # Build JSON object for this parameter
         entry = {
@@ -47,6 +50,10 @@ def generate_factory_defaults(schema_file: str, output_file: str) -> None:
             'value': default
         }
         config_entries.append(entry)
+        
+        # Track required keys for validation
+        if required or ftype in ['integer', 'string', 'password']:
+            required_keys.append((key, ftype))
     
     # Convert to compact JSON string
     json_defaults = json.dumps(config_entries, separators=(',', ':'), ensure_ascii=False)
@@ -58,9 +65,16 @@ def generate_factory_defaults(schema_file: str, output_file: str) -> None:
     lines.append("")
     lines.append("#include \"config_manager.h\"")
     lines.append("#include \"esp_log.h\"")
+    lines.append("#include \"esp_system.h\"")
+    lines.append("#include \"nvs.h\"")
+    lines.append("#include \"freertos/FreeRTOS.h\"")
+    lines.append("#include \"freertos/task.h\"")
+    lines.append("#include <stdbool.h>")
     lines.append("")
     lines.append("static const char *TAG = \"config_factory\";")
     lines.append("")
+    
+    # Generate config_write_factory_defaults()
     lines.append("/**")
     lines.append(" * @brief Write factory default values to NVS")
     lines.append(" * ")
@@ -84,12 +98,64 @@ def generate_factory_defaults(schema_file: str, output_file: str) -> None:
     lines.append("}")
     lines.append("")
     
+    # Generate config_validate_or_reset()
+    lines.append("/**")
+    lines.append(" * @brief Check if all required configuration keys exist")
+    lines.append(" * ")
+    lines.append(" * This function is auto-generated from config_schema.json.")
+    lines.append(" * It verifies that all mandatory parameters are present in NVS.")
+    lines.append(" * If any are missing, it writes factory defaults and triggers a restart.")
+    lines.append(" * ")
+    lines.append(" * @return true if all keys exist, false if defaults were written and restart triggered")
+    lines.append(" */")
+    lines.append("bool config_validate_or_reset(void)")
+    lines.append("{")
+    lines.append("    ESP_LOGI(TAG, \"Validating configuration completeness...\");")
+    lines.append("    ")
+    lines.append("    bool missing_keys = false;")
+    lines.append("    int32_t test_int;")
+    lines.append("    char test_str[64];")
+    lines.append("    ")
+    
+    # Generate validation checks for each required key
+    for key, ftype in required_keys:
+        if ftype == 'integer':
+            lines.append(f"    if (config_get_int32(\"{key}\", &test_int) == ESP_ERR_NVS_NOT_FOUND) {{")
+        elif ftype in ['string', 'password']:
+            lines.append(f"    if (config_get_string(\"{key}\", test_str, sizeof(test_str)) == ESP_ERR_NVS_NOT_FOUND) {{")
+        lines.append(f"        ESP_LOGW(TAG, \"Missing key: {key}\");")
+        lines.append("        missing_keys = true;")
+        lines.append("    }")
+    
+    lines.append("    ")
+    lines.append("    if (missing_keys) {")
+    lines.append("        ESP_LOGW(TAG, \"Configuration incomplete - writing factory defaults...\");")
+    lines.append("        esp_err_t ret = config_factory_reset();")
+    lines.append("        if (ret != ESP_OK) {")
+    lines.append("            ESP_LOGE(TAG, \"Failed to write factory defaults: %s\", esp_err_to_name(ret));")
+    lines.append("            return false;")
+    lines.append("        }")
+    lines.append("        ")
+    lines.append("        ESP_LOGI(TAG, \"✓ Factory defaults written successfully\");")
+    lines.append("        ESP_LOGI(TAG, \"System will restart in 3 seconds to apply configuration...\");")
+    lines.append("        vTaskDelay(pdMS_TO_TICKS(3000));")
+    lines.append("        esp_restart();")
+    lines.append("        return false;  // Never reached, but makes return path explicit")
+    lines.append("    }")
+    lines.append("    ")
+    lines.append("    ESP_LOGI(TAG, \"✓ Configuration validation passed\");")
+    lines.append("    return true;")
+    lines.append("}")
+    lines.append("")
+    
     # Write output file
     try:
         os.makedirs(os.path.dirname(output_file), exist_ok=True)
         with open(output_file, 'w', encoding='utf-8') as f:
             f.write('\n'.join(lines))
         print(f"Generated: {output_file}")
+        print(f"  - Factory defaults: {len(config_entries)} parameters")
+        print(f"  - Validation checks: {len(required_keys)} required keys")
     except IOError as e:
         print(f"ERROR: Failed to write output file: {e}", file=sys.stderr)
         sys.exit(1)
