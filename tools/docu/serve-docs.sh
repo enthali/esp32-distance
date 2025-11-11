@@ -1,22 +1,25 @@
-echo "Serving documentation at http://localhost:8000 ..."
 #!/bin/bash
-# Serve Sphinx documentation locally
+# Serve Sphinx documentation with live auto-rebuild
 # Usage: ./serve-docs.sh
 set -e
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
+DOCS_DIR="$PROJECT_DIR/docs"
 BUILD_DIR="$PROJECT_DIR/docs/_build/html"
 
-# Check if build exists
-if [ ! -d "$BUILD_DIR" ]; then
-    echo "❌ Error: Documentation not built yet"
-    echo "Run ./tools/docu/build-docs.sh first"
-    exit 1
-fi
-
-echo "Serving documentation at http://localhost:8000 from $BUILD_DIR ..."
-cd "$BUILD_DIR"
+echo "Starting sphinx-autobuild with live preview and auto-rebuild..."
+echo "Documentation will be available at http://localhost:8000"
+echo "Changes to .rst files will trigger automatic rebuild"
 
 # Use nohup to keep server running after parent process exits
-nohup python3 -m http.server 8000 > "$PROJECT_DIR/temp/docserver.log" 2>&1 &
+# sphinx-autobuild watches for changes and rebuilds automatically
+nohup /opt/venv/bin/sphinx-autobuild \
+    "$DOCS_DIR" \
+    "$BUILD_DIR" \
+    --host 0.0.0.0 \
+    --port 8000 \
+    --no-initial \
+    > "$PROJECT_DIR/temp/docserver.log" 2>&1 &
+
 echo "Documentation server running in background (log: temp/docserver.log)"
+echo "PID: $!"

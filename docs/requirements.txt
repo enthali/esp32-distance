@@ -5,3 +5,4 @@ furo>=2025.0
 myst-parser>=4.0
 sphinxcontrib-plantuml>=0.31
 graphviz>=0.20
+sphinx-autobuild>=2024.0

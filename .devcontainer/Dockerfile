@@ -40,6 +40,7 @@ RUN apt-get update \
     "furo>=2025.0" \
     "myst-parser>=4.0" \
     "sphinxcontrib-plantuml>=0.31" \
+    "sphinx-autobuild>=2024.0" \
   # install markdownlint-cli for markdown validation
   && npm install -g markdownlint-cli \
   # make the venv binaries available system-wide via /etc/profile.d
