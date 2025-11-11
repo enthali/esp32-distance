@@ -630,6 +630,87 @@ Configuration API Design
    - Automated health checks
 
 
+.. spec:: LED State API Endpoint
+   :id: SPEC_WEB_REST_LED_1
+   :links: REQ_WEB_LED_1, SPEC_LED_API_3
+   :status: approved
+   :tags: web, api, led, visualization
+
+   **Endpoint: GET /api/led/state**
+
+   **Purpose:** Retrieve current LED strip state for real-time web visualization
+
+   **Response:**
+
+   .. code-block:: json
+
+      {
+        "led_count": 40,
+        "colors": "FF0000 00FF00 0000FF 000000 FFFFFF ..."
+      }
+
+   **Response Format:**
+
+   - ``led_count``: Number of LEDs in the strip (matches configuration)
+   - ``colors``: Space-separated hex RGB colors (e.g., "FF0000" = red, "000000" = off)
+   - Each color: 6 hex digits (RRGGBB format)
+   - Total response size: ~280 bytes for 40 LEDs + JSON overhead
+
+   **Implementation Details:**
+
+   .. code-block:: c
+
+      // Handler function
+      static esp_err_t led_state_handler(httpd_req_t *req)
+      {
+          // 1. Set CORS headers for cross-origin access
+          httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*");
+          httpd_resp_set_hdr(req, "Content-Type", "application/json");
+
+          // 2. Get LED count from controller
+          uint16_t led_count = led_get_count();
+          
+          // 3. Allocate snapshot buffer
+          led_color_t *snapshot = malloc(led_count * sizeof(led_color_t));
+          
+          // 4. Get thread-safe snapshot using REQ_LED_5 API
+          uint16_t actual = led_get_all_colors(snapshot, led_count);
+          
+          // 5. Convert RGB to hex string: "RRGGBB RRGGBB ..."
+          //    Format: sprintf(pos, "%02X%02X%02X", r, g, b)
+          
+          // 6. Build JSON response
+          // 7. Send response
+          // 8. Free buffers
+      }
+
+   **Error Handling:**
+
+   - LED controller not initialized → 500 Internal Server Error
+   - Memory allocation failure → 500 Internal Server Error
+   - Snapshot read failure → 500 Internal Server Error
+   - All errors log to console for debugging
+
+   **Performance:**
+
+   - Typical response time: <100ms for 40 LEDs
+   - Memory usage: ~600 bytes (LED snapshot + hex string buffers)
+   - Thread-safe: Uses mutex-protected ``led_get_all_colors()``
+   - No blocking of LED updates: Snapshot operation is fast
+
+   **Use Cases:**
+
+   - Real-time LED strip visualization in web UI
+   - Remote monitoring of LED states
+   - JavaScript canvas/CSS LED animation sync
+   - Debugging LED display issues
+
+   **CORS Support:**
+
+   - Access-Control-Allow-Origin: * (allows cross-origin requests)
+   - Enables local development and external web apps
+
+
 Configuration Manager Integration
 ----------------------------------
 

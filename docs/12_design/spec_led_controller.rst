@@ -100,6 +100,33 @@ API Specifications
    **Validation:** Clear all zeros entire buffer, show triggers RMT transmission, utilities 
    produce correct colors.
 
+.. spec:: LED State Read API
+   :id: SPEC_LED_API_3
+   :links: REQ_LED_5
+   :status: approved
+   :tags: led, api, monitoring, thread-safety
+
+   **Design:** Thread-safe LED state snapshot API for external monitoring and visualization components.
+
+   **Implementation:**
+
+   - ``led_get_all_colors(output_buffer, max_count)``: Copy current LED state to caller buffer
+   - Snapshot Semantics: Returns state matching last ``led_show()`` call (physical LED state)
+   - Thread Safety: Mutex-protected read operation safe for concurrent access from multiple tasks
+   - Partial Read Support: Respects ``max_count`` limit to prevent buffer overruns
+   - Return Value: Number of LEDs actually copied (min(led_count, max_count)), or 0 on error
+   - Error Conditions: Returns 0 if not initialized, invalid buffer pointer, or mutex error
+   - Buffer Ownership: Caller allocates and owns output buffer memory
+   - Copy Operation: Deep copy of LED color data (``memcpy`` of color structures)
+
+   **Rationale:** Web server and monitoring tasks need non-blocking access to LED state without 
+   interfering with display logic updates. Mutex ensures data consistency when display task is 
+   updating buffer.
+
+   **Validation:** Concurrent access from web server and display task shows no corruption, 
+   returned colors match physical LED state, mutex prevents race conditions, partial reads work 
+   correctly with buffer size limits.
+
 Timing and Data Format
 -----------------------
 

@@ -1222,10 +1222,12 @@ static esp_err_t distance_data_handler(httpd_req_t *req)
 /**
  * @brief GET /api/led/state - Get current LED strip state
  * 
- * Returns JSON with all LED colors as hex strings for visualization.
+ * Implements REQ_WEB_LED_1, SPEC_WEB_REST_LED_1
+ * 
+ * Returns JSON with all LED colors as hex strings for web visualization.
  * Example response: {"led_count":40,"colors":"FF0000 00FF00 000000 ..."}
  * 
- * Uses led_get_all_colors() for thread-safe snapshot read.
+ * Uses led_get_all_colors() (REQ_LED_5) for thread-safe snapshot read.
  */
 static esp_err_t led_state_handler(httpd_req_t *req)
 {

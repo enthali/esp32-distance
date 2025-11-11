@@ -393,6 +393,12 @@ bool led_is_initialized(void)
     return is_initialized;
 }
 
+/**
+ * @brief Get snapshot of all LED colors - implements REQ_LED_5, SPEC_LED_API_3
+ * 
+ * Thread-safe LED state read for external monitoring (web server, diagnostics).
+ * Returns stable snapshot matching last led_show() call (physical LED state).
+ */
 uint16_t led_get_all_colors(led_color_t* output_buffer, uint16_t max_count)
 {
     if (!is_initialized || output_buffer == NULL || max_count == 0)
