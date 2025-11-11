@@ -1,7 +1,7 @@
 QEMU Emulator Guide
 ===================
 
-The ESP32 Template includes full QEMU emulation support, allowing you to develop and test without physical hardware. The emulator includes complete network functionality via a UART-based IP tunnel.
+The ESP32 Distance Sensor project includes full QEMU emulation support, allowing you to develop and test without physical hardware. The emulator includes complete network functionality via a UART-based IP tunnel.
 
 Quick Start
 -----------
@@ -9,18 +9,40 @@ Quick Start
 Starting QEMU
 ~~~~~~~~~~~~~
 
+**For Normal Operation:**
+
 .. code-block:: bash
 
-   # From project root
-   ./tools/run-qemu-network.sh
+   # From project root - runs immediately
+   ./tools/qemu/run_qemu.sh
 
-This script automatically:
+**For Debugging:**
 
-- ✅ Builds the project (incremental, fast)
-- ✅ Starts the TUN network bridge
-- ✅ Starts the HTTP proxy for web access
-- ✅ Launches QEMU with GDB support
-- ✅ Waits for debugger connection
+.. code-block:: bash
+
+   # Starts QEMU and waits for GDB debugger
+   ./tools/qemu/run_qemu_debug.sh
+
+Or use VS Code tasks:
+
+- **Run QEMU (No Debug)** - Start emulator immediately
+- **Run QEMU Debug** - Start with GDB support, then press F5 to attach debugger
+
+Both scripts automatically:
+
+- ✅ Build the project if needed (incremental, fast)
+- ✅ Start the network stack (TUN device, bridge)
+- ✅ Create Unix domain sockets for UART communication
+- ✅ Launch QEMU with proper configuration
+
+Stopping QEMU
+~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+   ./tools/qemu/stop_qemu.sh
+
+Or use VS Code task: **Stop QEMU**
 
 Accessing the Web Interface
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -29,13 +51,13 @@ Once QEMU is running:
 
 .. code-block:: bash
 
-   # Direct access
+   # Direct access to emulated ESP32
    curl http://192.168.100.2/
 
-   # Via HTTP proxy
+   # Via HTTP proxy (if configured)
    curl http://localhost:8080/
 
-The web interface should be accessible at ``http://localhost:8080`` in your browser.
+The web interface should be accessible at ``http://192.168.100.2`` in your browser.
 
 Architecture Overview
 ---------------------
@@ -45,31 +67,37 @@ Architecture Overview
    ┌────────────────────────────────────────────────────────────┐
    │                    Host System (Linux)                     │
    │                                                            │
-   │  ┌──────────┐    ┌───────────┐    ┌──────────────────┐    │
-   │  │ Browser  │───▶│   Proxy   │───▶│   tun0 Device    │    │
-   │  │  :8080   │    │   :8080   │    │  192.168.100.1   │    │
-   │  └──────────┘    └───────────┘    └──────────────────┘    │
-   │                                             │              │
-   │                                             │              │
-   │                                    ┌────────▼─────────┐    │
-   │                                    │   TUN Bridge     │    │
-   │                                    │   (Python)       │    │
-   │                                    └────────┬─────────┘    │
-   │                                             │ TCP:5556     │
-   └─────────────────────────────────────────────┼──────────────┘
-                                                 │
-                                                 │ QEMU chardev
-   ┌─────────────────────────────────────────────┼──────────────┐
-   │                       ESP32 QEMU            │              │
-   │                                             ▼              │
-   │  ┌────────────┐    ┌──────────┐    ┌──────────────┐       │
-   │  │    Web     │    │   lwIP   │    │    UART1     │       │
-   │  │   Server   │◄──►│  Stack   │◄──►│   Driver     │       │
-   │  │   :80      │    │ 192.168. │    │              │       │
-   │  │            │    │ 100.2/24 │    └──────────────┘       │
-   │  └────────────┘    └──────────┘                           │
-   │                                                            │
-   └────────────────────────────────────────────────────────────┘
+   │  ┌──────────┐           ┌──────────────────┐              │
+   │  │ Browser  │──────────▶│   tun0 Device    │              │
+   │  │          │    HTTP   │  192.168.100.1   │              │
+   │  └──────────┘           └──────────────────┘              │
+   │                                  │                         │
+   │                         ┌────────▼─────────┐               │
+   │                         │   TUN Bridge     │               │
+   │                         │   (Python)       │               │
+   │                         └────────┬─────────┘               │
+   │                                  │ Unix Socket             │
+   │                         temp/esp32-uart1.sock              │
+   └──────────────────────────────────┼────────────────────────┘
+                                      │
+                                      │ QEMU chardev
+   ┌──────────────────────────────────┼────────────────────────┐
+   │                   ESP32 QEMU     │                        │
+   │                                  ▼                        │
+   │  ┌────────────┐    ┌──────────┐    ┌──────────────┐      │
+   │  │    Web     │    │   lwIP   │    │    UART1     │      │
+   │  │   Server   │◄──►│  Stack   │◄──►│   Driver     │      │
+   │  │   :80      │    │ 192.168. │    │              │      │
+   │  │            │    │ 100.2/24 │    └──────────────┘      │
+   │  └────────────┘    └──────────┘                          │
+   │                                                           │
+   │  Console Logs (ESP_LOG*)                                 │
+   │         │                                                 │
+   │         ▼                                                 │
+   │  ┌──────────────┐      Unix Socket                       │
+   │  │    UART0     │──────temp/esp32-uart0.sock────────────▶│
+   │  └──────────────┘                                        │
+   └───────────────────────────────────────────────────────────┘
 
 Network Configuration
 ---------------------
@@ -85,20 +113,21 @@ IP Addresses
 | ESP32 QEMU          | 192.168.100.2/24  | Emulated device IP         |
 +---------------------+-------------------+----------------------------+
 
-Ports
-~~~~~
+Communication Channels
+~~~~~~~~~~~~~~~~~~~~~~
 
-+------+----------+---------------------------+
-| Port | Protocol | Purpose                   |
-+======+==========+===========================+
-| 5555 | TCP      | QEMU UART0 (console)      |
-+------+----------+---------------------------+
-| 5556 | TCP      | QEMU UART1 (IP tunnel)    |
-+------+----------+---------------------------+
-| 8080 | HTTP     | Proxy to ESP32 web server |
-+------+----------+---------------------------+
-| 3333 | TCP      | GDB debug server          |
-+------+----------+---------------------------+
++----------------------+-----------------------------+--------------------------------+
+| Channel              | Location                    | Purpose                        |
++======================+=============================+================================+
+| UART0 Socket         | ``temp/esp32-uart0.sock``   | Console output (ESP_LOG*)      |
++----------------------+-----------------------------+--------------------------------+
+| UART1 Socket         | ``temp/esp32-uart1.sock``   | Network tunnel (IP packets)    |
++----------------------+-----------------------------+--------------------------------+
+| GDB Port (debug)     | TCP 3333                    | Debugger connection (when -d)  |
++----------------------+-----------------------------+--------------------------------+
+
+.. note::
+   This project uses **Unix domain sockets** for UART communication instead of TCP ports. This eliminates "port already in use" errors and provides better performance.
 
 How It Works
 ------------
@@ -214,14 +243,17 @@ QEMU Won't Start
 .. code-block:: bash
 
    # Check if QEMU is already running
-   ps aux | grep qemu
+   ps aux | grep qemu-system-xtensa
 
-   # Kill existing QEMU processes
-   ./tools/stop_qemu.sh
+   # Stop any existing QEMU instances
+   ./tools/qemu/stop_qemu.sh
+
+   # Clean old socket files
+   rm -f temp/esp32-uart*.sock
 
    # Rebuild and try again
    idf.py build
-   ./tools/run-qemu-network.sh
+   ./tools/qemu/run_qemu.sh
 
 Network Not Working
 ~~~~~~~~~~~~~~~~~~~
@@ -238,15 +270,15 @@ Network Not Working
    # 2. Check TUN bridge is running
    ps aux | grep serial_tun_bridge
 
-   # 3. Check HTTP proxy is running
-   ps aux | grep http_proxy
+   # 3. Verify UART1 socket exists
+   ls -l temp/esp32-uart1.sock
 
-   # 4. Restart network stack
-   ./tools/stop_qemu.sh
-   ./tools/run-qemu-network.sh
+   # 4. Restart everything
+   ./tools/qemu/stop_qemu.sh
+   ./tools/qemu/run_qemu.sh
 
-No UART Output
-~~~~~~~~~~~~~~
+No Console Output
+~~~~~~~~~~~~~~~~~
 
 **Problem:** No logs from QEMU
 
@@ -254,30 +286,26 @@ No UART Output
 
 .. code-block:: bash
 
-   # Connect to UART0 console
-   nc localhost 5555
+   # Use the UART0 terminal viewer
+   ./tools/qemu/uart0_terminal.sh
 
-   # Or use dedicated viewer
-   ./tools/view_uart1.sh
+This connects to the UART0 Unix socket and displays ESP_LOG* output.
 
-Port Already in Use
-~~~~~~~~~~~~~~~~~~~
+Debugging with GDB
+~~~~~~~~~~~~~~~~~~
 
-**Problem:** Error about port 5555 or 5556 already in use
+**Problem:** Want to debug but QEMU runs too fast
 
 **Solution:**
 
-.. code-block:: bash
+Use the debug script and VS Code integration:
 
-   # Find process using the port
-   lsof -i :5555
-   lsof -i :5556
+1. Start QEMU in debug mode: ``./tools/qemu/run_qemu_debug.sh`` (or use VS Code task)
+2. QEMU will wait for debugger connection
+3. Press **F5** in VS Code to attach debugger
+4. Set breakpoints and step through code
 
-   # Kill the process
-   kill <PID>
-
-   # Or use the stop script
-   ./tools/stop_qemu.sh
+See :doc:`debugging` for complete GDB debugging workflow.
 
 Advanced Usage
 --------------
@@ -311,16 +339,24 @@ Edit ``main/components/netif_uart_tunnel/netif_uart_tunnel_sim.c``:
    #define GATEWAY_IP "192.168.100.1"
    #define NETMASK "255.255.255.0"
 
-Running Without GDB
-~~~~~~~~~~~~~~~~~~~
+Running QEMU
+~~~~~~~~~~~~
 
-To start QEMU without waiting for debugger:
+**Two modes available:**
 
-.. code-block:: bash
+1. **Normal Mode** (runs immediately):
 
-   # Edit run-qemu-network.sh and remove the -d flag
-   idf.py qemu \
-       --qemu-extra-args="-serial tcp::5555,server,nowait -serial tcp::5556,server,nowait -nographic"
+   .. code-block:: bash
+
+      ./tools/qemu/run_qemu.sh
+
+2. **Debug Mode** (waits for GDB):
+
+   .. code-block:: bash
+
+      ./tools/qemu/run_qemu_debug.sh
+
+Both modes use the same QEMU instance with Unix socket communication. Debug mode adds the ``-d`` flag to enable GDB support and wait for debugger attachment.
 
 Technical Deep Dive
 -------------------

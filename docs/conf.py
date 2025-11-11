@@ -6,9 +6,9 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'ESP32 Template'
-copyright = '2025, ESP32 Template Team'
-author = 'ESP32 Template Team'
+project = 'ESP32 Distance Sensor'
+copyright = '2025, ESP32 Distance Sensor Team'
+author = 'ESP32 Distance Sensor Team'
 release = '1.0.0'
 
 # -- General configuration ---------------------------------------------------
@@ -39,7 +39,7 @@ exclude_patterns = [
 
 html_theme = 'furo'
 html_static_path = ['_static']
-html_title = 'ESP32 Template Documentation'
+html_title = 'ESP32 Distance Sensor'
 
 # Custom CSS for dark mode fixes
 html_css_files = [

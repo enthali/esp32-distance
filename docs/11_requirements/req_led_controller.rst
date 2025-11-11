@@ -114,3 +114,29 @@ Functional Requirements
 
    **Verification:** Display primary colors and verify visual accuracy, test white balance and 
    off state, measure color transition timing.
+
+.. req:: LED State Read API
+   :id: REQ_LED_5
+   :links: REQ_LED_2, REQ_WEB_1
+   :status: approved
+   :priority: important
+   :tags: led, api, monitoring, web-interface
+
+   **Description:** The system SHALL provide a thread-safe API to read the current state of all 
+   LED colors for monitoring and visualization purposes (e.g., web interface LED display).
+
+   **Rationale:** External components (web server, monitoring tasks) need to read LED state for 
+   real-time visualization without interfering with LED control operations. Thread-safe access 
+   is critical in multi-task RTOS environment.
+
+   **Acceptance Criteria:**
+
+   - AC-1: System SHALL provide ``led_get_all_colors()`` function to retrieve snapshot of all LED colors
+   - AC-2: Function SHALL return stable snapshot matching last physical LED update (after ``led_show()``)
+   - AC-3: Function SHALL be thread-safe using mutex protection
+   - AC-4: Function SHALL support partial reads limited by buffer size
+   - AC-5: Function SHALL return actual number of LEDs copied or 0 on error
+   - AC-6: Caller SHALL provide pre-allocated buffer of sufficient size
+
+   **Verification:** Call from multiple tasks concurrently, verify no race conditions, confirm 
+   returned colors match physical LED state, test with various buffer sizes.

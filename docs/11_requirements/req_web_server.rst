@@ -152,6 +152,33 @@ Functional Requirements
    - AC-4: Connection handling SHALL not interfere with real-time system operation
 
 
+.. req:: LED State API Endpoint
+   :id: REQ_WEB_LED_1
+   :links: REQ_SYS_WEB_1, REQ_LED_5
+   :status: approved
+   :priority: important
+   :tags: web, api, led, visualization
+
+   **Description:** The web server SHALL provide a REST API endpoint to retrieve current LED strip 
+   state for real-time visualization in the web interface.
+
+   **Rationale:** Users viewing the web interface should see real-time visual representation of 
+   the LED strip state, enabling remote monitoring without physical line-of-sight to the device.
+
+   **Acceptance Criteria:**
+
+   - AC-1: GET /api/led/state SHALL return JSON with LED count and color array
+   - AC-2: Response SHALL include all LED colors as hex RGB strings (e.g., "FF0000" for red)
+   - AC-3: Endpoint SHALL use thread-safe LED state read API (REQ_LED_5)
+   - AC-4: Response SHALL set CORS headers for cross-origin access
+   - AC-5: Endpoint SHALL return 500 Internal Server Error if LED controller not initialized
+   - AC-6: Response time SHALL be under 200ms for 40 LEDs
+   - AC-7: Memory SHALL be properly freed after response (no leaks)
+
+   **Verification:** Call endpoint from browser, verify JSON format, test with LED animations, 
+   check memory usage over time, verify CORS headers allow cross-origin requests.
+
+
 Non-Functional Requirements
 ----------------------------
 

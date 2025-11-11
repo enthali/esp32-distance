@@ -40,10 +40,24 @@ In GitHub Codespaces
 Local Development with Docker
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-1. Ensure Docker Desktop is running
+**Recommended:** Clone repository into container volume for best performance (like Codespaces):
+
+1. Install VS Code and the **Dev Containers** extension
+2. Ensure Docker Desktop is running
+3. In VS Code: Press **F1** → Type "**Dev Containers: Clone Repository in Container Volume...**"
+4. Enter repository URL (GitHub/GitLab/etc.)
+5. Select branch to clone
+6. Container builds automatically with full ESP-IDF environment
+
+**Alternative:** Open existing local clone in container:
+
+1. Clone repository to your local machine
 2. Open the project in VS Code
 3. VS Code will prompt: "Reopen in Container" → Click **Yes**
-4. Container builds automatically with ESP-IDF environment
+4. Container builds and mounts your local files
+
+.. tip::
+   **Container volume cloning is faster!** File I/O performance is significantly better when the repository lives in a Docker volume rather than being bind-mounted from the host filesystem.
 
 Container Features
 ------------------
