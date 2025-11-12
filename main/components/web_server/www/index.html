@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP32 Distance Sensor - Dashboard</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="stylesheet" href="/css/style.css?v=2">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">ESP32 Distance Sensor</div>
+        <div class="nav-links">
+            <a href="/index.html" class="nav-btn active">Dashboard</a>
+            <a href="/wifi-setup.html" class="nav-btn">WiFi</a>
+            <a href="/settings.html" class="nav-btn">Settings</a>
+        </div>
+    </nav>
+    
+    <main class="container">
+        <h2>Dashboard</h2>
+        
+        <div class="info-card">
+            <h3>Distance Measurement</h3>
+            <div class="status-grid">
+                <div class="status-item">
+                    <span class="status-label">Current Distance:</span>
+                    <span class="status-value" id="distance-value">--</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-card">
+            <h3>LED Strip Status</h3>
+            <div id="led-strip" class="led-strip">
+                Loading...
+            </div>
+        </div>
+        
+        <div class="info-card">
+            <h3>WiFi Status</h3>
+            <div class="status-grid">
+                <div class="status-item">
+                    <span class="status-label">Connection:</span>
+                    <span class="status-value" id="wifi-status">Checking...</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">SSID:</span>
+                    <span class="status-value" id="wifi-ssid">--</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Signal:</span>
+                    <span class="status-value" id="wifi-rssi">--</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <h3>System Information</h3>
+            <div class="status-grid">
+                <div class="status-item">
+                    <span class="status-label">Uptime:</span>
+                    <span class="status-value" id="system-uptime">--</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Free Heap:</span>
+                    <span class="status-value" id="system-heap">--</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Firmware:</span>
+                    <span class="status-value" id="system-firmware">--</span>
+                </div>
+            </div>
+        </div>
+
+        <button onclick="refreshData()" class="refresh-btn">Refresh</button>
+    </main>
+    
+    <script src="/js/app.js?v=2"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+{
+    "version": 4,
+    "configurations": [
+        {
+            "name": "ESP-IDF",
+            "compilerPath": "/opt/esp/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/bin/xtensa-esp32-elf-gcc",
+            "compileCommands": "${workspaceFolder}/build/compile_commands.json",
+            "cStandard": "c11",
+            "cppStandard": "c++20",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${config:idf.espIdfPath}/components/**",
+                "${config:idf.espIdfPathWin}/components/**",
+                "${workspaceFolder}/build/config",
+                "/opt/esp/idf/components/**",
+                "/opt/esp/idf/components/freertos/FreeRTOS-Kernel/include",
+                "/opt/esp/idf/components/freertos/esp_additions/include",
+                "/opt/esp/idf/components/freertos/config/include",
+                "/opt/esp/idf/components/esp_common/include",
+                "/opt/esp/idf/components/esp_hw_support/include",
+                "/opt/esp/idf/components/esp_rom/include",
+                "/opt/esp/idf/components/esp_system/include",
+                "/opt/esp/idf/components/esp_timer/include",
+                "/opt/esp/idf/components/log/include",
+                "/opt/esp/idf/components/nvs_flash/include",
+                "/opt/esp/idf/components/spi_flash/include",
+                "/opt/esp/idf/components/hal/include",
+                "/opt/esp/idf/components/hal/esp32/include",
+                "/opt/esp/idf/components/soc/esp32/include",
+                "/opt/esp/idf/components/soc/include",
+                "/opt/esp/idf/components/esp_http_server/include",
+                "/opt/esp/idf/components/esp_wifi/include",
+                "/opt/esp/idf/components/esp_netif/include",
+                "/opt/esp/idf/components/lwip/include",
+                "/opt/esp/idf/components/lwip/lwip/src/include",
+                "/opt/esp/idf/components/esp_event/include",
+                "${workspaceFolder}/main",
+                "${workspaceFolder}/main/components/**"
+            ],
+            "browse": {
+                "path": [
+                    "${workspaceFolder}",
+                    "/opt/esp/idf/components",
+                    "${workspaceFolder}/build/config"
+                ],
+                "limitSymbolsToIncludedHeaders": false
+            },
+            "defines": [
+                "ESP_PLATFORM",
+                "IDF_VER=\"v5.4.1\"",
+                "__XTENSA__"
+            ],
+            "intelliSenseMode": "gcc-x64"
+        }
+    ]
+}
