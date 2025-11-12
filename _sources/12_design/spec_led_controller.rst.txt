@@ -4,12 +4,8 @@ LED Controller Design Specification
 This document specifies the design of the WS2812 LED controller component, using ESP32 RMT 
 peripheral for precise timing and providing a simple pixel-level control API.
 
-**Design Version**: 1.0  
-**Last Updated**: 2025-11-10
-
-.. contents:: Table of Contents
-   :local:
-   :depth: 2
+**Document Version**: 2.0  
+**Last Updated**: 2025-11-12
 
 Overview
 --------

@@ -303,26 +303,16 @@
 <h1>Display System Design Specification<a class="headerlink" href="#display-system-design-specification" title="Link to this heading">¶</a></h1>
 <p>This document specifies the design of the display system that visualizes distance measurements
 through WS2812 LED strips with dual-layer rendering and zone-based animations.</p>
-<p><strong>Design Version</strong>: 1.0
-<strong>Last Updated</strong>: 2025-11-10</p>
-<nav class="contents local" id="table-of-contents">
-<p class="topic-title">Table of Contents</p>
-<ul class="simple">
-<li><p><a class="reference internal" href="#overview" id="id1">Overview</a></p></li>
-<li><p><a class="reference internal" href="#system-integration" id="id2">System Integration</a></p></li>
-<li><p><a class="reference internal" href="#core-algorithms" id="id3">Core Algorithms</a></p></li>
-<li><p><a class="reference internal" href="#animation-specifications" id="id4">Animation Specifications</a></p></li>
-<li><p><a class="reference internal" href="#api-design" id="id5">API Design</a></p></li>
-</ul>
-</nav>
+<p><strong>Document Version</strong>: 2.0
+<strong>Last Updated</strong>: 2025-11-12</p>
 <section id="overview">
-<h2><a class="toc-backref" href="#id1" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
 <p>The display system implements a multi-layer rendering architecture combining position indication
 and directional animations to guide optimal parking, using frame-based compositing at 10 FPS.</p>
 </section>
 <section id="system-integration">
-<h2><a class="toc-backref" href="#id2" role="doc-backlink">System Integration</a><a class="headerlink" href="#system-integration" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-14942483">
+<h2>System Integration<a class="headerlink" href="#system-integration" title="Link to this heading">¶</a></h2>
+<div class="need_container docutils container" id="SNCB-9b69a8de">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_DSP_OVERVIEW_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -355,7 +345,7 @@ parameters.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-2d1a7772">
+<div class="need_container docutils container" id="SNCB-06b3caed">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_DSP_ARCH_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -386,7 +376,7 @@ parameters.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-94d56fc2">
+<div class="need_container docutils container" id="SNCB-cdc53256">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_DSP_ARCH_2">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -421,8 +411,8 @@ config structures.</p>
 </div>
 </section>
 <section id="core-algorithms">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Core Algorithms</a><a class="headerlink" href="#core-algorithms" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-717bd7d5">
+<h2>Core Algorithms<a class="headerlink" href="#core-algorithms" title="Link to this heading">¶</a></h2>
+<div class="need_container docutils container" id="SNCB-2727a522">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_DSP_ALGO_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -468,7 +458,7 @@ trigger in correct zones.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-a7155487">
+<div class="need_container docutils container" id="SNCB-4ef6e464">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_DSP_ALGO_2">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -515,7 +505,7 @@ frame, no visual tearing, animation smooth at 10 FPS.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-a4a36073">
+<div class="need_container docutils container" id="SNCB-2fe09f46">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_DSP_ALGO_3">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -551,8 +541,8 @@ frame, no visual tearing, animation smooth at 10 FPS.</p>
 </div>
 </section>
 <section id="animation-specifications">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink">Animation Specifications</a><a class="headerlink" href="#animation-specifications" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-de69f8b6">
+<h2>Animation Specifications<a class="headerlink" href="#animation-specifications" title="Link to this heading">¶</a></h2>
+<div class="need_container docutils container" id="SNCB-b451cf87">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_DSP_ANIM_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -604,7 +594,7 @@ correct.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-6fae15d3">
+<div class="need_container docutils container" id="SNCB-e55895d3">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_DSP_ANIM_2">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -644,7 +634,7 @@ immediate transition provides clear feedback.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-6a15a65e">
+<div class="need_container docutils container" id="SNCB-dd0ff041">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_DSP_ANIM_3">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -684,7 +674,7 @@ angles, emergency overrides all other displays.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-8b7434d4">
+<div class="need_container docutils container" id="SNCB-6ad6934c">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_DSP_ANIM_4">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -726,8 +716,8 @@ states.</p>
 </div>
 </section>
 <section id="api-design">
-<h2><a class="toc-backref" href="#id5" role="doc-backlink">API Design</a><a class="headerlink" href="#api-design" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-979f3efe">
+<h2>API Design<a class="headerlink" href="#api-design" title="Link to this heading">¶</a></h2>
+<div class="need_container docutils container" id="SNCB-dc14899a">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_DSP_API_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">

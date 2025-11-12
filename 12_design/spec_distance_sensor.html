@@ -303,28 +303,17 @@
 <h1>Distance Sensor Design Specification<a class="headerlink" href="#distance-sensor-design-specification" title="Link to this heading">¶</a></h1>
 <p>This document specifies the design of the HC-SR04 distance sensor component, implementing
 real-time measurement processing with dual-queue architecture and EMA filtering.</p>
-<p><strong>Design Version</strong>: 1.0
-<strong>Last Updated</strong>: 2025-11-10</p>
-<nav class="contents local" id="table-of-contents">
-<p class="topic-title">Table of Contents</p>
-<ul class="simple">
-<li><p><a class="reference internal" href="#overview" id="id1">Overview</a></p></li>
-<li><p><a class="reference internal" href="#architecture-specifications" id="id2">Architecture Specifications</a></p></li>
-<li><p><a class="reference internal" href="#algorithm-specifications" id="id3">Algorithm Specifications</a></p></li>
-<li><p><a class="reference internal" href="#api-specifications" id="id4">API Specifications</a></p></li>
-<li><p><a class="reference internal" href="#error-handling-specifications" id="id5">Error Handling Specifications</a></p></li>
-<li><p><a class="reference internal" href="#simulator-specification" id="id6">Simulator Specification</a></p></li>
-</ul>
-</nav>
+<p><strong>Document Version</strong>: 2.0
+<strong>Last Updated</strong>: 2025-11-12</p>
 <section id="overview">
-<h2><a class="toc-backref" href="#id1" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
 <p>The distance sensor component uses a dual-queue architecture to separate ISR-level timestamp
 capture from task-level measurement processing, ensuring real-time performance while providing
 filtered, validated measurements to consumers.</p>
 </section>
 <section id="architecture-specifications">
-<h2><a class="toc-backref" href="#id2" role="doc-backlink">Architecture Specifications</a><a class="headerlink" href="#architecture-specifications" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-f21650cc">
+<h2>Architecture Specifications<a class="headerlink" href="#architecture-specifications" title="Link to this heading">¶</a></h2>
+<div class="need_container docutils container" id="SNCB-d9fd3953">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_ARCH_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -358,7 +347,7 @@ consumers get processed measurements.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-30a658e0">
+<div class="need_container docutils container" id="SNCB-80e5f2f0">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_ARCH_2">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -389,7 +378,7 @@ consumers get processed measurements.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-dedcc649">
+<div class="need_container docutils container" id="SNCB-47620e5a">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_ISR_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -422,7 +411,7 @@ receives data.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-9a403284">
+<div class="need_container docutils container" id="SNCB-ffcc9bc7">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_TASK_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -457,8 +446,8 @@ processes raw data correctly.</p>
 </div>
 </section>
 <section id="algorithm-specifications">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Algorithm Specifications</a><a class="headerlink" href="#algorithm-specifications" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-11390574">
+<h2>Algorithm Specifications<a class="headerlink" href="#algorithm-specifications" title="Link to this heading">¶</a></h2>
+<div class="need_container docutils container" id="SNCB-cc06691b">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_ALGO_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -491,7 +480,7 @@ temperatures.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-3d784737">
+<div class="need_container docutils container" id="SNCB-d88e23a1">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_ALGO_2">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -526,8 +515,8 @@ temperatures.</p>
 </div>
 </section>
 <section id="api-specifications">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink">API Specifications</a><a class="headerlink" href="#api-specifications" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-97f8aea1">
+<h2>API Specifications<a class="headerlink" href="#api-specifications" title="Link to this heading">¶</a></h2>
+<div class="need_container docutils container" id="SNCB-c53ae958">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_API_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -562,8 +551,8 @@ monitoring functions provide accurate metrics.</p>
 </div>
 </section>
 <section id="error-handling-specifications">
-<h2><a class="toc-backref" href="#id5" role="doc-backlink">Error Handling Specifications</a><a class="headerlink" href="#error-handling-specifications" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-7d94cc46">
+<h2>Error Handling Specifications<a class="headerlink" href="#error-handling-specifications" title="Link to this heading">¶</a></h2>
+<div class="need_container docutils container" id="SNCB-a830cf0a">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_ERR_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -597,8 +586,8 @@ correctly, system continues operation.</p>
 </div>
 </section>
 <section id="simulator-specification">
-<h2><a class="toc-backref" href="#id6" role="doc-backlink">Simulator Specification</a><a class="headerlink" href="#simulator-specification" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-59ac3869">
+<h2>Simulator Specification<a class="headerlink" href="#simulator-specification" title="Link to this heading">¶</a></h2>
+<div class="need_container docutils container" id="SNCB-a2065789">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_SIM_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">

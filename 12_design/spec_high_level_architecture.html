@@ -302,9 +302,11 @@
           <section id="high-level-architecture-design-specification">
 <h1>High-Level Architecture Design Specification<a class="headerlink" href="#high-level-architecture-design-specification" title="Link to this heading">¶</a></h1>
 <p>This document defines the high-level system architecture for the ESP32 Distance Sensor, including component interactions, layering, and integration patterns.</p>
-<section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-b454ef02">
+<p><strong>Document Version</strong>: 2.0
+<strong>Last Updated</strong>: 2025-11-12</p>
+<section id="architecture-overview">
+<h2>Architecture Overview<a class="headerlink" href="#architecture-overview" title="Link to this heading">¶</a></h2>
+<div class="need_container docutils container" id="SNCB-ad018dd0">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_LAYERS_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -369,7 +371,7 @@
 </section>
 <section id="component-design-specifications">
 <h2>Component Design Specifications<a class="headerlink" href="#component-design-specifications" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-d5eba96d">
+<div class="need_container docutils container" id="SNCB-0600031f">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_CONFIG_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -403,7 +405,7 @@
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-3f136fbd">
+<div class="need_container docutils container" id="SNCB-5ef30820">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_WEB_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -439,7 +441,7 @@
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-220d3a79">
+<div class="need_container docutils container" id="SNCB-c774c548">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_CERT_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -473,7 +475,7 @@
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-171a6aa1">
+<div class="need_container docutils container" id="SNCB-b9b04694">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_NETIF_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -515,7 +517,7 @@
 </section>
 <section id="data-flow-architecture">
 <h2>Data Flow Architecture<a class="headerlink" href="#data-flow-architecture" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-0ee4707e">
+<div class="need_container docutils container" id="SNCB-dd4792c1">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_COMM_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -556,7 +558,7 @@ Hardware
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-f2ea24b6">
+<div class="need_container docutils container" id="SNCB-74328777">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_CONFIG_FLOW_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -588,7 +590,7 @@ Factory:   Factory Reset → Defaults → NVS → Cache
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-cdf1dbfb">
+<div class="need_container docutils container" id="SNCB-988de7c6">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_WIFI_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -643,7 +645,7 @@ Factory:   Factory Reset → Defaults → NVS → Cache
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-71eb4182">
+<div class="need_container docutils container" id="SNCB-3165921a">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_HTTP_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -685,7 +687,7 @@ Factory:   Factory Reset → Defaults → NVS → Cache
 </section>
 <section id="qemu-emulation-architecture">
 <h2>QEMU Emulation Architecture<a class="headerlink" href="#qemu-emulation-architecture" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-ed1742c7">
+<div class="need_container docutils container" id="SNCB-23fc1ee1">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_QEMU_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -733,7 +735,7 @@ Factory:   Factory Reset → Defaults → NVS → Cache
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-100a77b3">
+<div class="need_container docutils container" id="SNCB-dc8369de">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_QEMU_BUILD_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -775,7 +777,7 @@ Factory:   Factory Reset → Defaults → NVS → Cache
 </section>
 <section id="threading-architecture">
 <h2>Threading Architecture<a class="headerlink" href="#threading-architecture" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-d6a236a4">
+<div class="need_container docutils container" id="SNCB-133b6c5d">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_TASKS_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -818,7 +820,7 @@ Core 1: WiFi/Network Stack (ESP-IDF managed)
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-a2b3a9aa">
+<div class="need_container docutils container" id="SNCB-6899707a">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_MEMORY_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -858,7 +860,7 @@ Core 1: WiFi/Network Stack (ESP-IDF managed)
 </section>
 <section id="build-system-integration">
 <h2>Build System Integration<a class="headerlink" href="#build-system-integration" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-c356cacc">
+<div class="need_container docutils container" id="SNCB-52e05b15">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_BUILD_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -901,7 +903,7 @@ Core 1: WiFi/Network Stack (ESP-IDF managed)
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-561988e8">
+<div class="need_container docutils container" id="SNCB-4a77962a">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_FLASH_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -942,7 +944,7 @@ factory     app   0x10000  ~3.8MB (firmware)
 </section>
 <section id="development-workflow-design">
 <h2>Development Workflow Design<a class="headerlink" href="#development-workflow-design" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-1bba8775">
+<div class="need_container docutils container" id="SNCB-5da5076a">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_CODESPACES_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -981,7 +983,7 @@ Build → Test in QEMU → Flash to Hardware
 </section>
 <section id="logging-and-diagnostics">
 <h2>Logging and Diagnostics<a class="headerlink" href="#logging-and-diagnostics" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-e3c5bed2">
+<div class="need_container docutils container" id="SNCB-1e621712">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_LOGGING_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -1041,7 +1043,7 @@ Build → Test in QEMU → Flash to Hardware
 </section>
 <section id="error-recovery-strategy">
 <h2>Error Recovery Strategy<a class="headerlink" href="#error-recovery-strategy" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-1c674ee1">
+<div class="need_container docutils container" id="SNCB-33ee30bb">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_ERROR_RECOVERY_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -1107,7 +1109,7 @@ Build → Test in QEMU → Flash to Hardware
 </section>
 <section id="performance-targets">
 <h2>Performance Targets<a class="headerlink" href="#performance-targets" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-d3efc348">
+<div class="need_container docutils container" id="SNCB-13e2a1a2">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_PERF_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -2719,7 +2721,7 @@ Build → Test in QEMU → Flash to Hardware
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">High-Level Architecture Design Specification</a><ul>
-<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#architecture-overview">Architecture Overview</a></li>
 <li><a class="reference internal" href="#component-design-specifications">Component Design Specifications</a></li>
 <li><a class="reference internal" href="#data-flow-architecture">Data Flow Architecture</a></li>
 <li><a class="reference internal" href="#qemu-emulation-architecture">QEMU Emulation Architecture</a></li>

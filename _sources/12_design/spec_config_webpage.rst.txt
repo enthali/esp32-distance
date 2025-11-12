@@ -3,6 +3,8 @@ Configuration Webpage Design Specification
 
 This document specifies the design of the browser-based configuration interface that provides schema-driven dynamic form generation, bulk configuration management, and factory reset capabilities.
 
+**Document Version**: 2.0  
+**Last Updated**: 2025-11-12
 
 Architecture Overview
 ---------------------

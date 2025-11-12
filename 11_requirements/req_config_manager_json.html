@@ -302,13 +302,15 @@
           <section id="json-based-configuration-manager-requirements">
 <h1>JSON-Based Configuration Manager Requirements<a class="headerlink" href="#json-based-configuration-manager-requirements" title="Link to this heading">¶</a></h1>
 <p>This document specifies component-level requirements for the JSON-Schema-Driven Configuration Management System. These requirements refine the high-level system requirement <a class="reference internal" href="req_system.html#REQ_SYS_CFG_1" title="REQ_SYS_CFG_1"><em class="xref need">Non-volatile Configuration ... (REQ_SYS_CFG_1)</em></a> (Non-volatile Configuration Storage).</p>
+<p><strong>Document Version</strong>: 2.0
+<strong>Last Updated</strong>: 2025-11-12</p>
 <section id="component-overview">
 <h2>Component Overview<a class="headerlink" href="#component-overview" title="Link to this heading">¶</a></h2>
 <p>The JSON-based configuration manager component provides centralized configuration management through a single JSON schema source of truth. Configuration is stored persistently in NVS and accessed via type-safe C API. The web interface generates forms dynamically from the schema.</p>
 </section>
 <section id="configuration-schema-definition">
 <h2>Configuration Schema Definition<a class="headerlink" href="#configuration-schema-definition" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-ee1f4b4e">
+<div class="need_container docutils container" id="SNCB-3f9202fb">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_CFG_JSON_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -344,7 +346,7 @@ Single source of truth prevents duplication across C code, web forms, and docume
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-69ce8ed4">
+<div class="need_container docutils container" id="SNCB-3d35b0f3">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_CFG_JSON_2">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -379,7 +381,7 @@ Logical organization improves usability for configuration with many parameters.<
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-5e3270cd">
+<div class="need_container docutils container" id="SNCB-4e11ddb4">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_CFG_JSON_3">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -418,7 +420,7 @@ Covers typical IoT configuration needs while remaining simple. Separate types en
 </section>
 <section id="configuration-generation-and-defaults">
 <h2>Configuration Generation and Defaults<a class="headerlink" href="#configuration-generation-and-defaults" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-b7219027">
+<div class="need_container docutils container" id="SNCB-450f6ef8">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_CFG_JSON_4">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -454,7 +456,7 @@ Eliminates manual default value maintenance in C code. Generated code is compile
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-c047be8b">
+<div class="need_container docutils container" id="SNCB-cf9ccdfd">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_CFG_JSON_5">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -492,7 +494,7 @@ Eliminates runtime overhead and memory overhead of JSON parser on resource-const
 </section>
 <section id="nvs-storage-and-access">
 <h2>NVS Storage and Access<a class="headerlink" href="#nvs-storage-and-access" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-fabd8aab">
+<div class="need_container docutils container" id="SNCB-87208de3">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_CFG_JSON_6">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -527,7 +529,7 @@ Direct key usage simplifies storage format and eliminates need for separate UUID
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-40fcb4eb">
+<div class="need_container docutils container" id="SNCB-f94a838f">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_CFG_JSON_7">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -563,7 +565,7 @@ Type-specific functions enforce compile-time type checking via function signatur
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-c070bd16">
+<div class="need_container docutils container" id="SNCB-f402074c">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_CFG_JSON_8">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -598,7 +600,7 @@ Ensures configuration survives power loss and system resets.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-84985ce3">
+<div class="need_container docutils container" id="SNCB-5fd7067d">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_CFG_JSON_9">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -636,7 +638,7 @@ Users need ability to recover from misconfiguration without firmware rebuild.</p
 </section>
 <section id="web-interface-integration">
 <h2>Web Interface Integration<a class="headerlink" href="#web-interface-integration" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-0d4674e3">
+<div class="need_container docutils container" id="SNCB-b694c7cb">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_CFG_JSON_10">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -676,7 +678,7 @@ Detailed web interface requirements (HTML forms, REST API endpoints, validation)
 </section>
 <section id="error-handling">
 <h2>Error Handling<a class="headerlink" href="#error-handling" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-b469bc68">
+<div class="need_container docutils container" id="SNCB-c61f91db">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_CFG_JSON_11">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -711,7 +713,7 @@ NVS corruption or wear should not prevent system operation.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-f269d206">
+<div class="need_container docutils container" id="SNCB-dd2bdba9">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_CFG_JSON_12">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -749,7 +751,7 @@ New devices need sensible defaults on first boot.</p>
 </section>
 <section id="development-guide">
 <h2>Development Guide<a class="headerlink" href="#development-guide" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-122350f2">
+<div class="need_container docutils container" id="SNCB-5e5b9bcd">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_CFG_JSON_13">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -784,7 +786,7 @@ Low friction for extending configuration reduces development time.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-978612b6">
+<div class="need_container docutils container" id="SNCB-3c23e5cf">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_CFG_JSON_14">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -823,7 +825,7 @@ Catches developer errors early without requiring code generation. Optional to ke
 </section>
 <section id="future-enhancements">
 <h2>Future Enhancements<a class="headerlink" href="#future-enhancements" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-26badd70">
+<div class="need_container docutils container" id="SNCB-0852aa86">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_CFG_JSON_15">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">

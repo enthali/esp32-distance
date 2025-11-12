@@ -3,8 +3,11 @@ High-Level Architecture Design Specification
 
 This document defines the high-level system architecture for the ESP32 Distance Sensor, including component interactions, layering, and integration patterns.
 
-Overview
---------
+**Document Version**: 2.0  
+**Last Updated**: 2025-11-12
+
+Architecture Overview
+---------------------
 
 .. spec:: ESP32 Distance Sensor Layered Architecture
    :id: SPEC_ARCH_LAYERS_1

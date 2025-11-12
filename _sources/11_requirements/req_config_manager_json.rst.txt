@@ -3,6 +3,9 @@ JSON-Based Configuration Manager Requirements
 
 This document specifies component-level requirements for the JSON-Schema-Driven Configuration Management System. These requirements refine the high-level system requirement :need:`REQ_SYS_CFG_1` (Non-volatile Configuration Storage).
 
+**Document Version**: 2.0  
+**Last Updated**: 2025-11-12
+
 Component Overview
 ------------------
 

@@ -3,6 +3,9 @@ Web Server Requirements
 
 This document specifies component-level requirements for the web server functionality, enabling user interface, configuration, and WiFi setup capabilities.
 
+**Document Version**: 2.0  
+**Last Updated**: 2025-11-12
+
 Component Overview
 ------------------
 

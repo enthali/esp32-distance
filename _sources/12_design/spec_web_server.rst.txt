@@ -3,6 +3,8 @@ Web Server Design Specification
 
 This document specifies the design of the ESP32 web server component that provides HTTP-based user interface, WiFi configuration, and device configuration capabilities.
 
+**Document Version**: 2.0  
+**Last Updated**: 2025-11-12
 
 Architecture Overview
 ---------------------

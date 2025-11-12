@@ -5,11 +5,7 @@ This document specifies requirements for the Display System, enabling visual rep
 of distance measurements through LED strip control with clear user experience definitions.
 
 **Document Version**: 2.0  
-**Last Updated**: 2025-11-10
-
-.. contents:: Table of Contents
-   :local:
-   :depth: 2
+**Last Updated**: 2025-11-12
 
 Overview
 --------

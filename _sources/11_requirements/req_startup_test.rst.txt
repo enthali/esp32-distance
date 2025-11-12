@@ -4,12 +4,8 @@ Startup Test Requirements
 This document specifies requirements for the startup test sequence that provides visual feedback 
 to users during system initialization, demonstrating hardware functionality and successful boot.
 
-**Document Version**: 1.0  
-**Last Updated**: 2025-11-10
-
-.. contents:: Table of Contents
-   :local:
-   :depth: 2
+**Document Version**: 2.0  
+**Last Updated**: 2025-11-12
 
 Overview
 --------
