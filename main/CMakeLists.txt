@@ -44,3 +44,11 @@ idf_component_register(
     # Optional: Uncomment when HTTPS is needed
     # cert_handler
 )
+
+# Add version information as compile definitions
+target_compile_definitions(${COMPONENT_LIB} PUBLIC
+    FIRMWARE_VERSION="${PROJECT_VERSION}"
+    VERSION_MAJOR=${VERSION_MAJOR}
+    VERSION_MINOR=${VERSION_MINOR}
+    VERSION_BUILD=${VERSION_BUILD}
+)

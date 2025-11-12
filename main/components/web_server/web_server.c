@@ -1123,7 +1123,12 @@ static esp_err_t system_health_handler(httpd_req_t *req)
 
     cJSON_AddStringToObject(json, "overall_status", system_healthy ? "healthy" : "degraded");
     cJSON_AddStringToObject(json, "device_type", "ESP32 Distance Sensor");
-    cJSON_AddStringToObject(json, "firmware_version", "1.0.0");
+    
+    #ifdef FIRMWARE_VERSION
+    cJSON_AddStringToObject(json, "firmware_version", FIRMWARE_VERSION);
+    #else
+    cJSON_AddStringToObject(json, "firmware_version", "unknown");
+    #endif
 
     // Convert to string and send
     char *json_string = cJSON_Print(json);
