@@ -187,7 +187,7 @@ static void render_zone0_background(void)
 /**
  * @brief Render Zone 1 background: Too Close (REQ_DSP_7 AC-3, SPEC_DSP_ANIM_1)
  * 
- * Pattern: Orange background + two black LEDs moving toward ideal zone
+ * Pattern: Dim orange background (5%) + two black LEDs moving FROM LED 0 TOWARD ideal zone
  * Ideal zone: 5% red (target reference)
  */
 static void render_zone1_background(void)
@@ -196,18 +196,20 @@ static void render_zone1_background(void)
     uint16_t zone1_end, zone2_end, ideal_led;
     calculate_zone_boundaries(led_count, &zone1_end, &zone2_end, &ideal_led);
     
-    // Orange background for Zone 1 (RGB: 255, 165, 0)
+    // Dim orange background for Zone 1 at 5% brightness (RGB: 255, 165, 0)
     led_color_t orange = led_color_rgb(255, 165, 0);
+    led_color_t dim_orange = led_color_brightness(orange, 13);  // 5% of 255 ≈ 13
     for (uint16_t i = 0; i < zone1_end; i++)
     {
-        led_set_pixel(i, orange);
+        led_set_pixel(i, dim_orange);
     }
     
-    // Two black (off) LEDs moving toward ideal zone
-    // Calculate positions based on animation step (circular motion within Zone 1)
-    uint16_t anim_offset = animation_state.animation_step % zone1_end;
+    // Two black (off) LEDs in chase pattern FROM LED 0 TOWARD ideal zone
+    // Calculate positions based on animation step moving forward from LED 0
+    uint16_t chase_range = (ideal_led > 0) ? ideal_led : 1;  // Range from 0 to ideal_led
+    uint16_t anim_offset = animation_state.animation_step % chase_range;
     uint16_t led1_pos = anim_offset;
-    uint16_t led2_pos = (anim_offset + zone1_end / 2) % zone1_end;
+    uint16_t led2_pos = (anim_offset + chase_range / 2) % chase_range;
     
     led_set_pixel(led1_pos, LED_COLOR_OFF);
     led_set_pixel(led2_pos, LED_COLOR_OFF);
@@ -220,7 +222,7 @@ static void render_zone1_background(void)
 /**
  * @brief Render Zone 2 background: Ideal (REQ_DSP_7 AC-4, SPEC_DSP_ANIM_1)
  * 
- * Pattern: Bright red at ideal position (100%), all else off
+ * Pattern: Entire zone (20%-40% of LEDs) illuminated in bright red (100%)
  */
 static void render_zone2_background(void)
 {
@@ -228,16 +230,17 @@ static void render_zone2_background(void)
     uint16_t zone1_end, zone2_end, ideal_led;
     calculate_zone_boundaries(led_count, &zone1_end, &zone2_end, &ideal_led);
     
-    // All LEDs off (already cleared)
-    
-    // Ideal zone at 100% red - "STOP HERE!" (REQ_DSP_10 AC-4)
-    led_set_pixel(ideal_led, LED_COLOR_RED);
+    // Illuminate entire Zone 2 (from zone1_end to zone2_end) in bright red - "STOP HERE!"
+    for (uint16_t i = zone1_end; i < zone2_end; i++)
+    {
+        led_set_pixel(i, LED_COLOR_RED);
+    }
 }
 
 /**
  * @brief Render Zone 3 background: Too Far (REQ_DSP_7 AC-5, SPEC_DSP_ANIM_1)
  * 
- * Pattern: Two green LEDs (5% brightness) moving toward ideal zone
+ * Pattern: Two green LEDs (5% brightness) moving FROM far end TOWARD ideal zone in chase pattern
  * Ideal zone: 5% green (target reference)
  */
 static void render_zone3_background(void)
@@ -246,16 +249,18 @@ static void render_zone3_background(void)
     uint16_t zone1_end, zone2_end, ideal_led;
     calculate_zone_boundaries(led_count, &zone1_end, &zone2_end, &ideal_led);
     
-    // Two dim green LEDs (5% brightness) moving toward ideal zone
+    // Two dim green LEDs (5% brightness) in chase pattern FROM far end TOWARD ideal zone
     led_color_t dim_green = led_color_brightness(LED_COLOR_GREEN, 13);  // 5% of 255 ≈ 13
     
-    // Calculate positions: move from current zone toward ideal
-    // Zone 3 spans from zone2_end to led_count
-    uint16_t zone3_size = led_count - zone2_end;
-    uint16_t anim_offset = animation_state.animation_step % zone3_size;
+    // Calculate positions: move FROM far end (led_count-1) TOWARD ideal zone
+    // Chase range from ideal_led to led_count-1
+    uint16_t chase_range = led_count - ideal_led;
+    if (chase_range == 0) chase_range = 1;  // Prevent division by zero
     
-    uint16_t led1_pos = zone2_end + anim_offset;
-    uint16_t led2_pos = zone2_end + ((anim_offset + zone3_size / 2) % zone3_size);
+    // Animation moves backward from far end toward ideal
+    uint16_t anim_offset = animation_state.animation_step % chase_range;
+    uint16_t led1_pos = (led_count - 1) - anim_offset;  // Start from far end, move backward
+    uint16_t led2_pos = (led_count - 1) - ((anim_offset + chase_range / 2) % chase_range);
     
     led_set_pixel(led1_pos, dim_green);
     led_set_pixel(led2_pos, dim_green);
