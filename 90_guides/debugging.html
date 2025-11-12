@@ -1,0 +1,735 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="QEMU Network Internals" href="qemu-network-internals.html"><link rel="prev" title="Web-Based Firmware Flashing" href="web-flasher.html">
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+        <title>Debugging Guide - ESP32 Distance Sensor</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/modern.css?v=803738c0" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2dda3639" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">ESP32 Distance Sensor</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <span class="sidebar-brand-text">ESP32 Distance Sensor</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../01_overview/index.html">Project Overview</a><input aria-label="Toggle navigation of Project Overview" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../01_overview/introduction.html">Project Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_overview/hardware.html">Hardware Specifications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_overview/quick-start.html">Quick Start Guide</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../05_workshop/index.html">Workshop Overview</a><input aria-label="Toggle navigation of Workshop Overview" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../05_workshop/prerequisites.html">Workshop Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_workshop/getting-started.html">Getting Started with the Workshop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_workshop/hardware-setup.html">Hardware Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_workshop/exercises.html">Workshop Exercises</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../11_requirements/index.html">Requirements Documentation</a><input aria-label="Toggle navigation of Requirements Documentation" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_system.html">System Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_web_server.html">Web Server Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_config_manager_json.html">JSON-Based Configuration Manager Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_netif_tunnel.html">Network Interface Tunnel Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_distance_sensor.html">Distance Sensor Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_led_controller.html">LED Controller Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_display.html">Display System Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_startup_test.html">Startup Test Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../12_design/index.html">Design Specifications</a><input aria-label="Toggle navigation of Design Specifications" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_high_level_architecture.html">High-Level Architecture Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_config_manager_json.html">JSON-Based Configuration Manager Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_config_webpage.html">Configuration Webpage Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_web_server.html">Web Server Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_distance_sensor.html">Distance Sensor Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_led_controller.html">LED Controller Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_display.html">Display System Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_startup_test.html">Startup Test Design Specification</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../21_api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_config_manager.html">Config Manager API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_led_controller.html">LED Controller API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_distance_sensor.html">Distance Sensor API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_display_logic.html">Display Logic API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_startup_tests.html">Startup Tests API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_netif_uart_tunnel.html">Network Tunnel API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_cert_handler.html">Certificate Handler API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_web_server.html">Web Server API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_wifi_manager.html">WiFi Manager API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../31_traceability/index.html">Traceability</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Development Guide</a><input aria-label="Toggle navigation of Development Guide" checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="devcontainer.html">Development Container Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pre-commit-hooks.html">Pre-commit Hooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu-emulator.html">QEMU Emulator Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web-flasher.html">Web-Based Firmware Flashing</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Debugging Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu-network-internals.html">QEMU Network Internals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="known-issues.html">Known Issues and Limitations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../legal/impressum.html">Impressum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../legal/datenschutz.html">Datenschutzerklärung</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/90_guides/debugging.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="debugging-guide">
+<h1>Debugging Guide<a class="headerlink" href="#debugging-guide" title="Link to this heading">¶</a></h1>
+<p>The ESP32 Distance Sensor project supports full GDB debugging in both emulator (QEMU) and hardware modes. This guide focuses on QEMU debugging since it’s fully supported in GitHub Codespaces.</p>
+<section id="quick-start-debugging-in-qemu">
+<h2>Quick Start: Debugging in QEMU<a class="headerlink" href="#quick-start-debugging-in-qemu" title="Link to this heading">¶</a></h2>
+<p><strong>It’s as simple as pressing F5!</strong></p>
+<ol class="arabic simple">
+<li><p>Open your source file in VS Code (e.g., <code class="docutils literal notranslate"><span class="pre">main/main.c</span></code>)</p></li>
+<li><p>Set breakpoints by clicking in the gutter (left of line numbers)</p></li>
+<li><p>Press <strong>F5</strong> (or click the green play button in Debug panel)</p></li>
+</ol>
+<p>That’s it! VS Code automatically:</p>
+<ul class="simple">
+<li><p>✅ Builds your project if needed</p></li>
+<li><p>✅ Starts QEMU in debug mode</p></li>
+<li><p>✅ Connects GDB debugger</p></li>
+<li><p>✅ Breaks at your breakpoints</p></li>
+<li><p>✅ Stops QEMU when you stop debugging</p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>No manual setup needed!</strong> The <code class="docutils literal notranslate"><span class="pre">preLaunchTask</span></code> in <code class="docutils literal notranslate"><span class="pre">.vscode/launch.json</span></code> automatically runs QEMU debug server before attaching the debugger.</p>
+</div>
+</section>
+<section id="debugging-features">
+<h2>Debugging Features<a class="headerlink" href="#debugging-features" title="Link to this heading">¶</a></h2>
+<section id="breakpoints">
+<h3>Breakpoints<a class="headerlink" href="#breakpoints" title="Link to this heading">¶</a></h3>
+<p>Set breakpoints by clicking in the editor gutter (left of line numbers):</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">app_main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// Breakpoint here: Click in gutter at line number</span>
+<span class="w">    </span><span class="n">ESP_LOGI</span><span class="p">(</span><span class="n">TAG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ESP32 Application Starting...&quot;</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Conditional breakpoint: Right-click → Add Conditional Breakpoint</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Break only when value &lt; 10</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Breakpoint Types:</strong></p>
+<ul class="simple">
+<li><p><strong>Line Breakpoint</strong>: Break when reaching specific line</p></li>
+<li><p><strong>Conditional Breakpoint</strong>: Break only when condition is true</p></li>
+<li><p><strong>Logpoint</strong>: Log message without stopping (useful for tracing)</p></li>
+</ul>
+</section>
+<section id="step-through-code">
+<h3>Step Through Code<a class="headerlink" href="#step-through-code" title="Link to this heading">¶</a></h3>
+<p>Use VS Code debug toolbar or keyboard shortcuts:</p>
+<ul class="simple">
+<li><p><strong>F10</strong> - Step Over (execute current line, don’t enter functions)</p></li>
+<li><p><strong>F11</strong> - Step Into (enter function calls)</p></li>
+<li><p><strong>Shift+F11</strong> - Step Out (return from current function)</p></li>
+<li><p><strong>F5</strong> - Continue (run until next breakpoint)</p></li>
+</ul>
+</section>
+<section id="inspect-variables">
+<h3>Inspect Variables<a class="headerlink" href="#inspect-variables" title="Link to this heading">¶</a></h3>
+<p><strong>Variables Panel</strong>: Shows local variables and function parameters automatically</p>
+<p><strong>Watch Panel</strong>: Add custom expressions to monitor</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// Example: Monitor a struct member</span>
+<span class="n">config</span><span class="p">.</span><span class="n">led_count</span>
+
+<span class="c1">// Example: Monitor array element</span>
+<span class="n">buffer</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+
+<span class="c1">// Example: Evaluate expression</span>
+<span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">threshold</span>
+</pre></div>
+</div>
+</section>
+<section id="call-stack">
+<h3>Call Stack<a class="headerlink" href="#call-stack" title="Link to this heading">¶</a></h3>
+<p>The Call Stack panel shows the complete function call hierarchy:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>#0  my_function() at main.c:42
+#1  process_data() at main.c:128
+#2  app_main() at main.c:200
+#3  main_task() at cpu_start.c:...
+</pre></div>
+</div>
+<p>Click any frame to inspect its local variables and source code.</p>
+</section>
+<section id="debug-console">
+<h3>Debug Console<a class="headerlink" href="#debug-console" title="Link to this heading">¶</a></h3>
+<p>Execute GDB commands directly in the Debug Console:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span># Print variable
+p my_variable
+
+# Print in hex
+p/x my_variable
+
+# Print array
+p my_array[0]@10
+
+# Call function
+call my_debug_function()
+</pre></div>
+</div>
+</section>
+</section>
+<section id="hardware-debugging">
+<h2>Hardware Debugging<a class="headerlink" href="#hardware-debugging" title="Link to this heading">¶</a></h2>
+<section id="debugging-on-real-esp32">
+<h3>Debugging on Real ESP32<a class="headerlink" href="#debugging-on-real-esp32" title="Link to this heading">¶</a></h3>
+<p>For hardware debugging, you need a JTAG adapter. The template doesn’t include hardware debugging configuration by default (focus is on QEMU).</p>
+<p>For production projects, see <a class="reference external" href="https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/jtag-debugging/">ESP-IDF JTAG Debugging</a> documentation.</p>
+</section>
+</section>
+<section id="debug-configuration">
+<h2>Debug Configuration<a class="headerlink" href="#debug-configuration" title="Link to this heading">¶</a></h2>
+<section id="how-it-works">
+<h3>How It Works<a class="headerlink" href="#how-it-works" title="Link to this heading">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">.vscode/launch.json</span></code> configuration handles everything automatically:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;QEMU ESP32 Debug (with Graphics)&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;preLaunchTask&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Run QEMU Debug&quot;</span><span class="p">,</span><span class="w">      </span><span class="c1">// Starts QEMU before debugging</span>
+<span class="w">    </span><span class="nt">&quot;postDebugTask&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Stop QEMU&quot;</span><span class="p">,</span><span class="w">            </span><span class="c1">// Stops QEMU when you stop debugging</span>
+<span class="w">    </span><span class="nt">&quot;miDebuggerServerAddress&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;localhost:3333&quot;</span><span class="w">  </span><span class="c1">// GDB connects here</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>What happens when you press F5:</strong></p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">preLaunchTask</span></code> runs: QEMU starts in debug mode (waits for GDB)</p></li>
+<li><p>GDB connects to QEMU on port 3333</p></li>
+<li><p>Your breakpoints are set</p></li>
+<li><p>Program runs until it hits a breakpoint</p></li>
+<li><p>When you stop debugging, <code class="docutils literal notranslate"><span class="pre">postDebugTask</span></code> stops QEMU cleanly</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You don’t need to manually start QEMU! The VS Code tasks handle it automatically.</p>
+</div>
+</section>
+<section id="customization">
+<h3>Customization<a class="headerlink" href="#customization" title="Link to this heading">¶</a></h3>
+<p>If you need to modify the ELF file path (e.g., after renaming your project):</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;program&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;${workspaceFolder}/build/your-project-name.elf&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="advanced-debugging">
+<h2>Advanced Debugging<a class="headerlink" href="#advanced-debugging" title="Link to this heading">¶</a></h2>
+<section id="debugging-freertos-tasks">
+<h3>Debugging FreeRTOS Tasks<a class="headerlink" href="#debugging-freertos-tasks" title="Link to this heading">¶</a></h3>
+<p>View FreeRTOS task information:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span># In Debug Console
+info threads
+
+# Switch to specific task
+thread 3
+</pre></div>
+</div>
+</section>
+<section id="memory-inspection">
+<h3>Memory Inspection<a class="headerlink" href="#memory-inspection" title="Link to this heading">¶</a></h3>
+<p>Inspect memory directly:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span># View memory at address (hex)
+x/16x 0x3FFB0000
+
+# View memory as string
+x/s 0x3FFB0000
+
+# Examine stack
+x/32x $sp
+</pre></div>
+</div>
+</section>
+<section id="performance-analysis">
+<h3>Performance Analysis<a class="headerlink" href="#performance-analysis" title="Link to this heading">¶</a></h3>
+<p>Measure execution time:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// Add timing code</span>
+<span class="kt">uint64_t</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">esp_timer_get_time</span><span class="p">();</span>
+
+<span class="c1">// Your code here</span>
+<span class="n">my_function</span><span class="p">();</span>
+
+<span class="kt">uint64_t</span><span class="w"> </span><span class="n">elapsed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">esp_timer_get_time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="p">;</span>
+<span class="n">ESP_LOGI</span><span class="p">(</span><span class="n">TAG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Execution time: %llu us&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">elapsed</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Set breakpoints before and after, inspect <code class="docutils literal notranslate"><span class="pre">elapsed</span></code> value.</p>
+</section>
+</section>
+<section id="common-debugging-scenarios">
+<h2>Common Debugging Scenarios<a class="headerlink" href="#common-debugging-scenarios" title="Link to this heading">¶</a></h2>
+<section id="crash-analysis">
+<h3>Crash Analysis<a class="headerlink" href="#crash-analysis" title="Link to this heading">¶</a></h3>
+<p>When ESP32 crashes, look for:</p>
+<ol class="arabic simple">
+<li><p><strong>Stack trace</strong> in serial output</p></li>
+<li><p><strong>Program Counter (PC)</strong> - use <code class="docutils literal notranslate"><span class="pre">addr2line</span></code> to find source line</p></li>
+<li><p><strong>Register dump</strong> - shows CPU state at crash</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Convert crash address to source line</span>
+xtensa-esp32-elf-addr2line<span class="w"> </span>-e<span class="w"> </span>build/esp32-template.elf<span class="w"> </span>0x400d1234
+</pre></div>
+</div>
+</section>
+<section id="memory-leaks">
+<h3>Memory Leaks<a class="headerlink" href="#memory-leaks" title="Link to this heading">¶</a></h3>
+<p>Monitor heap usage:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">ESP_LOGI</span><span class="p">(</span><span class="n">TAG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Free heap: %d bytes&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">esp_get_free_heap_size</span><span class="p">());</span>
+<span class="n">ESP_LOGI</span><span class="p">(</span><span class="n">TAG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Min free heap: %d bytes&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">esp_get_minimum_free_heap_size</span><span class="p">());</span>
+</pre></div>
+</div>
+</section>
+<section id="stack-overflow">
+<h3>Stack Overflow<a class="headerlink" href="#stack-overflow" title="Link to this heading">¶</a></h3>
+<p>Check stack high water mark:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">UBaseType_t</span><span class="w"> </span><span class="n">stack_left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">uxTaskGetStackHighWaterMark</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
+<span class="n">ESP_LOGI</span><span class="p">(</span><span class="n">TAG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Stack space left: %d words&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">stack_left</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading">¶</a></h2>
+<section id="gdb-won-t-connect">
+<h3>GDB Won’t Connect<a class="headerlink" href="#gdb-won-t-connect" title="Link to this heading">¶</a></h3>
+<p><strong>Problem:</strong> VS Code can’t connect to QEMU</p>
+<p><strong>Solutions:</strong></p>
+<ol class="arabic simple">
+<li><p>Ensure QEMU is running: <code class="docutils literal notranslate"><span class="pre">ps</span> <span class="pre">aux</span> <span class="pre">|</span> <span class="pre">grep</span> <span class="pre">qemu</span></code></p></li>
+<li><p>Check port 3333 is available: <code class="docutils literal notranslate"><span class="pre">lsof</span> <span class="pre">-i</span> <span class="pre">:3333</span></code></p></li>
+<li><p>Restart QEMU: <code class="docutils literal notranslate"><span class="pre">./tools/stop_qemu.sh</span> <span class="pre">&amp;&amp;</span> <span class="pre">./tools/run-qemu-network.sh</span></code></p></li>
+</ol>
+</section>
+<section id="no-debug-symbols">
+<h3>No Debug Symbols<a class="headerlink" href="#no-debug-symbols" title="Link to this heading">¶</a></h3>
+<p><strong>Problem:</strong> Can’t see source code or variable names</p>
+<p><strong>Solutions:</strong></p>
+<ol class="arabic simple">
+<li><p>Ensure debug build: <code class="docutils literal notranslate"><span class="pre">idf.py</span> <span class="pre">menuconfig</span></code> → Component config → Compiler options → Optimization Level → Debug (-Og)</p></li>
+<li><p>Rebuild: <code class="docutils literal notranslate"><span class="pre">idf.py</span> <span class="pre">fullclean</span> <span class="pre">build</span></code></p></li>
+</ol>
+</section>
+<section id="breakpoint-not-hit">
+<h3>Breakpoint Not Hit<a class="headerlink" href="#breakpoint-not-hit" title="Link to this heading">¶</a></h3>
+<p><strong>Problem:</strong> Breakpoint is set but never triggers</p>
+<p><strong>Checks:</strong></p>
+<ol class="arabic simple">
+<li><p>Code is actually executed (not in dead code path)</p></li>
+<li><p>Compiler didn’t optimize code away (check disassembly)</p></li>
+<li><p>Breakpoint is in correct file (check paths match)</p></li>
+</ol>
+</section>
+</section>
+<section id="tips-and-best-practices">
+<h2>Tips and Best Practices<a class="headerlink" href="#tips-and-best-practices" title="Link to this heading">¶</a></h2>
+<section id="efficient-debugging">
+<h3>Efficient Debugging<a class="headerlink" href="#efficient-debugging" title="Link to this heading">¶</a></h3>
+<p>✅ <strong>Use Logpoints</strong>: Don’t stop execution, just log information</p>
+<p>✅ <strong>Conditional Breakpoints</strong>: Break only when specific conditions occur</p>
+<p>✅ <strong>Watch Expressions</strong>: Monitor key variables without manual inspection</p>
+<p>✅ <strong>Call Stack Navigation</strong>: Quickly find where problems originate</p>
+</section>
+<section id="logging-vs-debugging">
+<h3>Logging vs Debugging<a class="headerlink" href="#logging-vs-debugging" title="Link to this heading">¶</a></h3>
+<p><strong>Use Logging For:</strong></p>
+<ul class="simple">
+<li><p>Production code monitoring</p></li>
+<li><p>Long-running operations</p></li>
+<li><p>Intermittent issues</p></li>
+<li><p>Field diagnostics</p></li>
+</ul>
+<p><strong>Use Debugging For:</strong></p>
+<ul class="simple">
+<li><p>Development and troubleshooting</p></li>
+<li><p>Complex state inspection</p></li>
+<li><p>Step-by-step execution analysis</p></li>
+<li><p>One-time investigation</p></li>
+</ul>
+</section>
+<section id="debug-optimization">
+<h3>Debug Optimization<a class="headerlink" href="#debug-optimization" title="Link to this heading">¶</a></h3>
+<p><strong>During Development:</strong></p>
+<ul class="simple">
+<li><p>Use Debug (-Og) optimization for best debugging experience</p></li>
+<li><p>Enable all debug symbols</p></li>
+</ul>
+<p><strong>For Release:</strong></p>
+<ul class="simple">
+<li><p>Switch to Release optimization (-O2 or -Os)</p></li>
+<li><p>Disable verbose logging</p></li>
+<li><p>Keep ESP_LOGI for important events</p></li>
+</ul>
+</section>
+</section>
+<section id="resources">
+<h2>Resources<a class="headerlink" href="#resources" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/jtag-debugging/">ESP-IDF Debugging Guide</a></p></li>
+<li><p><a class="reference external" href="https://sourceware.org/gdb/current/onlinedocs/gdb/">GDB Manual</a></p></li>
+<li><p><a class="reference external" href="https://code.visualstudio.com/docs/editor/debugging">VS Code Debugging</a></p></li>
+</ul>
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="qemu-emulator.html"><span class="doc">QEMU Emulator Guide</span></a> - Learn more about QEMU emulation</p></li>
+<li><p><a class="reference internal" href="qemu-network-internals.html"><span class="doc">QEMU Network Internals</span></a> - Understand network implementation</p></li>
+<li><p><a class="reference internal" href="devcontainer.html"><span class="doc">Development Container Setup</span></a> - Set up your development environment</p></li>
+</ul>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="qemu-network-internals.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">QEMU Network Internals</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="web-flasher.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Web-Based Firmware Flashing</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2025, ESP32 Distance Sensor Team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Debugging Guide</a><ul>
+<li><a class="reference internal" href="#quick-start-debugging-in-qemu">Quick Start: Debugging in QEMU</a></li>
+<li><a class="reference internal" href="#debugging-features">Debugging Features</a><ul>
+<li><a class="reference internal" href="#breakpoints">Breakpoints</a></li>
+<li><a class="reference internal" href="#step-through-code">Step Through Code</a></li>
+<li><a class="reference internal" href="#inspect-variables">Inspect Variables</a></li>
+<li><a class="reference internal" href="#call-stack">Call Stack</a></li>
+<li><a class="reference internal" href="#debug-console">Debug Console</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#hardware-debugging">Hardware Debugging</a><ul>
+<li><a class="reference internal" href="#debugging-on-real-esp32">Debugging on Real ESP32</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#debug-configuration">Debug Configuration</a><ul>
+<li><a class="reference internal" href="#how-it-works">How It Works</a></li>
+<li><a class="reference internal" href="#customization">Customization</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#advanced-debugging">Advanced Debugging</a><ul>
+<li><a class="reference internal" href="#debugging-freertos-tasks">Debugging FreeRTOS Tasks</a></li>
+<li><a class="reference internal" href="#memory-inspection">Memory Inspection</a></li>
+<li><a class="reference internal" href="#performance-analysis">Performance Analysis</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#common-debugging-scenarios">Common Debugging Scenarios</a><ul>
+<li><a class="reference internal" href="#crash-analysis">Crash Analysis</a></li>
+<li><a class="reference internal" href="#memory-leaks">Memory Leaks</a></li>
+<li><a class="reference internal" href="#stack-overflow">Stack Overflow</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#troubleshooting">Troubleshooting</a><ul>
+<li><a class="reference internal" href="#gdb-won-t-connect">GDB Won’t Connect</a></li>
+<li><a class="reference internal" href="#no-debug-symbols">No Debug Symbols</a></li>
+<li><a class="reference internal" href="#breakpoint-not-hit">Breakpoint Not Hit</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tips-and-best-practices">Tips and Best Practices</a><ul>
+<li><a class="reference internal" href="#efficient-debugging">Efficient Debugging</a></li>
+<li><a class="reference internal" href="#logging-vs-debugging">Logging vs Debugging</a></li>
+<li><a class="reference internal" href="#debug-optimization">Debug Optimization</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#resources">Resources</a></li>
+<li><a class="reference internal" href="#next-steps">Next Steps</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../_static/documentation_options.js?v=51b770b3"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
+    <script src="../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>
+    <script src="../_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
+    <script src="../_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
+    <script src="../_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
+    </body>
+</html>

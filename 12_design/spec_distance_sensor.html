@@ -1,0 +1,754 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="LED Controller Design Specification" href="spec_led_controller.html"><link rel="prev" title="Web Server Design Specification" href="spec_web_server.html">
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+        <title>Distance Sensor Design Specification - ESP32 Distance Sensor</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/modern.css?v=803738c0" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2dda3639" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">ESP32 Distance Sensor</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <span class="sidebar-brand-text">ESP32 Distance Sensor</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../01_overview/index.html">Project Overview</a><input aria-label="Toggle navigation of Project Overview" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../01_overview/introduction.html">Project Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_overview/hardware.html">Hardware Specifications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_overview/quick-start.html">Quick Start Guide</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../05_workshop/index.html">Workshop Overview</a><input aria-label="Toggle navigation of Workshop Overview" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../05_workshop/prerequisites.html">Workshop Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_workshop/getting-started.html">Getting Started with the Workshop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_workshop/hardware-setup.html">Hardware Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_workshop/exercises.html">Workshop Exercises</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../11_requirements/index.html">Requirements Documentation</a><input aria-label="Toggle navigation of Requirements Documentation" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_system.html">System Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_web_server.html">Web Server Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_config_manager_json.html">JSON-Based Configuration Manager Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_netif_tunnel.html">Network Interface Tunnel Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_distance_sensor.html">Distance Sensor Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_led_controller.html">LED Controller Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_display.html">Display System Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_startup_test.html">Startup Test Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Design Specifications</a><input aria-label="Toggle navigation of Design Specifications" checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="spec_high_level_architecture.html">High-Level Architecture Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spec_config_manager_json.html">JSON-Based Configuration Manager Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spec_config_webpage.html">Configuration Webpage Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spec_web_server.html">Web Server Design Specification</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Distance Sensor Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spec_led_controller.html">LED Controller Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spec_display.html">Display System Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spec_startup_test.html">Startup Test Design Specification</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../21_api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_config_manager.html">Config Manager API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_led_controller.html">LED Controller API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_distance_sensor.html">Distance Sensor API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_display_logic.html">Display Logic API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_startup_tests.html">Startup Tests API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_netif_uart_tunnel.html">Network Tunnel API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_cert_handler.html">Certificate Handler API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_web_server.html">Web Server API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_wifi_manager.html">WiFi Manager API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../31_traceability/index.html">Traceability</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../90_guides/index.html">Development Guide</a><input aria-label="Toggle navigation of Development Guide" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/devcontainer.html">Development Container Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/pre-commit-hooks.html">Pre-commit Hooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/qemu-emulator.html">QEMU Emulator Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/web-flasher.html">Web-Based Firmware Flashing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/debugging.html">Debugging Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/qemu-network-internals.html">QEMU Network Internals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/known-issues.html">Known Issues and Limitations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../legal/impressum.html">Impressum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../legal/datenschutz.html">Datenschutzerklärung</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/12_design/spec_distance_sensor.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="distance-sensor-design-specification">
+<h1>Distance Sensor Design Specification<a class="headerlink" href="#distance-sensor-design-specification" title="Link to this heading">¶</a></h1>
+<p>This document specifies the design of the HC-SR04 distance sensor component, implementing
+real-time measurement processing with dual-queue architecture and EMA filtering.</p>
+<p><strong>Design Version</strong>: 1.0
+<strong>Last Updated</strong>: 2025-11-10</p>
+<nav class="contents local" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview" id="id1">Overview</a></p></li>
+<li><p><a class="reference internal" href="#architecture-specifications" id="id2">Architecture Specifications</a></p></li>
+<li><p><a class="reference internal" href="#algorithm-specifications" id="id3">Algorithm Specifications</a></p></li>
+<li><p><a class="reference internal" href="#api-specifications" id="id4">API Specifications</a></p></li>
+<li><p><a class="reference internal" href="#error-handling-specifications" id="id5">Error Handling Specifications</a></p></li>
+<li><p><a class="reference internal" href="#simulator-specification" id="id6">Simulator Specification</a></p></li>
+</ul>
+</nav>
+<section id="overview">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Overview</a><a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p>The distance sensor component uses a dual-queue architecture to separate ISR-level timestamp
+capture from task-level measurement processing, ensuring real-time performance while providing
+filtered, validated measurements to consumers.</p>
+</section>
+<section id="architecture-specifications">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Architecture Specifications</a><a class="headerlink" href="#architecture-specifications" title="Link to this heading">¶</a></h2>
+<div class="need_container docutils container" id="SNCB-f21650cc">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_ARCH_1">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Design Specification</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">Dual-Queue Real-Time Architecture</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#SPEC_SNS_ARCH_1" title="SPEC_SNS_ARCH_1">SPEC_SNS_ARCH_1</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">approved</span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">sensor</span><span class="needs_spacer">, </span><span class="needs_data">architecture</span><span class="needs_spacer">, </span><span class="needs_data">real-time</span></span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_distance_sensor.html#REQ_SNS_3" title="SPEC_SNS_ARCH_1">REQ_SNS_3</a>, <a class="reference internal" href="../11_requirements/req_distance_sensor.html#REQ_SNS_4" title="SPEC_SNS_ARCH_1">REQ_SNS_4</a>, <a class="reference internal" href="../11_requirements/req_distance_sensor.html#REQ_SNS_8" title="SPEC_SNS_ARCH_1">REQ_SNS_8</a></span></span></div>
+<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="#SPEC_SNS_SIM_1" title="SPEC_SNS_ARCH_1">SPEC_SNS_SIM_1</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>Design:</strong> Separate ISR and task responsibilities using FreeRTOS queues for communication.</p>
+<p><strong>Implementation:</strong></p>
+<ul class="simple">
+<li><p>ISR captures raw timestamps only, minimal processing</p></li>
+<li><p>Sensor task performs calculations, validation, and smoothing</p></li>
+<li><p>Raw queue (size 2): ISR → Task communication for timestamps</p></li>
+<li><p>Processed queue (size 5): Task → API communication for measurements</p></li>
+<li><p>Queue-based design eliminates shared variables and race conditions</p></li>
+</ul>
+<p><strong>Validation:</strong> ISR completes within microseconds, task receives raw timestamps, API
+consumers get processed measurements.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="need_container docutils container" id="SNCB-30a658e0">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_ARCH_2">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Design Specification</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">GPIO Interface Design</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#SPEC_SNS_ARCH_2" title="SPEC_SNS_ARCH_2">SPEC_SNS_ARCH_2</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">approved</span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">sensor</span><span class="needs_spacer">, </span><span class="needs_data">gpio</span><span class="needs_spacer">, </span><span class="needs_data">hardware</span></span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_distance_sensor.html#REQ_SNS_1" title="SPEC_SNS_ARCH_2">REQ_SNS_1</a>, <a class="reference internal" href="../11_requirements/req_distance_sensor.html#REQ_SNS_2" title="SPEC_SNS_ARCH_2">REQ_SNS_2</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>Design:</strong> HC-SR04 ultrasonic sensor interface using ESP32 GPIO.</p>
+<p><strong>Implementation:</strong></p>
+<ul class="simple">
+<li><p>Trigger pin (default GPIO14): Output mode, generates 10µs pulse</p></li>
+<li><p>Echo pin (default GPIO13): Input mode with <code class="docutils literal notranslate"><span class="pre">GPIO_INTR_ANYEDGE</span></code> interrupt</p></li>
+<li><p>GPIO configuration during <code class="docutils literal notranslate"><span class="pre">distance_sensor_init()</span></code> with validation</p></li>
+<li><p>ISR handler attached to echo pin for edge detection</p></li>
+</ul>
+<p><strong>Validation:</strong> GPIO pins configured correctly, ISR service installed, trigger pulse generated.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="need_container docutils container" id="SNCB-dedcc649">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_ISR_1">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Design Specification</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">Interrupt Service Routine Design</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#SPEC_SNS_ISR_1" title="SPEC_SNS_ISR_1">SPEC_SNS_ISR_1</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">approved</span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">sensor</span><span class="needs_spacer">, </span><span class="needs_data">isr</span><span class="needs_spacer">, </span><span class="needs_data">real-time</span></span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_distance_sensor.html#REQ_SNS_3" title="SPEC_SNS_ISR_1">REQ_SNS_3</a>, <a class="reference internal" href="../11_requirements/req_distance_sensor.html#REQ_SNS_8" title="SPEC_SNS_ISR_1">REQ_SNS_8</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>Design:</strong> IRAM-resident ISR for deterministic timestamp capture.</p>
+<p><strong>Implementation:</strong></p>
+<ul class="simple">
+<li><p>Rising edge: Capture <code class="docutils literal notranslate"><span class="pre">echo_start_time</span></code> using <code class="docutils literal notranslate"><span class="pre">esp_timer_get_time()</span></code></p></li>
+<li><p>Falling edge: Capture <code class="docutils literal notranslate"><span class="pre">echo_end_time</span></code> and queue raw measurement via <code class="docutils literal notranslate"><span class="pre">xQueueSendFromISR</span></code></p></li>
+<li><p>Uses <code class="docutils literal notranslate"><span class="pre">portYIELD_FROM_ISR</span></code> for task scheduling</p></li>
+<li><p>Marked <code class="docutils literal notranslate"><span class="pre">IRAM_ATTR</span></code> for real-time constraints</p></li>
+<li><p>No floating-point, heap allocation, or blocking operations</p></li>
+</ul>
+<p><strong>Validation:</strong> ISR execution time &lt; 10µs, timestamps captured accurately, raw queue
+receives data.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="need_container docutils container" id="SNCB-9a403284">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_TASK_1">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Design Specification</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">Sensor Task Design</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#SPEC_SNS_TASK_1" title="SPEC_SNS_TASK_1">SPEC_SNS_TASK_1</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">approved</span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">sensor</span><span class="needs_spacer">, </span><span class="needs_data">freertos</span><span class="needs_spacer">, </span><span class="needs_data">task</span></span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_distance_sensor.html#REQ_SNS_4" title="SPEC_SNS_TASK_1">REQ_SNS_4</a>, <a class="reference internal" href="../11_requirements/req_distance_sensor.html#REQ_SNS_6" title="SPEC_SNS_TASK_1">REQ_SNS_6</a>, <a class="reference internal" href="../11_requirements/req_distance_sensor.html#REQ_SNS_10" title="SPEC_SNS_TASK_1">REQ_SNS_10</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>Design:</strong> FreeRTOS task for continuous measurement processing.</p>
+<p><strong>Implementation:</strong></p>
+<ul class="simple">
+<li><p>Task priority 5, stack size 4096 bytes, pinned to core 1</p></li>
+<li><p>Measurement loop: trigger pulse → wait for raw queue → calculate distance → validate → smooth → enqueue</p></li>
+<li><p>Configurable measurement interval (default 100ms) with <code class="docutils literal notranslate"><span class="pre">vTaskDelay</span></code></p></li>
+<li><p>Timeout handling for missing echo responses (default 30ms)</p></li>
+<li><p>Created by <code class="docutils literal notranslate"><span class="pre">distance_sensor_start()</span></code>, deleted by <code class="docutils literal notranslate"><span class="pre">distance_sensor_stop()</span></code></p></li>
+</ul>
+<p><strong>Validation:</strong> Task created successfully, measurement loop operates at configured interval,
+processes raw data correctly.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="algorithm-specifications">
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Algorithm Specifications</a><a class="headerlink" href="#algorithm-specifications" title="Link to this heading">¶</a></h2>
+<div class="need_container docutils container" id="SNCB-11390574">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_ALGO_1">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Design Specification</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">Distance Calculation Algorithm</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#SPEC_SNS_ALGO_1" title="SPEC_SNS_ALGO_1">SPEC_SNS_ALGO_1</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">approved</span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">sensor</span><span class="needs_spacer">, </span><span class="needs_data">algorithm</span><span class="needs_spacer">, </span><span class="needs_data">calibration</span></span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_distance_sensor.html#REQ_SNS_11" title="SPEC_SNS_ALGO_1">REQ_SNS_11</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>Design:</strong> Integer arithmetic for temperature-compensated distance calculation.</p>
+<p><strong>Implementation:</strong></p>
+<ul class="simple">
+<li><p>Speed of sound: <code class="docutils literal notranslate"><span class="pre">calculate_speed_of_sound_scaled(temperature_c_x10)</span></code> with scaling factor 1,000,000</p></li>
+<li><p>Formula: <code class="docutils literal notranslate"><span class="pre">speed</span> <span class="pre">=</span> <span class="pre">331300000</span> <span class="pre">+</span> <span class="pre">(606</span> <span class="pre">*</span> <span class="pre">temperature_c_x10</span> <span class="pre">*</span> <span class="pre">100)</span></code></p></li>
+<li><p>Distance: <code class="docutils literal notranslate"><span class="pre">distance_mm</span> <span class="pre">=</span> <span class="pre">(echo_duration_us</span> <span class="pre">*</span> <span class="pre">speed_of_sound_scaled)</span> <span class="pre">/</span> <span class="pre">2000000</span></code></p></li>
+<li><p>Avoids floating-point operations for embedded performance</p></li>
+<li><p>Temperature input as <code class="docutils literal notranslate"><span class="pre">temperature_c_x10</span></code> (200 = 20.0°C)</p></li>
+</ul>
+<p><strong>Validation:</strong> Distance calculations accurate within ±1mm for known echo durations and
+temperatures.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="need_container docutils container" id="SNCB-3d784737">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_ALGO_2">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Design Specification</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">EMA Smoothing Filter Design</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#SPEC_SNS_ALGO_2" title="SPEC_SNS_ALGO_2">SPEC_SNS_ALGO_2</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">approved</span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">sensor</span><span class="needs_spacer">, </span><span class="needs_data">algorithm</span><span class="needs_spacer">, </span><span class="needs_data">filtering</span></span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_distance_sensor.html#REQ_SNS_4" title="SPEC_SNS_ALGO_2">REQ_SNS_4</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>Design:</strong> Exponential Moving Average filter using integer arithmetic.</p>
+<p><strong>Implementation:</strong></p>
+<ul class="simple">
+<li><p>Formula: <code class="docutils literal notranslate"><span class="pre">smoothed</span> <span class="pre">=</span> <span class="pre">(smoothing_factor</span> <span class="pre">*</span> <span class="pre">new)</span> <span class="pre">+</span> <span class="pre">((1000</span> <span class="pre">-</span> <span class="pre">smoothing_factor)</span> <span class="pre">*</span> <span class="pre">previous)</span> <span class="pre">/</span> <span class="pre">1000</span></code></p></li>
+<li><p>Smoothing factor range 0-1000 (300 = 30% new, 70% previous)</p></li>
+<li><p>Previous value stored as <code class="docutils literal notranslate"><span class="pre">uint16_t</span> <span class="pre">previous_smoothed_value_mm</span></code></p></li>
+<li><p>First measurement initializes filter without smoothing</p></li>
+<li><p>Applied only to valid measurements (not out-of-range or timeout)</p></li>
+</ul>
+<p><strong>Validation:</strong> Smoothing reduces noise while maintaining responsiveness, factor extremes
+(0, 1000) work correctly.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="api-specifications">
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">API Specifications</a><a class="headerlink" href="#api-specifications" title="Link to this heading">¶</a></h2>
+<div class="need_container docutils container" id="SNCB-97f8aea1">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_API_1">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Design Specification</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">Public API Design</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#SPEC_SNS_API_1" title="SPEC_SNS_API_1">SPEC_SNS_API_1</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">approved</span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">sensor</span><span class="needs_spacer">, </span><span class="needs_data">api</span><span class="needs_spacer">, </span><span class="needs_data">interface</span></span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_distance_sensor.html#REQ_SNS_5" title="SPEC_SNS_API_1">REQ_SNS_5</a>, <a class="reference internal" href="../11_requirements/req_distance_sensor.html#REQ_SNS_7" title="SPEC_SNS_API_1">REQ_SNS_7</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>Design:</strong> Simple blocking and monitoring API for consumers.</p>
+<p><strong>Implementation:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">distance_sensor_get_latest()</span></code>: Blocking receive from processed queue with <code class="docutils literal notranslate"><span class="pre">portMAX_DELAY</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">distance_sensor_has_new_measurement()</span></code>: Non-blocking queue status check</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">distance_sensor_get_queue_overflows()</span></code>: Returns overflow counter for monitoring</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">distance_sensor_monitor()</span></code>: Health check with overflow logging</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">distance_sensor_is_running()</span></code>: Task state query</p></li>
+</ul>
+<p><strong>Validation:</strong> Blocking API waits for new data, non-blocking API returns immediately,
+monitoring functions provide accurate metrics.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="error-handling-specifications">
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">Error Handling Specifications</a><a class="headerlink" href="#error-handling-specifications" title="Link to this heading">¶</a></h2>
+<div class="need_container docutils container" id="SNCB-7d94cc46">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_ERR_1">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Design Specification</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">Error Handling Design</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#SPEC_SNS_ERR_1" title="SPEC_SNS_ERR_1">SPEC_SNS_ERR_1</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">approved</span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">sensor</span><span class="needs_spacer">, </span><span class="needs_data">error-handling</span><span class="needs_spacer">, </span><span class="needs_data">robustness</span></span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_distance_sensor.html#REQ_SNS_12" title="SPEC_SNS_ERR_1">REQ_SNS_12</a>, <a class="reference internal" href="../11_requirements/req_distance_sensor.html#REQ_SNS_13" title="SPEC_SNS_ERR_1">REQ_SNS_13</a>, <a class="reference internal" href="../11_requirements/req_distance_sensor.html#REQ_SNS_14" title="SPEC_SNS_ERR_1">REQ_SNS_14</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>Design:</strong> Comprehensive error detection and recovery.</p>
+<p><strong>Implementation:</strong></p>
+<ul class="simple">
+<li><p>Timeout: No echo within timeout → enqueue <code class="docutils literal notranslate"><span class="pre">DISTANCE_SENSOR_TIMEOUT</span></code> with distance 0</p></li>
+<li><p>Out-of-range: Distance &lt; 20mm or &gt; 4000mm → mark <code class="docutils literal notranslate"><span class="pre">DISTANCE_SENSOR_OUT_OF_RANGE</span></code>, no smoothing</p></li>
+<li><p>Queue overflow: Processed queue full → drop oldest, increment <code class="docutils literal notranslate"><span class="pre">queue_overflow_counter</span></code></p></li>
+<li><p>Graceful degradation with status codes in measurement structure</p></li>
+</ul>
+<p><strong>Validation:</strong> Error conditions produce correct status codes, overflow policy drops oldest
+correctly, system continues operation.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="simulator-specification">
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Simulator Specification</a><a class="headerlink" href="#simulator-specification" title="Link to this heading">¶</a></h2>
+<div class="need_container docutils container" id="SNCB-59ac3869">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_SIM_1">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Design Specification</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">Distance Sensor Simulator Design</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#SPEC_SNS_SIM_1" title="SPEC_SNS_SIM_1">SPEC_SNS_SIM_1</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">approved</span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">sensor</span><span class="needs_spacer">, </span><span class="needs_data">simulator</span><span class="needs_spacer">, </span><span class="needs_data">qemu</span></span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_system.html#REQ_SYS_SIM_1" title="SPEC_SNS_SIM_1">REQ_SYS_SIM_1</a>, <a class="reference internal" href="#SPEC_SNS_ARCH_1" title="SPEC_SNS_SIM_1">SPEC_SNS_ARCH_1</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>Design:</strong> Provide a simulator implementation for the distance sensor that implements the
+full public API declared in <code class="docutils literal notranslate"><span class="pre">distance_sensor.h</span></code> while replacing ISR/GPIO timing with a
+deterministic simulated data producer.</p>
+<p><strong>Implementation:</strong></p>
+<ul class="simple">
+<li><p>API Compatibility: The simulator SHALL implement <code class="docutils literal notranslate"><span class="pre">distance_sensor_init()</span></code>, <code class="docutils literal notranslate"><span class="pre">distance_sensor_start()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">distance_sensor_get_latest()</span></code> and all other public functions with identical signatures
+and return codes</p></li>
+<li><p>Queue Semantics: The simulator MUST produce <code class="docutils literal notranslate"><span class="pre">distance_measurement_t</span></code> entries on the
+processed queue with the same semantics as the hardware task (blocking consumers, identical
+status codes for out-of-range/timeouts when simulated)</p></li>
+<li><p>Animation Pattern: Deterministic sweep from 5cm to 60cm and back in 1mm steps, advancing
+once per second</p></li>
+<li><p>Isolation: Simulator implementation SHOULD be in <code class="docutils literal notranslate"><span class="pre">distance_sensor_sim.c</span></code> and selected
+via CMake when <code class="docutils literal notranslate"><span class="pre">CONFIG_TARGET_EMULATOR=y</span></code> without modifying headers or higher-level
+application code</p></li>
+</ul>
+<p><strong>Validation:</strong> Simulator build compiles, <code class="docutils literal notranslate"><span class="pre">distance_sensor_get_latest()</span></code> receives simulated
+measurements at ≈1Hz, and status codes match expectations.</p>
+<p><strong>Example Implementation Pattern:</strong></p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">// Simulated sensor with animated distance sweep</span>
+<span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">distance_sensor_task</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">pvParameters</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">sim_distance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">50</span><span class="p">;</span><span class="w">  </span><span class="c1">// Start at 5cm</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="kt">int8_t</span><span class="w"> </span><span class="n">direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">        </span><span class="c1">// 1 = increasing, -1 = decreasing</span>
+
+<span class="w">    </span><span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Animate distance: 5cm → 60cm → 5cm (1mm steps)</span>
+<span class="w">        </span><span class="n">sim_distance</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">direction</span><span class="p">;</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">sim_distance</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">600</span><span class="p">)</span><span class="w"> </span><span class="n">direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w">  </span><span class="c1">// 60cm</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">sim_distance</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">50</span><span class="p">)</span><span class="w">  </span><span class="n">direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">   </span><span class="c1">// 5cm</span>
+
+<span class="w">        </span><span class="n">distance_measurement_t</span><span class="w"> </span><span class="n">sim_data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="p">.</span><span class="n">distance_mm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sim_distance</span><span class="p">,</span>
+<span class="w">            </span><span class="p">.</span><span class="n">timestamp_us</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">esp_timer_get_time</span><span class="p">(),</span>
+<span class="w">            </span><span class="p">.</span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DISTANCE_SENSOR_OK</span>
+<span class="w">        </span><span class="p">};</span>
+
+<span class="w">        </span><span class="n">xQueueSend</span><span class="p">(</span><span class="n">processed_measurement_queue</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">sim_data</span><span class="p">,</span><span class="w"> </span><span class="n">portMAX_DELAY</span><span class="p">);</span>
+<span class="w">        </span><span class="n">vTaskDelay</span><span class="p">(</span><span class="n">pdMS_TO_TICKS</span><span class="p">(</span><span class="mi">1000</span><span class="p">));</span><span class="w">  </span><span class="c1">// 1 second steps</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="spec_led_controller.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">LED Controller Design Specification</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="spec_web_server.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Web Server Design Specification</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2025, ESP32 Distance Sensor Team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Distance Sensor Design Specification</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#architecture-specifications">Architecture Specifications</a></li>
+<li><a class="reference internal" href="#algorithm-specifications">Algorithm Specifications</a></li>
+<li><a class="reference internal" href="#api-specifications">API Specifications</a></li>
+<li><a class="reference internal" href="#error-handling-specifications">Error Handling Specifications</a></li>
+<li><a class="reference internal" href="#simulator-specification">Simulator Specification</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../_static/documentation_options.js?v=51b770b3"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
+    <script src="../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>
+    <script src="../_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
+    <script src="../_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
+    <script src="../_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
+    </body>
+</html>

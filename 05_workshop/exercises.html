@@ -1,0 +1,997 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Requirements Documentation" href="../11_requirements/index.html"><link rel="prev" title="Hardware Setup" href="hardware-setup.html">
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+        <title>Workshop Exercises - ESP32 Distance Sensor</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/modern.css?v=803738c0" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2dda3639" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">ESP32 Distance Sensor</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <span class="sidebar-brand-text">ESP32 Distance Sensor</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../01_overview/index.html">Project Overview</a><input aria-label="Toggle navigation of Project Overview" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../01_overview/introduction.html">Project Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_overview/hardware.html">Hardware Specifications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_overview/quick-start.html">Quick Start Guide</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Workshop Overview</a><input aria-label="Toggle navigation of Workshop Overview" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="prerequisites.html">Workshop Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="getting-started.html">Getting Started with the Workshop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hardware-setup.html">Hardware Setup</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Workshop Exercises</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../11_requirements/index.html">Requirements Documentation</a><input aria-label="Toggle navigation of Requirements Documentation" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_system.html">System Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_web_server.html">Web Server Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_config_manager_json.html">JSON-Based Configuration Manager Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_netif_tunnel.html">Network Interface Tunnel Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_distance_sensor.html">Distance Sensor Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_led_controller.html">LED Controller Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_display.html">Display System Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_startup_test.html">Startup Test Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../12_design/index.html">Design Specifications</a><input aria-label="Toggle navigation of Design Specifications" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_high_level_architecture.html">High-Level Architecture Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_config_manager_json.html">JSON-Based Configuration Manager Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_config_webpage.html">Configuration Webpage Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_web_server.html">Web Server Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_distance_sensor.html">Distance Sensor Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_led_controller.html">LED Controller Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_display.html">Display System Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_startup_test.html">Startup Test Design Specification</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../21_api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_config_manager.html">Config Manager API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_led_controller.html">LED Controller API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_distance_sensor.html">Distance Sensor API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_display_logic.html">Display Logic API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_startup_tests.html">Startup Tests API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_netif_uart_tunnel.html">Network Tunnel API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_cert_handler.html">Certificate Handler API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_web_server.html">Web Server API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_wifi_manager.html">WiFi Manager API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../31_traceability/index.html">Traceability</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../90_guides/index.html">Development Guide</a><input aria-label="Toggle navigation of Development Guide" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/devcontainer.html">Development Container Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/pre-commit-hooks.html">Pre-commit Hooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/qemu-emulator.html">QEMU Emulator Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/web-flasher.html">Web-Based Firmware Flashing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/debugging.html">Debugging Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/qemu-network-internals.html">QEMU Network Internals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/known-issues.html">Known Issues and Limitations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../legal/impressum.html">Impressum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../legal/datenschutz.html">Datenschutzerklärung</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/05_workshop/exercises.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="workshop-exercises">
+<h1>Workshop Exercises<a class="headerlink" href="#workshop-exercises" title="Link to this heading">¶</a></h1>
+<p>These hands-on exercises help you master ESP32 development using GitHub Copilot and the GitHub Coding Agent. Work through them at your own pace and experiment with your own ideas!</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>GitHub Copilot Required:</strong> These exercises utilize GitHub Copilot’s agent capabilities.
+If you don’t have access to the GitHub Coding Agent, you can:</p>
+<ul class="simple">
+<li><p>Use <strong>GitHub Copilot Chat</strong> in Agent Mode</p></li>
+<li><p>Complete exercises manually following the coding standards</p></li>
+<li><p>Request a free trial at <a class="reference external" href="https://github.com/features/copilot">GitHub Copilot</a></p></li>
+</ul>
+</div>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">¶</a></h2>
+<p>Before starting exercises, ensure you have:</p>
+<p>✓ <strong>Hardware assembled</strong> - See <a class="reference internal" href="hardware-setup.html"><span class="doc">Hardware Setup</span></a> for wiring instructions
+✓ <strong>Firmware flashed</strong> - Follow <a class="reference internal" href="getting-started.html"><span class="doc">Getting Started with the Workshop</span></a> to build and flash
+✓ <strong>System working</strong> - LEDs respond to distance sensor
+✓ <strong>Codespace running</strong> - Development environment active
+✓ <strong>GitHub Copilot enabled</strong> - Access to Coding Agent or Chat</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>QEMU Testing:</strong> You can complete most exercises using QEMU emulation if you
+don’t have hardware available. Some exercises work better with real hardware.</p>
+</div>
+</section>
+<section id="exercise-a-extend-led-patterns">
+<h2>Exercise A: Extend LED Patterns<a class="headerlink" href="#exercise-a-extend-led-patterns" title="Link to this heading">¶</a></h2>
+<p><strong>Difficulty:</strong> Intermediate
+<strong>Time:</strong> 30-45 minutes
+<strong>Skills:</strong> Requirements engineering, design documentation, implementation</p>
+<section id="objective">
+<h3>Objective<a class="headerlink" href="#objective" title="Link to this heading">¶</a></h3>
+<p>Learn how to use GitHub Coding Agent to implement a feature request with full requirements
+and design documentation traceability.</p>
+<p><strong>Current Behavior:</strong></p>
+<ul class="simple">
+<li><p>When distance &lt; minimum threshold → First LED turns red</p></li>
+<li><p>Static red indicator, no animation</p></li>
+</ul>
+<p><strong>Desired Behavior:</strong></p>
+<ul class="simple">
+<li><p>When distance &lt; minimum threshold → Every 10th LED flashes red</p></li>
+<li><p>Flashing frequency: 1 second (0.5s on, 0.5s off)</p></li>
+<li><p>No interference with distance measurement timing</p></li>
+</ul>
+</section>
+<section id="step-1-create-github-issue">
+<h3>Step 1: Create GitHub Issue<a class="headerlink" href="#step-1-create-github-issue" title="Link to this heading">¶</a></h3>
+<p>Open GitHub Copilot Chat in your Codespace and enter this prompt:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>I want you to create an issue on GitHub that we will then assign to the
+GitHub coding agent: We want to change the behavior of the system.
+Right now, when the measurement is below the minimum threshold, the
+first LED is red. However, I want every 10th LED to flash red with a
+1-second frequency. Please update the requirements document
+(docs/11_requirements/req_display.rst), update and extend the design
+document (docs/12_design/spec_display.rst), and implement the solution.
+</pre></div>
+</div>
+<p>This guides Copilot Chat Agent to:</p>
+<ul class="simple">
+<li><p>Generate a GitHub issue via GitHub MCP server</p></li>
+<li><p>Reference requirements and design documentation</p></li>
+<li><p>Request full documentation + implementation updates</p></li>
+</ul>
+</section>
+<section id="step-2-assign-to-coding-agent">
+<h3>Step 2: Assign to Coding Agent<a class="headerlink" href="#step-2-assign-to-coding-agent" title="Link to this heading">¶</a></h3>
+<p>You have two options:</p>
+<p><strong>Option A: Assign via GitHub Website</strong></p>
+<ol class="arabic simple">
+<li><p>Navigate to repository’s <strong>“Issues”</strong> tab on GitHub</p></li>
+<li><p>Locate the newly created issue</p></li>
+<li><p>Click <strong>“Assignees”</strong> → Select <strong>GitHub Coding Agent</strong></p></li>
+</ol>
+<p><strong>Option B: Assign via Copilot Chat</strong></p>
+<p>Enter this prompt in Copilot Chat:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Please assign the new issue to the GitHub coding agent.
+</pre></div>
+</div>
+<p>Either method routes the issue to the Coding Agent for implementation.</p>
+</section>
+<section id="step-3-watch-the-pr-process">
+<h3>Step 3: Watch the PR Process<a class="headerlink" href="#step-3-watch-the-pr-process" title="Link to this heading">¶</a></h3>
+<p>The GitHub Coding Agent will automatically begin work by creating a pull request (PR).</p>
+<p><strong>Monitor Progress:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Navigate to Pull Requests tab</strong> in your repository</p></li>
+<li><p><strong>Locate the new PR</strong> - Title references the issue</p></li>
+<li><p><strong>Follow the timeline:</strong></p>
+<ul class="simple">
+<li><p>Agent sets up development environment (~2 minutes)</p></li>
+<li><p>Updates requirements document (<code class="docutils literal notranslate"><span class="pre">req_display.rst</span></code>)</p></li>
+<li><p>Updates design document (<code class="docutils literal notranslate"><span class="pre">spec_display.rst</span></code>)</p></li>
+<li><p>Implements code changes in <code class="docutils literal notranslate"><span class="pre">display_logic.c</span></code></p></li>
+<li><p>Commits with proper traceability references</p></li>
+<li><p>Runs automated tests/checks</p></li>
+<li><p>Requests your review</p></li>
+</ul>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Typical Duration:</strong> 10-15 minutes for complete PR creation</p>
+</div>
+<p><strong>PR Monitoring Tips:</strong></p>
+<ul class="simple">
+<li><p>View <strong>“Commits”</strong> tab to see incremental changes</p></li>
+<li><p>Check <strong>“Files changed”</strong> to review modifications</p></li>
+<li><p>Watch <strong>“Checks”</strong> for CI/CD pipeline status</p></li>
+<li><p>Read <strong>“Conversation”</strong> for agent’s explanations</p></li>
+</ul>
+</section>
+<section id="step-4-review-and-test">
+<h3>Step 4: Review and Test<a class="headerlink" href="#step-4-review-and-test" title="Link to this heading">¶</a></h3>
+<p><strong>In VS Code:</strong></p>
+<ol class="arabic">
+<li><p><strong>Check out the PR branch:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>fetch<span class="w"> </span>origin
+git<span class="w"> </span>checkout<span class="w"> </span>fix/led-flashing-pattern<span class="w">  </span><span class="c1"># Branch name from PR</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Build the project:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>idf.py<span class="w"> </span>build
+</pre></div>
+</div>
+</li>
+<li><p><strong>Flash to hardware or run in QEMU:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Hardware</span>
+idf.py<span class="w"> </span>flash<span class="w"> </span>monitor
+
+<span class="c1"># QEMU</span>
+./tools/qemu/run_qemu.sh
+</pre></div>
+</div>
+</li>
+<li><p><strong>Test the new behavior:</strong></p>
+<ul class="simple">
+<li><p>Move object <strong>below minimum threshold</strong> (&lt; 10cm)</p></li>
+<li><p>Watch every 10th LED flash red (1 Hz)</p></li>
+<li><p>Verify no impact on distance measurement responsiveness</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Review Documentation:</strong></p>
+<ol class="arabic simple">
+<li><p>Open <code class="docutils literal notranslate"><span class="pre">docs/11_requirements/req_display.rst</span></code></p></li>
+<li><p>Look for <strong>new requirement</strong> added by Coding Agent</p></li>
+<li><p>Check <strong>requirement ID</strong> and <strong>traceability links</strong></p></li>
+<li><p>Open <code class="docutils literal notranslate"><span class="pre">docs/12_design/spec_display.rst</span></code></p></li>
+<li><p>Review <strong>design specification</strong> for flashing algorithm</p></li>
+<li><p>Verify <strong>bidirectional traceability</strong> (requirements ↔ design ↔ code)</p></li>
+</ol>
+<p><strong>Check Code Quality:</strong></p>
+<p>The Coding Agent follows project coding standards:</p>
+<ul class="simple">
+<li><p>✅ Requirements traceability comments in code</p></li>
+<li><p>✅ Design rationale in function headers</p></li>
+<li><p>✅ ESP-IDF naming conventions</p></li>
+<li><p>✅ Proper error handling</p></li>
+<li><p>✅ Non-blocking timer implementation</p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Key Learning:</strong> Notice how the Coding Agent implemented time-based flashing
+without using <code class="docutils literal notranslate"><span class="pre">vTaskDelay()</span></code> which would block the measurement task!
+This demonstrates proper FreeRTOS task design.</p>
+</div>
+</section>
+<section id="step-5-approve-and-merge">
+<h3>Step 5: Approve and Merge<a class="headerlink" href="#step-5-approve-and-merge" title="Link to this heading">¶</a></h3>
+<p>If everything works:</p>
+<ol class="arabic simple">
+<li><p><strong>Add review comment</strong> in GitHub PR</p></li>
+<li><p><strong>Approve the PR</strong></p></li>
+<li><p><strong>Merge to main branch</strong></p></li>
+</ol>
+<p>If issues found:</p>
+<ol class="arabic simple">
+<li><p><strong>Comment on specific lines</strong> in PR</p></li>
+<li><p><strong>Request changes</strong> from Coding Agent</p></li>
+<li><p><strong>Agent will update</strong> and push new commits</p></li>
+</ol>
+</section>
+<section id="creative-led-pattern-ideas">
+<h3>Creative LED Pattern Ideas<a class="headerlink" href="#creative-led-pattern-ideas" title="Link to this heading">¶</a></h3>
+<p>Want to go beyond the exercise? Try these extensions:</p>
+<p><strong>Distance-Based Color Gradients:</strong></p>
+<ul class="simple">
+<li><p>Green for close range (10-20cm)</p></li>
+<li><p>Yellow for mid-range (20-35cm)</p></li>
+<li><p>Red for far range (35-50cm)</p></li>
+<li><p>Smooth color transitions</p></li>
+</ul>
+<p><strong>Animated Effects:</strong></p>
+<ul class="simple">
+<li><p>LED “wave” effect that sweeps along strip</p></li>
+<li><p>Breathing animation (fade in/out)</p></li>
+<li><p>Rainbow color cycling</p></li>
+<li><p>Proximity-based speed changes</p></li>
+</ul>
+<p><strong>Threshold Alerts:</strong></p>
+<ul class="simple">
+<li><p>Rapid flashing when object too close (&lt; 5cm)</p></li>
+<li><p>Slow pulse when object too far (&gt; 50cm)</p></li>
+<li><p>All LEDs flash on error condition</p></li>
+</ul>
+<p><strong>Custom Patterns:</strong></p>
+<ul class="simple">
+<li><p>Progress bar showing distance as percentage</p></li>
+<li><p>Alternating colors based on distance zones</p></li>
+<li><p>Binary counter display (nerdy!)</p></li>
+<li><p>Your own creative ideas!</p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Implementation Approach:</strong> For each new idea, follow the same workflow:</p>
+<ol class="arabic simple">
+<li><p>Create GitHub issue describing desired behavior</p></li>
+<li><p>Assign to Coding Agent</p></li>
+<li><p>Review PR with documentation updates</p></li>
+<li><p>Test and iterate</p></li>
+</ol>
+</div>
+</section>
+</section>
+<section id="exercise-b-improve-distance-filtering">
+<h2>Exercise B: Improve Distance Filtering<a class="headerlink" href="#exercise-b-improve-distance-filtering" title="Link to this heading">¶</a></h2>
+<p><strong>Difficulty:</strong> Advanced
+<strong>Time:</strong> 45-60 minutes
+<strong>Skills:</strong> Signal processing, numerical methods, cross-component changes</p>
+<section id="id1">
+<h3>Objective<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<p>Learn how GitHub Coding Agent handles <strong>multi-file refactoring</strong> across components.</p>
+</section>
+<section id="background">
+<h3>Background<a class="headerlink" href="#background" title="Link to this heading">¶</a></h3>
+<p>This project previously used floating-point arithmetic for distance calculations.
+With a single GitHub issue, the Coding Agent converted the entire system to
+<strong>fixed-point integer math</strong>, improving:</p>
+<ul class="simple">
+<li><p>Performance (no FPU overhead)</p></li>
+<li><p>Predictability (deterministic timing)</p></li>
+<li><p>Memory usage (smaller binary)</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Historical Context:</strong> The codebase was migrated from <code class="docutils literal notranslate"><span class="pre">float</span></code> to <code class="docutils literal notranslate"><span class="pre">int</span></code>
+using fixed-point arithmetic (16-bit fractional representation). You can reverse
+this or explore other numerical methods!</p>
+</div>
+</section>
+<section id="your-mission">
+<h3>Your Mission<a class="headerlink" href="#your-mission" title="Link to this heading">¶</a></h3>
+<p>Choose one of these improvements:</p>
+<p><strong>Option 1: Revert to Floating Point</strong></p>
+<p>Create an issue requesting conversion back to floating-point arithmetic:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>I want to use floating-point arithmetic for distance calculations instead
+of fixed-point integers. Please update all distance sensor and display logic
+components to use `float` types, update calculations accordingly, and verify
+accuracy is maintained. Update requirements and design docs.
+</pre></div>
+</div>
+<p><strong>Option 2: Implement Kalman Filtering</strong></p>
+<p>Add advanced filtering to smooth noisy sensor readings:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>The distance sensor readings are noisy. Please implement a simple Kalman
+filter to smooth the measurements. Add a new requirement for filtering,
+update the design specification with filter equations, and implement in
+the distance_sensor component. Ensure filter state persists across measurements.
+</pre></div>
+</div>
+<p><strong>Option 3: Add Moving Average Filter</strong></p>
+<p>Implement a simple but effective noise reduction:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Add a 5-sample moving average filter to the distance sensor readings to
+reduce noise. Document as a new requirement, specify filter design, and
+implement a circular buffer for efficient computation. Verify filtering
+does not introduce unacceptable latency.
+</pre></div>
+</div>
+</section>
+<section id="what-to-observe">
+<h3>What to Observe<a class="headerlink" href="#what-to-observe" title="Link to this heading">¶</a></h3>
+<p>Watch how the Coding Agent:</p>
+<ul class="simple">
+<li><p><strong>Identifies affected files</strong> across multiple components</p></li>
+<li><p><strong>Updates multiple requirements</strong> (sensor + display)</p></li>
+<li><p><strong>Maintains traceability</strong> across all changes</p></li>
+<li><p><strong>Preserves interfaces</strong> between components</p></li>
+<li><p><strong>Tests thoroughly</strong> to prevent regressions</p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Multi-Component Changes:</strong> This exercise demonstrates the Coding Agent’s
+ability to understand system architecture and make coordinated changes
+across loosely-coupled components.</p>
+</div>
+</section>
+</section>
+<section id="exercise-c-led-animation-on-website">
+<h2>Exercise C: LED Animation on Website<a class="headerlink" href="#exercise-c-led-animation-on-website" title="Link to this heading">¶</a></h2>
+<p><strong>Difficulty:</strong> Advanced
+<strong>Time:</strong> 60-90 minutes
+<strong>Skills:</strong> Web development, real-time updates, full-stack integration</p>
+<section id="id2">
+<h3>Objective<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<p>Add real-time LED strip visualization to the web interface showing current LED states.</p>
+</section>
+<section id="challenge-description">
+<h3>Challenge Description<a class="headerlink" href="#challenge-description" title="Link to this heading">¶</a></h3>
+<p><strong>Current Web Interface:</strong></p>
+<ul class="simple">
+<li><p>Static HTML page</p></li>
+<li><p>Displays distance reading (when implemented)</p></li>
+<li><p>No LED visualization</p></li>
+</ul>
+<p><strong>Desired Web Interface:</strong></p>
+<ul class="simple">
+<li><p>Real-time LED strip animation</p></li>
+<li><p>Mirrors physical LED states</p></li>
+<li><p>Updates 10-30 times per second</p></li>
+<li><p>Shows colors, brightness, animations</p></li>
+</ul>
+</section>
+<section id="implementation-approaches">
+<h3>Implementation Approaches<a class="headerlink" href="#implementation-approaches" title="Link to this heading">¶</a></h3>
+<p><strong>Approach 1: WebSocket Streaming</strong></p>
+<p>Create an issue requesting WebSocket-based real-time updates:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>I want to see the LED strip state in real-time on the web interface.
+Please add WebSocket support to the web server, stream LED state updates
+from the display_logic component, and create an HTML5 canvas visualization
+that shows all 40 LEDs with their current colors. Update requirements for
+real-time web interface.
+</pre></div>
+</div>
+<p><strong>Approach 2: SSE (Server-Sent Events)</strong></p>
+<p>Simpler alternative using HTTP streaming:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Add real-time LED visualization using Server-Sent Events (SSE). Stream
+LED state updates to the web interface and create a simple HTML/CSS
+representation of the LED strip. Include CSS animations for smooth
+color transitions.
+</pre></div>
+</div>
+<p><strong>Approach 3: AJAX Polling</strong></p>
+<p>Simplest implementation (less smooth but easier):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Add a REST API endpoint that returns current LED strip state as JSON.
+Create a JavaScript polling mechanism (10 Hz) that fetches LED states
+and updates an HTML canvas or CSS grid visualization. Include color
+interpolation for smooth appearance.
+</pre></div>
+</div>
+</section>
+<section id="bonus-challenges">
+<h3>Bonus Challenges<a class="headerlink" href="#bonus-challenges" title="Link to this heading">¶</a></h3>
+<p>Once basic visualization works, try these enhancements:</p>
+<ul class="simple">
+<li><p><strong>3D LED strip visualization</strong> using Three.js or WebGL</p></li>
+<li><p><strong>Color picker interface</strong> to manually set LED colors</p></li>
+<li><p><strong>Animation presets</strong> (rainbow, wave, pulse) selectable from web UI</p></li>
+<li><p><strong>Record and replay</strong> LED patterns</p></li>
+<li><p><strong>Multi-device sync</strong> showing same animation across multiple ESP32s</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Competition:</strong> First person to implement this wins bragging rights! 🏆</p>
+<p>Share your solution in GitHub Discussions!</p>
+</div>
+</section>
+<section id="what-you-ll-learn">
+<h3>What You’ll Learn<a class="headerlink" href="#what-you-ll-learn" title="Link to this heading">¶</a></h3>
+<p>This exercise covers:</p>
+<ul class="simple">
+<li><p>Real-time web communication protocols</p></li>
+<li><p>Efficient data serialization (LED states)</p></li>
+<li><p>Browser rendering optimization</p></li>
+<li><p>ESP32 memory management for web sockets</p></li>
+<li><p>HTML5 Canvas or CSS Grid layouts</p></li>
+<li><p>JavaScript animation techniques</p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Memory Constraint:</strong> ESP32 has limited RAM! Consider sending only
+changed LEDs (delta encoding) instead of full strip state every frame.</p>
+</div>
+</section>
+</section>
+<section id="exercise-d-custom-feature-your-choice">
+<h2>Exercise D: Custom Feature (Your Choice)<a class="headerlink" href="#exercise-d-custom-feature-your-choice" title="Link to this heading">¶</a></h2>
+<p><strong>Difficulty:</strong> Your choice
+<strong>Time:</strong> Varies
+<strong>Skills:</strong> Creativity, problem-solving, system integration</p>
+<section id="id3">
+<h3>Your Mission<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<p>Design and implement your own feature using GitHub Coding Agent!</p>
+<p>Feature Ideas:</p>
+<p><strong>Hardware Enhancements:</strong></p>
+<ul class="simple">
+<li><p>Add buzzer for audio alerts at thresholds</p></li>
+<li><p>Integrate temperature sensor (BME280)</p></li>
+<li><p>Add push button for mode switching</p></li>
+<li><p>Connect OLED display (SSD1306) for readings</p></li>
+</ul>
+<p><strong>Software Features:</strong></p>
+<ul class="simple">
+<li><p>Data logging to SD card or NVS</p></li>
+<li><p>MQTT integration for IoT dashboard</p></li>
+<li><p>Home Assistant integration</p></li>
+<li><p>Bluetooth LE proximity alerts</p></li>
+<li><p>OTA (Over-The-Air) firmware updates</p></li>
+</ul>
+<p><strong>User Interface:</strong></p>
+<ul class="simple">
+<li><p>Configuration web page (see existing design!)</p></li>
+<li><p>Mobile app using BLE</p></li>
+<li><p>REST API for automation</p></li>
+<li><p>Captive portal improvements</p></li>
+</ul>
+<p><strong>Algorithm Enhancements:</strong></p>
+<ul class="simple">
+<li><p>Multi-zone detection (multiple sensors)</p></li>
+<li><p>Object speed calculation (velocity tracking)</p></li>
+<li><p>Gesture recognition (swipe patterns)</p></li>
+<li><p>Environmental compensation (temperature/humidity)</p></li>
+</ul>
+</section>
+<section id="implementation-guidelines">
+<h3>Implementation Guidelines<a class="headerlink" href="#implementation-guidelines" title="Link to this heading">¶</a></h3>
+<p>For any custom feature:</p>
+<ol class="arabic simple">
+<li><p><strong>Write clear issue</strong> describing desired behavior</p></li>
+<li><p><strong>Include acceptance criteria</strong> (how to verify it works)</p></li>
+<li><p><strong>Reference existing docs</strong> (requirements, design, API)</p></li>
+<li><p><strong>Specify traceability</strong> (which requirements affected)</p></li>
+<li><p><strong>Assign to Coding Agent</strong> and monitor PR</p></li>
+<li><p><strong>Test thoroughly</strong> on hardware and/or QEMU</p></li>
+<li><p><strong>Document your work</strong> (update README if significant)</p></li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Start Small:</strong> Begin with simple features and gradually increase complexity.
+GitHub Coding Agent handles incremental improvements well!</p>
+</div>
+</section>
+</section>
+<section id="tips-for-success">
+<h2>Tips for Success<a class="headerlink" href="#tips-for-success" title="Link to this heading">¶</a></h2>
+<section id="best-practices">
+<h3>Best Practices<a class="headerlink" href="#best-practices" title="Link to this heading">¶</a></h3>
+<p><strong>Clear Issue Descriptions:</strong></p>
+<ul class="simple">
+<li><p>✅ Specific, measurable requirements</p></li>
+<li><p>✅ Reference existing documentation</p></li>
+<li><p>✅ Include acceptance criteria</p></li>
+<li><p>✅ Mention affected components</p></li>
+<li><p>❌ Vague requests without context</p></li>
+</ul>
+<p><strong>Effective Prompts:</strong></p>
+<ul class="simple">
+<li><p>✅ “Update requirements and design docs”</p></li>
+<li><p>✅ “Maintain traceability to REQ_DSP_*”</p></li>
+<li><p>✅ “Follow ESP32 coding standards”</p></li>
+<li><p>✅ “Test on hardware and QEMU”</p></li>
+<li><p>❌ “Just make it work”</p></li>
+</ul>
+<p><strong>Review Process:</strong></p>
+<ul class="simple">
+<li><p>✅ Read all changed files carefully</p></li>
+<li><p>✅ Verify requirements↔design↔code links</p></li>
+<li><p>✅ Test on real hardware (not just QEMU)</p></li>
+<li><p>✅ Check for memory leaks or resource issues</p></li>
+<li><p>✅ Validate timing and real-time behavior</p></li>
+</ul>
+</section>
+<section id="debugging-tips">
+<h3>Debugging Tips<a class="headerlink" href="#debugging-tips" title="Link to this heading">¶</a></h3>
+<p><strong>Build Errors:</strong></p>
+<ul class="simple">
+<li><p>Check component dependencies in <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code></p></li>
+<li><p>Verify all header includes are correct</p></li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">idf.py</span> <span class="pre">fullclean</span></code> then rebuild</p></li>
+</ul>
+<p><strong>Runtime Issues:</strong></p>
+<ul class="simple">
+<li><p>Enable verbose logging: <code class="docutils literal notranslate"><span class="pre">idf.py</span> <span class="pre">menuconfig</span></code> → Component config → Log output</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">ESP_LOGI/LOGD</span></code> liberally in code</p></li>
+<li><p>Monitor heap usage: <code class="docutils literal notranslate"><span class="pre">esp_get_free_heap_size()</span></code></p></li>
+<li><p>Check FreeRTOS task stack sizes</p></li>
+</ul>
+<p><strong>Hardware Problems:</strong></p>
+<ul class="simple">
+<li><p>Verify wiring matches pin configuration in code</p></li>
+<li><p>Check power supply sufficient for LEDs</p></li>
+<li><p>Test components individually before integration</p></li>
+<li><p>Use logic analyzer or oscilloscope if available</p></li>
+</ul>
+</section>
+<section id="common-pitfalls">
+<h3>Common Pitfalls<a class="headerlink" href="#common-pitfalls" title="Link to this heading">¶</a></h3>
+<p>❌ <strong>Blocking in Tasks:</strong></p>
+<p>Don’t use <code class="docutils literal notranslate"><span class="pre">vTaskDelay()</span></code> in measurement tasks—use timers!</p>
+<p>❌ <strong>Forgetting Documentation:</strong></p>
+<p>Always update requirements and design docs with code changes.</p>
+<p>❌ <strong>Ignoring Memory Limits:</strong></p>
+<p>ESP32 has limited RAM—monitor heap carefully!</p>
+<p>❌ <strong>Not Testing on Hardware:</strong></p>
+<p>QEMU is great but doesn’t catch timing issues or hardware quirks.</p>
+</section>
+</section>
+<section id="getting-help">
+<h2>Getting Help<a class="headerlink" href="#getting-help" title="Link to this heading">¶</a></h2>
+<p><strong>During Workshop:</strong></p>
+<ul class="simple">
+<li><p>Ask facilitator or mentor</p></li>
+<li><p>Collaborate with other participants</p></li>
+<li><p>Use GitHub Copilot Chat for quick questions</p></li>
+<li><p>Check <a class="reference internal" href="../90_guides/index.html"><span class="doc">Development Guide</span></a> for detailed guides</p></li>
+</ul>
+<p><strong>After Workshop:</strong></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/enthali/esp32-distance/issues">GitHub Issues</a> - Bug reports</p></li>
+<li><p><a class="reference external" href="https://github.com/enthali/esp32-distance/discussions">GitHub Discussions</a> - Q&amp;A</p></li>
+<li><p>Main documentation: <a class="reference internal" href="../index.html"><span class="doc">ESP32 Distance Sensor</span></a></p></li>
+<li><p>Requirements: <a class="reference internal" href="../11_requirements/index.html"><span class="doc">Requirements Documentation</span></a></p></li>
+<li><p>Design specs: <a class="reference internal" href="../12_design/index.html"><span class="doc">Design Specifications</span></a></p></li>
+</ul>
+</section>
+<section id="share-your-work">
+<h2>Share Your Work<a class="headerlink" href="#share-your-work" title="Link to this heading">¶</a></h2>
+<p>Completed an exercise? Share it with the community!</p>
+<p><strong>GitHub Discussions:</strong></p>
+<p>Post your implementation, challenges faced, and lessons learned.</p>
+<p><strong>Pull Requests:</strong></p>
+<p>If you implemented something useful, contribute it back:</p>
+<ol class="arabic simple">
+<li><p>Fork the repository (if not already)</p></li>
+<li><p>Create feature branch</p></li>
+<li><p>Implement and document</p></li>
+<li><p>Submit PR with description</p></li>
+<li><p>Maintainers will review</p></li>
+</ol>
+<p><strong>Social Media:</strong></p>
+<p>Share your project on Twitter/X, LinkedIn, or Reddit with:</p>
+<ul class="simple">
+<li><p>Photos/videos of working hardware</p></li>
+<li><p>Code snippets or architecture diagrams</p></li>
+<li><p>Lessons learned and tips</p></li>
+<li><p>Tag <code class="docutils literal notranslate"><span class="pre">#ESP32</span></code> <code class="docutils literal notranslate"><span class="pre">#IoT</span></code> <code class="docutils literal notranslate"><span class="pre">#GitHubCopilot</span></code></p></li>
+</ul>
+</section>
+<section id="what-s-next">
+<h2>What’s Next?<a class="headerlink" href="#what-s-next" title="Link to this heading">¶</a></h2>
+<p>After completing exercises:</p>
+<ul class="simple">
+<li><p><strong>Explore Architecture:</strong> <span class="xref std std-doc">../03_architecture/index</span></p></li>
+<li><p><strong>Read API Documentation:</strong> <a class="reference internal" href="../21_api/index.html"><span class="doc">API Reference</span></a></p></li>
+<li><p><strong>Study Requirements:</strong> <a class="reference internal" href="../11_requirements/index.html"><span class="doc">Requirements Documentation</span></a></p></li>
+<li><p><strong>Review Design Specs:</strong> <a class="reference internal" href="../12_design/index.html"><span class="doc">Design Specifications</span></a></p></li>
+<li><p><strong>Build Your Own Project:</strong> Use this as a template!</p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Template Project:</strong> This repository is designed as a template!
+Fork it and build your own ESP32 IoT projects with the same structure,
+documentation methodology, and development workflow.</p>
+</div>
+<p>—</p>
+<p><strong>Have fun experimenting!</strong> 🚀 <strong>Happy coding!</strong> 💻</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Feedback Welcome:</strong> Found an issue or have suggestions for exercises?
+Open an issue or discussion on GitHub!</p>
+</div>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="../11_requirements/index.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Requirements Documentation</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="hardware-setup.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Hardware Setup</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2025, ESP32 Distance Sensor Team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Workshop Exercises</a><ul>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#exercise-a-extend-led-patterns">Exercise A: Extend LED Patterns</a><ul>
+<li><a class="reference internal" href="#objective">Objective</a></li>
+<li><a class="reference internal" href="#step-1-create-github-issue">Step 1: Create GitHub Issue</a></li>
+<li><a class="reference internal" href="#step-2-assign-to-coding-agent">Step 2: Assign to Coding Agent</a></li>
+<li><a class="reference internal" href="#step-3-watch-the-pr-process">Step 3: Watch the PR Process</a></li>
+<li><a class="reference internal" href="#step-4-review-and-test">Step 4: Review and Test</a></li>
+<li><a class="reference internal" href="#step-5-approve-and-merge">Step 5: Approve and Merge</a></li>
+<li><a class="reference internal" href="#creative-led-pattern-ideas">Creative LED Pattern Ideas</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#exercise-b-improve-distance-filtering">Exercise B: Improve Distance Filtering</a><ul>
+<li><a class="reference internal" href="#id1">Objective</a></li>
+<li><a class="reference internal" href="#background">Background</a></li>
+<li><a class="reference internal" href="#your-mission">Your Mission</a></li>
+<li><a class="reference internal" href="#what-to-observe">What to Observe</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#exercise-c-led-animation-on-website">Exercise C: LED Animation on Website</a><ul>
+<li><a class="reference internal" href="#id2">Objective</a></li>
+<li><a class="reference internal" href="#challenge-description">Challenge Description</a></li>
+<li><a class="reference internal" href="#implementation-approaches">Implementation Approaches</a></li>
+<li><a class="reference internal" href="#bonus-challenges">Bonus Challenges</a></li>
+<li><a class="reference internal" href="#what-you-ll-learn">What You’ll Learn</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#exercise-d-custom-feature-your-choice">Exercise D: Custom Feature (Your Choice)</a><ul>
+<li><a class="reference internal" href="#id3">Your Mission</a></li>
+<li><a class="reference internal" href="#implementation-guidelines">Implementation Guidelines</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tips-for-success">Tips for Success</a><ul>
+<li><a class="reference internal" href="#best-practices">Best Practices</a></li>
+<li><a class="reference internal" href="#debugging-tips">Debugging Tips</a></li>
+<li><a class="reference internal" href="#common-pitfalls">Common Pitfalls</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#getting-help">Getting Help</a></li>
+<li><a class="reference internal" href="#share-your-work">Share Your Work</a></li>
+<li><a class="reference internal" href="#what-s-next">What’s Next?</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../_static/documentation_options.js?v=51b770b3"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
+    <script src="../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>
+    <script src="../_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
+    <script src="../_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
+    <script src="../_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
+    </body>
+</html>

@@ -1,0 +1,1552 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Web Server Design Specification" href="spec_web_server.html"><link rel="prev" title="JSON-Based Configuration Manager Design" href="spec_config_manager_json.html">
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+        <title>Configuration Webpage Design Specification - ESP32 Distance Sensor</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/modern.css?v=803738c0" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2dda3639" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">ESP32 Distance Sensor</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <span class="sidebar-brand-text">ESP32 Distance Sensor</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../01_overview/index.html">Project Overview</a><input aria-label="Toggle navigation of Project Overview" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../01_overview/introduction.html">Project Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_overview/hardware.html">Hardware Specifications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_overview/quick-start.html">Quick Start Guide</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../05_workshop/index.html">Workshop Overview</a><input aria-label="Toggle navigation of Workshop Overview" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../05_workshop/prerequisites.html">Workshop Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_workshop/getting-started.html">Getting Started with the Workshop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_workshop/hardware-setup.html">Hardware Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_workshop/exercises.html">Workshop Exercises</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../11_requirements/index.html">Requirements Documentation</a><input aria-label="Toggle navigation of Requirements Documentation" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_system.html">System Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_web_server.html">Web Server Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_config_manager_json.html">JSON-Based Configuration Manager Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_netif_tunnel.html">Network Interface Tunnel Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_distance_sensor.html">Distance Sensor Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_led_controller.html">LED Controller Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_display.html">Display System Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_startup_test.html">Startup Test Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Design Specifications</a><input aria-label="Toggle navigation of Design Specifications" checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="spec_high_level_architecture.html">High-Level Architecture Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spec_config_manager_json.html">JSON-Based Configuration Manager Design</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Configuration Webpage Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spec_web_server.html">Web Server Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spec_distance_sensor.html">Distance Sensor Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spec_led_controller.html">LED Controller Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spec_display.html">Display System Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spec_startup_test.html">Startup Test Design Specification</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../21_api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_config_manager.html">Config Manager API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_led_controller.html">LED Controller API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_distance_sensor.html">Distance Sensor API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_display_logic.html">Display Logic API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_startup_tests.html">Startup Tests API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_netif_uart_tunnel.html">Network Tunnel API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_cert_handler.html">Certificate Handler API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_web_server.html">Web Server API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_wifi_manager.html">WiFi Manager API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../31_traceability/index.html">Traceability</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../90_guides/index.html">Development Guide</a><input aria-label="Toggle navigation of Development Guide" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/devcontainer.html">Development Container Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/pre-commit-hooks.html">Pre-commit Hooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/qemu-emulator.html">QEMU Emulator Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/web-flasher.html">Web-Based Firmware Flashing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/debugging.html">Debugging Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/qemu-network-internals.html">QEMU Network Internals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/known-issues.html">Known Issues and Limitations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../legal/impressum.html">Impressum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../legal/datenschutz.html">Datenschutzerklärung</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/12_design/spec_config_webpage.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="configuration-webpage-design-specification">
+<h1>Configuration Webpage Design Specification<a class="headerlink" href="#configuration-webpage-design-specification" title="Link to this heading">¶</a></h1>
+<p>This document specifies the design of the browser-based configuration interface that provides schema-driven dynamic form generation, bulk configuration management, and factory reset capabilities.</p>
+<section id="architecture-overview">
+<h2>Architecture Overview<a class="headerlink" href="#architecture-overview" title="Link to this heading">¶</a></h2>
+<div class="need_container docutils container" id="SNCB-d1f1ce94">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_CFG_WEB_ARCH_1">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Design Specification</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">Configuration Webpage Architecture</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#SPEC_CFG_WEB_ARCH_1" title="SPEC_CFG_WEB_ARCH_1">SPEC_CFG_WEB_ARCH_1</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">frontend</span><span class="needs_spacer">, </span><span class="needs_data">javascript</span><span class="needs_spacer">, </span><span class="needs_data">ui</span></span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_web_server.html#REQ_WEB_CONF_1" title="SPEC_CFG_WEB_ARCH_1">REQ_WEB_CONF_1</a>, <a class="reference internal" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_12" title="SPEC_CFG_WEB_ARCH_1">REQ_CFG_JSON_12</a>, <a class="reference internal" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_13" title="SPEC_CFG_WEB_ARCH_1">REQ_CFG_JSON_13</a></span></span></div>
+<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="#SPEC_CFG_WEB_FLOW_1" title="SPEC_CFG_WEB_ARCH_1">SPEC_CFG_WEB_FLOW_1</a>, <a class="reference internal" href="#SPEC_CFG_WEB_FORM_1" title="SPEC_CFG_WEB_ARCH_1">SPEC_CFG_WEB_FORM_1</a>, <a class="reference internal" href="#SPEC_CFG_WEB_MAPPING_1" title="SPEC_CFG_WEB_ARCH_1">SPEC_CFG_WEB_MAPPING_1</a>, <a class="reference internal" href="#SPEC_CFG_WEB_STATE_1" title="SPEC_CFG_WEB_ARCH_1">SPEC_CFG_WEB_STATE_1</a>, <a class="reference internal" href="#SPEC_CFG_WEB_COUNTDOWN_1" title="SPEC_CFG_WEB_ARCH_1">SPEC_CFG_WEB_COUNTDOWN_1</a>, <a class="reference internal" href="#SPEC_CFG_WEB_ERROR_1" title="SPEC_CFG_WEB_ARCH_1">SPEC_CFG_WEB_ERROR_1</a>, <a class="reference internal" href="#SPEC_CFG_WEB_INIT_1" title="SPEC_CFG_WEB_ARCH_1">SPEC_CFG_WEB_INIT_1</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>Overview:</strong>
+The configuration webpage is a single-page JavaScript application that dynamically generates configuration forms from JSON schema and manages all configuration operations through RESTful bulk APIs.</p>
+<p><strong>Architecture Layers:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Schema Processing Layer</strong>:
+- Fetch JSON schema from <code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/api/config/schema</span></code>
+- Parse schema field definitions (key, type, label, description, validation)
+- Cache schema for form generation and validation</p></li>
+<li><p><strong>Form Generation Layer</strong>:
+- Dynamic HTML form element creation based on schema types
+- Input type mapping (string → text, integer → number, boolean → checkbox)
+- Validation attribute generation (min, max, pattern, required)
+- Label and description rendering</p></li>
+<li><p><strong>Data Management Layer</strong>:
+- Fetch configuration as structured JSON array <code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/api/config</span></code>
+- Parse <code class="docutils literal notranslate"><span class="pre">{key,</span> <span class="pre">type,</span> <span class="pre">value}</span></code> objects
+- Update form fields with current values
+- Collect form data and generate structured JSON for save operations</p></li>
+<li><p><strong>API Integration Layer</strong>:
+- HTTP client for REST API communication
+- Error handling and retry logic
+- Response parsing and status code handling
+- Loading state management</p></li>
+<li><p><strong>User Interaction Layer</strong>:
+- Save button: Collect form → Generate JSON → <code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/api/config</span></code>
+- Restore button: Fetch current config → Update form
+- Factory Reset button: Confirmation dialog → <code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/api/config/reset</span></code>
+- Reset countdown modal with timer display</p></li>
+</ol>
+<p><strong>Component Dependencies:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/api/config/schema</span></code>: JSON schema endpoint (config_manager)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/api/config</span></code>: Bulk configuration GET/POST endpoint (web_server → config_manager)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/api/config/reset</span></code>: Factory reset endpoint (web_server → config_manager)</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="data-flow-architecture">
+<h2>Data Flow Architecture<a class="headerlink" href="#data-flow-architecture" title="Link to this heading">¶</a></h2>
+<div class="need_container docutils container" id="SNCB-f3e3bf0d">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_CFG_WEB_FLOW_1">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Design Specification</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">Configuration Data Flow</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#SPEC_CFG_WEB_FLOW_1" title="SPEC_CFG_WEB_FLOW_1">SPEC_CFG_WEB_FLOW_1</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">data-flow</span><span class="needs_spacer">, </span><span class="needs_data">json</span><span class="needs_spacer">, </span><span class="needs_data">api</span></span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#SPEC_CFG_WEB_ARCH_1" title="SPEC_CFG_WEB_FLOW_1">SPEC_CFG_WEB_ARCH_1</a>, <a class="reference internal" href="spec_config_manager_json.html#SPEC_CFG_JSON_BULK_1" title="SPEC_CFG_WEB_FLOW_1">SPEC_CFG_JSON_BULK_1</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>Page Load Sequence:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1. Browser loads settings.html
+   ↓
+2. JavaScript fetches schema: GET /api/config/schema
+   ↓
+3. Parse schema → Generate form HTML dynamically
+   ↓
+4. Fetch current config: GET /api/config
+   ↓
+5. Parse [{key, type, value}, ...] → Update form fields
+   ↓
+6. Enable user interaction (Save, Restore, Factory Reset)
+</pre></div>
+</div>
+<p><strong>Save Configuration Flow:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1. User clicks &quot;Save&quot; button
+   ↓
+2. JavaScript collects form values
+   ↓
+3. Build structured JSON array:
+   [
+     {key: &quot;wifi_ssid&quot;, type: &quot;string&quot;, value: &quot;MyNetwork&quot;},
+     {key: &quot;led_count&quot;, type: &quot;integer&quot;, value: 50},
+     ...
+   ]
+   ↓
+4. POST /api/config with JSON body
+   ↓
+5. Server responds: 200 OK or error
+   ↓
+6. Show success message + reset countdown modal
+   ↓
+7. Auto-reload page after countdown (device reboots)
+</pre></div>
+</div>
+<p><strong>Restore Configuration Flow:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1. User clicks &quot;Restore&quot; button
+   ↓
+2. Fetch current config: GET /api/config
+   ↓
+3. Parse structured JSON array
+   ↓
+4. Update all form fields with current values
+   ↓
+5. Show success message
+</pre></div>
+</div>
+<p><strong>Factory Reset Flow:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1. User clicks &quot;Factory Reset&quot; button
+   ↓
+2. Show confirmation dialog: &quot;This will reset all settings!&quot;
+   ↓
+3. User confirms
+   ↓
+4. POST /api/config/reset
+   ↓
+5. Server responds: 200 OK (device will reboot)
+   ↓
+6. Show countdown modal: &quot;Device resetting in 5...4...3...2...1&quot;
+   ↓
+7. Auto-redirect to WiFi setup page (device rebooted to defaults)
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="schema-driven-form-generation">
+<h2>Schema-Driven Form Generation<a class="headerlink" href="#schema-driven-form-generation" title="Link to this heading">¶</a></h2>
+<div class="need_container docutils container" id="SNCB-6e38bf32">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_CFG_WEB_FORM_1">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Design Specification</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">Dynamic Form Generation from Schema</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#SPEC_CFG_WEB_FORM_1" title="SPEC_CFG_WEB_FORM_1">SPEC_CFG_WEB_FORM_1</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">form-generation</span><span class="needs_spacer">, </span><span class="needs_data">schema</span><span class="needs_spacer">, </span><span class="needs_data">javascript</span></span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#SPEC_CFG_WEB_ARCH_1" title="SPEC_CFG_WEB_FORM_1">SPEC_CFG_WEB_ARCH_1</a>, <a class="reference internal" href="spec_config_manager_json.html#SPEC_CFG_JSON_SCHEMA_1" title="SPEC_CFG_WEB_FORM_1">SPEC_CFG_JSON_SCHEMA_1</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>Description:</strong> JavaScript code that dynamically creates HTML form elements based on JSON schema field definitions.</p>
+<p><strong>Schema Field Processing:</strong></p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Input: JSON schema from GET /api/config/schema</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="s2">&quot;fields&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="s2">&quot;key&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;wifi_ssid&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;label&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;WiFi SSID&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;description&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Network name to connect&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;default&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;validation&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">&quot;required&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;maxLength&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">32</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="s2">&quot;key&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;led_count&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;integer&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;label&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;LED Count&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;description&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Number of LEDs in strip&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;default&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">50</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;validation&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">&quot;min&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;max&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">300</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">};</span>
+
+<span class="c1">// Process each field to generate form HTML</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">generateForm</span><span class="p">(</span><span class="nx">schema</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">formContainer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;config-form&#39;</span><span class="p">);</span>
+
+<span class="w">  </span><span class="nx">schema</span><span class="p">.</span><span class="nx">fields</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">field</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">formGroup</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createFormGroup</span><span class="p">(</span><span class="nx">field</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">formContainer</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">formGroup</span><span class="p">);</span>
+<span class="w">  </span><span class="p">});</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Form Element Generation Logic:</strong></p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">createFormGroup</span><span class="p">(</span><span class="nx">field</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">group</span><span class="p">.</span><span class="nx">className</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;form-group&#39;</span><span class="p">;</span>
+
+<span class="w">  </span><span class="c1">// Create label</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">label</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">field</span><span class="p">.</span><span class="nx">label</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">label</span><span class="p">.</span><span class="nx">htmlFor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">field</span><span class="p">.</span><span class="nx">key</span><span class="p">;</span>
+
+<span class="w">  </span><span class="c1">// Create input based on type</span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nx">input</span><span class="p">;</span>
+<span class="w">  </span><span class="k">switch</span><span class="p">(</span><span class="nx">field</span><span class="p">.</span><span class="nx">type</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="s1">&#39;string&#39;</span><span class="o">:</span>
+<span class="w">      </span><span class="nx">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">);</span>
+<span class="w">      </span><span class="nx">input</span><span class="p">.</span><span class="nx">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">field</span><span class="p">.</span><span class="nx">key</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="s1">&#39;pass&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s1">&#39;password&#39;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;text&#39;</span><span class="p">;</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">field</span><span class="p">.</span><span class="nx">validation</span><span class="o">?</span><span class="p">.</span><span class="nx">maxLength</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">input</span><span class="p">.</span><span class="nx">maxLength</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">field</span><span class="p">.</span><span class="nx">validation</span><span class="p">.</span><span class="nx">maxLength</span><span class="p">;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">field</span><span class="p">.</span><span class="nx">validation</span><span class="o">?</span><span class="p">.</span><span class="nx">pattern</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">input</span><span class="p">.</span><span class="nx">pattern</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">field</span><span class="p">.</span><span class="nx">validation</span><span class="p">.</span><span class="nx">pattern</span><span class="p">;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">      </span><span class="k">break</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="s1">&#39;integer&#39;</span><span class="o">:</span>
+<span class="w">      </span><span class="nx">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">);</span>
+<span class="w">      </span><span class="nx">input</span><span class="p">.</span><span class="nx">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;number&#39;</span><span class="p">;</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">field</span><span class="p">.</span><span class="nx">validation</span><span class="o">?</span><span class="p">.</span><span class="nx">min</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="kc">undefined</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">input</span><span class="p">.</span><span class="nx">min</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">field</span><span class="p">.</span><span class="nx">validation</span><span class="p">.</span><span class="nx">min</span><span class="p">;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">field</span><span class="p">.</span><span class="nx">validation</span><span class="o">?</span><span class="p">.</span><span class="nx">max</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="kc">undefined</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">input</span><span class="p">.</span><span class="nx">max</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">field</span><span class="p">.</span><span class="nx">validation</span><span class="p">.</span><span class="nx">max</span><span class="p">;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">      </span><span class="k">break</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="s1">&#39;boolean&#39;</span><span class="o">:</span>
+<span class="w">      </span><span class="nx">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">);</span>
+<span class="w">      </span><span class="nx">input</span><span class="p">.</span><span class="nx">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;checkbox&#39;</span><span class="p">;</span>
+<span class="w">      </span><span class="k">break</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="nx">input</span><span class="p">.</span><span class="nx">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">field</span><span class="p">.</span><span class="nx">key</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">input</span><span class="p">.</span><span class="nx">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">field</span><span class="p">.</span><span class="nx">key</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">input</span><span class="p">.</span><span class="nx">required</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">field</span><span class="p">.</span><span class="nx">validation</span><span class="o">?</span><span class="p">.</span><span class="nx">required</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+
+<span class="w">  </span><span class="c1">// Create description</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;small&#39;</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">description</span><span class="p">.</span><span class="nx">className</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;form-text&#39;</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">description</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">field</span><span class="p">.</span><span class="nx">description</span><span class="p">;</span>
+
+<span class="w">  </span><span class="nx">group</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">label</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">group</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">input</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">group</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">description</span><span class="p">);</span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">group</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Design Properties:</strong></p>
+<ul class="simple">
+<li><p><strong>No hardcoded form fields</strong>: All HTML generated from schema</p></li>
+<li><p><strong>Type-safe input elements</strong>: Schema type maps to correct HTML input type</p></li>
+<li><p><strong>Automatic validation</strong>: HTML5 validation attributes from schema</p></li>
+<li><p><strong>Password detection</strong>: Fields with “pass” in key get type=”password”</p></li>
+<li><p><strong>Extensible</strong>: New schema fields automatically generate form elements</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="configuration-data-mapping">
+<h2>Configuration Data Mapping<a class="headerlink" href="#configuration-data-mapping" title="Link to this heading">¶</a></h2>
+<div class="need_container docutils container" id="SNCB-81afb5b1">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_CFG_WEB_MAPPING_1">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Design Specification</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">JSON Array to Form Field Mapping</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#SPEC_CFG_WEB_MAPPING_1" title="SPEC_CFG_WEB_MAPPING_1">SPEC_CFG_WEB_MAPPING_1</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">data-mapping</span><span class="needs_spacer">, </span><span class="needs_data">json</span><span class="needs_spacer">, </span><span class="needs_data">form</span></span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#SPEC_CFG_WEB_ARCH_1" title="SPEC_CFG_WEB_MAPPING_1">SPEC_CFG_WEB_ARCH_1</a>, <a class="reference internal" href="spec_config_manager_json.html#SPEC_CFG_JSON_BULK_1" title="SPEC_CFG_WEB_MAPPING_1">SPEC_CFG_JSON_BULK_1</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>Description:</strong> JavaScript logic for loading structured JSON configuration data into form fields and collecting form data back into structured JSON format.</p>
+<p><strong>Loading Configuration into Form:</strong></p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Input: Structured JSON array from GET /api/config</span>
+<span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">loadConfiguration</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;/api/config&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">configArray</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Example configArray:</span>
+<span class="w">    </span><span class="c1">// [</span>
+<span class="w">    </span><span class="c1">//   {key: &quot;wifi_ssid&quot;, type: &quot;string&quot;, value: &quot;MyNetwork&quot;},</span>
+<span class="w">    </span><span class="c1">//   {key: &quot;led_count&quot;, type: &quot;integer&quot;, value: 50},</span>
+<span class="w">    </span><span class="c1">//   {key: &quot;enable_leds&quot;, type: &quot;boolean&quot;, value: true}</span>
+<span class="w">    </span><span class="c1">// ]</span>
+
+<span class="w">    </span><span class="nx">configArray</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">item</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">item</span><span class="p">.</span><span class="nx">key</span><span class="p">);</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">input</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span><span class="w"> </span><span class="c1">// Field not in form (schema mismatch)</span>
+
+<span class="w">      </span><span class="k">switch</span><span class="p">(</span><span class="nx">item</span><span class="p">.</span><span class="nx">type</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="s1">&#39;string&#39;</span><span class="o">:</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="s1">&#39;integer&#39;</span><span class="o">:</span>
+<span class="w">          </span><span class="nx">input</span><span class="p">.</span><span class="nx">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+<span class="w">          </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="s1">&#39;boolean&#39;</span><span class="o">:</span>
+<span class="w">          </span><span class="nx">input</span><span class="p">.</span><span class="nx">checked</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+<span class="w">          </span><span class="k">break</span><span class="p">;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">});</span>
+
+<span class="w">    </span><span class="nx">showMessage</span><span class="p">(</span><span class="s1">&#39;Configuration loaded&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;success&#39;</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">showMessage</span><span class="p">(</span><span class="s1">&#39;Failed to load configuration: &#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">error</span><span class="p">.</span><span class="nx">message</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;error&#39;</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Collecting Form Data into Structured JSON:</strong></p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">collectFormData</span><span class="p">(</span><span class="nx">schema</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">configArray</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
+
+<span class="w">  </span><span class="nx">schema</span><span class="p">.</span><span class="nx">fields</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">field</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">field</span><span class="p">.</span><span class="nx">key</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">input</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">value</span><span class="p">;</span>
+<span class="w">    </span><span class="k">switch</span><span class="p">(</span><span class="nx">field</span><span class="p">.</span><span class="nx">type</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="s1">&#39;string&#39;</span><span class="o">:</span>
+<span class="w">        </span><span class="nx">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">input</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="s1">&#39;integer&#39;</span><span class="o">:</span>
+<span class="w">        </span><span class="nx">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">input</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span><span class="w"> </span><span class="mf">10</span><span class="p">);</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="s1">&#39;boolean&#39;</span><span class="o">:</span>
+<span class="w">        </span><span class="nx">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">input</span><span class="p">.</span><span class="nx">checked</span><span class="p">;</span>
+<span class="w">        </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">configArray</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span>
+<span class="w">      </span><span class="nx">key</span><span class="o">:</span><span class="w"> </span><span class="nx">field</span><span class="p">.</span><span class="nx">key</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="nx">field</span><span class="p">.</span><span class="nx">type</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="nx">value</span>
+<span class="w">    </span><span class="p">});</span>
+<span class="w">  </span><span class="p">});</span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">configArray</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Save Configuration to Server:</strong></p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">saveConfiguration</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Validate form first</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">form</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;config-form&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">form</span><span class="p">.</span><span class="nx">checkValidity</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">form</span><span class="p">.</span><span class="nx">reportValidity</span><span class="p">();</span>
+<span class="w">      </span><span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Collect form data as structured JSON</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">configArray</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">collectFormData</span><span class="p">(</span><span class="nx">cachedSchema</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// POST to server</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;/api/config&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">method</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;application/json&#39;</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">configArray</span><span class="p">)</span>
+<span class="w">    </span><span class="p">});</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">response</span><span class="p">.</span><span class="nx">ok</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="s1">&#39;Server returned &#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">showMessage</span><span class="p">(</span><span class="s1">&#39;Configuration saved successfully&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;success&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">showResetCountdown</span><span class="p">();</span>
+
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">showMessage</span><span class="p">(</span><span class="s1">&#39;Failed to save configuration: &#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">error</span><span class="p">.</span><span class="nx">message</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;error&#39;</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Design Properties:</strong></p>
+<ul class="simple">
+<li><p><strong>Type-aware mapping</strong>: Converts between HTML input values and typed JSON</p></li>
+<li><p><strong>Schema-driven</strong>: Uses cached schema for type information</p></li>
+<li><p><strong>Validation before save</strong>: HTML5 form validation prevents invalid data</p></li>
+<li><p><strong>Error handling</strong>: Network errors and HTTP errors handled gracefully</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="user-interface-states">
+<h2>User Interface States<a class="headerlink" href="#user-interface-states" title="Link to this heading">¶</a></h2>
+<div class="need_container docutils container" id="SNCB-c0fbf2ad">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_CFG_WEB_STATE_1">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Design Specification</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">UI State Management</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#SPEC_CFG_WEB_STATE_1" title="SPEC_CFG_WEB_STATE_1">SPEC_CFG_WEB_STATE_1</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">ui-state</span><span class="needs_spacer">, </span><span class="needs_data">javascript</span></span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#SPEC_CFG_WEB_ARCH_1" title="SPEC_CFG_WEB_STATE_1">SPEC_CFG_WEB_ARCH_1</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>Description:</strong> JavaScript state management for different UI states during page lifecycle.</p>
+<p><strong>State Definitions:</strong></p>
+<div class="table-wrapper docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>State</p></th>
+<th class="head"><p>UI Behavior</p></th>
+<th class="head"><p>User Actions Allowed</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">LOADING</span></code></p></td>
+<td><p>Loading spinner visible</p></td>
+<td><p>None (buttons disabled)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">READY</span></code></p></td>
+<td><p>Form visible and enabled</p></td>
+<td><p>Save, Restore, Factory Reset</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">SAVING</span></code></p></td>
+<td><p>Save button shows spinner</p></td>
+<td><p>None (all buttons disabled)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ERROR</span></code></p></td>
+<td><p>Error message displayed</p></td>
+<td><p>Retry allowed</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">COUNTDOWN</span></code></p></td>
+<td><p>Modal with countdown timer</p></td>
+<td><p>None (auto-reload pending)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>State Transition Logic:</strong></p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="nx">currentState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;LOADING&#39;</span><span class="p">;</span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">setState</span><span class="p">(</span><span class="nx">newState</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">currentState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">newState</span><span class="p">;</span>
+
+<span class="w">  </span><span class="c1">// Update UI based on state</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">form</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;config-form&#39;</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">saveBtn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;save-btn&#39;</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">restoreBtn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;restore-btn&#39;</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">resetBtn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;factory-reset-btn&#39;</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">spinner</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;loading-spinner&#39;</span><span class="p">);</span>
+
+<span class="w">  </span><span class="k">switch</span><span class="p">(</span><span class="nx">newState</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="s1">&#39;LOADING&#39;</span><span class="o">:</span>
+<span class="w">      </span><span class="nx">form</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;none&#39;</span><span class="p">;</span>
+<span class="w">      </span><span class="nx">spinner</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;block&#39;</span><span class="p">;</span>
+<span class="w">      </span><span class="nx">saveBtn</span><span class="p">.</span><span class="nx">disabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<span class="w">      </span><span class="nx">restoreBtn</span><span class="p">.</span><span class="nx">disabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<span class="w">      </span><span class="nx">resetBtn</span><span class="p">.</span><span class="nx">disabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<span class="w">      </span><span class="k">break</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="s1">&#39;READY&#39;</span><span class="o">:</span>
+<span class="w">      </span><span class="nx">form</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;block&#39;</span><span class="p">;</span>
+<span class="w">      </span><span class="nx">spinner</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;none&#39;</span><span class="p">;</span>
+<span class="w">      </span><span class="nx">saveBtn</span><span class="p">.</span><span class="nx">disabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="w">      </span><span class="nx">restoreBtn</span><span class="p">.</span><span class="nx">disabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="w">      </span><span class="nx">resetBtn</span><span class="p">.</span><span class="nx">disabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="w">      </span><span class="k">break</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="s1">&#39;SAVING&#39;</span><span class="o">:</span>
+<span class="w">      </span><span class="nx">saveBtn</span><span class="p">.</span><span class="nx">disabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<span class="w">      </span><span class="nx">saveBtn</span><span class="p">.</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&lt;span class=&quot;spinner&quot;&gt;&lt;/span&gt; Saving...&#39;</span><span class="p">;</span>
+<span class="w">      </span><span class="nx">restoreBtn</span><span class="p">.</span><span class="nx">disabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<span class="w">      </span><span class="nx">resetBtn</span><span class="p">.</span><span class="nx">disabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<span class="w">      </span><span class="k">break</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="s1">&#39;ERROR&#39;</span><span class="o">:</span>
+<span class="w">      </span><span class="nx">form</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;block&#39;</span><span class="p">;</span>
+<span class="w">      </span><span class="nx">spinner</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;none&#39;</span><span class="p">;</span>
+<span class="w">      </span><span class="nx">saveBtn</span><span class="p">.</span><span class="nx">disabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="w">      </span><span class="nx">restoreBtn</span><span class="p">.</span><span class="nx">disabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="w">      </span><span class="nx">resetBtn</span><span class="p">.</span><span class="nx">disabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="w">      </span><span class="k">break</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="s1">&#39;COUNTDOWN&#39;</span><span class="o">:</span>
+<span class="w">      </span><span class="nx">showModal</span><span class="p">(</span><span class="s1">&#39;countdown-modal&#39;</span><span class="p">);</span>
+<span class="w">      </span><span class="nx">saveBtn</span><span class="p">.</span><span class="nx">disabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<span class="w">      </span><span class="nx">restoreBtn</span><span class="p">.</span><span class="nx">disabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<span class="w">      </span><span class="nx">resetBtn</span><span class="p">.</span><span class="nx">disabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<span class="w">      </span><span class="k">break</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="reset-countdown-modal">
+<h2>Reset Countdown Modal<a class="headerlink" href="#reset-countdown-modal" title="Link to this heading">¶</a></h2>
+<div class="need_container docutils container" id="SNCB-5885ec01">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_CFG_WEB_COUNTDOWN_1">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Design Specification</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">Device Reset Countdown Interface</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#SPEC_CFG_WEB_COUNTDOWN_1" title="SPEC_CFG_WEB_COUNTDOWN_1">SPEC_CFG_WEB_COUNTDOWN_1</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">ui</span><span class="needs_spacer">, </span><span class="needs_data">countdown</span><span class="needs_spacer">, </span><span class="needs_data">reset</span></span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#SPEC_CFG_WEB_ARCH_1" title="SPEC_CFG_WEB_COUNTDOWN_1">SPEC_CFG_WEB_ARCH_1</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>Description:</strong> Modal dialog with countdown timer shown after configuration save or factory reset to inform user of pending device reboot.</p>
+<p><strong>Modal HTML Structure:</strong></p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;countdown-modal&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;modal&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;modal-content&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>Configuration Saved<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Device will restart in <span class="p">&lt;</span><span class="nt">span</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;countdown&quot;</span><span class="p">&gt;</span>5<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span> seconds...<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;warning&quot;</span><span class="p">&gt;</span>Page will reload automatically after restart.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p><strong>Countdown JavaScript Logic:</strong></p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">showResetCountdown</span><span class="p">(</span><span class="nx">seconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">5</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">setState</span><span class="p">(</span><span class="s1">&#39;COUNTDOWN&#39;</span><span class="p">);</span>
+
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">countdownEl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;countdown&#39;</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nx">remaining</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">seconds</span><span class="p">;</span>
+
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">interval</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">setInterval</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">remaining</span><span class="o">--</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">countdownEl</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">remaining</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">remaining</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">clearInterval</span><span class="p">(</span><span class="nx">interval</span><span class="p">);</span>
+<span class="w">      </span><span class="c1">// Device should have rebooted, attempt page reload</span>
+<span class="w">      </span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">reload</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span><span class="w"> </span><span class="mf">1000</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Factory Reset Countdown Variant:</strong></p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">factoryReset</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// Show confirmation dialog</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">confirmed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">confirm</span><span class="p">(</span>
+<span class="w">    </span><span class="s1">&#39;Factory Reset will restore all settings to defaults.\n\n&#39;</span><span class="w"> </span><span class="o">+</span>
+<span class="w">    </span><span class="s1">&#39;WiFi credentials will be erased.\n&#39;</span><span class="w"> </span><span class="o">+</span>
+<span class="w">    </span><span class="s1">&#39;Device will restart in AP mode.\n\n&#39;</span><span class="w"> </span><span class="o">+</span>
+<span class="w">    </span><span class="s1">&#39;Are you sure?&#39;</span>
+<span class="w">  </span><span class="p">);</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">confirmed</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;/api/config/reset&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">method</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;POST&#39;</span>
+<span class="w">    </span><span class="p">});</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">response</span><span class="p">.</span><span class="nx">ok</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="s1">&#39;Reset failed: &#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Show countdown modal</span>
+<span class="w">    </span><span class="nx">showFactoryResetCountdown</span><span class="p">(</span><span class="mf">5</span><span class="p">);</span>
+
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">showMessage</span><span class="p">(</span><span class="s1">&#39;Factory reset failed: &#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">error</span><span class="p">.</span><span class="nx">message</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;error&#39;</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">showFactoryResetCountdown</span><span class="p">(</span><span class="nx">seconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">5</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">setState</span><span class="p">(</span><span class="s1">&#39;COUNTDOWN&#39;</span><span class="p">);</span>
+
+<span class="w">  </span><span class="c1">// Update modal text for factory reset</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">modal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;countdown-modal&#39;</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">modal</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;h2&#39;</span><span class="p">).</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Factory Reset Initiated&#39;</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">modal</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;.warning&#39;</span><span class="p">).</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="s1">&#39;Device resetting to defaults. Redirecting to WiFi setup...&#39;</span><span class="p">;</span>
+
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">countdownEl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;countdown&#39;</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nx">remaining</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">seconds</span><span class="p">;</span>
+
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">interval</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">setInterval</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">remaining</span><span class="o">--</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">countdownEl</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">remaining</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">remaining</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">clearInterval</span><span class="p">(</span><span class="nx">interval</span><span class="p">);</span>
+<span class="w">      </span><span class="c1">// Redirect to WiFi setup page (device now in AP mode)</span>
+<span class="w">      </span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;/wifi-setup.html&#39;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span><span class="w"> </span><span class="mf">1000</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Design Properties:</strong></p>
+<ul class="simple">
+<li><p><strong>Non-blocking UI</strong>: Modal overlay prevents user interaction during countdown</p></li>
+<li><p><strong>Clear messaging</strong>: User knows exactly what’s happening and when</p></li>
+<li><p><strong>Automatic recovery</strong>: Page reloads/redirects without user action</p></li>
+<li><p><strong>Different variants</strong>: Save countdown vs Factory Reset countdown with appropriate messaging</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="error-handling">
+<h2>Error Handling<a class="headerlink" href="#error-handling" title="Link to this heading">¶</a></h2>
+<div class="need_container docutils container" id="SNCB-f7680779">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_CFG_WEB_ERROR_1">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Design Specification</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">Error Handling and User Feedback</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#SPEC_CFG_WEB_ERROR_1" title="SPEC_CFG_WEB_ERROR_1">SPEC_CFG_WEB_ERROR_1</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">error-handling</span><span class="needs_spacer">, </span><span class="needs_data">feedback</span></span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#SPEC_CFG_WEB_ARCH_1" title="SPEC_CFG_WEB_ERROR_1">SPEC_CFG_WEB_ARCH_1</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>Description:</strong> Comprehensive error handling for all API operations with user-friendly feedback.</p>
+<p><strong>Error Categories:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Network Errors</strong>: Fetch timeout, connection refused, DNS failure</p></li>
+<li><p><strong>HTTP Errors</strong>: 4xx client errors, 5xx server errors</p></li>
+<li><p><strong>Validation Errors</strong>: Invalid form data, schema mismatch</p></li>
+<li><p><strong>Parse Errors</strong>: Malformed JSON responses</p></li>
+</ol>
+<p><strong>Error Handling Implementation:</strong></p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">apiCall</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span><span class="w"> </span><span class="nx">options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{})</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="p">...</span><span class="nx">options</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">timeout</span><span class="o">:</span><span class="w"> </span><span class="mf">10000</span><span class="w"> </span><span class="c1">// 10 second timeout</span>
+<span class="w">    </span><span class="p">});</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">response</span><span class="p">.</span><span class="nx">ok</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="c1">// HTTP error</span>
+<span class="w">      </span><span class="kd">let</span><span class="w"> </span><span class="nx">errorMsg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`HTTP </span><span class="si">${</span><span class="nx">response</span><span class="p">.</span><span class="nx">status</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
+
+<span class="w">      </span><span class="c1">// Try to parse error response</span>
+<span class="w">      </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">errorData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">errorData</span><span class="p">.</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nx">errorMsg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">errorData</span><span class="p">.</span><span class="nx">error</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Response not JSON, use default message</span>
+<span class="w">      </span><span class="p">}</span>
+
+<span class="w">      </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="nx">errorMsg</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Parse successful response</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">data</span><span class="p">;</span>
+
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Network error or other exception</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">.</span><span class="nx">name</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;AbortError&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="s1">&#39;Request timeout - device may be offline&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">throw</span><span class="w"> </span><span class="nx">error</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>User Feedback Display:</strong></p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">showMessage</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span><span class="w"> </span><span class="nx">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;info&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">messageEl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;message-banner&#39;</span><span class="p">);</span>
+
+<span class="w">  </span><span class="nx">messageEl</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">message</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">messageEl</span><span class="p">.</span><span class="nx">className</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`message </span><span class="si">${</span><span class="nx">type</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span><span class="w"> </span><span class="c1">// &#39;success&#39;, &#39;error&#39;, &#39;warning&#39;, &#39;info&#39;</span>
+<span class="w">  </span><span class="nx">messageEl</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;block&#39;</span><span class="p">;</span>
+
+<span class="w">  </span><span class="c1">// Auto-hide success messages after 5 seconds</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">type</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;success&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">setTimeout</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">messageEl</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;none&#39;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">},</span><span class="w"> </span><span class="mf">5000</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Retry Logic for Critical Operations:</strong></p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">loadSchemaWithRetry</span><span class="p">(</span><span class="nx">maxRetries</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nx">lastError</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">maxRetries</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">apiCall</span><span class="p">(</span><span class="s1">&#39;/api/config/schema&#39;</span><span class="p">);</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">schema</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">lastError</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">error</span><span class="p">;</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">maxRetries</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Wait before retry: 1s, 2s, 4s</span>
+<span class="w">        </span><span class="k">await</span><span class="w"> </span><span class="nx">sleep</span><span class="p">(</span><span class="mf">1000</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">pow</span><span class="p">(</span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="nx">i</span><span class="p">));</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="sb">`Failed to load schema after </span><span class="si">${</span><span class="nx">maxRetries</span><span class="si">}</span><span class="sb"> attempts: </span><span class="si">${</span><span class="nx">lastError</span><span class="p">.</span><span class="nx">message</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="page-initialization-sequence">
+<h2>Page Initialization Sequence<a class="headerlink" href="#page-initialization-sequence" title="Link to this heading">¶</a></h2>
+<div class="need_container docutils container" id="SNCB-557dac56">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_CFG_WEB_INIT_1">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Design Specification</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">Complete Page Initialization Flow</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#SPEC_CFG_WEB_INIT_1" title="SPEC_CFG_WEB_INIT_1">SPEC_CFG_WEB_INIT_1</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">initialization</span><span class="needs_spacer">, </span><span class="needs_data">lifecycle</span></span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#SPEC_CFG_WEB_ARCH_1" title="SPEC_CFG_WEB_INIT_1">SPEC_CFG_WEB_ARCH_1</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>Description:</strong> Complete initialization sequence when configuration page loads.</p>
+<p><strong>Initialization Code:</strong></p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// Global cached schema</span>
+<span class="kd">let</span><span class="w"> </span><span class="nx">cachedSchema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+
+<span class="c1">// DOMContentLoaded event handler</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;DOMContentLoaded&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">setState</span><span class="p">(</span><span class="s1">&#39;LOADING&#39;</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Step 1: Load JSON schema with retry</span>
+<span class="w">    </span><span class="nx">showMessage</span><span class="p">(</span><span class="s1">&#39;Loading configuration schema...&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;info&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">cachedSchema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">loadSchemaWithRetry</span><span class="p">(</span><span class="mf">3</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Step 2: Generate form from schema</span>
+<span class="w">    </span><span class="nx">showMessage</span><span class="p">(</span><span class="s1">&#39;Generating form...&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;info&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">generateForm</span><span class="p">(</span><span class="nx">cachedSchema</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Step 3: Load current configuration</span>
+<span class="w">    </span><span class="nx">showMessage</span><span class="p">(</span><span class="s1">&#39;Loading current configuration...&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;info&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">loadConfiguration</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Step 4: Attach event handlers</span>
+<span class="w">    </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;save-btn&#39;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">saveConfiguration</span><span class="p">);</span>
+<span class="w">    </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;restore-btn&#39;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">loadConfiguration</span><span class="p">);</span>
+<span class="w">    </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;factory-reset-btn&#39;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">factoryReset</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Step 5: Ready for user interaction</span>
+<span class="w">    </span><span class="nx">setState</span><span class="p">(</span><span class="s1">&#39;READY&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">showMessage</span><span class="p">(</span><span class="s1">&#39;Configuration loaded successfully&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;success&#39;</span><span class="p">);</span>
+
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">setState</span><span class="p">(</span><span class="s1">&#39;ERROR&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">showMessage</span><span class="p">(</span><span class="s1">&#39;Failed to initialize page: &#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">error</span><span class="p">.</span><span class="nx">message</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;error&#39;</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Show retry button</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">retryBtn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;retry-btn&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">retryBtn</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;block&#39;</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">retryBtn</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">reload</span><span class="p">();</span>
+<span class="w">    </span><span class="p">});</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p><strong>Initialization Sequence Diagram:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Page Load
+  ↓
+DOMContentLoaded event
+  ↓
+setState(&#39;LOADING&#39;)
+  ↓
+Fetch /api/config/schema (with retry)
+  ↓
+Parse schema → cachedSchema
+  ↓
+generateForm(cachedSchema)
+  ↓
+Fetch /api/config
+  ↓
+Parse config array → Update form fields
+  ↓
+Attach button event handlers
+  ↓
+setState(&#39;READY&#39;)
+  ↓
+User can interact
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="traceability">
+<h2>Traceability<a class="headerlink" href="#traceability" title="Link to this heading">¶</a></h2>
+<span id="needtable-12_design/spec_config_webpage-0"></span><table class="NEEDS_DATATABLES docutils align-default" id="needtable-12_design/spec_config_webpage-0-table_node">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+<col style="width: 20.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Title</p></th>
+<th class="head"><p>Status</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="need row-even"><td class="needs_id"><p><a class="reference internal" href="#SPEC_CFG_WEB_ARCH_1">SPEC_CFG_WEB_ARCH_1</a></p></td>
+<td class="needs_title"><p>Configuration Webpage Architecture</p></td>
+<td class="needs_status"><p>open</p></td>
+</tr>
+<tr class="need row-odd"><td class="needs_id"><p><a class="reference internal" href="#SPEC_CFG_WEB_COUNTDOWN_1">SPEC_CFG_WEB_COUNTDOWN_1</a></p></td>
+<td class="needs_title"><p>Device Reset Countdown Interface</p></td>
+<td class="needs_status"><p>open</p></td>
+</tr>
+<tr class="need row-even"><td class="needs_id"><p><a class="reference internal" href="#SPEC_CFG_WEB_ERROR_1">SPEC_CFG_WEB_ERROR_1</a></p></td>
+<td class="needs_title"><p>Error Handling and User Feedback</p></td>
+<td class="needs_status"><p>open</p></td>
+</tr>
+<tr class="need row-odd"><td class="needs_id"><p><a class="reference internal" href="#SPEC_CFG_WEB_FLOW_1">SPEC_CFG_WEB_FLOW_1</a></p></td>
+<td class="needs_title"><p>Configuration Data Flow</p></td>
+<td class="needs_status"><p>open</p></td>
+</tr>
+<tr class="need row-even"><td class="needs_id"><p><a class="reference internal" href="#SPEC_CFG_WEB_FORM_1">SPEC_CFG_WEB_FORM_1</a></p></td>
+<td class="needs_title"><p>Dynamic Form Generation from Schema</p></td>
+<td class="needs_status"><p>open</p></td>
+</tr>
+<tr class="need row-odd"><td class="needs_id"><p><a class="reference internal" href="#SPEC_CFG_WEB_INIT_1">SPEC_CFG_WEB_INIT_1</a></p></td>
+<td class="needs_title"><p>Complete Page Initialization Flow</p></td>
+<td class="needs_status"><p>open</p></td>
+</tr>
+<tr class="need row-even"><td class="needs_id"><p><a class="reference internal" href="#SPEC_CFG_WEB_MAPPING_1">SPEC_CFG_WEB_MAPPING_1</a></p></td>
+<td class="needs_title"><p>JSON Array to Form Field Mapping</p></td>
+<td class="needs_status"><p>open</p></td>
+</tr>
+<tr class="need row-odd"><td class="needs_id"><p><a class="reference internal" href="#SPEC_CFG_WEB_STATE_1">SPEC_CFG_WEB_STATE_1</a></p></td>
+<td class="needs_title"><p>UI State Management</p></td>
+<td class="needs_status"><p>open</p></td>
+</tr>
+</tbody>
+</table>
+<figure class="align-center" id="needflow-12_design/spec_config_webpage-0">
+<div class="graphviz"><img src="../_images/needflow-576a5fecc9855bb33a20e3bdcbff84539e74dda7.png" alt="" usemap="#needflow" class="graphviz" /></div>
+<map id="needflow" name="needflow">
+<area shape="rect" id="node1" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_1" target="_top" title="REQ_CFG_JSON_1" alt="" coords="1871,2321,2084,2428"/>
+<area shape="rect" id="node63" href="../11_requirements/req_system.html#REQ_SYS_CFG_1" target="_top" title="REQ_SYS_CFG_1" alt="" coords="5329,2535,5516,2641"/>
+<area shape="rect" id="node2" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_2" target="_top" title="REQ_CFG_JSON_2" alt="" coords="3575,2099,3782,2205"/>
+<area shape="rect" id="node3" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_3" target="_top" title="REQ_CFG_JSON_3" alt="" coords="2663,2108,2868,2196"/>
+<area shape="rect" id="node4" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_4" target="_top" title="REQ_CFG_JSON_4" alt="" coords="840,2089,1008,2215"/>
+<area shape="rect" id="node5" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_5" target="_top" title="REQ_CFG_JSON_5" alt="" coords="657,1885,887,1992"/>
+<area shape="rect" id="node6" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_6" target="_top" title="REQ_CFG_JSON_6" alt="" coords="1969,2108,2170,2196"/>
+<area shape="rect" id="node7" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_7" target="_top" title="REQ_CFG_JSON_7" alt="" coords="2752,1885,2939,1992"/>
+<area shape="rect" id="node8" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_8" target="_top" title="REQ_CFG_JSON_8" alt="" coords="1777,1885,1964,1992"/>
+<area shape="rect" id="node9" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_9" target="_top" title="REQ_CFG_JSON_9" alt="" coords="449,1895,633,1983"/>
+<area shape="rect" id="node10" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_10" target="_top" title="REQ_CFG_JSON_10" alt="" coords="5089,1672,5277,1779"/>
+<area shape="rect" id="node62" href="../11_requirements/req_system.html#REQ_SYS_WEB_1" target="_top" title="REQ_SYS_WEB_1" alt="" coords="6661,1895,6848,1983"/>
+<area shape="rect" id="node11" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_11" target="_top" title="REQ_CFG_JSON_11" alt="" coords="4571,1885,4747,1992"/>
+<area shape="rect" id="node65" href="../11_requirements/req_system.html#REQ_SYS_REL_1" target="_top" title="REQ_SYS_REL_1" alt="" coords="18898,2108,19099,2196"/>
+<area shape="rect" id="node12" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_12" target="_top" title="REQ_CFG_JSON_12" alt="" coords="4565,1672,4752,1779"/>
+<area shape="rect" id="node13" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_13" target="_top" title="REQ_CFG_JSON_13" alt="" coords="261,1663,461,1788"/>
+<area shape="rect" id="node14" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_14" target="_top" title="REQ_CFG_JSON_14" alt="" coords="1860,1672,2057,1779"/>
+<area shape="rect" id="node15" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_15" target="_top" title="REQ_CFG_JSON_15" alt="" coords="1427,2089,1626,2215"/>
+<area shape="rect" id="node16" href="../11_requirements/req_display.html#REQ_DSP_1" target="_top" title="REQ_DSP_1" alt="" coords="15961,1681,16105,1769"/>
+<area shape="rect" id="node44" href="../11_requirements/req_led_controller.html#REQ_LED_1" target="_top" title="REQ_LED_1" alt="" coords="18682,1895,18865,1983"/>
+<area shape="rect" id="node17" href="../11_requirements/req_display.html#REQ_DSP_2" target="_top" title="REQ_DSP_2" alt="" coords="11453,1381,11640,1469"/>
+<area shape="rect" id="node18" href="../11_requirements/req_display.html#REQ_DSP_3" target="_top" title="REQ_DSP_3" alt="" coords="15054,1372,15231,1479"/>
+<area shape="rect" id="node40" href="../11_requirements/req_distance_sensor.html#REQ_SNS_11" target="_top" title="REQ_SNS_11" alt="" coords="14723,1681,14903,1769"/>
+<area shape="rect" id="node19" href="../11_requirements/req_display.html#REQ_DSP_4" target="_top" title="REQ_DSP_4" alt="" coords="12263,1044,12435,1169"/>
+<area shape="rect" id="node20" href="../11_requirements/req_display.html#REQ_DSP_5" target="_top" title="REQ_DSP_5" alt="" coords="14164,1053,14321,1160"/>
+<area shape="rect" id="node21" href="../11_requirements/req_display.html#REQ_DSP_6" target="_top" title="REQ_DSP_6" alt="" coords="12083,840,12261,928"/>
+<area shape="rect" id="node22" href="../11_requirements/req_display.html#REQ_DSP_7" target="_top" title="REQ_DSP_7" alt="" coords="12155,617,12312,724"/>
+<area shape="rect" id="node23" href="../11_requirements/req_display.html#REQ_DSP_8" target="_top" title="REQ_DSP_8" alt="" coords="11973,617,12131,724"/>
+<area shape="rect" id="node24" href="../11_requirements/req_display.html#REQ_DSP_9" target="_top" title="REQ_DSP_9" alt="" coords="12387,627,12602,715"/>
+<area shape="rect" id="node25" href="../11_requirements/req_display.html#REQ_DSP_10" target="_top" title="REQ_DSP_10" alt="" coords="12273,413,12447,520"/>
+<area shape="rect" id="node26" href="../11_requirements/req_display.html#REQ_DSP_11" target="_top" title="REQ_DSP_11" alt="" coords="14164,821,14321,947"/>
+<area shape="rect" id="node27" href="../11_requirements/req_display.html#REQ_DSP_12" target="_top" title="REQ_DSP_12" alt="" coords="15657,1063,15831,1151"/>
+<area shape="rect" id="node28" href="../11_requirements/req_display.html#REQ_DSP_13" target="_top" title="REQ_DSP_13" alt="" coords="12487,219,12667,307"/>
+<area shape="rect" id="node45" href="../11_requirements/req_led_controller.html#REQ_LED_2" target="_top" title="REQ_LED_2" alt="" coords="17418,1681,17595,1769"/>
+<area shape="rect" id="node29" href="../11_requirements/req_display.html#REQ_DSP_14" target="_top" title="REQ_DSP_14" alt="" coords="12731,840,12944,928"/>
+<area shape="rect" id="node30" href="../11_requirements/req_distance_sensor.html#REQ_SNS_1" target="_top" title="REQ_SNS_1" alt="" coords="14007,2544,14185,2632"/>
+<area shape="rect" id="node31" href="../11_requirements/req_distance_sensor.html#REQ_SNS_2" target="_top" title="REQ_SNS_2" alt="" coords="14134,2331,14317,2419"/>
+<area shape="rect" id="node32" href="../11_requirements/req_distance_sensor.html#REQ_SNS_3" target="_top" title="REQ_SNS_3" alt="" coords="13915,2099,14074,2205"/>
+<area shape="rect" id="node33" href="../11_requirements/req_distance_sensor.html#REQ_SNS_4" target="_top" title="REQ_SNS_4" alt="" coords="13901,1895,14089,1983"/>
+<area shape="rect" id="node34" href="../11_requirements/req_distance_sensor.html#REQ_SNS_5" target="_top" title="REQ_SNS_5" alt="" coords="13577,1681,13754,1769"/>
+<area shape="rect" id="node35" href="../11_requirements/req_distance_sensor.html#REQ_SNS_6" target="_top" title="REQ_SNS_6" alt="" coords="11215,1681,11401,1769"/>
+<area shape="rect" id="node36" href="../11_requirements/req_distance_sensor.html#REQ_SNS_7" target="_top" title="REQ_SNS_7" alt="" coords="13392,1681,13552,1769"/>
+<area shape="rect" id="node37" href="../11_requirements/req_distance_sensor.html#REQ_SNS_8" target="_top" title="REQ_SNS_8" alt="" coords="12653,1895,12843,1983"/>
+<area shape="rect" id="node38" href="../11_requirements/req_distance_sensor.html#REQ_SNS_9" target="_top" title="REQ_SNS_9" alt="" coords="15655,1681,15886,1769"/>
+<area shape="rect" id="node39" href="../11_requirements/req_distance_sensor.html#REQ_SNS_10" target="_top" title="REQ_SNS_10" alt="" coords="13141,1681,13317,1769"/>
+<area shape="rect" id="node41" href="../11_requirements/req_distance_sensor.html#REQ_SNS_12" target="_top" title="REQ_SNS_12" alt="" coords="12875,1681,13066,1769"/>
+<area shape="rect" id="node42" href="../11_requirements/req_distance_sensor.html#REQ_SNS_13" target="_top" title="REQ_SNS_13" alt="" coords="15175,1527,15321,1615"/>
+<area shape="rect" id="node43" href="../11_requirements/req_distance_sensor.html#REQ_SNS_14" target="_top" title="REQ_SNS_14" alt="" coords="13637,1381,13843,1469"/>
+<area shape="rect" id="node46" href="../11_requirements/req_led_controller.html#REQ_LED_3" target="_top" title="REQ_LED_3" alt="" coords="18575,1681,18753,1769"/>
+<area shape="rect" id="node47" href="../11_requirements/req_led_controller.html#REQ_LED_4" target="_top" title="REQ_LED_4" alt="" coords="17273,1381,17469,1469"/>
+<area shape="rect" id="node48" href="../11_requirements/req_led_controller.html#REQ_LED_5" target="_top" title="REQ_LED_5" alt="" coords="12761,1381,12965,1469"/>
+<area shape="rect" id="node71" href="../11_requirements/req_web_server.html#REQ_WEB_1" target="_top" title="REQ_WEB_1" alt="" coords="6847,1681,7039,1769"/>
+<area shape="rect" id="node49" href="../11_requirements/req_netif_tunnel.html#REQ_NETIF_TUNNEL_1" target="_top" title="REQ_NETIF_TUNNEL_1" alt="" coords="11219,1381,11429,1469"/>
+<area shape="rect" id="node67" href="../11_requirements/req_system.html#REQ_SYS_SIM_1" target="_top" title="REQ_SYS_SIM_1" alt="" coords="10546,1681,10702,1769"/>
+<area shape="rect" id="node50" href="../11_requirements/req_netif_tunnel.html#REQ_NETIF_TUNNEL_2" target="_top" title="REQ_NETIF_TUNNEL_2" alt="" coords="13829,1063,14038,1151"/>
+<area shape="rect" id="node51" href="../11_requirements/req_netif_tunnel.html#REQ_NETIF_TUNNEL_3" target="_top" title="REQ_NETIF_TUNNEL_3" alt="" coords="10179,1063,10389,1151"/>
+<area shape="rect" id="node52" href="../11_requirements/req_netif_tunnel.html#REQ_NETIF_TUNNEL_4" target="_top" title="REQ_NETIF_TUNNEL_4" alt="" coords="9563,1063,9773,1151"/>
+<area shape="rect" id="node61" href="../11_requirements/req_system.html#REQ_SYS_NET_1" target="_top" title="REQ_SYS_NET_1" alt="" coords="8805,2108,8979,2196"/>
+<area shape="rect" id="node53" href="../11_requirements/req_netif_tunnel.html#REQ_NETIF_TUNNEL_5" target="_top" title="REQ_NETIF_TUNNEL_5" alt="" coords="12511,1063,12721,1151"/>
+<area shape="rect" id="node54" href="../11_requirements/req_netif_tunnel.html#REQ_NETIF_TUNNEL_NF_1" target="_top" title="REQ_NETIF_TUNNEL_NF_1" alt="" coords="11029,1063,11267,1151"/>
+<area shape="rect" id="node55" href="../11_requirements/req_netif_tunnel.html#REQ_NETIF_TUNNEL_NF_2" target="_top" title="REQ_NETIF_TUNNEL_NF_2" alt="" coords="13815,840,14052,928"/>
+<area shape="rect" id="node56" href="../11_requirements/req_netif_tunnel.html#REQ_NETIF_TUNNEL_DOC_1" target="_top" title="REQ_NETIF_TUNNEL_DOC_1" alt="" coords="10065,840,10313,928"/>
+<area shape="rect" id="node57" href="../11_requirements/req_startup_test.html#REQ_STARTUP_1" target="_top" title="REQ_STARTUP_1" alt="" coords="17924,1681,18121,1769"/>
+<area shape="rect" id="node58" href="../11_requirements/req_startup_test.html#REQ_STARTUP_2" target="_top" title="REQ_STARTUP_2" alt="" coords="17595,1381,17757,1469"/>
+<area shape="rect" id="node59" href="../11_requirements/req_startup_test.html#REQ_STARTUP_3" target="_top" title="REQ_STARTUP_3" alt="" coords="18619,1063,18795,1151"/>
+<area shape="rect" id="node60" href="../11_requirements/req_system.html#REQ_SYS_HW_1" target="_top" title="REQ_SYS_HW_1" alt="" coords="18970,219,19187,307"/>
+<area shape="rect" id="node64" href="../11_requirements/req_system.html#REQ_SYS_ARCH_1" target="_top" title="REQ_SYS_ARCH_1" alt="" coords="20126,1681,20357,1769"/>
+<area shape="rect" id="node66" href="../11_requirements/req_system.html#REQ_SYS_PERF_1" target="_top" title="REQ_SYS_PERF_1" alt="" coords="19447,219,19627,307"/>
+<area shape="rect" id="node68" href="../11_requirements/req_system.html#REQ_SYS_SIM_2" target="_top" title="REQ_SYS_SIM_2" alt="" coords="9899,1372,10072,1479"/>
+<area shape="rect" id="node69" href="../11_requirements/req_system.html#REQ_SYS_SEC_1" target="_top" title="REQ_SYS_SEC_1" alt="" coords="20533,228,20736,297"/>
+<area shape="rect" id="node70" href="../11_requirements/req_system.html#REQ_SYS_TIME_1" target="_top" title="REQ_SYS_TIME_1" alt="" coords="21773,15,21995,103"/>
+<area shape="rect" id="node72" href="../11_requirements/req_web_server.html#REQ_WEB_2" target="_top" title="REQ_WEB_2" alt="" coords="6636,1681,6823,1769"/>
+<area shape="rect" id="node73" href="../11_requirements/req_web_server.html#REQ_WEB_3" target="_top" title="REQ_WEB_3" alt="" coords="8555,1895,8711,1983"/>
+<area shape="rect" id="node74" href="../11_requirements/req_web_server.html#REQ_WEB_CONF_1" target="_top" title="REQ_WEB_CONF_1" alt="" coords="4776,1681,4963,1769"/>
+<area shape="rect" id="node75" href="../11_requirements/req_web_server.html#REQ_WEB_SCHEMA_1" target="_top" title="REQ_WEB_SCHEMA_1" alt="" coords="4499,1372,4701,1479"/>
+<area shape="rect" id="node76" href="../11_requirements/req_web_server.html#REQ_WEB_4" target="_top" title="REQ_WEB_4" alt="" coords="8918,1681,9106,1769"/>
+<area shape="rect" id="node77" href="../11_requirements/req_web_server.html#REQ_WEB_5" target="_top" title="REQ_WEB_5" alt="" coords="6386,1681,6561,1769"/>
+<area shape="rect" id="node78" href="../11_requirements/req_web_server.html#REQ_WEB_LED_1" target="_top" title="REQ_WEB_LED_1" alt="" coords="12051,1063,12239,1151"/>
+<area shape="rect" id="node79" href="../11_requirements/req_web_server.html#REQ_WEB_NF_1" target="_top" title="REQ_WEB_NF_1" alt="" coords="7867,1381,8075,1469"/>
+<area shape="rect" id="node80" href="../11_requirements/req_web_server.html#REQ_WEB_NF_2" target="_top" title="REQ_WEB_NF_2" alt="" coords="8371,1381,8541,1469"/>
+<area shape="rect" id="node81" href="spec_config_manager_json.html#SPEC_CFG_JSON_ARCH_1" target="_top" title="SPEC_CFG_JSON_ARCH_1" alt="" coords="1428,1885,1652,1992"/>
+<area shape="rect" id="node82" href="spec_config_manager_json.html#SPEC_CFG_JSON_SOURCE_1" target="_top" title="SPEC_CFG_JSON_SOURCE_1" alt="" coords="1651,2099,1893,2205"/>
+<area shape="rect" id="node83" href="spec_config_manager_json.html#SPEC_CFG_JSON_SCHEMA_1" target="_top" title="SPEC_CFG_JSON_SCHEMA_1" alt="" coords="4039,1885,4286,1992"/>
+<area shape="rect" id="node84" href="spec_config_manager_json.html#SPEC_CFG_JSON_CODEGEN_1" target="_top" title="SPEC_CFG_JSON_CODEGEN_1" alt="" coords="919,1672,1177,1779"/>
+<area shape="rect" id="node85" href="spec_config_manager_json.html#SPEC_CFG_JSON_STORAGE_1" target="_top" title="SPEC_CFG_JSON_STORAGE_1" alt="" coords="1533,1681,1785,1769"/>
+<area shape="rect" id="node86" href="spec_config_manager_json.html#SPEC_CFG_JSON_API_1" target="_top" title="SPEC_CFG_JSON_API_1" alt="" coords="1252,1672,1457,1779"/>
+<area shape="rect" id="node87" href="spec_config_manager_json.html#SPEC_CFG_JSON_UI_1" target="_top" title="SPEC_CFG_JSON_UI_1" alt="" coords="5082,1381,5302,1469"/>
+<area shape="rect" id="node88" href="spec_config_manager_json.html#SPEC_CFG_JSON_BULK_1" target="_top" title="SPEC_CFG_JSON_BULK_1" alt="" coords="3259,1372,3480,1479"/>
+<area shape="rect" id="node89" href="spec_config_manager_json.html#SPEC_CFG_JSON_EXTEND_1" target="_top" title="SPEC_CFG_JSON_EXTEND_1" alt="" coords="5,1372,248,1479"/>
+<area shape="rect" id="node90" href="spec_config_manager_json.html#SPEC_CFG_JSON_TYPESAFETY_1" target="_top" title="SPEC_CFG_JSON_TYPESAFETY_1" alt="" coords="1932,1372,2207,1479"/>
+<area shape="rect" id="node91" href="spec_config_webpage.html#SPEC_CFG_WEB_ARCH_1" target="_top" title="SPEC_CFG_WEB_ARCH_1" alt="" coords="3013,1372,3235,1479"/>
+<area shape="rect" id="node92" href="spec_config_webpage.html#SPEC_CFG_WEB_FLOW_1" target="_top" title="SPEC_CFG_WEB_FLOW_1" alt="" coords="3972,1063,4193,1151"/>
+<area shape="rect" id="node93" href="spec_config_webpage.html#SPEC_CFG_WEB_FORM_1" target="_top" title="SPEC_CFG_WEB_FORM_1" alt="" coords="2635,1053,2858,1160"/>
+<area shape="rect" id="node94" href="spec_config_webpage.html#SPEC_CFG_WEB_MAPPING_1" target="_top" title="SPEC_CFG_WEB_MAPPING_1" alt="" coords="4218,1053,4467,1160"/>
+<area shape="rect" id="node95" href="spec_config_webpage.html#SPEC_CFG_WEB_STATE_1" target="_top" title="SPEC_CFG_WEB_STATE_1" alt="" coords="2932,1063,3156,1151"/>
+<area shape="rect" id="node96" href="spec_config_webpage.html#SPEC_CFG_WEB_COUNTDOWN_1" target="_top" title="SPEC_CFG_WEB_COUNTDOWN_1" alt="" coords="3180,1053,3460,1160"/>
+<area shape="rect" id="node97" href="spec_config_webpage.html#SPEC_CFG_WEB_ERROR_1" target="_top" title="SPEC_CFG_WEB_ERROR_1" alt="" coords="3484,1053,3713,1160"/>
+<area shape="rect" id="node98" href="spec_config_webpage.html#SPEC_CFG_WEB_INIT_1" target="_top" title="SPEC_CFG_WEB_INIT_1" alt="" coords="3738,1053,3947,1160"/>
+<area shape="rect" id="node99" href="spec_display.html#SPEC_DSP_OVERVIEW_1" target="_top" title="SPEC_DSP_OVERVIEW_1" alt="" coords="15537,1381,15773,1469"/>
+<area shape="rect" id="node100" href="spec_display.html#SPEC_DSP_ARCH_1" target="_top" title="SPEC_DSP_ARCH_1" alt="" coords="15517,840,15723,928"/>
+<area shape="rect" id="node101" href="spec_display.html#SPEC_DSP_ARCH_2" target="_top" title="SPEC_DSP_ARCH_2" alt="" coords="9848,1063,10053,1151"/>
+<area shape="rect" id="node102" href="spec_display.html#SPEC_DSP_ALGO_1" target="_top" title="SPEC_DSP_ALGO_1" alt="" coords="12735,617,12940,724"/>
+<area shape="rect" id="node103" href="spec_display.html#SPEC_DSP_ALGO_2" target="_top" title="SPEC_DSP_ALGO_2" alt="" coords="12557,5,12763,112"/>
+<area shape="rect" id="node104" href="spec_display.html#SPEC_DSP_ALGO_3" target="_top" title="SPEC_DSP_ALGO_3" alt="" coords="22019,5,22224,112"/>
+<area shape="rect" id="node105" href="spec_display.html#SPEC_DSP_ANIM_1" target="_top" title="SPEC_DSP_ANIM_1" alt="" coords="12028,209,12233,316"/>
+<area shape="rect" id="node106" href="spec_display.html#SPEC_DSP_ANIM_2" target="_top" title="SPEC_DSP_ANIM_2" alt="" coords="18740,219,18945,307"/>
+<area shape="rect" id="node107" href="spec_display.html#SPEC_DSP_ANIM_3" target="_top" title="SPEC_DSP_ANIM_3" alt="" coords="14215,617,14420,724"/>
+<area shape="rect" id="node108" href="spec_display.html#SPEC_DSP_ANIM_4" target="_top" title="SPEC_DSP_ANIM_4" alt="" coords="12257,219,12463,307"/>
+<area shape="rect" id="node109" href="spec_display.html#SPEC_DSP_API_1" target="_top" title="SPEC_DSP_API_1" alt="" coords="15747,840,15952,928"/>
+<area shape="rect" id="node110" href="spec_distance_sensor.html#SPEC_SNS_ARCH_1" target="_top" title="SPEC_SNS_ARCH_1" alt="" coords="10985,1672,11191,1779"/>
+<area shape="rect" id="node111" href="spec_distance_sensor.html#SPEC_SNS_ARCH_2" target="_top" title="SPEC_SNS_ARCH_2" alt="" coords="14105,2108,14311,2196"/>
+<area shape="rect" id="node112" href="spec_distance_sensor.html#SPEC_SNS_ISR_1" target="_top" title="SPEC_SNS_ISR_1" alt="" coords="12645,1672,12851,1779"/>
+<area shape="rect" id="node113" href="spec_distance_sensor.html#SPEC_SNS_TASK_1" target="_top" title="SPEC_SNS_TASK_1" alt="" coords="13040,1381,13245,1469"/>
+<area shape="rect" id="node114" href="spec_distance_sensor.html#SPEC_SNS_ALGO_1" target="_top" title="SPEC_SNS_ALGO_1" alt="" coords="14387,1372,14592,1479"/>
+<area shape="rect" id="node115" href="spec_distance_sensor.html#SPEC_SNS_ALGO_2" target="_top" title="SPEC_SNS_ALGO_2" alt="" coords="14927,1681,15137,1769"/>
+<area shape="rect" id="node116" href="spec_distance_sensor.html#SPEC_SNS_API_1" target="_top" title="SPEC_SNS_API_1" alt="" coords="13867,1381,14072,1469"/>
+<area shape="rect" id="node117" href="spec_distance_sensor.html#SPEC_SNS_ERR_1" target="_top" title="SPEC_SNS_ERR_1" alt="" coords="13548,1063,13753,1151"/>
+<area shape="rect" id="node118" href="spec_distance_sensor.html#SPEC_SNS_SIM_1" target="_top" title="SPEC_SNS_SIM_1" alt="" coords="11664,1372,11875,1479"/>
+<area shape="rect" id="node119" href="spec_high_level_architecture.html#SPEC_ARCH_LAYERS_1" target="_top" title="SPEC_ARCH_LAYERS_1" alt="" coords="20368,1372,20573,1479"/>
+<area shape="rect" id="node120" href="spec_high_level_architecture.html#SPEC_ARCH_CONFIG_1" target="_top" title="SPEC_ARCH_CONFIG_1" alt="" coords="10369,2312,10577,2437"/>
+<area shape="rect" id="node121" href="spec_high_level_architecture.html#SPEC_ARCH_WEB_1" target="_top" title="SPEC_ARCH_WEB_1" alt="" coords="5823,1672,6028,1779"/>
+<area shape="rect" id="node122" href="spec_high_level_architecture.html#SPEC_ARCH_CERT_1" target="_top" title="SPEC_ARCH_CERT_1" alt="" coords="7063,1663,7268,1788"/>
+<area shape="rect" id="node123" href="spec_high_level_architecture.html#SPEC_ARCH_NETIF_1" target="_top" title="SPEC_ARCH_NETIF_1" alt="" coords="10097,1372,10306,1479"/>
+<area shape="rect" id="node124" href="spec_high_level_architecture.html#SPEC_ARCH_COMM_1" target="_top" title="SPEC_ARCH_COMM_1" alt="" coords="19907,1372,20115,1479"/>
+<area shape="rect" id="node125" href="spec_high_level_architecture.html#SPEC_ARCH_CONFIG_FLOW_1" target="_top" title="SPEC_ARCH_CONFIG_FLOW_1" alt="" coords="10602,2331,10859,2419"/>
+<area shape="rect" id="node126" href="spec_high_level_architecture.html#SPEC_ARCH_WIFI_1" target="_top" title="SPEC_ARCH_WIFI_1" alt="" coords="7292,1681,7497,1769"/>
+<area shape="rect" id="node127" href="spec_high_level_architecture.html#SPEC_ARCH_HTTP_1" target="_top" title="SPEC_ARCH_HTTP_1" alt="" coords="7572,1672,7777,1779"/>
+<area shape="rect" id="node128" href="spec_high_level_architecture.html#SPEC_ARCH_QEMU_1" target="_top" title="SPEC_ARCH_QEMU_1" alt="" coords="10382,1381,10599,1469"/>
+<area shape="rect" id="node129" href="spec_high_level_architecture.html#SPEC_ARCH_QEMU_BUILD_1" target="_top" title="SPEC_ARCH_QEMU_BUILD_1" alt="" coords="10623,1381,10873,1469"/>
+<area shape="rect" id="node130" href="spec_high_level_architecture.html#SPEC_ARCH_TASKS_1" target="_top" title="SPEC_ARCH_TASKS_1" alt="" coords="20139,1381,20344,1469"/>
+<area shape="rect" id="node131" href="spec_high_level_architecture.html#SPEC_ARCH_MEMORY_1" target="_top" title="SPEC_ARCH_MEMORY_1" alt="" coords="18734,5,18951,112"/>
+<area shape="rect" id="node132" href="spec_high_level_architecture.html#SPEC_ARCH_BUILD_1" target="_top" title="SPEC_ARCH_BUILD_1" alt="" coords="18976,15,19181,103"/>
+<area shape="rect" id="node133" href="spec_high_level_architecture.html#SPEC_ARCH_FLASH_1" target="_top" title="SPEC_ARCH_FLASH_1" alt="" coords="19205,15,19411,103"/>
+<area shape="rect" id="node134" href="spec_high_level_architecture.html#SPEC_ARCH_CODESPACES_1" target="_top" title="SPEC_ARCH_CODESPACES_1" alt="" coords="10896,1372,11144,1479"/>
+<area shape="rect" id="node135" href="spec_high_level_architecture.html#SPEC_ARCH_LOGGING_1" target="_top" title="SPEC_ARCH_LOGGING_1" alt="" coords="18889,1885,19109,1992"/>
+<area shape="rect" id="node136" href="spec_high_level_architecture.html#SPEC_ARCH_ERROR_RECOVERY_1" target="_top" title="SPEC_ARCH_ERROR_RECOVERY_1" alt="" coords="19133,1885,19421,1992"/>
+<area shape="rect" id="node137" href="spec_high_level_architecture.html#SPEC_ARCH_PERF_1" target="_top" title="SPEC_ARCH_PERF_1" alt="" coords="19435,5,19640,112"/>
+<area shape="rect" id="node138" href="spec_led_controller.html#SPEC_LED_ARCH_1" target="_top" title="SPEC_LED_ARCH_1" alt="" coords="18917,1672,19126,1779"/>
+<area shape="rect" id="node139" href="spec_led_controller.html#SPEC_LED_ARCH_2" target="_top" title="SPEC_LED_ARCH_2" alt="" coords="16891,1381,17096,1469"/>
+<area shape="rect" id="node140" href="spec_led_controller.html#SPEC_LED_API_1" target="_top" title="SPEC_LED_API_1" alt="" coords="15797,1381,16003,1469"/>
+<area shape="rect" id="node141" href="spec_led_controller.html#SPEC_LED_API_2" target="_top" title="SPEC_LED_API_2" alt="" coords="17443,1063,17648,1151"/>
+<area shape="rect" id="node142" href="spec_led_controller.html#SPEC_LED_API_3" target="_top" title="SPEC_LED_API_3" alt="" coords="12897,1063,13103,1151"/>
+<area shape="rect" id="node143" href="spec_led_controller.html#SPEC_LED_TIMING_1" target="_top" title="SPEC_LED_TIMING_1" alt="" coords="19151,1681,19359,1769"/>
+<area shape="rect" id="node144" href="spec_led_controller.html#SPEC_LED_DATA_1" target="_top" title="SPEC_LED_DATA_1" alt="" coords="17213,1053,17419,1160"/>
+<area shape="rect" id="node145" href="spec_led_controller.html#SPEC_LED_MEM_1" target="_top" title="SPEC_LED_MEM_1" alt="" coords="18683,1381,18907,1469"/>
+<area shape="rect" id="node146" href="spec_led_controller.html#SPEC_LED_ERR_1" target="_top" title="SPEC_LED_ERR_1" alt="" coords="18403,1381,18608,1469"/>
+<area shape="rect" id="node147" href="spec_led_controller.html#SPEC_LED_SIM_1" target="_top" title="SPEC_LED_SIM_1" alt="" coords="14767,1063,14972,1151"/>
+<area shape="rect" id="node148" href="spec_startup_test.html#SPEC_STARTUP_1" target="_top" title="SPEC_STARTUP_1" alt="" coords="15747,1217,15952,1324"/>
+<area shape="rect" id="node149" href="spec_startup_test.html#SPEC_STARTUP_2" target="_top" title="SPEC_STARTUP_2" alt="" coords="15428,1053,15633,1160"/>
+<area shape="rect" id="node150" href="spec_startup_test.html#SPEC_STARTUP_3" target="_top" title="SPEC_STARTUP_3" alt="" coords="18331,831,18538,937"/>
+<area shape="rect" id="node151" href="spec_startup_test.html#SPEC_STARTUP_4" target="_top" title="SPEC_STARTUP_4" alt="" coords="15176,840,15381,928"/>
+<area shape="rect" id="node152" href="spec_web_server.html#SPEC_WEB_ARCH_1" target="_top" title="SPEC_WEB_ARCH_1" alt="" coords="7384,1381,7589,1469"/>
+<area shape="rect" id="node153" href="spec_web_server.html#SPEC_WEB_STATIC_1" target="_top" title="SPEC_WEB_STATIC_1" alt="" coords="8327,1053,8532,1160"/>
+<area shape="rect" id="node154" href="spec_web_server.html#SPEC_WEB_ROUTES_1" target="_top" title="SPEC_WEB_ROUTES_1" alt="" coords="8843,1381,9048,1469"/>
+<area shape="rect" id="node155" href="spec_web_server.html#SPEC_WEB_REST_CFG_1" target="_top" title="SPEC_WEB_REST_CFG_1" alt="" coords="4491,1063,4709,1151"/>
+<area shape="rect" id="node156" href="spec_web_server.html#SPEC_WEB_REST_WIFI_1" target="_top" title="SPEC_WEB_REST_WIFI_1" alt="" coords="9283,1672,9517,1779"/>
+<area shape="rect" id="node157" href="spec_web_server.html#SPEC_WEB_REST_HEALTH_1" target="_top" title="SPEC_WEB_REST_HEALTH_1" alt="" coords="8099,1381,8347,1469"/>
+<area shape="rect" id="node158" href="spec_web_server.html#SPEC_WEB_REST_LED_1" target="_top" title="SPEC_WEB_REST_LED_1" alt="" coords="12489,840,12706,928"/>
+<area shape="rect" id="node159" href="spec_web_server.html#SPEC_WEB_INTEGRATION_CFG_1" target="_top" title="SPEC_WEB_INTEGRATION_CFG_1" alt="" coords="4725,1372,5006,1479"/>
+<area shape="rect" id="node160" href="spec_web_server.html#SPEC_WEB_INTEGRATION_WIFI_1" target="_top" title="SPEC_WEB_INTEGRATION_WIFI_1" alt="" coords="9541,1672,9827,1779"/>
+<area shape="rect" id="node161" href="spec_web_server.html#SPEC_WEB_CAPTIVE_1" target="_top" title="SPEC_WEB_CAPTIVE_1" alt="" coords="9851,1681,10056,1769"/>
+<area shape="rect" id="node162" href="spec_web_server.html#SPEC_WEB_CONFIG_1" target="_top" title="SPEC_WEB_CONFIG_1" alt="" coords="5649,1381,5855,1469"/>
+<area shape="rect" id="node163" href="spec_web_server.html#SPEC_WEB_EXTEND_1" target="_top" title="SPEC_WEB_EXTEND_1" alt="" coords="9173,1381,9387,1469"/>
+<area shape="rect" id="node164" href="spec_web_server.html#SPEC_WEB_SECURITY_1" target="_top" title="SPEC_WEB_SECURITY_1" alt="" coords="5879,1381,6094,1469"/>
+<area shape="rect" id="node165" href="spec_web_server.html#SPEC_WEB_TEST_1" target="_top" title="SPEC_WEB_TEST_1" alt="" coords="6119,1372,6324,1479"/>
+<area shape="rect" id="node166" href="../21_api/api_cert_handler.html#API_COMP_CERT_HANDLER" target="_top" title="API_COMP_CERT_HANDLER" alt="" coords="19664,15,19907,103"/>
+<area shape="rect" id="node167" href="../21_api/api_cert_handler.html#API_FUNC_CERT_HANDLER_INIT" target="_top" title="API_FUNC_CERT_HANDLER_INIT" alt="" coords="19931,15,20210,103"/>
+<area shape="rect" id="node168" href="../21_api/api_cert_handler.html#API_FUNC_CERT_HANDLER_GET_SERVER_CERT" target="_top" title="API_FUNC_CERT_HANDLER_GET_SERVER_CERT" alt="" coords="20235,15,20624,103"/>
+<area shape="rect" id="node169" href="../21_api/api_cert_handler.html#API_FUNC_CERT_HANDLER_GET_SERVER_KEY" target="_top" title="API_FUNC_CERT_HANDLER_GET_SERVER_KEY" alt="" coords="20649,15,21029,103"/>
+<area shape="rect" id="node170" href="../21_api/api_cert_handler.html#API_FUNC_CERT_HANDLER_GET_CA_CERT" target="_top" title="API_FUNC_CERT_HANDLER_GET_CA_CERT" alt="" coords="21053,15,21403,103"/>
+<area shape="rect" id="node171" href="../21_api/api_cert_handler.html#API_FUNC_CERT_HANDLER_GET_INFO" target="_top" title="API_FUNC_CERT_HANDLER_GET_INFO" alt="" coords="21427,15,21749,103"/>
+<area shape="rect" id="node172" href="../21_api/api_config_manager.html#API_COMP_CONFIG_MANAGER" target="_top" title="API_COMP_CONFIG_MANAGER" alt="" coords="1082,1391,1347,1460"/>
+<area shape="rect" id="node173" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_INIT" target="_top" title="API_FUNC_CONFIG_INIT" alt="" coords="4206,1391,4423,1460"/>
+<area shape="rect" id="node174" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_FACTORY_RESET" target="_top" title="API_FUNC_CONFIG_FACTORY_RESET" alt="" coords="587,1681,895,1769"/>
+<area shape="rect" id="node175" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_COMMIT" target="_top" title="API_FUNC_CONFIG_COMMIT" alt="" coords="22249,24,22498,93"/>
+<area shape="rect" id="node176" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_WRITE_FACTORY_DEFAULTS" target="_top" title="API_FUNC_CONFIG_WRITE_FACTORY_DEFAULTS" alt="" coords="962,1895,1353,1983"/>
+<area shape="rect" id="node177" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_GET_STRING" target="_top" title="API_FUNC_CONFIG_GET_STRING" alt="" coords="2706,1681,2985,1769"/>
+<area shape="rect" id="node178" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_SET_STRING" target="_top" title="API_FUNC_CONFIG_SET_STRING" alt="" coords="3009,1681,3287,1769"/>
+<area shape="rect" id="node179" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_SET_STRING_NO_COMMIT" target="_top" title="API_FUNC_CONFIG_SET_STRING_NO_COMMIT" alt="" coords="22522,15,22899,103"/>
+<area shape="rect" id="node180" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_GET_INT32" target="_top" title="API_FUNC_CONFIG_GET_INT32" alt="" coords="3311,1681,3577,1769"/>
+<area shape="rect" id="node181" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_SET_INT32" target="_top" title="API_FUNC_CONFIG_SET_INT32" alt="" coords="3601,1681,3863,1769"/>
+<area shape="rect" id="node182" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_GET_INT16" target="_top" title="API_FUNC_CONFIG_GET_INT16" alt="" coords="3887,1681,4153,1769"/>
+<area shape="rect" id="node183" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_SET_INT16" target="_top" title="API_FUNC_CONFIG_SET_INT16" alt="" coords="4177,1681,4439,1769"/>
+<area shape="rect" id="node184" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_SET_INT16_NO_COMMIT" target="_top" title="API_FUNC_CONFIG_SET_INT16_NO_COMMIT" alt="" coords="22924,15,23287,103"/>
+<area shape="rect" id="node185" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_GET_BOOL" target="_top" title="API_FUNC_CONFIG_GET_BOOL" alt="" coords="2132,1691,2396,1760"/>
+<area shape="rect" id="node186" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_SET_BOOL_NO_COMMIT" target="_top" title="API_FUNC_CONFIG_SET_BOOL_NO_COMMIT" alt="" coords="23311,15,23673,103"/>
+<area shape="rect" id="node187" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_SET_BOOL" target="_top" title="API_FUNC_CONFIG_SET_BOOL" alt="" coords="2420,1691,2681,1760"/>
+<area shape="rect" id="node188" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_GET_SCHEMA_JSON" target="_top" title="API_FUNC_CONFIG_GET_SCHEMA_JSON" alt="" coords="3505,1381,3837,1469"/>
+<area shape="rect" id="node189" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_GET_ALL_AS_JSON" target="_top" title="API_FUNC_CONFIG_GET_ALL_AS_JSON" alt="" coords="3861,1381,4182,1469"/>
+<area shape="rect" id="node190" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_SET_ALL_FROM_JSON" target="_top" title="API_FUNC_CONFIG_SET_ALL_FROM_JSON" alt="" coords="272,1381,616,1469"/>
+<area shape="rect" id="node191" href="../21_api/api_display_logic.html#API_COMP_DISPLAY_LOGIC" target="_top" title="API_COMP_DISPLAY_LOGIC" alt="" coords="13548,849,13785,919"/>
+<area shape="rect" id="node192" href="../21_api/api_display_logic.html#API_FUNC_DISPLAY_LOGIC_START" target="_top" title="API_FUNC_DISPLAY_LOGIC_START" alt="" coords="12968,840,13256,928"/>
+<area shape="rect" id="node193" href="../21_api/api_distance_sensor.html#API_COMP_DISTANCE_SENSOR" target="_top" title="API_COMP_DISTANCE_SENSOR" alt="" coords="14097,1391,14362,1460"/>
+<area shape="rect" id="node194" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_INIT" target="_top" title="API_FUNC_DISTANCE_SENSOR_INIT" alt="" coords="12384,1381,12685,1469"/>
+<area shape="rect" id="node195" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_START" target="_top" title="API_FUNC_DISTANCE_SENSOR_START" alt="" coords="15161,1681,15479,1769"/>
+<area shape="rect" id="node196" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_STOP" target="_top" title="API_FUNC_DISTANCE_SENSOR_STOP" alt="" coords="11425,1681,11735,1769"/>
+<area shape="rect" id="node197" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_GET_LATEST" target="_top" title="API_FUNC_DISTANCE_SENSOR_GET_LATEST" alt="" coords="14616,1381,14979,1469"/>
+<area shape="rect" id="node198" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_HAS_NEW_MEASUREMENT" target="_top" title="API_FUNC_DISTANCE_SENSOR_HAS_NEW_MEASUREMENT" alt="" coords="11759,1672,12230,1779"/>
+<area shape="rect" id="node199" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_GET_QUEUE_OVERFLOWS" target="_top" title="API_FUNC_DISTANCE_SENSOR_GET_QUEUE_OVERFLOWS" alt="" coords="11899,1372,12360,1479"/>
+<area shape="rect" id="node200" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_MONITOR" target="_top" title="API_FUNC_DISTANCE_SENSOR_MONITOR" alt="" coords="13270,1381,13613,1469"/>
+<area shape="rect" id="node201" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_IS_RUNNING" target="_top" title="API_FUNC_DISTANCE_SENSOR_IS_RUNNING" alt="" coords="12255,1681,12620,1769"/>
+<area shape="rect" id="node202" href="../21_api/api_distance_sensor.html#API_STRUCT_DISTANCE_SENSOR_ERROR" target="_top" title="API_STRUCT_DISTANCE_SENSOR_ERROR" alt="" coords="13881,1681,14218,1769"/>
+<area shape="rect" id="node203" href="../21_api/api_distance_sensor.html#API_STRUCT_DISTANCE_SENSOR_RAW_MEASUREMENT" target="_top" title="API_STRUCT_DISTANCE_SENSOR_RAW_MEASUREMENT" alt="" coords="14112,1895,14557,1983"/>
+<area shape="rect" id="node204" href="../21_api/api_distance_sensor.html#API_STRUCT_DISTANCE_SENSOR_MEASUREMENT" target="_top" title="API_STRUCT_DISTANCE_SENSOR_MEASUREMENT" alt="" coords="14243,1681,14648,1769"/>
+<area shape="rect" id="node205" href="../21_api/api_led_controller.html#API_COMP_LED_CONTROLLER" target="_top" title="API_COMP_LED_CONTROLLER" alt="" coords="15855,1072,16116,1141"/>
+<area shape="rect" id="node206" href="../21_api/api_led_controller.html#API_FUNC_LED_CONTROLLER_INIT" target="_top" title="API_FUNC_LED_CONTROLLER_INIT" alt="" coords="19311,1381,19609,1469"/>
+<area shape="rect" id="node207" href="../21_api/api_led_controller.html#API_FUNC_LED_CONTROLLER_DEINIT" target="_top" title="API_FUNC_LED_CONTROLLER_DEINIT" alt="" coords="19383,1681,19700,1769"/>
+<area shape="rect" id="node208" href="../21_api/api_led_controller.html#API_FUNC_LED_CONTROLLER_SET_PIXEL" target="_top" title="API_FUNC_LED_CONTROLLER_SET_PIXEL" alt="" coords="18035,1391,18378,1460"/>
+<area shape="rect" id="node209" href="../21_api/api_led_controller.html#API_FUNC_LED_CONTROLLER_CLEAR_PIXEL" target="_top" title="API_FUNC_LED_CONTROLLER_CLEAR_PIXEL" alt="" coords="16129,1391,16493,1460"/>
+<area shape="rect" id="node210" href="../21_api/api_led_controller.html#API_FUNC_LED_CONTROLLER_GET_PIXEL" target="_top" title="API_FUNC_LED_CONTROLLER_GET_PIXEL" alt="" coords="14346,1072,14691,1141"/>
+<area shape="rect" id="node211" href="../21_api/api_led_controller.html#API_FUNC_LED_CONTROLLER_CLEAR_ALL" target="_top" title="API_FUNC_LED_CONTROLLER_CLEAR_ALL" alt="" coords="16517,1391,16867,1460"/>
+<area shape="rect" id="node212" href="../21_api/api_led_controller.html#API_FUNC_LED_CONTROLLER_SHOW" target="_top" title="API_FUNC_LED_CONTROLLER_SHOW" alt="" coords="17672,1072,17984,1141"/>
+<area shape="rect" id="node213" href="../21_api/api_led_controller.html#API_FUNC_LED_CONTROLLER_COLOR_RGB" target="_top" title="API_FUNC_LED_CONTROLLER_COLOR_RGB" alt="" coords="16140,1072,16495,1141"/>
+<area shape="rect" id="node214" href="../21_api/api_led_controller.html#API_FUNC_LED_CONTROLLER_COLOR_BRIGHTNESS" target="_top" title="API_FUNC_LED_CONTROLLER_COLOR_BRIGHTNESS" alt="" coords="16519,1063,16940,1151"/>
+<area shape="rect" id="node215" href="../21_api/api_led_controller.html#API_FUNC_LED_CONTROLLER_GET_COUNT" target="_top" title="API_FUNC_LED_CONTROLLER_GET_COUNT" alt="" coords="18931,1391,19287,1460"/>
+<area shape="rect" id="node216" href="../21_api/api_led_controller.html#API_FUNC_LED_CONTROLLER_IS_INITIALIZED" target="_top" title="API_FUNC_LED_CONTROLLER_IS_INITIALIZED" alt="" coords="19725,1681,20102,1769"/>
+<area shape="rect" id="node217" href="../21_api/api_led_controller.html#API_FUNC_LED_CONTROLLER_GET_ALL_COLORS" target="_top" title="API_FUNC_LED_CONTROLLER_GET_ALL_COLORS" alt="" coords="13127,1063,13524,1151"/>
+<area shape="rect" id="node218" href="../21_api/api_led_controller.html#API_STRUCT_LED_COLOR" target="_top" title="API_STRUCT_LED_COLOR" alt="" coords="16963,1072,17189,1141"/>
+<area shape="rect" id="node219" href="../21_api/api_netif_uart_tunnel.html#API_COMP_NETIF_TUNNEL" target="_top" title="API_COMP_NETIF_TUNNEL" alt="" coords="13280,849,13517,919"/>
+<area shape="rect" id="node220" href="../21_api/api_netif_uart_tunnel.html#API_STRUCT_NETIF_TUNNEL_CONFIG" target="_top" title="API_STRUCT_NETIF_TUNNEL_CONFIG" alt="" coords="11659,1063,11976,1151"/>
+<area shape="rect" id="node221" href="../21_api/api_netif_uart_tunnel.html#API_FUNC_NETIF_TUNNEL_INIT" target="_top" title="API_FUNC_NETIF_TUNNEL_INIT" alt="" coords="10413,1063,10686,1151"/>
+<area shape="rect" id="node222" href="../21_api/api_netif_uart_tunnel.html#API_FUNC_NETIF_TUNNEL_DEINIT" target="_top" title="API_FUNC_NETIF_TUNNEL_DEINIT" alt="" coords="10710,1063,11005,1151"/>
+<area shape="rect" id="node223" href="../21_api/api_netif_uart_tunnel.html#API_FUNC_NETIF_TUNNEL_GET_HANDLE" target="_top" title="API_FUNC_NETIF_TUNNEL_GET_HANDLE" alt="" coords="11291,1063,11635,1151"/>
+<area shape="rect" id="node224" href="../21_api/api_startup_tests.html#API_COMP_STARTUP_TESTS" target="_top" title="API_COMP_STARTUP_TESTS" alt="" coords="18066,849,18307,919"/>
+<area shape="rect" id="node225" href="../21_api/api_startup_tests.html#API_FUNC_STARTUP_TESTS_SINGLE_CYCLE" target="_top" title="API_FUNC_STARTUP_TESTS_SINGLE_CYCLE" alt="" coords="15047,1063,15404,1151"/>
+<area shape="rect" id="node226" href="../21_api/api_startup_tests.html#API_FUNC_STARTUP_TESTS_MULTIPLE_CYCLES" target="_top" title="API_FUNC_STARTUP_TESTS_MULTIPLE_CYCLES" alt="" coords="18058,1053,18443,1160"/>
+<area shape="rect" id="node227" href="../21_api/api_startup_tests.html#API_FUNC_STARTUP_TESTS_RAINBOW" target="_top" title="API_FUNC_STARTUP_TESTS_RAINBOW" alt="" coords="18562,840,18881,928"/>
+<area shape="rect" id="node228" href="../21_api/api_web_server.html#API_COMP_WEB_SERVER" target="_top" title="API_COMP_WEB_SERVER" alt="" coords="8413,849,8635,919"/>
+<area shape="rect" id="node229" href="../21_api/api_web_server.html#API_FUNC_WEB_INIT" target="_top" title="API_FUNC_WEB_INIT" alt="" coords="8565,1391,8768,1460"/>
+<area shape="rect" id="node230" href="../21_api/api_web_server.html#API_FUNC_WEB_START" target="_top" title="API_FUNC_WEB_START" alt="" coords="10080,1681,10288,1769"/>
+<area shape="rect" id="node231" href="../21_api/api_web_server.html#API_FUNC_WEB_STOP" target="_top" title="API_FUNC_WEB_STOP" alt="" coords="6348,1391,6559,1460"/>
+<area shape="rect" id="node232" href="../21_api/api_web_server.html#API_FUNC_WEB_IS_RUNNING" target="_top" title="API_FUNC_WEB_IS_RUNNING" alt="" coords="6843,1381,7099,1469"/>
+<area shape="rect" id="node233" href="../21_api/api_web_server.html#API_FUNC_WEB_GET_PORT" target="_top" title="API_FUNC_WEB_GET_PORT" alt="" coords="7123,1381,7360,1469"/>
+<area shape="rect" id="node234" href="../21_api/api_web_server.html#API_FUNC_WEB_STATIC_FILE" target="_top" title="API_FUNC_WEB_STATIC_FILE" alt="" coords="7614,1063,7866,1151"/>
+<area shape="rect" id="node235" href="../21_api/api_web_server.html#API_STRUCT_WEB_CONFIG" target="_top" title="API_STRUCT_WEB_CONFIG" alt="" coords="6582,1381,6818,1469"/>
+<area shape="rect" id="node236" href="../21_api/api_wifi_manager.html#API_COMP_WIFI_MGR" target="_top" title="API_COMP_WIFI_MGR" alt="" coords="5377,1391,5575,1460"/>
+<area shape="rect" id="node237" href="../21_api/api_wifi_manager.html#API_FUNC_WIFI_INIT" target="_top" title="API_FUNC_WIFI_INIT" alt="" coords="7802,1681,8011,1769"/>
+<area shape="rect" id="node238" href="../21_api/api_wifi_manager.html#API_FUNC_WIFI_START" target="_top" title="API_FUNC_WIFI_START" alt="" coords="8035,1681,8245,1769"/>
+<area shape="rect" id="node239" href="../21_api/api_wifi_manager.html#API_FUNC_WIFI_STOP" target="_top" title="API_FUNC_WIFI_STOP" alt="" coords="8787,1895,8997,1983"/>
+<area shape="rect" id="node240" href="../21_api/api_wifi_manager.html#API_FUNC_WIFI_GET_STATUS" target="_top" title="API_FUNC_WIFI_GET_STATUS" alt="" coords="8269,1681,8523,1769"/>
+<area shape="rect" id="node241" href="../21_api/api_wifi_manager.html#API_FUNC_WIFI_SET_CRED" target="_top" title="API_FUNC_WIFI_SET_CRED" alt="" coords="5511,1681,5748,1769"/>
+<area shape="rect" id="node242" href="../21_api/api_wifi_manager.html#API_FUNC_WIFI_CLEAR_CRED" target="_top" title="API_FUNC_WIFI_CLEAR_CRED" alt="" coords="6053,1681,6310,1769"/>
+<area shape="rect" id="node243" href="../21_api/api_wifi_manager.html#API_FUNC_WIFI_GET_IP" target="_top" title="API_FUNC_WIFI_GET_IP" alt="" coords="9072,1895,9285,1983"/>
+<area shape="rect" id="node244" href="../21_api/api_wifi_manager.html#API_FUNC_WIFI_SWITCH_AP" target="_top" title="API_FUNC_WIFI_SWITCH_AP" alt="" coords="8547,1681,8792,1769"/>
+<area shape="rect" id="node245" href="../21_api/api_wifi_manager.html#API_FUNC_WIFI_MONITOR" target="_top" title="API_FUNC_WIFI_MONITOR" alt="" coords="9310,1895,9543,1983"/>
+<area shape="rect" id="node246" href="../21_api/api_wifi_manager.html#API_STRUCT_WIFI_MODE" target="_top" title="API_STRUCT_WIFI_MODE" alt="" coords="9567,1895,9790,1983"/>
+<area shape="rect" id="node247" href="../21_api/api_wifi_manager.html#API_STRUCT_WIFI_CRED" target="_top" title="API_STRUCT_WIFI_CRED" alt="" coords="9814,1895,10031,1983"/>
+<area shape="rect" id="node248" href="../21_api/api_wifi_manager.html#API_STRUCT_WIFI_STATUS" target="_top" title="API_STRUCT_WIFI_STATUS" alt="" coords="10056,1904,10288,1973"/>
+</map><figcaption>
+<p><span class="caption-text">SPEC_CFG_WEB_ARCH_1</span><a class="headerlink" href="#needflow-12_design/spec_config_webpage-0" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="spec_web_server.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Web Server Design Specification</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="spec_config_manager_json.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">JSON-Based Configuration Manager Design</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2025, ESP32 Distance Sensor Team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Configuration Webpage Design Specification</a><ul>
+<li><a class="reference internal" href="#architecture-overview">Architecture Overview</a></li>
+<li><a class="reference internal" href="#data-flow-architecture">Data Flow Architecture</a></li>
+<li><a class="reference internal" href="#schema-driven-form-generation">Schema-Driven Form Generation</a></li>
+<li><a class="reference internal" href="#configuration-data-mapping">Configuration Data Mapping</a></li>
+<li><a class="reference internal" href="#user-interface-states">User Interface States</a></li>
+<li><a class="reference internal" href="#reset-countdown-modal">Reset Countdown Modal</a></li>
+<li><a class="reference internal" href="#error-handling">Error Handling</a></li>
+<li><a class="reference internal" href="#page-initialization-sequence">Page Initialization Sequence</a></li>
+<li><a class="reference internal" href="#traceability">Traceability</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../_static/documentation_options.js?v=51b770b3"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
+    <script src="../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>
+    <script src="../_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
+    <script src="../_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
+    <script src="../_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
+    </body>
+</html>

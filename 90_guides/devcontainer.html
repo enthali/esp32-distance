@@ -1,0 +1,544 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Pre-commit Hooks" href="pre-commit-hooks.html"><link rel="prev" title="Development Guide" href="index.html">
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+        <title>Development Container Setup - ESP32 Distance Sensor</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/modern.css?v=803738c0" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2dda3639" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">ESP32 Distance Sensor</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <span class="sidebar-brand-text">ESP32 Distance Sensor</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../01_overview/index.html">Project Overview</a><input aria-label="Toggle navigation of Project Overview" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../01_overview/introduction.html">Project Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_overview/hardware.html">Hardware Specifications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_overview/quick-start.html">Quick Start Guide</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../05_workshop/index.html">Workshop Overview</a><input aria-label="Toggle navigation of Workshop Overview" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../05_workshop/prerequisites.html">Workshop Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_workshop/getting-started.html">Getting Started with the Workshop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_workshop/hardware-setup.html">Hardware Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_workshop/exercises.html">Workshop Exercises</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../11_requirements/index.html">Requirements Documentation</a><input aria-label="Toggle navigation of Requirements Documentation" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_system.html">System Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_web_server.html">Web Server Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_config_manager_json.html">JSON-Based Configuration Manager Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_netif_tunnel.html">Network Interface Tunnel Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_distance_sensor.html">Distance Sensor Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_led_controller.html">LED Controller Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_display.html">Display System Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_startup_test.html">Startup Test Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../12_design/index.html">Design Specifications</a><input aria-label="Toggle navigation of Design Specifications" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_high_level_architecture.html">High-Level Architecture Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_config_manager_json.html">JSON-Based Configuration Manager Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_config_webpage.html">Configuration Webpage Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_web_server.html">Web Server Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_distance_sensor.html">Distance Sensor Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_led_controller.html">LED Controller Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_display.html">Display System Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_startup_test.html">Startup Test Design Specification</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../21_api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_config_manager.html">Config Manager API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_led_controller.html">LED Controller API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_distance_sensor.html">Distance Sensor API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_display_logic.html">Display Logic API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_startup_tests.html">Startup Tests API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_netif_uart_tunnel.html">Network Tunnel API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_cert_handler.html">Certificate Handler API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_web_server.html">Web Server API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_wifi_manager.html">WiFi Manager API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../31_traceability/index.html">Traceability</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Development Guide</a><input aria-label="Toggle navigation of Development Guide" checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Development Container Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pre-commit-hooks.html">Pre-commit Hooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu-emulator.html">QEMU Emulator Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web-flasher.html">Web-Based Firmware Flashing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging.html">Debugging Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu-network-internals.html">QEMU Network Internals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="known-issues.html">Known Issues and Limitations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../legal/impressum.html">Impressum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../legal/datenschutz.html">Datenschutzerklärung</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/90_guides/devcontainer.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="development-container-setup">
+<h1>Development Container Setup<a class="headerlink" href="#development-container-setup" title="Link to this heading">¶</a></h1>
+<p>This template uses containerized development with VS Code Dev Containers and GitHub Codespaces for consistent ESP-IDF development environment.</p>
+<section id="development-options">
+<h2>Development Options<a class="headerlink" href="#development-options" title="Link to this heading">¶</a></h2>
+<section id="recommended-github-codespaces-cloud">
+<h3>Recommended: GitHub Codespaces (Cloud)<a class="headerlink" href="#recommended-github-codespaces-cloud" title="Link to this heading">¶</a></h3>
+<p>✅ No local setup required - works entirely in browser</p>
+<p>✅ Pre-configured ESP-IDF v5.4.1 environment ready instantly</p>
+<p>✅ USB device access through browser serial interface</p>
+<p>✅ Perfect for trying the template before committing to hardware</p>
+</section>
+<section id="alternative-local-dev-container">
+<h3>Alternative: Local Dev Container<a class="headerlink" href="#alternative-local-dev-container" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Uses Docker container with ESP-IDF v5.4.1 pre-installed</p></li>
+<li><p>Requires Docker Desktop and VS Code with Dev Containers extension</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This template focuses on Codespaces workflow. Local dev container support is provided but not officially supported.</p>
+</div>
+</section>
+</section>
+<section id="using-the-dev-container">
+<h2>Using the Dev Container<a class="headerlink" href="#using-the-dev-container" title="Link to this heading">¶</a></h2>
+<section id="in-github-codespaces">
+<h3>In GitHub Codespaces<a class="headerlink" href="#in-github-codespaces" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Go to your GitHub repository</p></li>
+<li><p>Click “<strong>Code</strong>” → “<strong>Codespaces</strong>” → “<strong>Create codespace</strong>”</p></li>
+<li><p>Container will automatically build with ESP-IDF ready</p></li>
+<li><p>Extensions (ESP-IDF, ESP-IDF Web) will be pre-installed</p></li>
+</ol>
+</section>
+<section id="local-development-with-docker">
+<h3>Local Development with Docker<a class="headerlink" href="#local-development-with-docker" title="Link to this heading">¶</a></h3>
+<p><strong>Recommended:</strong> Clone repository into container volume for best performance (like Codespaces):</p>
+<ol class="arabic simple">
+<li><p>Install VS Code and the <strong>Dev Containers</strong> extension</p></li>
+<li><p>Ensure Docker Desktop is running</p></li>
+<li><p>In VS Code: Press <strong>F1</strong> → Type “<strong>Dev Containers: Clone Repository in Container Volume…</strong>”</p></li>
+<li><p>Enter repository URL (GitHub/GitLab/etc.)</p></li>
+<li><p>Select branch to clone</p></li>
+<li><p>Container builds automatically with full ESP-IDF environment</p></li>
+</ol>
+<p><strong>Alternative:</strong> Open existing local clone in container:</p>
+<ol class="arabic simple">
+<li><p>Clone repository to your local machine</p></li>
+<li><p>Open the project in VS Code</p></li>
+<li><p>VS Code will prompt: “Reopen in Container” → Click <strong>Yes</strong></p></li>
+<li><p>Container builds and mounts your local files</p></li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Container volume cloning is faster!</strong> File I/O performance is significantly better when the repository lives in a Docker volume rather than being bind-mounted from the host filesystem.</p>
+</div>
+</section>
+</section>
+<section id="container-features">
+<h2>Container Features<a class="headerlink" href="#container-features" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>ESP-IDF v5.4.1</strong>: Latest stable version pre-configured</p></li>
+<li><p><strong>Pre-configured VS Code</strong>: ESP-IDF extension settings ready</p></li>
+<li><p><strong>Web Serial Support</strong>: ESP-IDF Web extension for Codespaces flashing/monitoring</p></li>
+<li><p><strong>Port forwarding</strong>: HTTP server (80, 443) and development ports</p></li>
+<li><p><strong>Privileged mode</strong>: USB device access for flashing (local Docker only)</p></li>
+</ul>
+</section>
+<section id="build-commands-in-container">
+<h2>Build Commands in Container<a class="headerlink" href="#build-commands-in-container" title="Link to this heading">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Standard ESP-IDF commands work directly</span>
+idf.py<span class="w"> </span>build
+idf.py<span class="w"> </span>flash<span class="w"> </span>monitor
+idf.py<span class="w"> </span>menuconfig
+
+<span class="c1"># Container has ESP-IDF environment pre-loaded</span>
+<span class="c1"># No need to run export.sh or install.sh</span>
+</pre></div>
+</div>
+</section>
+<section id="hardware-flashing">
+<h2>Hardware Flashing<a class="headerlink" href="#hardware-flashing" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Local Docker</strong>: Hardware connected to host is accessible in container</p></li>
+<li><p><strong>Codespaces</strong>: Use ESP-IDF Web extension for WebSerial/WebUSB flashing</p></li>
+<li><p><strong>Mixed workflow</strong>: Build in container, flash on host if needed</p></li>
+</ul>
+<section id="windows-usb-device-setup-local-dev-container-only">
+<h3>Windows USB Device Setup (Local Dev Container Only)<a class="headerlink" href="#windows-usb-device-setup-local-dev-container-only" title="Link to this heading">¶</a></h3>
+<p>For Windows users running the dev container locally (not needed for Codespaces):</p>
+<p><strong>Quick Setup</strong>: Run <code class="docutils literal notranslate"><span class="pre">tools/attach-esp32.ps1</span></code> as Administrator - script automatically finds and attaches your ESP32.</p>
+<p><strong>Manual Setup</strong> (if script doesn’t work):</p>
+<ol class="arabic simple">
+<li><p>Install usbipd-win: <code class="docutils literal notranslate"><span class="pre">winget</span> <span class="pre">install</span> <span class="pre">usbipd</span></code></p></li>
+<li><p>Find device: <code class="docutils literal notranslate"><span class="pre">usbipd</span> <span class="pre">list</span></code> (look for USB-SERIAL CH340)</p></li>
+<li><p>Bind device: <code class="docutils literal notranslate"><span class="pre">usbipd</span> <span class="pre">bind</span> <span class="pre">--busid</span> <span class="pre">&lt;BUSID&gt;</span></code></p></li>
+<li><p>Attach to container: <code class="docutils literal notranslate"><span class="pre">usbipd</span> <span class="pre">attach</span> <span class="pre">--wsl</span> <span class="pre">--busid</span> <span class="pre">&lt;BUSID&gt;</span></code></p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>GitHub Codespaces handles USB through browser serial interface - no manual setup needed.</p>
+</div>
+</section>
+</section>
+<section id="benefits">
+<h2>Benefits<a class="headerlink" href="#benefits" title="Link to this heading">¶</a></h2>
+<p>✅ <strong>Consistent environments</strong> across Windows, macOS, Linux, Codespaces</p>
+<p>✅ <strong>No ESP-IDF setup</strong> required for new team members</p>
+<p>✅ <strong>Isolated dependencies</strong> - container changes don’t affect host system</p>
+<p>✅ <strong>Easy onboarding</strong> - clone repo, open in VS Code, start coding</p>
+<p>✅ <strong>Your existing setup unchanged</strong> - host workflow still works</p>
+</section>
+<section id="container-configuration">
+<h2>Container Configuration<a class="headerlink" href="#container-configuration" title="Link to this heading">¶</a></h2>
+<p>The dev container is configured in <code class="docutils literal notranslate"><span class="pre">.devcontainer/devcontainer.json</span></code>:</p>
+<ul class="simple">
+<li><p>Base image: <code class="docutils literal notranslate"><span class="pre">espressif/idf:v5.4.1</span></code></p></li>
+<li><p>VS Code extensions automatically installed</p></li>
+<li><p>Port forwarding for web development</p></li>
+<li><p>Git configuration inherited from host</p></li>
+</ul>
+</section>
+<section id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading">¶</a></h2>
+<p><strong>Issue</strong>: Container fails to build</p>
+<ul class="simple">
+<li><p><strong>Solution</strong>: Check Docker Desktop is running and has sufficient resources (4GB+ RAM recommended)</p></li>
+</ul>
+<p><strong>Issue</strong>: ESP32 device not visible in container</p>
+<ul class="simple">
+<li><p><strong>Solution</strong>: For local Docker, ensure USB device is attached using usbipd (Windows) or passed through (Linux/macOS)</p></li>
+</ul>
+<p><strong>Issue</strong>: Extensions not installed</p>
+<ul class="simple">
+<li><p><strong>Solution</strong>: Reload window (Ctrl+Shift+P → “Developer: Reload Window”) or manually install from marketplace</p></li>
+</ul>
+<p><strong>Issue</strong>: Slow build times</p>
+<ul class="simple">
+<li><p><strong>Solution</strong>: Dev container caches ESP-IDF, but first build always takes longer. Subsequent builds are faster.</p></li>
+</ul>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="pre-commit-hooks.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Pre-commit Hooks</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="index.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Development Guide</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2025, ESP32 Distance Sensor Team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Development Container Setup</a><ul>
+<li><a class="reference internal" href="#development-options">Development Options</a><ul>
+<li><a class="reference internal" href="#recommended-github-codespaces-cloud">Recommended: GitHub Codespaces (Cloud)</a></li>
+<li><a class="reference internal" href="#alternative-local-dev-container">Alternative: Local Dev Container</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#using-the-dev-container">Using the Dev Container</a><ul>
+<li><a class="reference internal" href="#in-github-codespaces">In GitHub Codespaces</a></li>
+<li><a class="reference internal" href="#local-development-with-docker">Local Development with Docker</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#container-features">Container Features</a></li>
+<li><a class="reference internal" href="#build-commands-in-container">Build Commands in Container</a></li>
+<li><a class="reference internal" href="#hardware-flashing">Hardware Flashing</a><ul>
+<li><a class="reference internal" href="#windows-usb-device-setup-local-dev-container-only">Windows USB Device Setup (Local Dev Container Only)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#benefits">Benefits</a></li>
+<li><a class="reference internal" href="#container-configuration">Container Configuration</a></li>
+<li><a class="reference internal" href="#troubleshooting">Troubleshooting</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../_static/documentation_options.js?v=51b770b3"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
+    <script src="../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>
+    <script src="../_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
+    <script src="../_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
+    <script src="../_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
+    </body>
+</html>

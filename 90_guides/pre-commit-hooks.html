@@ -1,0 +1,806 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="QEMU Emulator Guide" href="qemu-emulator.html"><link rel="prev" title="Development Container Setup" href="devcontainer.html">
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+        <title>Pre-commit Hooks - ESP32 Distance Sensor</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/modern.css?v=803738c0" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2dda3639" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">ESP32 Distance Sensor</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <span class="sidebar-brand-text">ESP32 Distance Sensor</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../01_overview/index.html">Project Overview</a><input aria-label="Toggle navigation of Project Overview" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../01_overview/introduction.html">Project Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_overview/hardware.html">Hardware Specifications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_overview/quick-start.html">Quick Start Guide</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../05_workshop/index.html">Workshop Overview</a><input aria-label="Toggle navigation of Workshop Overview" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../05_workshop/prerequisites.html">Workshop Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_workshop/getting-started.html">Getting Started with the Workshop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_workshop/hardware-setup.html">Hardware Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_workshop/exercises.html">Workshop Exercises</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../11_requirements/index.html">Requirements Documentation</a><input aria-label="Toggle navigation of Requirements Documentation" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_system.html">System Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_web_server.html">Web Server Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_config_manager_json.html">JSON-Based Configuration Manager Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_netif_tunnel.html">Network Interface Tunnel Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_distance_sensor.html">Distance Sensor Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_led_controller.html">LED Controller Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_display.html">Display System Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_startup_test.html">Startup Test Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../12_design/index.html">Design Specifications</a><input aria-label="Toggle navigation of Design Specifications" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_high_level_architecture.html">High-Level Architecture Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_config_manager_json.html">JSON-Based Configuration Manager Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_config_webpage.html">Configuration Webpage Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_web_server.html">Web Server Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_distance_sensor.html">Distance Sensor Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_led_controller.html">LED Controller Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_display.html">Display System Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_startup_test.html">Startup Test Design Specification</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../21_api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_config_manager.html">Config Manager API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_led_controller.html">LED Controller API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_distance_sensor.html">Distance Sensor API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_display_logic.html">Display Logic API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_startup_tests.html">Startup Tests API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_netif_uart_tunnel.html">Network Tunnel API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_cert_handler.html">Certificate Handler API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_web_server.html">Web Server API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_wifi_manager.html">WiFi Manager API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../31_traceability/index.html">Traceability</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Development Guide</a><input aria-label="Toggle navigation of Development Guide" checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="devcontainer.html">Development Container Setup</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Pre-commit Hooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu-emulator.html">QEMU Emulator Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web-flasher.html">Web-Based Firmware Flashing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debugging.html">Debugging Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qemu-network-internals.html">QEMU Network Internals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="known-issues.html">Known Issues and Limitations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../legal/impressum.html">Impressum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../legal/datenschutz.html">Datenschutzerklärung</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/90_guides/pre-commit-hooks.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="pre-commit-hooks">
+<h1>Pre-commit Hooks<a class="headerlink" href="#pre-commit-hooks" title="Link to this heading">¶</a></h1>
+<p>This project uses <a class="reference external" href="https://pre-commit.com/">pre-commit</a> hooks to ensure code quality and documentation integrity before commits reach the repository.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p>Pre-commit hooks run automatically on <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span></code> and validate changes before they are committed. This ensures:</p>
+<ul class="simple">
+<li><p>Documentation is always valid and buildable</p></li>
+<li><p>Markdown syntax follows consistent style guidelines</p></li>
+<li><p>RestructuredText is valid for Sphinx</p></li>
+<li><p>Links and references are correct</p></li>
+<li><p>Code quality standards are met</p></li>
+<li><p>Both human developers and AI agents (like GitHub Copilot) follow the same quality gates</p></li>
+</ul>
+</section>
+<section id="philosophy-quality-as-a-process">
+<h2>Philosophy: Quality as a Process<a class="headerlink" href="#philosophy-quality-as-a-process" title="Link to this heading">¶</a></h2>
+<p>Pre-commit hooks are <strong>automation assistants</strong>, not quality gatekeepers. They:</p>
+<ul class="simple">
+<li><p><strong>Catch trivial errors</strong> so humans can focus on design and logic</p></li>
+<li><p><strong>Enforce consistency</strong> automatically (formatting, style)</p></li>
+<li><p><strong>Provide fast feedback</strong> during development, not just at “the gate”</p></li>
+</ul>
+<p><strong>Quality should be everywhere:</strong></p>
+<ul class="simple">
+<li><p>Write tests alongside code</p></li>
+<li><p>Review design before implementation</p></li>
+<li><p>Use IDE linters while editing (not just at commit time)</p></li>
+<li><p>Think about maintainability from the start</p></li>
+</ul>
+<p>Pre-commit hooks are the <em>last automated safety check</em>, not the <em>first time</em> you think about quality.</p>
+</section>
+<section id="current-hooks">
+<h2>Current Hooks<a class="headerlink" href="#current-hooks" title="Link to this heading">¶</a></h2>
+<section id="markdown-linting">
+<h3>Markdown Linting<a class="headerlink" href="#markdown-linting" title="Link to this heading">¶</a></h3>
+<p><strong>Hook ID:</strong> <code class="docutils literal notranslate"><span class="pre">markdownlint</span></code></p>
+<p>Validates Markdown syntax and style consistency across temporary/analysis documents.</p>
+<p><strong>Configuration</strong> (<code class="docutils literal notranslate"><span class="pre">.pre-commit-config.yaml</span></code>):</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">markdownlint</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Markdown lint</span>
+<span class="w">  </span><span class="nt">entry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">markdownlint --fix</span>
+<span class="w">  </span><span class="nt">language</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">system</span>
+<span class="w">  </span><span class="nt">types</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">markdown</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">files</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">^(temp/.*\.md)$</span>
+</pre></div>
+</div>
+<p><strong>What it checks:</strong></p>
+<ul class="simple">
+<li><p>Consistent heading styles and hierarchy</p></li>
+<li><p>Blank lines before lists and code blocks</p></li>
+<li><p>Trailing whitespace and multiple blank lines</p></li>
+<li><p>Proper code fence formatting</p></li>
+<li><p>Link reference definitions</p></li>
+<li><p>Consistent list marker styles</p></li>
+</ul>
+<p><strong>When it runs:</strong></p>
+<ul class="simple">
+<li><p>On any <code class="docutils literal notranslate"><span class="pre">.md</span></code> file in <code class="docutils literal notranslate"><span class="pre">temp/</span></code> directory (analysis docs)</p></li>
+<li><p>Auto-fixes issues when possible (e.g., adds missing blank lines)</p></li>
+</ul>
+<p><strong>Configuration</strong> (<code class="docutils literal notranslate"><span class="pre">.markdownlint.json</span></code>):</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;MD013&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;MD033&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;MD041&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;MD046&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;style&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;fenced&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Key rules:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">MD013:</span> <span class="pre">false</span></code> - No line length limit (avoids breaking URLs)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MD033:</span> <span class="pre">false</span></code> - Allow inline HTML (useful for tables)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MD041:</span> <span class="pre">false</span></code> - Don’t require H1 as first line</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MD046:</span> <span class="pre">fenced</span></code> - Enforce fenced code blocks (```) instead of indented</p></li>
+</ul>
+<p><strong>Output example:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Markdown lint........................................................Failed
+- hook id: markdownlint
+- files were modified by this hook
+
+temp/analysis.md:38:1 MD032/blanks-around-lists
+Lists should be surrounded by blank lines
+
+Fixed automatically - please review and stage changes
+</pre></div>
+</div>
+</section>
+<section id="sphinx-documentation-validation">
+<h3>Sphinx Documentation Validation<a class="headerlink" href="#sphinx-documentation-validation" title="Link to this heading">¶</a></h3>
+<p><strong>Hook ID:</strong> <code class="docutils literal notranslate"><span class="pre">sphinx-build</span></code></p>
+<p>Validates all Sphinx documentation before allowing commits.</p>
+<p><strong>Configuration</strong> (<code class="docutils literal notranslate"><span class="pre">.pre-commit-config.yaml</span></code>):</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sphinx-build</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sphinx build (strict)</span>
+<span class="w">  </span><span class="nt">entry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sphinx-build -W -b html docs docs/_build/html</span>
+<span class="w">  </span><span class="nt">language</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">system</span>
+<span class="w">  </span><span class="nt">files</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">^(docs/.*\.rst|docs/conf\.py)$</span>
+</pre></div>
+</div>
+<p><strong>What it checks:</strong></p>
+<ul class="simple">
+<li><p>Broken cross-references (<code class="docutils literal notranslate"><span class="pre">:doc:</span></code>, <code class="docutils literal notranslate"><span class="pre">:ref:</span></code>)</p></li>
+<li><p>Invalid RestructuredText syntax</p></li>
+<li><p>Missing files referenced in toctrees</p></li>
+<li><p>Sphinx configuration errors</p></li>
+<li><p>Sphinx-Needs requirement traceability issues</p></li>
+</ul>
+<p><strong>When it runs:</strong></p>
+<ul class="simple">
+<li><p>Only when files in <code class="docutils literal notranslate"><span class="pre">docs/</span></code> directory change</p></li>
+<li><p>Only when <code class="docutils literal notranslate"><span class="pre">docs/conf.py</span></code> configuration changes</p></li>
+<li><p>Skipped for code-only commits (performance optimization)</p></li>
+</ul>
+<p><strong>Output example:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Sphinx build (strict)................................................Failed
+- hook id: sphinx-build
+- duration: 2.5s
+- exit code: 2
+
+WARNING: document isn&#39;t included in any toctree
+ERROR: Unknown directive type &quot;req&quot;
+
+Build failed due to warnings (strict mode)!
+</pre></div>
+</div>
+</section>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h2>
+<section id="automatic-devcontainer">
+<h3>Automatic (Devcontainer)<a class="headerlink" href="#automatic-devcontainer" title="Link to this heading">¶</a></h3>
+<p><strong>Pre-commit hooks are pre-installed</strong> in GitHub Codespaces and dev containers.</p>
+<p>No manual installation required!</p>
+</section>
+<section id="manual-installation-local">
+<h3>Manual Installation (Local)<a class="headerlink" href="#manual-installation-local" title="Link to this heading">¶</a></h3>
+<p>If working outside the devcontainer:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install pre-commit</span>
+pip<span class="w"> </span>install<span class="w"> </span>pre-commit
+
+<span class="c1"># Install hooks</span>
+pre-commit<span class="w"> </span>install
+
+<span class="c1"># Verify installation</span>
+pre-commit<span class="w"> </span>--version
+</pre></div>
+</div>
+</section>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading">¶</a></h2>
+<section id="running-hooks">
+<h3>Running Hooks<a class="headerlink" href="#running-hooks" title="Link to this heading">¶</a></h3>
+<p><strong>Automatic (on commit):</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>add<span class="w"> </span>.
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Your message&quot;</span>
+<span class="c1"># Hooks run automatically</span>
+</pre></div>
+</div>
+<p><strong>Manual (test before commit):</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run on staged files only</span>
+pre-commit<span class="w"> </span>run
+
+<span class="c1"># Run on all files</span>
+pre-commit<span class="w"> </span>run<span class="w"> </span>--all-files
+
+<span class="c1"># Run specific hook</span>
+pre-commit<span class="w"> </span>run<span class="w"> </span>markdownlint
+pre-commit<span class="w"> </span>run<span class="w"> </span>sphinx-build
+</pre></div>
+</div>
+<p><strong>Show differences:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show what hooks would fix</span>
+pre-commit<span class="w"> </span>run<span class="w"> </span>--all-files<span class="w"> </span>--show-diff-on-failure
+</pre></div>
+</div>
+</section>
+<section id="typical-workflow">
+<h3>Typical Workflow<a class="headerlink" href="#typical-workflow" title="Link to this heading">¶</a></h3>
+<ol class="arabic">
+<li><p><strong>Make changes</strong> to documentation or code</p></li>
+<li><p><strong>Stage changes:</strong> <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span> <span class="pre">docs/</span></code></p></li>
+<li><p><strong>Commit:</strong> <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span> <span class="pre">-m</span> <span class="pre">&quot;docs:</span> <span class="pre">Update</span> <span class="pre">requirements&quot;</span></code></p></li>
+<li><p><strong>Hooks run automatically:</strong></p>
+<ul class="simple">
+<li><p>If <strong>pass</strong> ✅ - Commit succeeds</p></li>
+<li><p>If <strong>fail</strong> ❌ - Commit blocked, review errors</p></li>
+<li><p>If <strong>auto-fixed</strong> 🔧 - Review changes, stage, commit again</p></li>
+</ul>
+</li>
+<li><p><strong>If auto-fixed:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>add<span class="w"> </span>.<span class="w">  </span><span class="c1"># Stage auto-fixes</span>
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;docs: Update requirements&quot;</span><span class="w">  </span><span class="c1"># Retry commit</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="handling-failures">
+<h3>Handling Failures<a class="headerlink" href="#handling-failures" title="Link to this heading">¶</a></h3>
+<p><strong>Markdown lint failures:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Auto-fix formatting issues</span>
+markdownlint<span class="w"> </span>--fix<span class="w"> </span>temp/*.md
+
+<span class="c1"># Review changes</span>
+git<span class="w"> </span>diff
+
+<span class="c1"># Stage and retry</span>
+git<span class="w"> </span>add<span class="w"> </span>temp/
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;...&quot;</span>
+</pre></div>
+</div>
+<p><strong>Sphinx build failures:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Build locally to see full error</span>
+sphinx-build<span class="w"> </span>-W<span class="w"> </span>-b<span class="w"> </span>html<span class="w"> </span>docs<span class="w"> </span>docs/_build/html
+
+<span class="c1"># Fix issues (broken links, invalid RST syntax)</span>
+<span class="c1"># Retry commit</span>
+</pre></div>
+</div>
+<p><strong>Skip hooks (emergency only):</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>commit<span class="w"> </span>--no-verify<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;...&quot;</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Don’t skip hooks regularly!</strong> This defeats the purpose of automated quality checks.
+Use <code class="docutils literal notranslate"><span class="pre">--no-verify</span></code> only in emergencies (e.g., critical hotfix).</p>
+</div>
+</section>
+</section>
+<section id="common-issues">
+<h2>Common Issues<a class="headerlink" href="#common-issues" title="Link to this heading">¶</a></h2>
+<section id="issue-markdownlint-command-not-found">
+<h3>Issue: “markdownlint: command not found”<a class="headerlink" href="#issue-markdownlint-command-not-found" title="Link to this heading">¶</a></h3>
+<p><strong>Solution:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>npm<span class="w"> </span>install<span class="w"> </span>-g<span class="w"> </span>markdownlint-cli
+</pre></div>
+</div>
+</section>
+<section id="issue-sphinx-build-command-not-found">
+<h3>Issue: “sphinx-build: command not found”<a class="headerlink" href="#issue-sphinx-build-command-not-found" title="Link to this heading">¶</a></h3>
+<p><strong>Solution:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>sphinx<span class="w"> </span>sphinx-needs
+</pre></div>
+</div>
+</section>
+<section id="issue-hooks-run-slowly">
+<h3>Issue: Hooks run slowly<a class="headerlink" href="#issue-hooks-run-slowly" title="Link to this heading">¶</a></h3>
+<p><strong>Optimization:</strong></p>
+<ul class="simple">
+<li><p>Hooks only run on changed files (not entire repo)</p></li>
+<li><p>Sphinx hook only runs for <code class="docutils literal notranslate"><span class="pre">.rst</span></code> file changes</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">pre-commit</span> <span class="pre">run</span></code> to test specific hooks</p></li>
+</ul>
+</section>
+<section id="issue-false-positives">
+<h3>Issue: False positives<a class="headerlink" href="#issue-false-positives" title="Link to this heading">¶</a></h3>
+<p><strong>Markdown linting:</strong></p>
+<p>Disable specific rules in <code class="docutils literal notranslate"><span class="pre">.markdownlint.json</span></code>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;MD013&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">  </span><span class="c1">// Disable line length check</span>
+<span class="w">  </span><span class="nt">&quot;MD033&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">   </span><span class="c1">// Allow inline HTML</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Sphinx warnings:</strong></p>
+<p>Some warnings can be suppressed in <code class="docutils literal notranslate"><span class="pre">docs/conf.py</span></code> if genuinely false positives.</p>
+</section>
+</section>
+<section id="benefits">
+<h2>Benefits<a class="headerlink" href="#benefits" title="Link to this heading">¶</a></h2>
+<p>✅ <strong>Consistent quality</strong> - All commits meet minimum standards</p>
+<p>✅ <strong>Fast feedback</strong> - Catch errors before pushing to remote</p>
+<p>✅ <strong>Automated fixes</strong> - Many issues fixed automatically</p>
+<p>✅ <strong>Documentation integrity</strong> - Broken links caught immediately</p>
+<p>✅ <strong>CI/CD confidence</strong> - Local checks match CI pipeline</p>
+<p>✅ <strong>Learning tool</strong> - See quality issues and understand corrections</p>
+</section>
+<section id="best-practices">
+<h2>Best Practices<a class="headerlink" href="#best-practices" title="Link to this heading">¶</a></h2>
+<section id="for-developers">
+<h3>For Developers<a class="headerlink" href="#for-developers" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Run hooks before committing</strong> large changes</p></li>
+<li><p><strong>Review auto-fixes</strong> - don’t blindly accept</p></li>
+<li><p><strong>Fix root causes</strong> - not just symptoms</p></li>
+<li><p><strong>Update rules</strong> - if they don’t make sense, discuss and adjust</p></li>
+</ul>
+</section>
+<section id="for-documentation-writers">
+<h3>For Documentation Writers<a class="headerlink" href="#for-documentation-writers" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Test Sphinx build locally</strong> before committing</p></li>
+<li><p><strong>Validate cross-references</strong> - use <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">linkcheck</span></code></p></li>
+<li><p><strong>Follow RST syntax</strong> - reference Sphinx documentation</p></li>
+<li><p><strong>Keep temp/ docs clean</strong> - run markdownlint on analysis docs</p></li>
+</ul>
+</section>
+<section id="for-ai-coding-agents">
+<h3>For AI Coding Agents<a class="headerlink" href="#for-ai-coding-agents" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Understand hook output</strong> - parse error messages correctly</p></li>
+<li><p><strong>Auto-fix when possible</strong> - stage fixes and retry</p></li>
+<li><p><strong>Report persistent failures</strong> - don’t infinitely retry</p></li>
+<li><p><strong>Learn from patterns</strong> - avoid repeating same mistakes</p></li>
+</ul>
+</section>
+</section>
+<section id="configuration-files">
+<h2>Configuration Files<a class="headerlink" href="#configuration-files" title="Link to this heading">¶</a></h2>
+<section id="pre-commit-config-yaml">
+<h3><code class="docutils literal notranslate"><span class="pre">.pre-commit-config.yaml</span></code><a class="headerlink" href="#pre-commit-config-yaml" title="Link to this heading">¶</a></h3>
+<p>Main configuration file defining all hooks:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">repos</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local</span>
+<span class="w">    </span><span class="nt">hooks</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">markdownlint</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Markdown lint</span>
+<span class="w">        </span><span class="nt">entry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">markdownlint --fix</span>
+<span class="w">        </span><span class="nt">language</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">system</span>
+<span class="w">        </span><span class="nt">types</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">markdown</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">files</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">^(temp/.*\.md)$</span>
+
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sphinx-build</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sphinx build (strict)</span>
+<span class="w">        </span><span class="nt">entry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sphinx-build -W -b html docs docs/_build/html</span>
+<span class="w">        </span><span class="nt">language</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">system</span>
+<span class="w">        </span><span class="nt">files</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">^(docs/.*\.rst|docs/conf\.py)$</span>
+</pre></div>
+</div>
+</section>
+<section id="markdownlint-json">
+<h3><code class="docutils literal notranslate"><span class="pre">.markdownlint.json</span></code><a class="headerlink" href="#markdownlint-json" title="Link to this heading">¶</a></h3>
+<p>Markdownlint-specific rules:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;MD013&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;MD033&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;MD041&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;MD046&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;style&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;fenced&quot;</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="docs-conf-py">
+<h3><code class="docutils literal notranslate"><span class="pre">docs/conf.py</span></code><a class="headerlink" href="#docs-conf-py" title="Link to this heading">¶</a></h3>
+<p>Sphinx configuration with Sphinx-Needs for requirements engineering.</p>
+</section>
+</section>
+<section id="continuous-integration">
+<h2>Continuous Integration<a class="headerlink" href="#continuous-integration" title="Link to this heading">¶</a></h2>
+<p>Pre-commit hooks run in CI/CD pipeline to ensure quality gates:</p>
+<p><strong>GitHub Actions</strong> (<code class="docutils literal notranslate"><span class="pre">.github/workflows/docs.yml</span></code>):</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run pre-commit</span>
+<span class="w">  </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pre-commit run --all-files</span>
+</pre></div>
+</div>
+<p>This ensures:</p>
+<ul class="simple">
+<li><p>Pull requests pass same checks as local development</p></li>
+<li><p>No quality regressions merge to main</p></li>
+<li><p>Automated documentation deployment is always valid</p></li>
+</ul>
+</section>
+<section id="related-documentation">
+<h2>Related Documentation<a class="headerlink" href="#related-documentation" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="index.html"><span class="doc">Development Guide</span></a> - All development guides</p></li>
+<li><p><a class="reference internal" href="devcontainer.html"><span class="doc">Development Container Setup</span></a> - Development environment setup</p></li>
+<li><p><a class="reference internal" href="debugging.html"><span class="doc">Debugging Guide</span></a> - Debugging workflows</p></li>
+<li><p><a class="reference external" href="https://pre-commit.com/">Pre-commit Documentation</a> - Official docs</p></li>
+</ul>
+<p>—</p>
+<p><strong>Version:</strong> 1.0
+<strong>Last Updated:</strong> 2025-01-27
+<strong>Applies to:</strong> GitHub Copilot, human developers, CI/CD pipelines</p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="qemu-emulator.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">QEMU Emulator Guide</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="devcontainer.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Development Container Setup</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2025, ESP32 Distance Sensor Team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Pre-commit Hooks</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#philosophy-quality-as-a-process">Philosophy: Quality as a Process</a></li>
+<li><a class="reference internal" href="#current-hooks">Current Hooks</a><ul>
+<li><a class="reference internal" href="#markdown-linting">Markdown Linting</a></li>
+<li><a class="reference internal" href="#sphinx-documentation-validation">Sphinx Documentation Validation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#installation">Installation</a><ul>
+<li><a class="reference internal" href="#automatic-devcontainer">Automatic (Devcontainer)</a></li>
+<li><a class="reference internal" href="#manual-installation-local">Manual Installation (Local)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#usage">Usage</a><ul>
+<li><a class="reference internal" href="#running-hooks">Running Hooks</a></li>
+<li><a class="reference internal" href="#typical-workflow">Typical Workflow</a></li>
+<li><a class="reference internal" href="#handling-failures">Handling Failures</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#common-issues">Common Issues</a><ul>
+<li><a class="reference internal" href="#issue-markdownlint-command-not-found">Issue: “markdownlint: command not found”</a></li>
+<li><a class="reference internal" href="#issue-sphinx-build-command-not-found">Issue: “sphinx-build: command not found”</a></li>
+<li><a class="reference internal" href="#issue-hooks-run-slowly">Issue: Hooks run slowly</a></li>
+<li><a class="reference internal" href="#issue-false-positives">Issue: False positives</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#benefits">Benefits</a></li>
+<li><a class="reference internal" href="#best-practices">Best Practices</a><ul>
+<li><a class="reference internal" href="#for-developers">For Developers</a></li>
+<li><a class="reference internal" href="#for-documentation-writers">For Documentation Writers</a></li>
+<li><a class="reference internal" href="#for-ai-coding-agents">For AI Coding Agents</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#configuration-files">Configuration Files</a><ul>
+<li><a class="reference internal" href="#pre-commit-config-yaml"><code class="docutils literal notranslate"><span class="pre">.pre-commit-config.yaml</span></code></a></li>
+<li><a class="reference internal" href="#markdownlint-json"><code class="docutils literal notranslate"><span class="pre">.markdownlint.json</span></code></a></li>
+<li><a class="reference internal" href="#docs-conf-py"><code class="docutils literal notranslate"><span class="pre">docs/conf.py</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#continuous-integration">Continuous Integration</a></li>
+<li><a class="reference internal" href="#related-documentation">Related Documentation</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../_static/documentation_options.js?v=51b770b3"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
+    <script src="../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>
+    <script src="../_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
+    <script src="../_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
+    <script src="../_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
+    </body>
+</html>

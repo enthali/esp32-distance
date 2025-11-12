@@ -1,0 +1,848 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Workshop Overview" href="../05_workshop/index.html"><link rel="prev" title="Hardware Specifications" href="hardware.html">
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+        <title>Quick Start Guide - ESP32 Distance Sensor</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/modern.css?v=803738c0" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2dda3639" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">ESP32 Distance Sensor</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <span class="sidebar-brand-text">ESP32 Distance Sensor</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Project Overview</a><input aria-label="Toggle navigation of Project Overview" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">Project Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hardware.html">Hardware Specifications</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Quick Start Guide</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../05_workshop/index.html">Workshop Overview</a><input aria-label="Toggle navigation of Workshop Overview" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../05_workshop/prerequisites.html">Workshop Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_workshop/getting-started.html">Getting Started with the Workshop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_workshop/hardware-setup.html">Hardware Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_workshop/exercises.html">Workshop Exercises</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../11_requirements/index.html">Requirements Documentation</a><input aria-label="Toggle navigation of Requirements Documentation" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_system.html">System Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_web_server.html">Web Server Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_config_manager_json.html">JSON-Based Configuration Manager Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_netif_tunnel.html">Network Interface Tunnel Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_distance_sensor.html">Distance Sensor Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_led_controller.html">LED Controller Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_display.html">Display System Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_startup_test.html">Startup Test Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../12_design/index.html">Design Specifications</a><input aria-label="Toggle navigation of Design Specifications" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_high_level_architecture.html">High-Level Architecture Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_config_manager_json.html">JSON-Based Configuration Manager Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_config_webpage.html">Configuration Webpage Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_web_server.html">Web Server Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_distance_sensor.html">Distance Sensor Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_led_controller.html">LED Controller Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_display.html">Display System Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_startup_test.html">Startup Test Design Specification</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../21_api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_config_manager.html">Config Manager API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_led_controller.html">LED Controller API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_distance_sensor.html">Distance Sensor API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_display_logic.html">Display Logic API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_startup_tests.html">Startup Tests API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_netif_uart_tunnel.html">Network Tunnel API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_cert_handler.html">Certificate Handler API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_web_server.html">Web Server API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_wifi_manager.html">WiFi Manager API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../31_traceability/index.html">Traceability</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../90_guides/index.html">Development Guide</a><input aria-label="Toggle navigation of Development Guide" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/devcontainer.html">Development Container Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/pre-commit-hooks.html">Pre-commit Hooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/qemu-emulator.html">QEMU Emulator Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/web-flasher.html">Web-Based Firmware Flashing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/debugging.html">Debugging Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/qemu-network-internals.html">QEMU Network Internals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/known-issues.html">Known Issues and Limitations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../legal/impressum.html">Impressum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../legal/datenschutz.html">Datenschutzerklärung</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/01_overview/quick-start.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="quick-start-guide">
+<h1>Quick Start Guide<a class="headerlink" href="#quick-start-guide" title="Link to this heading">¶</a></h1>
+<p>Get your ESP32 Distance Sensor up and running in minutes! This guide covers both hardware and QEMU emulation paths.</p>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">¶</a></h2>
+<section id="what-you-need">
+<h3>What You Need<a class="headerlink" href="#what-you-need" title="Link to this heading">¶</a></h3>
+<p><strong>Minimum Requirements:</strong></p>
+<ul class="simple">
+<li><p>Web browser with serial port support (Chrome or Edge recommended)</p></li>
+<li><p>GitHub account (free tier sufficient)</p></li>
+<li><p>Internet connection</p></li>
+</ul>
+<p><strong>For Hardware Development:</strong></p>
+<ul class="simple">
+<li><p>ESP32 development board</p></li>
+<li><p>HC-SR04 ultrasonic sensor</p></li>
+<li><p>WS2812 LED strip (40 LEDs)</p></li>
+<li><p>USB cable</p></li>
+<li><p>Jumper wires</p></li>
+<li><p>(Optional) External 5V power supply</p></li>
+</ul>
+<p><strong>For Emulation Only:</strong></p>
+<ul class="simple">
+<li><p>Just a browser! QEMU runs everything in the cloud.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>First time with ESP32?</strong> Don’t worry! GitHub Codespaces handles all the complex setup automatically. No local installation required.</p>
+</div>
+</section>
+</section>
+<section id="path-1-qemu-emulation-no-hardware">
+<h2>Path 1: QEMU Emulation (No Hardware)<a class="headerlink" href="#path-1-qemu-emulation-no-hardware" title="Link to this heading">¶</a></h2>
+<p>Perfect for learning, testing, or remote workshops.</p>
+<section id="step-1-get-the-code">
+<h3>Step 1: Get the Code<a class="headerlink" href="#step-1-get-the-code" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fork or clone the repository</span>
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/enthali/esp32-distance.git
+<span class="nb">cd</span><span class="w"> </span>esp32-distance
+</pre></div>
+</div>
+</section>
+<section id="step-2-open-in-codespaces">
+<h3>Step 2: Open in Codespaces<a class="headerlink" href="#step-2-open-in-codespaces" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Click <strong>Code</strong> button on GitHub</p></li>
+<li><p>Select <strong>Codespaces</strong> tab</p></li>
+<li><p>Click <strong>Create codespace on main</strong> (or your branch)</p></li>
+<li><p>Wait 2-5 minutes for initial setup (ESP-IDF installation)</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>What’s happening?</strong> Codespaces is installing ESP-IDF v5.4.1, QEMU emulator,
+and all development tools. This only happens once per codespace.</p>
+</div>
+</section>
+<section id="step-3-build-the-project">
+<h3>Step 3: Build the Project<a class="headerlink" href="#step-3-build-the-project" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Build for QEMU target</span>
+idf.py<span class="w"> </span>build
+</pre></div>
+</div>
+<p><strong>Expected output:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Project build complete. To flash, run:
+idf.py flash
+</pre></div>
+</div>
+<p><strong>Build time:</strong> ~30-60 seconds (incremental builds are much faster)</p>
+</section>
+<section id="step-4-run-in-qemu">
+<h3>Step 4: Run in QEMU<a class="headerlink" href="#step-4-run-in-qemu" title="Link to this heading">¶</a></h3>
+<p><strong>Option A: Using VS Code Task (Recommended)</strong></p>
+<ol class="arabic simple">
+<li><p>Press <code class="docutils literal notranslate"><span class="pre">Ctrl+Shift+P</span></code> (or <code class="docutils literal notranslate"><span class="pre">Cmd+Shift+P</span></code> on Mac)</p></li>
+<li><p>Type “Tasks: Run Task”</p></li>
+<li><p>Select <strong>“Run QEMU (No Debug)”</strong></p></li>
+</ol>
+<p><strong>Option B: Using Command Line</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Start QEMU with network support</span>
+./tools/qemu/run_qemu.sh
+</pre></div>
+</div>
+<p><strong>What you’ll see:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>🚀 Starting ESP32 Distance Sensor in QEMU
+📡 Starting network bridge...
+🌐 HTTP proxy running on http://localhost:8080
+✅ QEMU started successfully
+
+Distance Sensor Simulator:
+🟢🟢🟢⚪⚪⚪⚪⚪⚪⚪ (15cm)
+</pre></div>
+</div>
+</section>
+<section id="step-5-access-web-interface">
+<h3>Step 5: Access Web Interface<a class="headerlink" href="#step-5-access-web-interface" title="Link to this heading">¶</a></h3>
+<p>Open your browser to:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>http://localhost:8080
+</pre></div>
+</div>
+<p><strong>Features available:</strong></p>
+<ul class="simple">
+<li><p>View current distance reading</p></li>
+<li><p>See LED strip visualization</p></li>
+<li><p>Access configuration interface (when implemented)</p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Port Forwarding:</strong> GitHub Codespaces automatically forwards port 8080.
+You can access it from your local browser even though QEMU runs in the cloud!</p>
+</div>
+</section>
+<section id="step-6-debug-optional">
+<h3>Step 6: Debug (Optional)<a class="headerlink" href="#step-6-debug-optional" title="Link to this heading">¶</a></h3>
+<p>Want to set breakpoints and step through code?</p>
+<ol class="arabic simple">
+<li><p>Press <code class="docutils literal notranslate"><span class="pre">F5</span></code> in VS Code</p></li>
+<li><p>Or use <strong>Run and Debug</strong> panel</p></li>
+<li><p>Select <strong>“Debug in QEMU”</strong> configuration</p></li>
+</ol>
+<p><strong>Debugging features:</strong></p>
+<ul class="simple">
+<li><p>Set breakpoints in code</p></li>
+<li><p>Step through execution line-by-line</p></li>
+<li><p>Inspect variables and memory</p></li>
+<li><p>View call stack and registers</p></li>
+</ul>
+</section>
+<section id="stop-qemu">
+<h3>Stop QEMU<a class="headerlink" href="#stop-qemu" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Stop QEMU emulator</span>
+./tools/qemu/stop_qemu.sh
+
+<span class="c1"># Or use VS Code task: &quot;Stop QEMU&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="path-2-hardware-development">
+<h2>Path 2: Hardware Development<a class="headerlink" href="#path-2-hardware-development" title="Link to this heading">¶</a></h2>
+<p>Build and flash to real ESP32 hardware.</p>
+<section id="step-1-assemble-hardware">
+<h3>Step 1: Assemble Hardware<a class="headerlink" href="#step-1-assemble-hardware" title="Link to this heading">¶</a></h3>
+<p>Follow the pin configuration from <a class="reference internal" href="hardware.html"><span class="doc">Hardware Specifications</span></a>:</p>
+<p><strong>Connections:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ESP32 → HC-SR04 Sensor:
+  GPIO14 → Trig
+  GPIO13 → Echo
+  5V     → VCC
+  GND    → GND
+
+ESP32 → WS2812 LED Strip:
+  GPIO12 → DIN
+  5V     → 5V/VCC
+  GND    → GND
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Power Check:</strong> If using all 40 LEDs at high brightness, connect an external
+5V power supply (3A+) to both ESP32 VIN and LED strip VCC. Share common ground!</p>
+</div>
+</section>
+<section id="step-2-get-the-code">
+<h3>Step 2: Get the Code<a class="headerlink" href="#step-2-get-the-code" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fork or clone the repository</span>
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/enthali/esp32-distance.git
+<span class="nb">cd</span><span class="w"> </span>esp32-distance
+</pre></div>
+</div>
+</section>
+<section id="step-3-open-in-codespaces">
+<h3>Step 3: Open in Codespaces<a class="headerlink" href="#step-3-open-in-codespaces" title="Link to this heading">¶</a></h3>
+<p>Same as Path 1:</p>
+<ol class="arabic simple">
+<li><p>Click <strong>Code</strong> → <strong>Codespaces</strong> → <strong>Create codespace</strong></p></li>
+<li><p>Wait for ESP-IDF setup (~2-5 minutes first time)</p></li>
+</ol>
+</section>
+<section id="step-4-connect-esp32">
+<h3>Step 4: Connect ESP32<a class="headerlink" href="#step-4-connect-esp32" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Connect ESP32 to your computer via USB</p></li>
+<li><p>In Codespaces, allow USB device access when prompted</p></li>
+<li><p>Verify connection:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># List available serial ports</span>
+ls<span class="w"> </span>/dev/ttyUSB*<span class="w"> </span>/dev/ttyACM*
+</pre></div>
+</div>
+<p><strong>Expected output:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>/dev/ttyUSB0  # Your ESP32 serial port
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Port name varies:</strong> May be <code class="docutils literal notranslate"><span class="pre">/dev/ttyUSB0</span></code>, <code class="docutils literal notranslate"><span class="pre">/dev/ttyACM0</span></code>, or similar.
+Use the port name you see in your system.</p>
+</div>
+</section>
+<section id="step-5-build-the-project">
+<h3>Step 5: Build the Project<a class="headerlink" href="#step-5-build-the-project" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Build for ESP32 hardware</span>
+idf.py<span class="w"> </span>build
+</pre></div>
+</div>
+<p><strong>Build time:</strong> ~30-60 seconds</p>
+</section>
+<section id="step-6-flash-to-esp32">
+<h3>Step 6: Flash to ESP32<a class="headerlink" href="#step-6-flash-to-esp32" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Flash and start monitoring serial output</span>
+idf.py<span class="w"> </span>-p<span class="w"> </span>/dev/ttyUSB0<span class="w"> </span>flash<span class="w"> </span>monitor
+</pre></div>
+</div>
+<p>Replace <code class="docutils literal notranslate"><span class="pre">/dev/ttyUSB0</span></code> with your actual port name.</p>
+<p><strong>What happens:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Erase flash</strong> - Clears existing firmware</p></li>
+<li><p><strong>Flash bootloader</strong> - Low-level boot code</p></li>
+<li><p><strong>Flash partition table</strong> - Memory layout</p></li>
+<li><p><strong>Flash application</strong> - Your firmware</p></li>
+<li><p><strong>Monitor serial</strong> - Show boot logs and output</p></li>
+</ol>
+<p><strong>Expected output:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>I (123) boot: ESP-IDF v5.4.1
+I (234) main: Starting ESP32 Distance Sensor
+I (345) wifi: WiFi initialized
+I (456) sensor: Distance sensor ready
+I (567) led: LED controller initialized
+🟢 Distance: 25cm
+</pre></div>
+</div>
+</section>
+<section id="step-7-verify-operation">
+<h3>Step 7: Verify Operation<a class="headerlink" href="#step-7-verify-operation" title="Link to this heading">¶</a></h3>
+<p><strong>Check LED Test Sequence:</strong></p>
+<p>At boot, you should see LEDs cycle through:</p>
+<ol class="arabic simple">
+<li><p>Red sweep (left to right)</p></li>
+<li><p>Green sweep (right to left)</p></li>
+<li><p>Blue sweep (left to right)</p></li>
+<li><p>All LEDs off</p></li>
+</ol>
+<p><strong>Check Distance Measurement:</strong></p>
+<ul class="simple">
+<li><p>Move hand in front of sensor (10-50cm range)</p></li>
+<li><p>LED position should track hand movement</p></li>
+<li><p>Green LED = normal range</p></li>
+<li><p>Red LED = out of range</p></li>
+</ul>
+<p><strong>Check WiFi:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>I (2000) wifi: AP started
+I (2100) wifi: SSID: ESP32-Distance-Sensor
+I (2200) wifi: Connect to configure
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><p>Look for WiFi network “ESP32-Distance-Sensor”</p></li>
+<li><p>Connect (no password required)</p></li>
+<li><p>Browser should open captive portal automatically</p></li>
+<li><p>If not, navigate to <code class="docutils literal notranslate"><span class="pre">http://192.168.4.1</span></code></p></li>
+</ol>
+</section>
+<section id="step-8-monitor-serial-output">
+<h3>Step 8: Monitor Serial Output<a class="headerlink" href="#step-8-monitor-serial-output" title="Link to this heading">¶</a></h3>
+<p><strong>To exit monitor:</strong> Press <code class="docutils literal notranslate"><span class="pre">Ctrl+]</span></code></p>
+<p><strong>Useful monitor commands:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Ctrl+T</span></code> → <code class="docutils literal notranslate"><span class="pre">Ctrl+R</span></code> : Reset ESP32</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Ctrl+T</span></code> → <code class="docutils literal notranslate"><span class="pre">Ctrl+H</span></code> : Show help</p></li>
+</ul>
+<p><strong>To monitor without flashing:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>idf.py<span class="w"> </span>-p<span class="w"> </span>/dev/ttyUSB0<span class="w"> </span>monitor
+</pre></div>
+</div>
+</section>
+</section>
+<section id="common-issues-troubleshooting">
+<h2>Common Issues &amp; Troubleshooting<a class="headerlink" href="#common-issues-troubleshooting" title="Link to this heading">¶</a></h2>
+<section id="build-errors">
+<h3>Build Errors<a class="headerlink" href="#build-errors" title="Link to this heading">¶</a></h3>
+<p><strong>Error: “idf.py not found”</strong></p>
+<ul class="simple">
+<li><p>ESP-IDF not sourced in current shell</p></li>
+<li><p>In Codespaces, this should be automatic</p></li>
+<li><p>Try opening a new terminal</p></li>
+</ul>
+<p><strong>Error: “Component not found”</strong></p>
+<ul class="simple">
+<li><p>Check CMakeLists.txt in main/ and components/</p></li>
+<li><p>Verify all component directories exist</p></li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">idf.py</span> <span class="pre">fullclean</span></code> then rebuild</p></li>
+</ul>
+</section>
+<section id="flash-errors">
+<h3>Flash Errors<a class="headerlink" href="#flash-errors" title="Link to this heading">¶</a></h3>
+<p><strong>Error: “Serial port not found”</strong></p>
+<ul class="simple">
+<li><p>ESP32 not connected or detected</p></li>
+<li><p>Check USB cable (must support data, not just power)</p></li>
+<li><p>Try different USB port</p></li>
+<li><p>Check device permissions: <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-l</span> <span class="pre">/dev/ttyUSB0</span></code></p></li>
+</ul>
+<p><strong>Error: “Failed to connect to ESP32”</strong></p>
+<ul class="simple">
+<li><p>Hold BOOT button while connecting</p></li>
+<li><p>Press RESET button after <code class="docutils literal notranslate"><span class="pre">Connecting...</span></code> message</p></li>
+<li><p>Check USB cable and connection</p></li>
+</ul>
+</section>
+<section id="hardware-issues">
+<h3>Hardware Issues<a class="headerlink" href="#hardware-issues" title="Link to this heading">¶</a></h3>
+<p><strong>LEDs not lighting:</strong></p>
+<ul class="simple">
+<li><p>Check power supply (USB may be insufficient for 40 LEDs)</p></li>
+<li><p>Verify GPIO12 connection to DIN</p></li>
+<li><p>Test with fewer LEDs first</p></li>
+<li><p>Check LED strip polarity (DIN, not DOUT)</p></li>
+</ul>
+<p><strong>Sensor not responding:</strong></p>
+<ul class="simple">
+<li><p>Verify GPIO13/14 connections</p></li>
+<li><p>Check sensor power (VCC=5V, GND=GND)</p></li>
+<li><p>Ensure nothing blocking sensor (remove tape, plastic)</p></li>
+<li><p>Test sensor range (2cm-400cm specification)</p></li>
+</ul>
+<p><strong>WiFi not starting:</strong></p>
+<ul class="simple">
+<li><p>Check serial output for errors</p></li>
+<li><p>Verify antenna is connected (if using external antenna)</p></li>
+<li><p>Try different WiFi channel (default is auto)</p></li>
+</ul>
+</section>
+<section id="qemu-issues">
+<h3>QEMU Issues<a class="headerlink" href="#qemu-issues" title="Link to this heading">¶</a></h3>
+<p><strong>QEMU won’t start:</strong></p>
+<ul class="simple">
+<li><p>Another QEMU instance may be running: <code class="docutils literal notranslate"><span class="pre">./tools/qemu/stop_qemu.sh</span></code></p></li>
+<li><p>Check port conflicts (5555, 5556, 8080)</p></li>
+<li><p>Review console output for errors</p></li>
+</ul>
+<p><strong>Web interface not accessible:</strong></p>
+<ul class="simple">
+<li><p>Verify HTTP proxy is running (should auto-start)</p></li>
+<li><p>Check port forwarding in Codespaces</p></li>
+<li><p>Try direct access: <code class="docutils literal notranslate"><span class="pre">curl</span> <span class="pre">http://192.168.100.2</span></code></p></li>
+</ul>
+</section>
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading">¶</a></h2>
+<p>Now that your system is running:</p>
+<ol class="arabic simple">
+<li><p><strong>Explore the Code</strong> - Check out <code class="docutils literal notranslate"><span class="pre">main/main.c</span></code> and component sources</p></li>
+<li><p><strong>Read Requirements</strong> - See <a class="reference internal" href="../11_requirements/index.html"><span class="doc">Requirements Documentation</span></a> for specifications</p></li>
+<li><p><strong>Understand Design</strong> - Review <a class="reference internal" href="../12_design/index.html"><span class="doc">Design Specifications</span></a> for architecture</p></li>
+<li><p><strong>Join Workshop</strong> - (Coming soon) Hands-on exercises and challenges</p></li>
+<li><p><strong>Customize</strong> - Add features, change LED patterns, implement color zones</p></li>
+</ol>
+</section>
+<section id="useful-commands">
+<h2>Useful Commands<a class="headerlink" href="#useful-commands" title="Link to this heading">¶</a></h2>
+<p><strong>Build &amp; Flash:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Clean build</span>
+idf.py<span class="w"> </span>fullclean
+idf.py<span class="w"> </span>build
+
+<span class="c1"># Flash only (no rebuild)</span>
+idf.py<span class="w"> </span>-p<span class="w"> </span>/dev/ttyUSB0<span class="w"> </span>flash
+
+<span class="c1"># Build, flash, and monitor in one command</span>
+idf.py<span class="w"> </span>-p<span class="w"> </span>/dev/ttyUSB0<span class="w"> </span>build<span class="w"> </span>flash<span class="w"> </span>monitor
+</pre></div>
+</div>
+<p><strong>Configuration:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Open menuconfig (TUI configuration)</span>
+idf.py<span class="w"> </span>menuconfig
+
+<span class="c1"># Set target (if needed)</span>
+idf.py<span class="w"> </span>set-target<span class="w"> </span>esp32
+</pre></div>
+</div>
+<p><strong>Analysis:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check memory usage</span>
+idf.py<span class="w"> </span>size
+
+<span class="c1"># Check memory details by component</span>
+idf.py<span class="w"> </span>size-components
+</pre></div>
+</div>
+<p><strong>QEMU:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run QEMU (no debug)</span>
+./tools/qemu/run_qemu.sh
+
+<span class="c1"># Run QEMU with debug server</span>
+./tools/qemu/run_qemu_debug.sh
+
+<span class="c1"># Stop QEMU</span>
+./tools/qemu/stop_qemu.sh
+
+<span class="c1"># View UART0 output</span>
+./tools/qemu/uart0_terminal.sh
+</pre></div>
+</div>
+</section>
+<section id="getting-help">
+<h2>Getting Help<a class="headerlink" href="#getting-help" title="Link to this heading">¶</a></h2>
+<p><strong>Documentation:</strong></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../90_guides/index.html"><span class="doc">Development Guide</span></a> - Development guides (QEMU, debugging, devcontainer)</p></li>
+<li><p><a class="reference internal" href="../11_requirements/index.html"><span class="doc">Requirements Documentation</span></a> - System requirements</p></li>
+<li><p><a class="reference internal" href="../12_design/index.html"><span class="doc">Design Specifications</span></a> - Design specifications</p></li>
+<li><p><a class="reference internal" href="../21_api/index.html"><span class="doc">API Reference</span></a> - API reference</p></li>
+</ul>
+<p><strong>Community:</strong></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/enthali/esp32-distance/issues">GitHub Issues</a> - Report bugs or ask questions</p></li>
+<li><p><a class="reference external" href="https://github.com/enthali/esp32-distance/discussions">GitHub Discussions</a> - General questions and ideas</p></li>
+</ul>
+<p><strong>ESP-IDF Resources:</strong></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.espressif.com/projects/esp-idf/en/latest/">ESP-IDF Documentation</a></p></li>
+<li><p><a class="reference external" href="https://www.espressif.com/en/support/documents/technical-documents">ESP32 Technical Reference</a></p></li>
+</ul>
+</section>
+<section id="happy-building">
+<h2>Happy Building! 🚀<a class="headerlink" href="#happy-building" title="Link to this heading">¶</a></h2>
+<p>You’re now ready to explore, learn, and customize the ESP32 Distance Sensor project. Have fun experimenting!</p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="../05_workshop/index.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Workshop Overview</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="hardware.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Hardware Specifications</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2025, ESP32 Distance Sensor Team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Quick Start Guide</a><ul>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a><ul>
+<li><a class="reference internal" href="#what-you-need">What You Need</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#path-1-qemu-emulation-no-hardware">Path 1: QEMU Emulation (No Hardware)</a><ul>
+<li><a class="reference internal" href="#step-1-get-the-code">Step 1: Get the Code</a></li>
+<li><a class="reference internal" href="#step-2-open-in-codespaces">Step 2: Open in Codespaces</a></li>
+<li><a class="reference internal" href="#step-3-build-the-project">Step 3: Build the Project</a></li>
+<li><a class="reference internal" href="#step-4-run-in-qemu">Step 4: Run in QEMU</a></li>
+<li><a class="reference internal" href="#step-5-access-web-interface">Step 5: Access Web Interface</a></li>
+<li><a class="reference internal" href="#step-6-debug-optional">Step 6: Debug (Optional)</a></li>
+<li><a class="reference internal" href="#stop-qemu">Stop QEMU</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#path-2-hardware-development">Path 2: Hardware Development</a><ul>
+<li><a class="reference internal" href="#step-1-assemble-hardware">Step 1: Assemble Hardware</a></li>
+<li><a class="reference internal" href="#step-2-get-the-code">Step 2: Get the Code</a></li>
+<li><a class="reference internal" href="#step-3-open-in-codespaces">Step 3: Open in Codespaces</a></li>
+<li><a class="reference internal" href="#step-4-connect-esp32">Step 4: Connect ESP32</a></li>
+<li><a class="reference internal" href="#step-5-build-the-project">Step 5: Build the Project</a></li>
+<li><a class="reference internal" href="#step-6-flash-to-esp32">Step 6: Flash to ESP32</a></li>
+<li><a class="reference internal" href="#step-7-verify-operation">Step 7: Verify Operation</a></li>
+<li><a class="reference internal" href="#step-8-monitor-serial-output">Step 8: Monitor Serial Output</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#common-issues-troubleshooting">Common Issues &amp; Troubleshooting</a><ul>
+<li><a class="reference internal" href="#build-errors">Build Errors</a></li>
+<li><a class="reference internal" href="#flash-errors">Flash Errors</a></li>
+<li><a class="reference internal" href="#hardware-issues">Hardware Issues</a></li>
+<li><a class="reference internal" href="#qemu-issues">QEMU Issues</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#next-steps">Next Steps</a></li>
+<li><a class="reference internal" href="#useful-commands">Useful Commands</a></li>
+<li><a class="reference internal" href="#getting-help">Getting Help</a></li>
+<li><a class="reference internal" href="#happy-building">Happy Building! 🚀</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../_static/documentation_options.js?v=51b770b3"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
+    <script src="../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>
+    <script src="../_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
+    <script src="../_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
+    <script src="../_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
+    </body>
+</html>
