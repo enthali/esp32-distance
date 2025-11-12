@@ -3,13 +3,23 @@
 # For the full list of built-in configuration values, see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
+import os
+import sys
+
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
+
+# Read version from VERSION file in project root
+version_file = os.path.join(os.path.dirname(__file__), '..', 'VERSION')
+if os.path.exists(version_file):
+    with open(version_file, 'r') as f:
+        release = f.read().strip()
+else:
+    release = '1.0.0'
 
 project = 'ESP32 Distance Sensor'
 copyright = '2025, ESP32 Distance Sensor Team'
 author = 'ESP32 Distance Sensor Team'
-release = '1.0.0'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
