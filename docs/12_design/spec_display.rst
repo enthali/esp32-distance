@@ -79,19 +79,28 @@ Core Algorithms
    :status: approved
    :tags: display, algorithm, mapping
 
-   **Design:** Distance-to-LED mapping 
-
+   **Design:** Distance-to-LED mapping with zone-based guidance system.
 
    **Position Mapping:**
 
    - Formula: ``led_index = (distance_mm - min_mm) * (led_count - 1) / (max_mm - min_mm)``
    - Boundary clamping: ``[0, led_count-1]``
 
-   **Behaviors:**
+   **Zone Boundaries (Integer Math):**
 
-   - single LED green illuminated at mapped position
+   - Zone 1 end: ``(led_count * 20) / 100`` (20% of strip)
+   - Zone 2 end: ``(led_count * 40) / 100`` (40% of strip)
+   - Zone 3: From zone 2 end to ``led_count - 1``
 
-   **Validation:** Position updates correctly with distance changes.
+   **Zone Detection:**
+
+   - Zone 0: ``distance_mm < dist_min_mm``
+   - Zone 1: ``led_index >= 0 && led_index < zone1_end``
+   - Zone 2: ``led_index >= zone1_end && led_index < zone2_end``
+   - Zone 3: ``led_index >= zone2_end && led_index < led_count``
+   - Zone 4: ``distance_mm > dist_max_mm``
+
+   **Validation:** Position updates correctly with distance changes, zone boundaries calculated accurately.
 
 .. spec:: Embedded Arithmetic Architecture
    :id: SPEC_DSP_ALGO_3
@@ -113,6 +122,78 @@ Core Algorithms
    **Rationale:** Avoid floating-point on resource-constrained microcontrollers unless necessary.
 
    **Validation:** All arithmetic operations complete within deterministic time bounds.
+
+.. spec:: Animation State Machine Design
+   :id: SPEC_DSP_ALGO_4
+   :links: REQ_DSP_8
+   :status: draft
+   :tags: display, animation, state-machine
+
+   **Design:** Stack-allocated animation state machine with frame-based timing.
+
+   **State Structure:**
+
+   .. code-block:: c
+
+      typedef struct {
+          uint32_t frame_counter;      // Total frames rendered since start
+          uint32_t last_update_ms;     // Last animation update timestamp
+          bool blink_state;            // Zone 0 emergency blink state
+      } animation_state_t;
+
+   **Timing Logic:**
+
+   - Check elapsed time: ``current_ms - last_update_ms``
+   - Update if ``>= 100ms`` for normal animation frames
+   - Update if ``>= 500ms`` for Zone 0 blink toggle
+   - Use ``esp_timer_get_time() / 1000`` for millisecond timestamps
+
+   **Frame Updates:**
+
+   - Increment ``frame_counter`` on each animation update
+   - Use modulo arithmetic for cyclic patterns: ``frame % pattern_length``
+   - Moving indicators: ``position = start + (frame % zone_length)``
+
+   **Validation:** Animation timing accurate within ±20ms, no memory leaks, smooth visual transitions.
+
+.. spec:: Dual-Layer Rendering Architecture
+   :id: SPEC_DSP_RENDER_1
+   :links: REQ_DSP_6, REQ_DSP_7
+   :status: draft
+   :tags: display, rendering, architecture
+
+   **Design:** Two-pass rendering system with strict layering order.
+
+   **Rendering Pipeline:**
+
+   1. **Clear**: ``led_clear_all()`` - Reset all LEDs to black
+   2. **Lower Layer**: Render zone backgrounds and animations
+      - Zone 0: Blinking RED on Zone 1 LEDs
+      - Zone 1: ORANGE background + moving BLACK indicators
+      - Zone 2: Solid 100% RED
+      - Zone 3: Moving GREEN indicators at 5%
+      - Zone 4: BLUE indicator + GREEN ideal zone at 5%
+   3. **Upper Layer**: Render WHITE position indicator (overwrites lower layer)
+   4. **Show**: ``led_show()`` - Update physical LEDs
+
+   **Color Specifications:**
+
+   - WHITE (position): ``RGB(255, 255, 255)``
+   - RED (100%): ``RGB(255, 0, 0)``
+   - RED (5%): ``RGB(13, 0, 0)``
+   - GREEN (5%): ``RGB(0, 13, 0)``
+   - ORANGE: ``RGB(255, 165, 0)``
+   - BLUE (5%): ``RGB(0, 0, 13)``
+   - BLACK (moving): ``RGB(0, 0, 0)``
+
+   **Helper Functions:**
+
+   .. code-block:: c
+
+      static led_color_t led_color_scale(led_color_t color, uint8_t percentage);
+      static led_color_t led_color_rgb_custom(uint8_t r, uint8_t g, uint8_t b);
+
+   **Validation:** Upper layer always visible, lower layer provides context, no rendering artifacts.
 
 API Design
 ----------

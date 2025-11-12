@@ -137,6 +137,98 @@ User Experience Requirements
    - AC-2: No green position indicator is shown (measurement invalid)
    - AC-3: Display persists until measurement returns to valid range
 
+Advanced Visualization Requirements
+------------------------------------
+
+.. req:: Dual-Layer LED Rendering
+   :id: REQ_DSP_6
+   :links: REQ_DSP_3
+   :status: draft
+   :priority: mandatory
+   :tags: display, ux, visualization
+
+   **Description:** The display system SHALL implement dual-layer rendering where the upper 
+   layer (position indicator) renders on top of the lower layer (zone visualization and animations).
+
+   **Rationale:** Separates position feedback from guidance cues, allowing simultaneous display 
+   of "where you are" (upper layer WHITE LED) and "where you should be" (lower layer zone-based 
+   guidance). This dual-layer approach provides richer visual feedback without confusion, as the 
+   white position indicator always shows current location while background colors and animations 
+   provide directional guidance.
+
+   **Acceptance Criteria:**
+
+   - AC-1: Upper layer WHITE LED renders at current position when distance is valid
+   - AC-2: Lower layer provides zone-based guidance with colors and animations
+   - AC-3: Upper layer overwrites lower layer at position LED index
+   - AC-4: Rendering order is strictly: clear all → lower layer → upper layer → show
+
+.. req:: Zone-Based Guidance System
+   :id: REQ_DSP_7
+   :links: REQ_DSP_6, REQ_DSP_4, REQ_DSP_5
+   :status: draft
+   :priority: mandatory
+   :tags: display, ux, guidance, zones
+
+   **Description:** The display system SHALL implement a 5-zone guidance system that provides 
+   directional feedback to help drivers reach the ideal parking position.
+
+   **Rationale:** Zone-based guidance transforms the LED strip from a simple position indicator 
+   into an active guidance system. Each zone provides distinct visual cues that clearly indicate 
+   whether to move forward or backward to reach the ideal parking zone (Zone 2). This leverages 
+   the traffic light mental model where RED means STOP, making the ideal zone immediately 
+   recognizable.
+
+   **Zone Definitions:**
+
+   - **Zone 0 - Emergency** (distance < dist_min_mm): All Zone 1 LEDs BLINK RED at 1 Hz
+   - **Zone 1 - Too Close** (0-20% of LED strip): ORANGE background + 2 BLACK LEDs moving toward Zone 2
+   - **Zone 2 - Ideal** (20-40% of LED strip): 100% RED → "STOP HERE!" (traffic light concept)
+   - **Zone 3 - Too Far** (40-100% of LED strip): 2 GREEN LEDs at 5% brightness moving toward Zone 2
+   - **Zone 4 - Out of Range** (distance > dist_max_mm): Last LED 5% BLUE + Zone 2 LEDs 5% GREEN
+
+   **Acceptance Criteria:**
+
+   - AC-1: Zone boundaries calculated using integer arithmetic (no floating point)
+   - AC-2: Zone 0 blinks at exactly 1 Hz (500ms on, 500ms off)
+   - AC-3: Zone 1 shows ORANGE background with 2 BLACK LEDs moving toward ideal zone
+   - AC-4: Zone 2 shows solid 100% RED across entire ideal zone
+   - AC-5: Zone 3 shows 2 GREEN LEDs at 5% brightness moving toward ideal zone
+   - AC-6: Zone 4 shows last LED at 5% BLUE and ideal zone at 5% GREEN
+   - AC-7: Zone transitions are smooth with no visual glitches
+
+.. req:: Animation System
+   :id: REQ_DSP_8
+   :links: REQ_DSP_7
+   :status: draft
+   :priority: mandatory
+   :tags: display, ux, animation, timing
+
+   **Description:** The display system SHALL implement an animation system that provides 
+   smooth visual transitions and moving indicators at consistent frame rates.
+
+   **Rationale:** Animations draw user attention to directional cues and make the guidance 
+   system more intuitive. Moving LEDs create a sense of direction ("move this way") that is 
+   more effective than static indicators. Consistent timing ensures smooth, professional-looking 
+   animations that enhance user experience without causing distraction.
+
+   **Animation Specifications:**
+
+   - **Frame Rate**: ~100ms per animation step (10 FPS)
+   - **Blink Frequency**: 1 Hz for Zone 0 emergency (500ms on, 500ms off)
+   - **Movement Speed**: 2-LED patterns move at 1 LED per frame toward ideal zone
+   - **State Management**: Stack-allocated frame counters (no dynamic allocation)
+   - **Timing Method**: FreeRTOS task timing via elapsed time checks
+
+   **Acceptance Criteria:**
+
+   - AC-1: Animation updates occur at approximately 100ms intervals (±20ms tolerance)
+   - AC-2: Emergency blink runs at exactly 1 Hz (500ms on, 500ms off)
+   - AC-3: Moving LED patterns advance at 1 LED position per frame
+   - AC-4: Animation state uses only stack-allocated memory
+   - AC-5: Animation timing does not interfere with position updates
+   - AC-6: No dynamic memory allocation in animation rendering
+
 Traceability
 ------------
 
