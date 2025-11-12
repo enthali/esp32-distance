@@ -450,6 +450,7 @@ Feature Ideas:
 * Home Assistant integration
 * Bluetooth LE proximity alerts
 * OTA (Over-The-Air) firmware updates
+* **Dual-layer LED display with zone-based guidance** (see example below)
 
 **User Interface:**
 
@@ -464,6 +465,71 @@ Feature Ideas:
 * Object speed calculation (velocity tracking)
 * Gesture recognition (swipe patterns)
 * Environmental compensation (temperature/humidity)
+
+Example: Dual-Layer LED Display
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Here's a complete feature request example you can use as a template:
+
+.. code-block:: text
+
+   /generate-feature-with-coding-agent Dual-Layer LED Display with Zone-Based Guidance
+
+   Problem:
+   The current display (REQ_DSP_3, REQ_DSP_4, REQ_DSP_5) shows only the current position with a green LED and warnings (red) when too close or too far. However, drivers have no indication WHERE the ideal parking position is located and no directional guidance whether to move forward or backward.
+
+   Solution: 5 Zones with Dual-Layer Display System
+
+   Zone Definition (percentage of LED strip):
+   - Zone 0 "Emergency": Below minimum distance threshold (< dist_min_mm)
+   - Zone 1 "Too Close": First 20% of LEDs (dist_min_mm to 20%)
+   - Zone 2 "Ideal": Next 20% of LEDs (20% to 40%)
+   - Zone 3 "Too Far": Remaining 60% of LEDs (40% to dist_max_mm)
+   - Zone 4 "Out of Range": Beyond maximum distance threshold (> dist_max_mm)
+
+   Layer System:
+
+   Upper Layer (Position Indicator):
+   - Single WHITE LED shows current vehicle position (when measurement valid)
+
+   Lower Layer (Zone-Based Visualization):
+
+   Zone 0 - Emergency (measurement < dist_min_mm):
+   - All Zone 1 LEDs BLINK RED (1 Hz, 500ms on/off) → "DANGER! Move backward!"
+   - Ideal zone at 5% RED
+   - No position indicator (invalid measurement)
+
+   Zone 1 - Too Close (measurement in Zone 1):
+   - All Zone 1 LEDs ORANGE (background)
+   - Two BLACK LEDs moving toward ideal zone → "back up!"
+   - Ideal zone at 5% RED
+
+   Zone 2 - Ideal (measurement in Zone 2):
+   - Ideal zone at 100% RED → "STOP HERE!" (like traffic light)
+   - Zone 1 and 3 OFF
+
+   Zone 3 - Too Far (measurement in Zone 3):
+   - Two GREEN LEDs at 5% brightness moving toward ideal zone → "move forward!"
+   - Ideal zone at 5% GREEN
+   - Zone 1 OFF
+
+   Zone 4 - Out of Range (measurement > dist_max_mm):
+   - Last LED (led_count-1) at 5% BLUE → "too far, no valid measurement"
+   - Ideal zone at 5% GREEN
+   - No position indicator
+
+   Technical:
+   - Animation speed: ~100ms per step
+   - Blink frequency: 1 Hz (500ms on, 500ms off)
+   - Position layer (white LED) renders on top of all zone layers
+
+**How to use this example:**
+
+1. Copy the text above
+2. Use the generate-feature prompt (`.github/prompts/generate-feature-with-coding-agent.prompt.md`)
+3. Paste it when prompted for the feature request
+4. The prompt will automatically create a GitHub issue with full traceability
+5. Assign to Coding Agent or work through it yourself
 
 Implementation Guidelines
 ~~~~~~~~~~~~~~~~~~~~~~~~~
