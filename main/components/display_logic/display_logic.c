@@ -1,13 +1,23 @@
 /**
  * @file display_logic.c
- * @brief LED Distance Visualization business logic.
+ * @brief LED Distance Visualization business logic with dual-layer rendering.
  *
- * Design is documented in `docs/design/display-design.md` and linked to requirements
- * and design IDs (e.g. REQ_DISPLAY_*, DSN_DISPLAY_*). Keep this header short; full design
- * rationale lives in the design document for traceability.
+ * REQUIREMENTS TRACEABILITY:
+ * - REQ_DSP_3: Core visualization - dual-layer display with position indicator and zone animations
+ * - REQ_DSP_6: Dual-layer rendering architecture (background + position indicator)
+ * - REQ_DSP_7: Zone-based display system (5 zones with specific visual patterns)
+ * - REQ_DSP_8: Position indicator layer (white LED on top of background)
+ * - REQ_DSP_9: Animation layer (directional guidance with timing)
+ * - REQ_DSP_10: Ideal zone visualization (consistent reference point)
+ *
+ * DESIGN TRACEABILITY:
+ * - SPEC_DSP_ALGO_1: Distance-to-LED mapping with zone detection
+ * - SPEC_DSP_ZONES_1: Zone calculation and boundaries
+ * - SPEC_DSP_LAYERS_1: Dual-layer rendering architecture
+ * - SPEC_DSP_ANIM_1: Animation patterns and timing
  * 
  * CONFIGURATION:
- * Uses new JSON-based config_manager API to read distance parameters:
+ * Uses JSON-based config_manager API to read distance parameters:
  * - dist_min_mm: Minimum distance threshold (millimeters)
  * - dist_max_mm: Maximum distance threshold (millimeters)
  */
@@ -19,6 +29,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "esp_log.h"
+#include "esp_timer.h"
 
 static const char *TAG = "display_logic";
 
@@ -29,82 +40,315 @@ static TaskHandle_t display_task_handle = NULL;
 static int32_t dist_min_mm = 100;  // Default 100mm = 10cm
 static int32_t dist_max_mm = 500;  // Default 500mm = 50cm
 
+// Zone definitions (REQ_DSP_7, SPEC_DSP_ZONES_1)
+typedef enum {
+    ZONE_0_EMERGENCY = 0,    // Below dist_min_mm
+    ZONE_1_TOO_CLOSE = 1,    // 0-20% of LEDs
+    ZONE_2_IDEAL = 2,        // 20-40% of LEDs
+    ZONE_3_TOO_FAR = 3,      // 40-100% of LEDs
+    ZONE_4_OUT_OF_RANGE = 4  // Beyond dist_max_mm
+} display_zone_t;
+
+// Animation state for smooth transitions (REQ_DSP_9, SPEC_DSP_ANIM_1)
+typedef struct {
+    uint32_t animation_step;      // Current animation frame counter
+    uint64_t last_update_time;    // Last animation update (microseconds)
+    bool blink_state;             // Zone 0 blink state (on/off)
+} display_animation_state_t;
+
+static display_animation_state_t animation_state = {0, 0, false};
+
 /**
- * @brief Update LED display based on distance measurement
+ * @brief Calculate zone boundaries (REQ_DSP_7, SPEC_DSP_ZONES_1)
+ * 
+ * Zone boundaries based on LED strip percentage:
+ * - Zone 0: Below dist_min_mm (emergency)
+ * - Zone 1: 0-20% of LEDs (too close)
+ * - Zone 2: 20-40% of LEDs (ideal)
+ * - Zone 3: 40-100% of LEDs (too far)
+ * - Zone 4: Beyond dist_max_mm (out of range)
+ * 
+ * @param led_count Number of LEDs in strip
+ * @param zone1_end Output: End of Zone 1 (20% boundary)
+ * @param zone2_end Output: End of Zone 2 (40% boundary)
+ * @param ideal_led Output: Ideal parking position (30% - center of Zone 2)
+ */
+static void calculate_zone_boundaries(uint16_t led_count, uint16_t *zone1_end, 
+                                     uint16_t *zone2_end, uint16_t *ideal_led)
+{
+    // SPEC_DSP_ZONES_1: Integer arithmetic for zone boundaries
+    *zone1_end = led_count * 20 / 100;  // 20% of LEDs
+    *zone2_end = led_count * 40 / 100;  // 40% of LEDs
+    *ideal_led = led_count * 30 / 100;  // 30% center of ideal zone
+}
+
+/**
+ * @brief Determine current zone from distance measurement (SPEC_DSP_ALGO_1)
+ * 
+ * @param measurement Distance measurement
+ * @param led_index Output: Calculated LED position (only valid for zones 1-3)
+ * @return Current zone
+ */
+static display_zone_t determine_zone(const distance_measurement_t *measurement, uint16_t *led_index)
+{
+    // Zone 0: Emergency (below minimum)
+    if (measurement->distance_mm < dist_min_mm || measurement->status != DISTANCE_SENSOR_OK)
+    {
+        return ZONE_0_EMERGENCY;
+    }
+    
+    // Zone 4: Out of range (beyond maximum)
+    if (measurement->distance_mm > dist_max_mm)
+    {
+        return ZONE_4_OUT_OF_RANGE;
+    }
+    
+    // Calculate LED position for zones 1-3 (SPEC_DSP_ALGO_1)
+    uint16_t led_count = led_get_count();
+    uint32_t range_mm = dist_max_mm - dist_min_mm;
+    uint32_t offset_mm = measurement->distance_mm - dist_min_mm;
+    
+    // Integer math: multiply before divide for precision
+    uint32_t calculated_index = (offset_mm * (led_count - 1)) / range_mm;
+    
+    // Clamp to valid range
+    if (calculated_index >= led_count) {
+        calculated_index = led_count - 1;
+    }
+    
+    *led_index = (uint16_t)calculated_index;
+    
+    // Determine zone based on LED position
+    uint16_t zone1_end, zone2_end, ideal_led;
+    calculate_zone_boundaries(led_count, &zone1_end, &zone2_end, &ideal_led);
+    
+    if (*led_index < zone1_end) {
+        return ZONE_1_TOO_CLOSE;
+    } else if (*led_index < zone2_end) {
+        return ZONE_2_IDEAL;
+    } else {
+        return ZONE_3_TOO_FAR;
+    }
+}
+
+/**
+ * @brief Update animation state based on elapsed time (REQ_DSP_9, SPEC_DSP_ANIM_1)
+ * 
+ * Animation update interval: 100ms (10 Hz frame rate)
+ * Zone 0 blink period: 1 Hz (500ms on, 500ms off)
+ * 
+ * @param zone Current zone
+ */
+static void update_animation_state(display_zone_t zone)
+{
+    uint64_t current_time = esp_timer_get_time();
+    uint64_t elapsed_us = current_time - animation_state.last_update_time;
+    
+    // Update animation every 100ms (SPEC_DSP_ANIM_1)
+    if (elapsed_us >= 100000)  // 100ms = 100,000 microseconds
+    {
+        animation_state.animation_step++;
+        animation_state.last_update_time = current_time;
+        
+        // Zone 0 blink logic: toggle every 500ms (5 animation steps)
+        if (zone == ZONE_0_EMERGENCY && (animation_state.animation_step % 5) == 0)
+        {
+            animation_state.blink_state = !animation_state.blink_state;
+        }
+    }
+}
+
+/**
+ * @brief Render Zone 0 background: Emergency (REQ_DSP_7 AC-2, SPEC_DSP_ANIM_1)
+ * 
+ * Pattern: All Zone 1 LEDs blink red at 1 Hz
+ * Ideal zone: 5% red (subtle reference)
+ */
+static void render_zone0_background(void)
+{
+    uint16_t led_count = led_get_count();
+    uint16_t zone1_end, zone2_end, ideal_led;
+    calculate_zone_boundaries(led_count, &zone1_end, &zone2_end, &ideal_led);
+    
+    // All Zone 1 LEDs blink red at 1 Hz
+    if (animation_state.blink_state)
+    {
+        for (uint16_t i = 0; i < zone1_end; i++)
+        {
+            led_set_pixel(i, LED_COLOR_RED);
+        }
+    }
+    
+    // Ideal zone at 5% red (REQ_DSP_10 AC-2)
+    led_color_t dim_red = led_color_brightness(LED_COLOR_RED, 13);  // 5% of 255 ≈ 13
+    led_set_pixel(ideal_led, dim_red);
+}
+
+/**
+ * @brief Render Zone 1 background: Too Close (REQ_DSP_7 AC-3, SPEC_DSP_ANIM_1)
+ * 
+ * Pattern: Orange background + two black LEDs moving toward ideal zone
+ * Ideal zone: 5% red (target reference)
+ */
+static void render_zone1_background(void)
+{
+    uint16_t led_count = led_get_count();
+    uint16_t zone1_end, zone2_end, ideal_led;
+    calculate_zone_boundaries(led_count, &zone1_end, &zone2_end, &ideal_led);
+    
+    // Orange background for Zone 1 (RGB: 255, 165, 0)
+    led_color_t orange = led_color_rgb(255, 165, 0);
+    for (uint16_t i = 0; i < zone1_end; i++)
+    {
+        led_set_pixel(i, orange);
+    }
+    
+    // Two black (off) LEDs moving toward ideal zone
+    // Calculate positions based on animation step (circular motion within Zone 1)
+    uint16_t anim_offset = animation_state.animation_step % zone1_end;
+    uint16_t led1_pos = anim_offset;
+    uint16_t led2_pos = (anim_offset + zone1_end / 2) % zone1_end;
+    
+    led_set_pixel(led1_pos, LED_COLOR_OFF);
+    led_set_pixel(led2_pos, LED_COLOR_OFF);
+    
+    // Ideal zone at 5% red (REQ_DSP_10 AC-3)
+    led_color_t dim_red = led_color_brightness(LED_COLOR_RED, 13);  // 5% of 255 ≈ 13
+    led_set_pixel(ideal_led, dim_red);
+}
+
+/**
+ * @brief Render Zone 2 background: Ideal (REQ_DSP_7 AC-4, SPEC_DSP_ANIM_1)
+ * 
+ * Pattern: Bright red at ideal position (100%), all else off
+ */
+static void render_zone2_background(void)
+{
+    uint16_t led_count = led_get_count();
+    uint16_t zone1_end, zone2_end, ideal_led;
+    calculate_zone_boundaries(led_count, &zone1_end, &zone2_end, &ideal_led);
+    
+    // All LEDs off (already cleared)
+    
+    // Ideal zone at 100% red - "STOP HERE!" (REQ_DSP_10 AC-4)
+    led_set_pixel(ideal_led, LED_COLOR_RED);
+}
+
+/**
+ * @brief Render Zone 3 background: Too Far (REQ_DSP_7 AC-5, SPEC_DSP_ANIM_1)
+ * 
+ * Pattern: Two green LEDs (5% brightness) moving toward ideal zone
+ * Ideal zone: 5% green (target reference)
+ */
+static void render_zone3_background(void)
+{
+    uint16_t led_count = led_get_count();
+    uint16_t zone1_end, zone2_end, ideal_led;
+    calculate_zone_boundaries(led_count, &zone1_end, &zone2_end, &ideal_led);
+    
+    // Two dim green LEDs (5% brightness) moving toward ideal zone
+    led_color_t dim_green = led_color_brightness(LED_COLOR_GREEN, 13);  // 5% of 255 ≈ 13
+    
+    // Calculate positions: move from current zone toward ideal
+    // Zone 3 spans from zone2_end to led_count
+    uint16_t zone3_size = led_count - zone2_end;
+    uint16_t anim_offset = animation_state.animation_step % zone3_size;
+    
+    uint16_t led1_pos = zone2_end + anim_offset;
+    uint16_t led2_pos = zone2_end + ((anim_offset + zone3_size / 2) % zone3_size);
+    
+    led_set_pixel(led1_pos, dim_green);
+    led_set_pixel(led2_pos, dim_green);
+    
+    // Ideal zone at 5% green (REQ_DSP_10 AC-5)
+    led_set_pixel(ideal_led, dim_green);
+}
+
+/**
+ * @brief Render Zone 4 background: Out of Range (REQ_DSP_7 AC-6, SPEC_DSP_ANIM_1)
+ * 
+ * Pattern: Last LED at 5% blue, ideal zone at 5% green
+ */
+static void render_zone4_background(void)
+{
+    uint16_t led_count = led_get_count();
+    uint16_t zone1_end, zone2_end, ideal_led;
+    calculate_zone_boundaries(led_count, &zone1_end, &zone2_end, &ideal_led);
+    
+    // Last LED at 5% blue - "too far, no valid measurement"
+    led_color_t dim_blue = led_color_brightness(LED_COLOR_BLUE, 13);  // 5% of 255 ≈ 13
+    led_set_pixel(led_count - 1, dim_blue);
+    
+    // Ideal zone at 5% green (distance reference) (REQ_DSP_10 AC-6)
+    led_color_t dim_green = led_color_brightness(LED_COLOR_GREEN, 13);
+    led_set_pixel(ideal_led, dim_green);
+}
+
+/**
+ * @brief Update LED display based on distance measurement with dual-layer rendering
+ * 
+ * DUAL-LAYER RENDERING PIPELINE (REQ_DSP_6, SPEC_DSP_LAYERS_1):
+ * 1. Clear all LEDs
+ * 2. Render lower layer (zone background pattern)
+ * 3. Update animation state
+ * 4. Render upper layer (white position indicator)
+ * 5. Update physical LEDs with led_show()
  *
  * @param measurement Distance measurement from sensor
  */
 static void update_led_display(const distance_measurement_t *measurement)
 {    
-    // Clear all LEDs first
+    // Determine current zone and LED position (SPEC_DSP_ALGO_1)
+    uint16_t position_led = 0;
+    display_zone_t zone = determine_zone(measurement, &position_led);
+    
+    // Update animation state (SPEC_DSP_ANIM_1)
+    update_animation_state(zone);
+    
+    // PASS 1: Clear all LEDs (SPEC_DSP_LAYERS_1)
     led_clear_all();
-
-    switch (measurement->status)
+    
+    // PASS 2: Render lower layer (zone background) (REQ_DSP_9, SPEC_DSP_LAYERS_1)
+    switch (zone)
     {
-    case DISTANCE_SENSOR_OK:
-    {
-        // Normal measurement - calculate LED position from distance
-        if (measurement->distance_mm >= dist_min_mm && measurement->distance_mm <= dist_max_mm)
-        {
-            // Normal range: Calculate LED position directly with integer arithmetic
-            uint32_t range_mm = dist_max_mm - dist_min_mm;
-            uint32_t offset_mm = measurement->distance_mm - dist_min_mm;
-            
-            uint16_t led_count = led_get_count();
-            // Use integer math with multiplication before division for precision
-            uint32_t led_index = (offset_mm * (led_count - 1)) / range_mm;
-            
-            // Ensure within bounds
-            if (led_index >= led_count) led_index = led_count - 1;
-            
-            // Normal range: Green color for distance visualization - REQ_DISPLAY_3
-            led_color_t color = LED_COLOR_GREEN;
-            led_set_pixel((uint16_t)led_index, color);
-            ESP_LOGD(TAG, "Distance %d mm → LED %" PRIu32, measurement->distance_mm, led_index);
-        }
-        else if (measurement->distance_mm < dist_min_mm)
-        {
-            // Too close: Red on first LED - REQ_DISPLAY_4
-            led_set_pixel(0, LED_COLOR_RED);
-            ESP_LOGD(TAG, "Distance %d mm too close (min=%" PRIi32 ") → LED 0 red", 
-                     measurement->distance_mm, dist_min_mm);
-        }
-        else
-        {
-            // Too far: Red on last LED - REQ_DISPLAY_5
-            uint16_t led_count = led_get_count();
-            led_set_pixel(led_count - 1, LED_COLOR_RED);
-            ESP_LOGD(TAG, "Distance %d mm too far (max=%" PRIi32 ") → LED %d red", 
-                     measurement->distance_mm, dist_max_mm, led_count - 1);
-        }
+    case ZONE_0_EMERGENCY:
+        render_zone0_background();
+        ESP_LOGD(TAG, "Zone 0 (Emergency): distance=%d mm < min=%" PRIi32 " mm", 
+                 measurement->distance_mm, dist_min_mm);
         break;
-
-    }
-
-    case DISTANCE_SENSOR_TIMEOUT:
-        // Sensor timeout: All LEDs off (already cleared)
-        ESP_LOGD(TAG, "Sensor timeout → All LEDs off");
+        
+    case ZONE_1_TOO_CLOSE:
+        render_zone1_background();
+        ESP_LOGD(TAG, "Zone 1 (Too Close): LED %d", position_led);
         break;
-
-    case DISTANCE_SENSOR_OUT_OF_RANGE:
-        // Out of sensor range: Red on last LED
-        {
-            uint16_t led_count = led_get_count();
-            led_set_pixel(led_count - 1, LED_COLOR_RED);
-            ESP_LOGD(TAG, "Sensor out of range → LED %d red", led_count - 1);
-        }
+        
+    case ZONE_2_IDEAL:
+        render_zone2_background();
+        ESP_LOGD(TAG, "Zone 2 (Ideal): LED %d - STOP HERE!", position_led);
         break;
-
-    case DISTANCE_SENSOR_NO_ECHO:
-    case DISTANCE_SENSOR_INVALID_READING:
-    default:
-        // Other errors: Red on first LED
-        led_set_pixel(0, LED_COLOR_RED);
-        ESP_LOGD(TAG, "Sensor error → LED 0 red");
+        
+    case ZONE_3_TOO_FAR:
+        render_zone3_background();
+        ESP_LOGD(TAG, "Zone 3 (Too Far): LED %d", position_led);
+        break;
+        
+    case ZONE_4_OUT_OF_RANGE:
+        render_zone4_background();
+        ESP_LOGD(TAG, "Zone 4 (Out of Range): distance=%d mm > max=%" PRIi32 " mm", 
+                 measurement->distance_mm, dist_max_mm);
         break;
     }
-
-    // Update physical LEDs
+    
+    // PASS 3: Render upper layer (position indicator) (REQ_DSP_8, SPEC_DSP_LAYERS_1)
+    // White LED only visible in zones 1, 2, 3 (valid measurements)
+    if (zone >= ZONE_1_TOO_CLOSE && zone <= ZONE_3_TOO_FAR)
+    {
+        // REQ_DSP_8 AC-1: Position LED is pure white
+        // REQ_DSP_8 AC-5: Position LED renders after background (overwrites)
+        led_set_pixel(position_led, LED_COLOR_WHITE);
+    }
+    
+    // PASS 4: Update physical LEDs (SPEC_DSP_LAYERS_1)
     led_show();
 }
 
@@ -171,12 +415,23 @@ esp_err_t display_logic_start(void)
         ESP_LOGW(TAG, "Distance sensor not running. Display may not update.");
     }
 
+    // Initialize animation state (SPEC_DSP_ANIM_1)
+    animation_state.animation_step = 0;
+    animation_state.last_update_time = esp_timer_get_time();
+    animation_state.blink_state = false;
+
     // Get LED count for logging
     uint16_t led_count = led_get_count();
+    
+    // Calculate and log zone boundaries (SPEC_DSP_ZONES_1)
+    uint16_t zone1_end, zone2_end, ideal_led;
+    calculate_zone_boundaries(led_count, &zone1_end, &zone2_end, &ideal_led);
 
     ESP_LOGI(TAG, "Display logic initialized successfully");
     ESP_LOGI(TAG, "Distance range: %" PRIi32 "-%" PRIi32 "mm → LEDs 0-%d",
              dist_min_mm, dist_max_mm, led_count - 1);
+    ESP_LOGI(TAG, "Zone boundaries: Zone1[0-%d] Zone2[%d-%d] Zone3[%d-%d] Ideal[%d]",
+             zone1_end - 1, zone1_end, zone2_end - 1, zone2_end, led_count - 1, ideal_led);
 
     // Create display logic task
     BaseType_t result = xTaskCreatePinnedToCore(
@@ -202,4 +457,6 @@ esp_err_t display_logic_start(void)
 // Legacy functions removed for architectural simplification:
 // - display_logic_get_config(): Configuration access now via config_manager API (REQ-CFG-2)
 // - display_logic_stop(): Restart-based architecture pattern
+// - display_logic_is_running(): Simplified lifecycle management
+
 // - display_logic_is_running(): Simplified lifecycle management
