@@ -494,29 +494,36 @@ Here's a complete feature request example you can use as a template:
 
    Lower Layer (Zone-Based Visualization):
 
-   Zone 0 - Emergency (measurement < dist_min_mm):
-   - All Zone 1 LEDs BLINK RED (1 Hz, 500ms on/off) → "DANGER! Move backward!"
-   - Ideal zone at 5% RED
-   - No position indicator (invalid measurement)
+   Emergency (measurement < dist_min_mm):
+   - Zone 1: All LEDs BLINK RED (1 Hz, 500ms on/off) → "DANGER! Move backward!"
+   - Zone 2: OFF
+   - Zone 3: OFF
+   - No white position indicator (measurement invalid)
 
-   Zone 1 - Too Close (measurement in Zone 1):
-   - All Zone 1 LEDs ORANGE (background)
-   - Two BLACK LEDs moving toward ideal zone → "back up!"
-   - Ideal zone at 5% RED
+   Too Close (measurement in Zone 1):
+   - Zone 1: All LEDs ORANGE at 5% brightness + two BLACK LEDs (next to each other) moving FROM LED 0 TOWARD end of Zone 1 (chase pattern) → "back up!"
+   - Zone 2: All LEDs RED at 5% brightness (shows target parking zone)
+   - Zone 3: OFF
+   - White position indicator shows current location
 
-   Zone 2 - Ideal (measurement in Zone 2):
-   - Ideal zone at 100% RED → "STOP HERE!" (like traffic light)
-   - Zone 1 and 3 OFF
+   Ideal (measurement in Zone 2):
+   - Zone 1: OFF
+   - Zone 2: All LEDs SOLID RED at 100% brightness → "STOP HERE! You are in the ideal parking zone!"
+   - Zone 3: OFF
+   - White position indicator shows current location
 
-   Zone 3 - Too Far (measurement in Zone 3):
-   - Two GREEN LEDs at 5% brightness moving toward ideal zone → "move forward!"
-   - Ideal zone at 5% GREEN
-   - Zone 1 OFF
+   Too Far (measurement in Zone 3):
+   - Zone 1: OFF
+   - Zone 2: All LEDs GREEN at 5% brightness (shows target parking zone)
+   - Zone 3: Two GREEN LEDs at 5% brightness (next to each other) moving FROM far end (led_count-1) TOWARD beginning of Zone 3 (chase pattern) → "move forward!"
+   - White position indicator shows current location
 
-   Zone 4 - Out of Range (measurement > dist_max_mm):
-   - Last LED (led_count-1) at 5% BLUE → "too far, no valid measurement"
-   - Ideal zone at 5% GREEN
-   - No position indicator
+   Out of Range (measurement > dist_max_mm):
+   - Zone 1: OFF
+   - Zone 2: OFF
+   - Zone 3: OFF
+   - Last LED (led_count-1): BLUE at 5% brightness → "too far, no valid measurement"
+   - No white position indicator (measurement invalid)
 
    Technical:
    - Animation speed: ~100ms per step
