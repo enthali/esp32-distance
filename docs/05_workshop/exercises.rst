@@ -500,16 +500,16 @@ Here's a complete feature request example you can use as a template:
    - No position indicator (invalid measurement)
 
    Zone 1 - Too Close (measurement in Zone 1):
-   - All Zone 1 LEDs ORANGE (background)
-   - Two BLACK LEDs moving toward ideal zone → "back up!"
+   - All Zone 1 LEDs ORANGE at 5% brightness (background)
+   - Two BLACK LEDs moving FROM LED 0 TOWARD ideal zone (chase pattern) → "back up!"
    - Ideal zone at 5% RED
 
    Zone 2 - Ideal (measurement in Zone 2):
-   - Ideal zone at 100% RED → "STOP HERE!" (like traffic light)
+   - ALL LEDs in Zone 2 range (20%-40%) at 100% RED → "STOP HERE!" (like traffic light)
    - Zone 1 and 3 OFF
 
    Zone 3 - Too Far (measurement in Zone 3):
-   - Two GREEN LEDs at 5% brightness moving toward ideal zone → "move forward!"
+   - Two GREEN LEDs at 5% brightness moving FROM far end TOWARD ideal zone (chase pattern) → "move forward!"
    - Ideal zone at 5% GREEN
    - Zone 1 OFF
 
