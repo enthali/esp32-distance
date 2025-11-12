@@ -307,12 +307,11 @@ through WS2812 LED strips with dual-layer rendering and zone-based animations.</
 <strong>Last Updated</strong>: 2025-11-12</p>
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
-<p>The display system implements a multi-layer rendering architecture combining position indication
-and directional animations to guide optimal parking, using frame-based compositing at 10 FPS.</p>
+<p>The display system implements straight forward distance-to-LED mapping</p>
 </section>
 <section id="system-integration">
 <h2>System Integration<a class="headerlink" href="#system-integration" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-9b69a8de">
+<div class="need_container docutils container" id="SNCB-6f64ff3d">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_DSP_OVERVIEW_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -345,7 +344,7 @@ parameters.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-06b3caed">
+<div class="need_container docutils container" id="SNCB-046a807c">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_DSP_ARCH_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -357,7 +356,7 @@ parameters.</p>
 <div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">approved</span></span></div>
 <div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">display</span><span class="needs_spacer">, </span><span class="needs_data">freertos</span><span class="needs_spacer">, </span><span class="needs_data">task</span></span></span></div>
 </span></span></div>
-<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_display.html#REQ_DSP_12" title="SPEC_DSP_ARCH_1">REQ_DSP_12</a></span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_display.html#REQ_DSP_3" title="SPEC_DSP_ARCH_1">REQ_DSP_3</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -376,7 +375,7 @@ parameters.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-cdc53256">
+<div class="need_container docutils container" id="SNCB-6a86de86">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_DSP_ARCH_2">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -396,8 +395,8 @@ parameters.</p>
 <tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>Design:</strong> Use <code class="docutils literal notranslate"><span class="pre">config_manager</span></code> API for all distance range parameters.</p>
 <p><strong>Implementation:</strong></p>
 <ul class="simple">
-<li><p>Obtain min/max distance values via <code class="docutils literal notranslate"><span class="pre">config_get_current()</span></code> and use <code class="docutils literal notranslate"><span class="pre">distance_min_mm</span></code> /
-<code class="docutils literal notranslate"><span class="pre">distance_max_mm</span></code> fields (millimeters)</p></li>
+<li><p>Obtain min/max distance values via <code class="docutils literal notranslate"><span class="pre">config_get_int32()</span></code> using <code class="docutils literal notranslate"><span class="pre">dist_min_mm</span></code> /
+<code class="docutils literal notranslate"><span class="pre">dist_max_mm</span></code> fields (millimeters)</p></li>
 <li><p>Cache config values locally at task startup for performance</p></li>
 <li><p>Configuration changes handled via system restart (restart-based architecture)</p></li>
 <li><p>Configuration validation responsibility belongs to <code class="docutils literal notranslate"><span class="pre">config_manager</span></code></p></li>
@@ -412,7 +411,7 @@ config structures.</p>
 </section>
 <section id="core-algorithms">
 <h2>Core Algorithms<a class="headerlink" href="#core-algorithms" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-2727a522">
+<div class="need_container docutils container" id="SNCB-6f124628">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_DSP_ALGO_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -424,88 +423,28 @@ config structures.</p>
 <div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">approved</span></span></div>
 <div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">display</span><span class="needs_spacer">, </span><span class="needs_data">algorithm</span><span class="needs_spacer">, </span><span class="needs_data">mapping</span></span></span></div>
 </span></span></div>
-<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_display.html#REQ_DSP_14" title="SPEC_DSP_ALGO_1">REQ_DSP_14</a>, <a class="reference internal" href="../11_requirements/req_display.html#REQ_DSP_3" title="SPEC_DSP_ALGO_1">REQ_DSP_3</a>, <a class="reference internal" href="../11_requirements/req_display.html#REQ_DSP_4" title="SPEC_DSP_ALGO_1">REQ_DSP_4</a></span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_display.html#REQ_DSP_3" title="SPEC_DSP_ALGO_1">REQ_DSP_3</a>, <a class="reference internal" href="../11_requirements/req_display.html#REQ_DSP_4" title="SPEC_DSP_ALGO_1">REQ_DSP_4</a>, <a class="reference internal" href="../11_requirements/req_display.html#REQ_DSP_5" title="SPEC_DSP_ALGO_1">REQ_DSP_5</a></span></span></div>
 </span></div>
 </div>
 </td>
 </tr>
-<tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>Design:</strong> Distance-to-LED mapping with zone-based visual behavior.</p>
-<p><strong>Zone Calculation</strong> (configuration-independent, integer math):</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">ideal_size</span> <span class="pre">=</span> <span class="pre">(led_count</span> <span class="pre">*</span> <span class="pre">10)</span> <span class="pre">/</span> <span class="pre">100</span></code> (10% of strip)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ideal_center</span> <span class="pre">=</span> <span class="pre">(led_count</span> <span class="pre">*</span> <span class="pre">30)</span> <span class="pre">/</span> <span class="pre">100</span></code> (30% position)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ideal_start</span> <span class="pre">=</span> <span class="pre">ideal_center</span> <span class="pre">-</span> <span class="pre">(ideal_size</span> <span class="pre">/</span> <span class="pre">2)</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ideal_end</span> <span class="pre">=</span> <span class="pre">ideal_start</span> <span class="pre">+</span> <span class="pre">ideal_size</span> <span class="pre">-</span> <span class="pre">1</span></code></p></li>
-<li><p>Example for 40 LEDs: ideal_center=12, ideal_size=4, ideal_start=10, ideal_end=13</p></li>
-</ul>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>Design:</strong> Distance-to-LED mapping</p>
 <p><strong>Position Mapping:</strong></p>
 <ul class="simple">
 <li><p>Formula: <code class="docutils literal notranslate"><span class="pre">led_index</span> <span class="pre">=</span> <span class="pre">(distance_mm</span> <span class="pre">-</span> <span class="pre">min_mm)</span> <span class="pre">*</span> <span class="pre">(led_count</span> <span class="pre">-</span> <span class="pre">1)</span> <span class="pre">/</span> <span class="pre">(max_mm</span> <span class="pre">-</span> <span class="pre">min_mm)</span></code></p></li>
 <li><p>Boundary clamping: <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">led_count-1]</span></code></p></li>
 </ul>
-<p><strong>Zone Behaviors:</strong></p>
+<p><strong>Behaviors:</strong></p>
 <ul class="simple">
-<li><p>Zone 1 “too close” (led_index &lt; ideal_start): Orange position (50%) + red animation (100%)</p></li>
-<li><p>Zone 2 “ideal” (ideal_start ≤ led_index ≤ ideal_end): All ideal zone LEDs red (100%)</p></li>
-<li><p>Zone 3 “too far” (led_index &gt; ideal_end): Green position (100%) + white animation (2%)</p></li>
-<li><p>Below minimum: Emergency blinking pattern</p></li>
-<li><p>Above maximum: White animation only (no position indicator)</p></li>
+<li><p>single LED green illuminated at mapped position</p></li>
 </ul>
-<p><strong>Validation:</strong> Zone boundaries calculated correctly, position mapping linear, animations
-trigger in correct zones.</p>
+<p><strong>Validation:</strong> Position updates correctly with distance changes.</p>
 </td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-4ef6e464">
-<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_DSP_ALGO_2">
-<tbody>
-<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">Design Specification</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">Multi-Layer Rendering Pipeline</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#SPEC_DSP_ALGO_2" title="SPEC_DSP_ALGO_2">SPEC_DSP_ALGO_2</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
-</div>
-</td>
-</tr>
-<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
-<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">approved</span></span></div>
-<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">display</span><span class="needs_spacer">, </span><span class="needs_data">rendering</span><span class="needs_spacer">, </span><span class="needs_data">architecture</span></span></span></div>
-</span></span></div>
-<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_display.html#REQ_DSP_13" title="SPEC_DSP_ALGO_2">REQ_DSP_13</a>, <a class="reference internal" href="../11_requirements/req_display.html#REQ_DSP_10" title="SPEC_DSP_ALGO_2">REQ_DSP_10</a></span></span></div>
-</span></div>
-</div>
-</td>
-</tr>
-<tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>Design:</strong> Frame-based rendering with priority-based layer compositing at 10 FPS.</p>
-<p><strong>Rendering Pipeline</strong> (executed at 100ms intervals):</p>
-<ol class="arabic simple">
-<li><p><strong>Clear</strong>: <code class="docutils literal notranslate"><span class="pre">led_clear_all()</span></code> - reset all LEDs to off state</p></li>
-<li><p><strong>Ideal Zone Background Layer</strong> (2% red brightness):
-- Always render ideal zone LEDs (ideal_start through ideal_end) at 2% brightness
-- Provides constant visual reference of target parking zone</p></li>
-<li><p><strong>Animation Layer</strong> (2-100% brightness):
-- Render white or red animation LED at current animation position</p></li>
-<li><p><strong>Position Layer</strong> (50-100% brightness):
-- Render orange or green LED at measured position (overwrites animation if same position)</p></li>
-<li><p><strong>Ideal Zone Full Brightness Layer</strong>:
-- If in ideal zone: Overwrite ALL ideal zone LEDs with red at 100% brightness</p></li>
-<li><p><strong>Emergency Layer</strong> (highest priority):
-- If below minimum: Overwrite LEDs 0, 10, 20, 30… with blinking red</p></li>
-<li><p><strong>Commit</strong>: <code class="docutils literal notranslate"><span class="pre">led_show()</span></code> - transmit complete buffer atomically</p></li>
-</ol>
-<p><strong>Timing:</strong></p>
-<ul class="simple">
-<li><p>FreeRTOS timer callback at 100ms intervals for animation updates</p></li>
-<li><p>Distance measurement updates position immediately (no waiting for timer)</p></li>
-<li><p>Non-blocking: Timer callback completes in &lt;1ms</p></li>
-</ul>
-<p><strong>Validation:</strong> All layers composite correctly, priority enforced, single led_show() per
-frame, no visual tearing, animation smooth at 10 FPS.</p>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="need_container docutils container" id="SNCB-2fe09f46">
+<div class="need_container docutils container" id="SNCB-bc18b42b">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_DSP_ALGO_3">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -517,7 +456,7 @@ frame, no visual tearing, animation smooth at 10 FPS.</p>
 <div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">approved</span></span></div>
 <div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">display</span><span class="needs_spacer">, </span><span class="needs_data">performance</span><span class="needs_spacer">, </span><span class="needs_data">arithmetic</span></span></span></div>
 </span></span></div>
-<div class="line"><span><div class="line">links outgoing: <span class="links"><span><span class="needs_dead_link forbidden">REQ_SYS_1</span></span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_system.html#REQ_SYS_1" title="SPEC_DSP_ALGO_3">REQ_SYS_1</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -540,184 +479,9 @@ frame, no visual tearing, animation smooth at 10 FPS.</p>
 </table>
 </div>
 </section>
-<section id="animation-specifications">
-<h2>Animation Specifications<a class="headerlink" href="#animation-specifications" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-b451cf87">
-<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_DSP_ANIM_1">
-<tbody>
-<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">Design Specification</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">Directional Animation Design</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#SPEC_DSP_ANIM_1" title="SPEC_DSP_ANIM_1">SPEC_DSP_ANIM_1</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
-</div>
-</td>
-</tr>
-<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
-<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">approved</span></span></div>
-<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">display</span><span class="needs_spacer">, </span><span class="needs_data">animation</span><span class="needs_spacer">, </span><span class="needs_data">guidance</span></span></span></div>
-</span></span></div>
-<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_display.html#REQ_DSP_7" title="SPEC_DSP_ANIM_1">REQ_DSP_7</a>, <a class="reference internal" href="../11_requirements/req_display.html#REQ_DSP_8" title="SPEC_DSP_ANIM_1">REQ_DSP_8</a>, <a class="reference internal" href="../11_requirements/req_display.html#REQ_DSP_10" title="SPEC_DSP_ANIM_1">REQ_DSP_10</a></span></span></div>
-</span></div>
-</div>
-</td>
-</tr>
-<tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>Design:</strong> Running LED animation for directional guidance.</p>
-<p><strong>Animation State Machine:</strong></p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">current_position</span><span class="p">;</span><span class="w">    </span><span class="c1">// Current animation LED position</span>
-<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">animation_active</span><span class="p">;</span><span class="w">       </span><span class="c1">// Is animation running?</span>
-<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">animation_direction</span><span class="p">;</span><span class="w">    </span><span class="c1">// true = forward, false = backward</span>
-<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">animation_start</span><span class="p">;</span><span class="w">     </span><span class="c1">// Start position</span>
-<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">animation_end</span><span class="p">;</span><span class="w">       </span><span class="c1">// End position</span>
-<span class="p">}</span><span class="w"> </span><span class="n">animation_state_t</span><span class="p">;</span>
-</pre></div>
-</div>
-<p><strong>Animation Behaviors:</strong></p>
-<ul class="simple">
-<li><p><strong>Too Far Zone</strong> (position &gt; ideal_end):
-- Start: <code class="docutils literal notranslate"><span class="pre">led_count</span> <span class="pre">-</span> <span class="pre">1</span></code> (far end), End: <code class="docutils literal notranslate"><span class="pre">ideal_end</span></code>
-- Direction: Backward (toward ideal zone)
-- Color: White at 2% brightness (~5, ~5, ~5)
-- Loop: When reaching ideal_end, restart from led_count-1</p></li>
-<li><p><strong>Too Close Zone</strong> (position &lt; ideal_start):
-- Start: 0 (near end), End: <code class="docutils literal notranslate"><span class="pre">ideal_start</span></code>
-- Direction: Forward (toward ideal zone)
-- Color: Red at 100% brightness (255, 0, 0)
-- Loop: When reaching ideal_start, restart from 0</p></li>
-<li><p><strong>Animation Update</strong> (100ms timer):
-- Increment/decrement position based on direction
-- Wrap around when reaching end position
-- Independent of distance measurement updates</p></li>
-</ul>
-<p><strong>Validation:</strong> Animation smooth, loops correctly, stops when zone changes, color brightness
-correct.</p>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="need_container docutils container" id="SNCB-e55895d3">
-<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_DSP_ANIM_2">
-<tbody>
-<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">Design Specification</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">Ideal Zone Display Design</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#SPEC_DSP_ANIM_2" title="SPEC_DSP_ANIM_2">SPEC_DSP_ANIM_2</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
-</div>
-</td>
-</tr>
-<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
-<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">approved</span></span></div>
-<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">display</span><span class="needs_spacer">, </span><span class="needs_data">ideal-zone</span><span class="needs_spacer">, </span><span class="needs_data">feedback</span></span></span></div>
-</span></span></div>
-<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_display.html#REQ_DSP_9" title="SPEC_DSP_ANIM_2">REQ_DSP_9</a>, <a class="reference internal" href="../11_requirements/req_display.html#REQ_DSP_10" title="SPEC_DSP_ANIM_2">REQ_DSP_10</a></span></span></div>
-</span></div>
-</div>
-</td>
-</tr>
-<tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>Design:</strong> Dual-brightness red indication for ideal parking zone providing constant visual
-reference and positive feedback.</p>
-<p><strong>Ideal Zone Background Rendering</strong> (always active):</p>
-<ul class="simple">
-<li><p>Loop through LEDs from ideal_start to ideal_end</p></li>
-<li><p>Set each LED to red at 2% brightness (~5, 0, 0)</p></li>
-<li><p>Renders as base layer (lowest priority)</p></li>
-<li><p>Provides constant visual target reference visible from any distance</p></li>
-</ul>
-<p><strong>Ideal Zone Full Brightness Rendering</strong> (when in zone):</p>
-<ul class="simple">
-<li><p>When <code class="docutils literal notranslate"><span class="pre">ideal_start</span> <span class="pre">≤</span> <span class="pre">led_index</span> <span class="pre">≤</span> <span class="pre">ideal_end</span></code>:
-- Set all LEDs (ideal_start to ideal_end) to solid red (255, 0, 0)
-- Overwrite any animation or position layer LEDs
-- No animation or position indicator (entire zone valid)</p></li>
-</ul>
-<p><strong>Validation:</strong> Background always visible at 2%, full brightness overrides other layers,
-immediate transition provides clear feedback.</p>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="need_container docutils container" id="SNCB-dd0ff041">
-<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_DSP_ANIM_3">
-<tbody>
-<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">Design Specification</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">Emergency Blinking Pattern Design</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#SPEC_DSP_ANIM_3" title="SPEC_DSP_ANIM_3">SPEC_DSP_ANIM_3</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
-</div>
-</td>
-</tr>
-<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
-<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">approved</span></span></div>
-<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">display</span><span class="needs_spacer">, </span><span class="needs_data">safety</span><span class="needs_spacer">, </span><span class="needs_data">emergency</span></span></span></div>
-</span></span></div>
-<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_display.html#REQ_DSP_11" title="SPEC_DSP_ANIM_3">REQ_DSP_11</a>, <a class="reference internal" href="../11_requirements/req_display.html#REQ_DSP_5" title="SPEC_DSP_ANIM_3">REQ_DSP_5</a></span></span></div>
-</span></div>
-</div>
-</td>
-</tr>
-<tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>Design:</strong> 1 Hz blinking pattern on every 10th LED for emergency warning.</p>
-<p><strong>Blink State Machine:</strong></p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">blink_state</span><span class="p">;</span><span class="w">           </span><span class="c1">// true = ON, false = OFF</span>
-<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">last_toggle_ms</span><span class="p">;</span><span class="w">    </span><span class="c1">// Last toggle timestamp</span>
-<span class="p">}</span><span class="w"> </span><span class="n">blink_state_t</span><span class="p">;</span>
-</pre></div>
-</div>
-<p><strong>Blink Behavior:</strong></p>
-<ul class="simple">
-<li><p><strong>Timing</strong>: Toggle every 500ms using FreeRTOS tick count</p></li>
-<li><p><strong>ON State</strong>: LEDs at positions 0, 10, 20, 30, … show red (255, 0, 0)</p></li>
-<li><p><strong>OFF State</strong>: LEDs at positions 0, 10, 20, 30, … turn off (0, 0, 0)</p></li>
-<li><p><strong>Priority</strong>: Highest priority, overrides all other layers</p></li>
-<li><p><strong>Suppression</strong>: Ideal zone background and all other layers suppressed during emergency</p></li>
-</ul>
-<p><strong>Validation:</strong> Blink frequency accurate at 1 Hz, distributed pattern visible from all
-angles, emergency overrides all other displays.</p>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="need_container docutils container" id="SNCB-6ad6934c">
-<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_DSP_ANIM_4">
-<tbody>
-<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">Design Specification</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">Layer Priority Architecture</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#SPEC_DSP_ANIM_4" title="SPEC_DSP_ANIM_4">SPEC_DSP_ANIM_4</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
-</div>
-</td>
-</tr>
-<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
-<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">approved</span></span></div>
-<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">display</span><span class="needs_spacer">, </span><span class="needs_data">rendering</span><span class="needs_spacer">, </span><span class="needs_data">priority</span></span></span></div>
-</span></span></div>
-<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_display.html#REQ_DSP_10" title="SPEC_DSP_ANIM_4">REQ_DSP_10</a></span></span></div>
-</span></div>
-</div>
-</td>
-</tr>
-<tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>Design:</strong> Deterministic layer priority with proper compositing.</p>
-<p><strong>Layer Priority</strong> (lowest to highest):</p>
-<ol class="arabic simple">
-<li><p><strong>Base Layer</strong>: Ideal zone background (2% red) - always visible</p></li>
-<li><p><strong>Animation Layer</strong>: White (too far) or red (too close) directional animation</p></li>
-<li><p><strong>Position Layer</strong>: Orange (too close) or green (too far) position indicator</p></li>
-<li><p><strong>Ideal Zone Override</strong>: Full brightness ideal zone (100% red) when in zone</p></li>
-<li><p><strong>Emergency Override</strong>: Blinking red pattern (highest priority)</p></li>
-</ol>
-<p><strong>Compositing Rules:</strong></p>
-<ul class="simple">
-<li><p>Higher priority layer overwrites lower priority at same LED position</p></li>
-<li><p>Single <code class="docutils literal notranslate"><span class="pre">led_show()</span></code> call per frame ensures atomic updates</p></li>
-<li><p>No partial frame updates or tearing</p></li>
-<li><p>Frame rate: 10 FPS (100ms per frame)</p></li>
-</ul>
-<p><strong>Validation:</strong> Priority enforced correctly, no visual artifacts, smooth transitions between
-states.</p>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
 <section id="api-design">
 <h2>API Design<a class="headerlink" href="#api-design" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-dc14899a">
+<div class="need_container docutils container" id="SNCB-a963d9f0">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_DSP_API_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -729,7 +493,7 @@ states.</p>
 <div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">approved</span></span></div>
 <div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">display</span><span class="needs_spacer">, </span><span class="needs_data">api</span><span class="needs_spacer">, </span><span class="needs_data">interface</span></span></span></div>
 </span></span></div>
-<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_display.html#REQ_DSP_12" title="SPEC_DSP_API_1">REQ_DSP_12</a></span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_display.html#REQ_DSP_3" title="SPEC_DSP_API_1">REQ_DSP_3</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -817,7 +581,6 @@ lifecycle managed correctly.</p>
 <li><a class="reference internal" href="#overview">Overview</a></li>
 <li><a class="reference internal" href="#system-integration">System Integration</a></li>
 <li><a class="reference internal" href="#core-algorithms">Core Algorithms</a></li>
-<li><a class="reference internal" href="#animation-specifications">Animation Specifications</a></li>
 <li><a class="reference internal" href="#api-design">API Design</a></li>
 </ul>
 </li>
@@ -832,7 +595,7 @@ lifecycle managed correctly.</p>
   </div>
 </div><script src="../_static/jquery.js?v=5d32c60e"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="../_static/documentation_options.js?v=51b770b3"></script>
+    <script src="../_static/documentation_options.js?v=c2377ec0"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
