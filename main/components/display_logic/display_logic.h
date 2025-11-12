@@ -8,24 +8,25 @@
  * REQUIREMENTS TRACEABILITY:
  *   - REQ_DSP_1: Hardware platform and LED controller integration
  *   - REQ_DSP_2: Configuration integration (all parameters from config_manager)
- *   - REQ_DSP_3: Core visualization concept (single LED position, real-time updates)
- *   - REQ_DSP_4: Dual-layer display with position and animation
+ *   - REQ_DSP_3: Core visualization concept (single green LED position, real-time updates)
+ *   - REQ_DSP_4: Below minimum distance warning (red LED at position 0)
+ *   - REQ_DSP_5: Out of range display (red LED at last position)
  *
  * DESIGN TRACEABILITY:
  *   - SPEC_DSP_OVERVIEW_1: WS2812 hardware integration
  *   - SPEC_DSP_ARCH_1: Task-based architecture (FreeRTOS, blocking on sensor)
  *   - SPEC_DSP_ARCH_2: Configuration integration via config_manager
  *   - SPEC_DSP_ALGO_1: Distance-to-visual mapping algorithm
- *   - SPEC_DSP_ALGO_2: Multi-layer rendering pipeline
+ *   - SPEC_DSP_ALGO_3: Embedded arithmetic architecture (integer math)
  *
  * FEATURES:
  * =========
  * - Distance Range Mapping: Configurable range mapped linearly to configured LED count
- * - LED Spacing: Approximately (max_distance - min_distance) / led_count cm per LED
+ * - LED Spacing: Approximately (dist_max_mm - dist_min_mm) / led_count mm per LED
  * - Visual Feedback:
- *   - Normal range: Green/blue gradient or solid color
- *   - Below 10cm: First LED red (error indicator)
- *   - Above 50cm: Last LED red (error indicator)
+ *   - Normal range: Single green LED indicating distance position
+ *   - Below min_distance: First LED red (warning indicator)
+ *   - Above max_distance: Last LED red (out of range indicator)
  *   - Sensor timeout/error: All LEDs off or specific error pattern
  *
  * ARCHITECTURE:
@@ -63,13 +64,14 @@ extern "C"
      *   - REQ_DSP_1: Uses LED controller API for all hardware access
      *   - REQ_DSP_2: Obtains all parameters from config_manager
      *   - REQ_DSP_3: Real-time single-LED visualization, no filtering
-     *   - REQ_DSP_4: Dual-layer display with animation
+     *   - REQ_DSP_4: Below minimum distance warning (red LED at position 0)
+     *   - REQ_DSP_5: Out of range display (red LED at last position)
      *
      * DESIGN TRACEABILITY:
      *   - SPEC_DSP_ARCH_1: FreeRTOS task, blocks on distance_sensor_get_latest()
-     *   - SPEC_DSP_ARCH_2: Configuration integration
-     *   - SPEC_DSP_ALGO_1: Distance-to-visual mapping
-     *   - SPEC_DSP_ALGO_2: Multi-layer rendering
+     *   - SPEC_DSP_ARCH_2: Configuration integration (cache at startup)
+     *   - SPEC_DSP_ALGO_1: Distance-to-LED position mapping
+     *   - SPEC_DSP_ALGO_3: Integer arithmetic for embedded performance
      *
      * Obtains configuration from config_manager, initializes hardware,
      * and starts the display task. No separate init/start lifecycle needed.

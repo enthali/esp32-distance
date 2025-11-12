@@ -23,8 +23,12 @@ if [ -z "$PROJECT_NAME" ]; then
     PROJECT_NAME="esp32-distance"
 fi
 
-# Get version from CMakeLists.txt or use default
-VERSION=$(grep -oP 'set\(PROJECT_VERSION\s+"\K[^"]+' "$PROJECT_DIR/CMakeLists.txt" || echo "1.0.0")
+# Get version from VERSION file
+if [ -f "$PROJECT_DIR/VERSION" ]; then
+    VERSION=$(cat "$PROJECT_DIR/VERSION" | tr -d '[:space:]')
+else
+    VERSION="1.0.0"
+fi
 
 # Get flash addresses from build artifacts (in decimal for ESP Web Tools)
 BOOTLOADER_OFFSET=4096        # 0x1000

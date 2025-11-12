@@ -25,27 +25,17 @@ static const char *TAG = "display_logic";
 // Task handle
 static TaskHandle_t display_task_handle = NULL;
 
+// Configuration parameters (read at initialization per REQ_DSP_2)
+static int32_t dist_min_mm = 100;  // Default 100mm = 10cm
+static int32_t dist_max_mm = 500;  // Default 500mm = 50cm
+
 /**
  * @brief Update LED display based on distance measurement
  *
  * @param measurement Distance measurement from sensor
  */
 static void update_led_display(const distance_measurement_t *measurement)
-{
-    // Get configuration from JSON config manager - REQ_DISPLAY_2
-    int32_t dist_min_mm = 100;   // Default minimum distance (100mm = 10cm)
-    int32_t dist_max_mm = 500;   // Default maximum distance (500mm = 50cm)
-    
-    // Read from config manager with fallback to defaults
-    if (config_get_int32("dist_min_mm", &dist_min_mm) != ESP_OK) {
-        ESP_LOGW(TAG, "Failed to read dist_min_mm, using default 100");
-        dist_min_mm = 100;
-    }
-    if (config_get_int32("dist_max_mm", &dist_max_mm) != ESP_OK) {
-        ESP_LOGW(TAG, "Failed to read dist_max_mm, using default 500");
-        dist_max_mm = 500;
-    }
-    
+{    
     // Clear all LEDs first
     led_clear_all();
 
@@ -130,13 +120,8 @@ static void display_logic_task(void *pvParameters)
     ESP_LOGI(TAG, "Display logic task started (Priority: %d, Core: %d)",
              uxTaskPriorityGet(NULL), xPortGetCoreID());
 
-    // Get current configuration from JSON config manager to log the range
-    int32_t dist_min_mm = 100;
-    int32_t dist_max_mm = 500;
-    config_get_int32("dist_min_mm", &dist_min_mm);
-    config_get_int32("dist_max_mm", &dist_max_mm);
-    
-    ESP_LOGI(TAG, "Distance range: %" PRIi32 "-%" PRIi32 "mm → LEDs 0-%d, blocking until new measurements",
+    // Configuration already loaded at initialization (REQ_DSP_2 AC-2)
+    ESP_LOGI(TAG, "Distance range: %" PRIi32 "-%" PRIi32 "mm → LEDs 0-%d",
              dist_min_mm, dist_max_mm, led_get_count() - 1);
 
     distance_measurement_t measurement;
@@ -163,8 +148,15 @@ esp_err_t display_logic_start(void)
         return ESP_ERR_INVALID_STATE;
     }
 
-    // Configuration is stored in JSON config_manager - no pre-validation needed
-    // Configuration parameters are read dynamically during display update
+    // Read and cache configuration at initialization (REQ_DSP_2 AC-2)
+    if (config_get_int32("dist_min_mm", &dist_min_mm) != ESP_OK) {
+        ESP_LOGW(TAG, "Failed to read dist_min_mm from config, using default 100mm");
+        dist_min_mm = 100;
+    }
+    if (config_get_int32("dist_max_mm", &dist_max_mm) != ESP_OK) {
+        ESP_LOGW(TAG, "Failed to read dist_max_mm from config, using default 500mm");
+        dist_max_mm = 500;
+    }
 
     // Check if LED controller is initialized
     if (!led_is_initialized())
@@ -181,13 +173,9 @@ esp_err_t display_logic_start(void)
 
     // Get LED count for logging
     uint16_t led_count = led_get_count();
-    int32_t dist_min_mm = 100;
-    int32_t dist_max_mm = 500;
-    config_get_int32("dist_min_mm", &dist_min_mm);
-    config_get_int32("dist_max_mm", &dist_max_mm);
 
     ESP_LOGI(TAG, "Display logic initialized successfully");
-    ESP_LOGI(TAG, "Config: %" PRIi32 "-%" PRIi32 "mm → LEDs 0-%d",
+    ESP_LOGI(TAG, "Distance range: %" PRIi32 "-%" PRIi32 "mm → LEDs 0-%d",
              dist_min_mm, dist_max_mm, led_count - 1);
 
     // Create display logic task

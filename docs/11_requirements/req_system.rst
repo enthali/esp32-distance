@@ -7,6 +7,30 @@ This document contains high-level system requirements for the ESP32 Distance Sen
 **Last Updated**: 2025-11-12
 
 
+.. req:: Garage Parking Assistance System
+   :id: REQ_SYS_1
+   :status: approved
+   :priority: mandatory
+   :tags: system, parking, garage
+
+   **Description:**
+   The system SHALL provide a parking assistance solution for garage parking by measuring the distance to the vehicle and providing visual feedback to help the driver park at the optimal position.
+
+   **Use Case:**
+   A driver pulls into their garage and needs to park at the correct distance from the back wall - not too close (risk of hitting the wall) and not too far (wasting garage space or blocking the garage door). The system continuously measures the distance and displays visual feedback (e.g., via LED indicators or display) to guide the driver to the perfect parking spot.
+
+   **Rationale:**
+   Many home garages have limited space, and parking too close or too far can be problematic. An automated distance measurement system removes guesswork and enables consistent, safe parking.
+
+   **Acceptance Criteria:**
+
+   * AC-1: System measures distance from sensor to vehicle continuously
+   * AC-2: Visual feedback guides driver during parking approach
+   * AC-3: Target parking distance is user-configurable
+   * AC-4: System operates reliably in typical garage environments (temperature, lighting)
+   * AC-5: Device can be mounted at back wall and positioned to detect approaching vehicle
+
+
 .. req:: ESP32 Hardware Platform
    :id: REQ_SYS_HW_1
    :status: approved
