@@ -11,7 +11,7 @@
  * - config_get/set functions are thin wrappers around NVS API
  * - Zero RAM overhead (direct NVS access, no caches)
  * 
- * @author ESP32 Template Project
+ * @author ESP32 Distance Sensor Project
  * @date 2025
  * @version 3.0 (JSON-based)
  * 

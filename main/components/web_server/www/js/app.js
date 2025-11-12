@@ -1,5 +1,5 @@
 /**
- * ESP32 Template - Shared JavaScript Functionality
+ * ESP32 Distance Sensor - Shared JavaScript Functionality
  * Provides common functionality across all pages
  */
 

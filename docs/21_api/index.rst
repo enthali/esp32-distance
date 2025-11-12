@@ -1,14 +1,14 @@
 API Reference
 =============
 
-Complete API documentation for ESP32 Template components using Sphinx-Needs methodology.
+Complete API documentation for ESP32 Distance Sensor components using Sphinx-Needs methodology.
 
 Each API is documented with full traceability to requirements and design specifications.
 
 Overview
 --------
 
-The ESP32 Template provides modular components for common IoT patterns:
+The ESP32 Distance Sensor provides modular components for common IoT patterns:
 
 * **Configuration Management** - JSON schema-driven configuration with NVS storage
 * **Web Server** - HTTP server with captive portal support  

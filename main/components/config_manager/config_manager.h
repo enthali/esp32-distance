@@ -26,7 +26,7 @@
  * ERROR HANDLING:
  * All functions return esp_err_t for ESP-IDF error handling patterns.
  * 
- * @author ESP32 Template Project
+ * @author ESP32 Distance Sensor Project
  * @date 2025
  * @version 3.0 (JSON-based)
  * 

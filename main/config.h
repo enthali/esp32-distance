@@ -18,7 +18,7 @@
  * - REQ_CFG_3: Configuration data structure
  * - REQ_CFG_6: Parameter validation
  * 
- * @author ESP32 Template Project
+ * @author ESP32 Distance Sensor Project
  * @date 2025
  */
 

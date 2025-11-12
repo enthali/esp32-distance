@@ -1,12 +1,12 @@
 High-Level Architecture Design Specification
 =============================================
 
-This document defines the high-level system architecture for the ESP32 Template, including component interactions, layering, and integration patterns.
+This document defines the high-level system architecture for the ESP32 Distance Sensor, including component interactions, layering, and integration patterns.
 
 Overview
 --------
 
-.. spec:: ESP32 Template Layered Architecture
+.. spec:: ESP32 Distance Sensor Layered Architecture
    :id: SPEC_ARCH_LAYERS_1
    :links: REQ_SYS_ARCH_1
    :status: approved

@@ -3,7 +3,7 @@
  * @file wifi_manager.h
  * @brief Smart WiFi management with captive portal and credential persistence
  *
- * @author ESP32 Template Project
+ * @author ESP32 Distance Sensor Project
  * @date 2025-11-11
  *
  * @section architecture_notes Architecture Notes

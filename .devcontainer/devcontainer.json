@@ -29,7 +29,8 @@
 	},	// execute on container creation and start used for setup of graphical environment and network tuneling
 	"postCreateCommand": "bash ./tools/devcontainer/on-create.sh",
 	"postStartCommand": "bash ./tools/devcontainer/on-start.sh",
-	"postAttachCommand": "bash ./tools/devcontainer/on-attach.sh",
+	// Removed postAttachCommand to prevent container restart issues
+	// "postAttachCommand": "bash ./tools/devcontainer/on-attach.sh",
 
 	"customizations": {
 		"vscode": {
