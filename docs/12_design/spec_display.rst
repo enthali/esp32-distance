@@ -73,25 +73,36 @@ System Integration
 Core Algorithms
 ---------------
 
-.. spec:: Distance-to-Visual Mapping Algorithm
+.. spec:: Distance-to-Visual Mapping Algorithm with Zone Detection
    :id: SPEC_DSP_ALGO_1
-   :links: REQ_DSP_3, REQ_DSP_4, REQ_DSP_5
+   :links: REQ_DSP_3, REQ_DSP_7, REQ_DSP_8, SPEC_DSP_ZONES_1
    :status: approved
    :tags: display, algorithm, mapping
 
-   **Design:** Distance-to-LED mapping 
+   **Design:** Distance-to-LED mapping with zone-based boundary detection for dual-layer rendering.
 
-
-   **Position Mapping:**
+   **Position Mapping (Upper Layer):**
 
    - Formula: ``led_index = (distance_mm - min_mm) * (led_count - 1) / (max_mm - min_mm)``
    - Boundary clamping: ``[0, led_count-1]``
+   - Color: White LED for position indicator (REQ_DSP_8)
+   - Visibility: Only in Zones 1, 2, 3 (hidden in emergency/out-of-range zones)
+
+   **Zone Detection:**
+
+   - Zone 0 (Emergency): ``distance_mm < dist_min_mm``
+   - Zone 1 (Too Close): ``0 <= led_index < (led_count * 20 / 100)``
+   - Zone 2 (Ideal): ``(led_count * 20 / 100) <= led_index < (led_count * 40 / 100)``
+   - Zone 3 (Too Far): ``(led_count * 40 / 100) <= led_index < led_count``
+   - Zone 4 (Out of Range): ``distance_mm > dist_max_mm``
 
    **Behaviors:**
 
-   - single LED green illuminated at mapped position
+   - Dual-layer rendering: Background (zone pattern) + Foreground (white position LED)
+   - Position LED overwrites background color at calculated index
+   - Zone-specific background patterns provide directional guidance
 
-   **Validation:** Position updates correctly with distance changes.
+   **Validation:** Position updates correctly with distance changes, zone transitions smooth.
 
 .. spec:: Embedded Arithmetic Architecture
    :id: SPEC_DSP_ALGO_3
@@ -113,6 +124,179 @@ Core Algorithms
    **Rationale:** Avoid floating-point on resource-constrained microcontrollers unless necessary.
 
    **Validation:** All arithmetic operations complete within deterministic time bounds.
+
+.. spec:: Zone Calculation and Boundaries
+   :id: SPEC_DSP_ZONES_1
+   :links: REQ_DSP_7, REQ_DSP_10, SPEC_DSP_ALGO_3
+   :status: approved
+   :tags: display, zones, algorithm
+
+   **Design:** Integer-based zone boundary calculations using LED strip percentage distribution 
+   with ideal zone reference point for parking guidance.
+
+   **Zone Boundary Calculations:**
+
+   .. code-block:: c
+
+      // Given: led_count, dist_min_mm, dist_max_mm
+      uint16_t zone1_end = led_count * 20 / 100;  // 20% of LEDs
+      uint16_t zone2_end = led_count * 40 / 100;  // 40% of LEDs
+      uint16_t ideal_led = led_count * 30 / 100;  // 30% center of ideal zone
+
+   **Zone Detection Logic:**
+
+   .. code-block:: c
+
+      // Zone determination from distance measurement
+      if (distance_mm < dist_min_mm) {
+          zone = 0;  // Emergency
+      } else if (distance_mm > dist_max_mm) {
+          zone = 4;  // Out of Range
+      } else {
+          // Calculate LED position
+          led_index = (distance_mm - dist_min_mm) * (led_count - 1) / (dist_max_mm - dist_min_mm);
+          
+          if (led_index < zone1_end) zone = 1;       // Too Close
+          else if (led_index < zone2_end) zone = 2;  // Ideal
+          else zone = 3;                              // Too Far
+      }
+
+   **Ideal Zone Reference:**
+
+   - Position: 30% of LED strip (center of Zone 2)
+   - Purpose: Visual target for driver across all zones
+   - Brightness: Variable (100% in Zone 2, 5% in other zones)
+   - Color: Red in Zones 0-2, Green in Zones 3-4
+
+   **Validation:** Zone boundaries stable across all valid LED counts (1-100), calculations 
+   use integer math only, no floating point operations.
+
+.. spec:: Dual-Layer Rendering Architecture
+   :id: SPEC_DSP_LAYERS_1
+   :links: REQ_DSP_6, REQ_DSP_8, REQ_DSP_9
+   :status: approved
+   :tags: display, architecture, rendering
+
+   **Design:** Two-pass rendering pipeline with compositing for visual clarity and separation 
+   of position tracking from directional guidance.
+
+   **Rendering Pipeline:**
+
+   .. code-block:: c
+
+      void render_frame(zone, distance_mm) {
+          // Pass 1: Clear buffer
+          led_clear_all();
+          
+          // Pass 2: Render lower layer (zone background)
+          render_zone_background(zone);
+          
+          // Pass 3: Render upper layer (position indicator)
+          if (zone >= 1 && zone <= 3) {  // Valid measurement zones
+              led_index = calculate_position(distance_mm);
+              led_set_pixel(led_index, LED_COLOR_WHITE);  // Overwrites background
+          }
+          
+          // Pass 4: Update physical LEDs
+          led_show();
+      }
+
+   **Layer Composition:**
+
+   - Lower layer (Background): Zone-based patterns (animations, colors)
+   - Upper layer (Position): Single white LED at calculated position
+   - Composition: Upper layer overwrites lower layer at position LED index
+   - Update: Atomic update via single ``led_show()`` call
+
+   **Memory Architecture:**
+
+   - Single LED buffer (no double buffering)
+   - In-place layer composition
+   - Stack-based animation state (~16 bytes)
+   - No heap allocation during rendering
+
+   **Validation:** Rendering completes within 20ms frame budget, layers composite correctly, 
+   position indicator always visible on top of background.
+
+.. spec:: Animation Patterns and Timing
+   :id: SPEC_DSP_ANIM_1
+   :links: REQ_DSP_9, REQ_DSP_10, SPEC_DSP_ZONES_1
+   :status: approved
+   :tags: display, animation, timing
+
+   **Design:** Timing-based animation system using ESP32 microsecond timer for smooth, 
+   consistent motion without blocking or task delays.
+
+   **Animation State Structure:**
+
+   .. code-block:: c
+
+      typedef struct {
+          uint32_t animation_step;      // Current animation frame counter
+          uint64_t last_update_time;    // Last animation update (microseconds)
+          bool blink_state;             // Zone 0 blink state (on/off)
+      } display_animation_state_t;
+
+   **Timing Control:**
+
+   - Animation update interval: 100ms (10 Hz frame rate)
+   - Zone 0 blink period: 1000ms (1 Hz, 500ms on / 500ms off)
+   - Timing source: ``esp_timer_get_time()`` (microsecond precision)
+   - Update trigger: Check elapsed time on each distance measurement arrival
+
+   **Zone-Specific Patterns:**
+
+   **Zone 0 (Emergency):**
+   
+   - Pattern: All Zone 1 LEDs blink red at 1 Hz
+   - Implementation: Toggle blink_state every 500ms
+   - Ideal LED: 5% red (constant, no animation)
+
+   **Zone 1 (Too Close):**
+   
+   - Pattern: Two black (off) LEDs move toward ideal zone
+   - Implementation: Calculate two LED positions based on animation_step
+   - Background: Orange (constant)
+   - Ideal LED: 5% red
+   - Motion: Circular animation wrapping at zone boundaries
+
+   **Zone 2 (Ideal):**
+   
+   - Pattern: Static display, no animation
+   - Ideal LED: 100% red (bright stop signal)
+   - All other LEDs: Off
+
+   **Zone 3 (Too Far):**
+   
+   - Pattern: Two green (5% brightness) LEDs move toward ideal zone
+   - Implementation: Calculate two LED positions based on animation_step
+   - Motion: Continuous movement from current zone toward ideal
+   - Ideal LED: 5% green
+
+   **Zone 4 (Out of Range):**
+   
+   - Pattern: Static display, no animation
+   - Last LED: 5% blue
+   - Ideal LED: 5% green
+
+   **Animation Update Logic:**
+
+   .. code-block:: c
+
+      void update_animation(state, zone, elapsed_us) {
+          if (elapsed_us >= 100000) {  // 100ms elapsed
+              state->animation_step++;
+              state->last_update_time = esp_timer_get_time();
+              
+              // Zone 0 blink logic
+              if (zone == 0 && (state->animation_step % 5) == 0) {
+                  state->blink_state = !state->blink_state;  // Toggle every 500ms
+              }
+          }
+      }
+
+   **Validation:** Animation frame rate consistent at 10 Hz, smooth motion without flicker, 
+   blink timing accurate within ±10ms, no performance degradation over extended operation.
 
 API Design
 ----------
