@@ -114,10 +114,21 @@ pre-commit run --all-files --show-diff-on-failure
 
 ### Step 5: Testing
 
-1. Build test: \`idf.py build\`
-2. Memory check: \`idf.py size\`
-3. Functional testing: Verify feature works as expected
-4. Document test results in commit message
+**Automated Tests (You can run):**
+
+\`\`\`bash
+# Quality gates already verify documentation and code quality
+pre-commit run --all-files --show-diff-on-failure
+\`\`\`
+
+**Manual Testing Required (Human Maintainer must perform):**
+
+⚠️ **Note**: The following tests require ESP-IDF environment which is not available in the Coding Agent environment:
+
+1. **Build test**: - Verify code compiles without errors
+2. **Memory check**: - Verify memory usage is acceptable
+3. **Functional testing**: - Test feature works as expected (QEMU or hardware)
+4. **Document test results**: - Add notes about manual testing to PR description
 
 ### Step 6: Commit with Traceability
 
@@ -145,10 +156,14 @@ Before submitting PR verify:
 - [ ] Design documentation updated
 - [ ] Code follows ESP32 coding standards
 - [ ] All quality gates passed (pre-commit hooks)
-- [ ] Build succeeds (\`idf.py build\`)
-- [ ] Memory usage acceptable (\`idf.py size\`)
 - [ ] Commit messages follow project format
 - [ ] Traceability maintained (REQ → DSN → Implementation)
+
+**For Human Maintainer to verify:**
+
+- [ ] Build succeeds (\`idf.py build\`)
+- [ ] Memory usage acceptable (\`idf.py size\`)
+- [ ] Functional testing completed (QEMU or hardware)
 
 ```text
 
