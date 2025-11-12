@@ -4,12 +4,8 @@ LED Controller Requirements
 This document specifies requirements for WS2812 LED strip control, focusing on user-facing 
 functionality and hardware interface.
 
-**Document Version**: 1.0  
-**Last Updated**: 2025-11-10
-
-.. contents:: Table of Contents
-   :local:
-   :depth: 2
+**Document Version**: 2.0  
+**Last Updated**: 2025-11-12
 
 Overview
 --------

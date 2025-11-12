@@ -3,6 +3,9 @@ Network Interface Tunnel Requirements
 
 This document specifies component-level requirements for the UART-based network tunnel driver, enabling QEMU emulation with external network connectivity.
 
+**Document Version**: 2.0  
+**Last Updated**: 2025-11-12
+
 Component Overview
 ------------------
 

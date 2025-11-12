@@ -3,6 +3,10 @@ System Requirements
 
 This document contains high-level system requirements for the ESP32 Distance Sensor project.
 
+**Document Version**: 2.0  
+**Last Updated**: 2025-11-12
+
+
 .. req:: ESP32 Hardware Platform
    :id: REQ_SYS_HW_1
    :status: approved

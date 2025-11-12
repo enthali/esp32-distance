@@ -4,12 +4,8 @@ Distance Sensor Design Specification
 This document specifies the design of the HC-SR04 distance sensor component, implementing 
 real-time measurement processing with dual-queue architecture and EMA filtering.
 
-**Design Version**: 1.0  
-**Last Updated**: 2025-11-10
-
-.. contents:: Table of Contents
-   :local:
-   :depth: 2
+**Document Version**: 2.0  
+**Last Updated**: 2025-11-12
 
 Overview
 --------

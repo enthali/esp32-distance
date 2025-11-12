@@ -3,8 +3,11 @@ JSON-Based Configuration Manager Design
 
 This document specifies the design for JSON-Schema-Driven Configuration System, covering architecture, data flow, schema design, and implementation approach.
 
-Architecture Design
--------------------
+**Document Version**: 2.0  
+**Last Updated**: 2025-11-12
+
+Architecture Overview
+---------------------
 
 .. spec:: JSON Schema-Driven Architecture
    :id: SPEC_CFG_JSON_ARCH_1

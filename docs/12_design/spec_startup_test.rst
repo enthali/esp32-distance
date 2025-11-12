@@ -4,12 +4,8 @@ Startup Test Design Specification
 This document specifies the design of the startup test sequence that provides visual feedback 
 during system initialization, demonstrating hardware functionality.
 
-**Design Version**: 1.0  
-**Last Updated**: 2025-11-10
-
-.. contents:: Table of Contents
-   :local:
-   :depth: 2
+**Document Version**: 2.0  
+**Last Updated**: 2025-11-12
 
 Overview
 --------

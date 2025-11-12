@@ -4,12 +4,8 @@ Display System Design Specification
 This document specifies the design of the display system that visualizes distance measurements 
 through WS2812 LED strips with dual-layer rendering and zone-based animations.
 
-**Design Version**: 1.0  
-**Last Updated**: 2025-11-10
-
-.. contents:: Table of Contents
-   :local:
-   :depth: 2
+**Document Version**: 2.0  
+**Last Updated**: 2025-11-12
 
 Overview
 --------
