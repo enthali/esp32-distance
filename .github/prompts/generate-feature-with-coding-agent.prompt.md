@@ -2,13 +2,9 @@
 description: Generate GitHub Issue for Coding Agent from feature description
 ---
 
-# ⚠️ CRITICAL: This prompt uses GitHub MCP Server to create issues automatically
+# Generate Feature Issue for Coding Agent
 
-**You MUST use the `mcp_github_create_issue` tool - DO NOT output text for manual creation!**
-
----
-
-Generate a complete GitHub Issue for this ESP32 project that will be assigned to the GitHub Copilot Coding Agent.
+**Use `mcp_github_create_issue` tool - DO NOT output text manually!**
 
 ## Feature Request
 
@@ -16,10 +12,14 @@ ${input:featureRequest:Describe the feature you want to implement}
 
 ---
 
-## Your Task
+## Analysis & Issue Creation
 
-Analyze the feature request above and:
+1. **Search the codebase**:
+   - Find related requirements in `docs/11_requirements/`
+   - Find related design specs in `docs/12_design/`
+   - Identify affected components
 
+<<<<<<< HEAD
 1. **Search docs/11_requirements/** for related REQ-* requirements
 2. **Search docs/12_design/** for related design elements
 3. **Search the codebase** to identify affected components (files/modules)
@@ -30,32 +30,60 @@ Analyze the feature request above and:
 5. **Extract clear objective** - what needs to be done and why
 6. **Infer current behavior** from codebase context
 7. **CREATE THE ISSUE using `mcp_github_create_issue` tool** in this repository
+=======
+2. **Determine documentation evolution** ⚠️ **CRITICAL**:
+   - What to **update** (modify existing REQ-*/SPEC-*)?
+   - What to **supersede** (mark old REQ-*/SPEC-* as superseded)?
+   - What **new** documentation needed?
+   - **NEVER create conflicts** - all documentation must be consistent
+
+3. **Create issue** using `mcp_github_create_issue`:
+   - **title**: `[Feature]: CLEAR_TITLE`
+   - **labels**: `["feature", "COMPONENT", "coding-agent"]`
+   - **body**: Use structure below ↓
+>>>>>>> 0d4ead0 (refactor(prompts): streamline feature issue generation process and enhance clarity in documentation)
 
 ---
 
-## Issue Structure Template
+## Issue Body Structure
 
-When creating the issue with `mcp_github_create_issue`, use this structure for the **body** parameter:
-
+```markdown
 ## 🎯 Objective
 
-<Rewrite feature request as clear objective - what needs to be done and why>
+<Clear statement: what needs to be done and why>
 
 ## 📋 Context
 
+<<<<<<< HEAD
 - **Related Requirements**: <List REQ-* IDs found in docs/11_requirements/, or state "Create REQ-<AREA>-N">
 - **Affected Components**: <List files/modules identified from codebase search>
 - **Current Behavior**: <Describe current behavior based on code analysis>
 - **Desired Behavior**: <Extract from feature request>
+=======
+**Existing Requirements** (from docs/11_requirements/):
+- To Update: <REQ-* IDs>
+- To Supersede: <REQ-* IDs>
+- To Add: <New REQ-* IDs>
+
+**Existing Design Docs** (from docs/12_design/):
+- To Update: <SPEC-* IDs>
+- To Supersede: <SPEC-* IDs>
+- To Add: <New SPEC-* IDs>
+
+**Affected Components**: <files/modules>
+**Current Behavior**: <from code analysis>
+**Desired Behavior**: <from feature request>
+>>>>>>> 0d4ead0 (refactor(prompts): streamline feature issue generation process and enhance clarity in documentation)
 
 ## 🔧 Technical Details
 
-<List technical constraints, dependencies, ESP32-specific considerations from your analysis>
+<ESP32-specific constraints, dependencies>
 
 ---
 
-## MANDATORY WORKFLOW - Follow in Order
+## Implementation Workflow
 
+<<<<<<< HEAD
 ### Step 1: Requirements Analysis & Update
 
 1. Read existing requirements in \`docs/11_requirements/\`
@@ -204,3 +232,29 @@ Before submitting PR verify:
 **DO NOT** ask the user to create the issue manually. The GitHub MCP Server will create it automatically.
 
 - ✅ Traceability maintained (REQ → DSN → Implementation)
+=======
+### Requirements & Design
+1. **Update requirements** in `docs/11_requirements/req_<area>.rst`
+   - Follow Sphinx-Needs format (see `docs/conf.py`)
+   - Status: `draft` (new), `approved` (updated), `superseded` (old)
+   - **NO conflicting requirements**
+2. **Update design docs** in `docs/12_design/`
+   - Maintain traceability to requirements
+
+### Implementation
+- Follow `.github/prompt-snippets/esp32-coding-standards.md`
+- Add traceability to design comments in code
+
+### Quality Gates
+```bash
+pre-commit run --all-files --show-diff-on-failure
+```
+Validates: markdown, Sphinx build, traceability links
+
+**Note**: ESP-IDF build testing (`idf.py build/size`) done by maintainer (not in Coding Agent environment)
+```
+
+---
+
+That's it! Issue created → Coding Agent implements → Pre-commit validates → PR ready.
+>>>>>>> 0d4ead0 (refactor(prompts): streamline feature issue generation process and enhance clarity in documentation)
