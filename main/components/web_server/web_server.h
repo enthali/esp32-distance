@@ -3,7 +3,7 @@
  * @file web_server.h
  * @brief HTTP server for WiFi captive portal and configuration interface
  *
- * @author ESP32 Template Project
+ * @author ESP32 Distance Sensor Project
  * @date 2025-11-11
  *
  * @section architecture_notes Architecture Notes

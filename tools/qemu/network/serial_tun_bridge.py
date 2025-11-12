@@ -21,7 +21,7 @@ Requirements:
     - Root privileges (for TUN device creation)
     - pytun or python-pytun package
 
-Author: ESP32 Template Project
+Author: Georg Doll
 Date: 2025
 """
 

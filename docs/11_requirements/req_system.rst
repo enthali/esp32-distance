@@ -1,7 +1,7 @@
 System Requirements
 ===================
 
-This document contains high-level system requirements for the ESP32 Template project.
+This document contains high-level system requirements for the ESP32 Distance Sensor project.
 
 .. req:: ESP32 Hardware Platform
    :id: REQ_SYS_HW_1

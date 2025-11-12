@@ -1122,7 +1122,7 @@ static esp_err_t system_health_handler(httpd_req_t *req)
                          (free_heap > 50000); // At least 50KB free
 
     cJSON_AddStringToObject(json, "overall_status", system_healthy ? "healthy" : "degraded");
-    cJSON_AddStringToObject(json, "device_type", "ESP32 Template");
+    cJSON_AddStringToObject(json, "device_type", "ESP32 Distance Sensor");
     cJSON_AddStringToObject(json, "firmware_version", "1.0.0");
 
     // Convert to string and send

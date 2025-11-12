@@ -15,9 +15,9 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-echo -e "${BLUE}╔════════════════════════════════════════════════════════════╗${NC}"
-echo -e "${BLUE}║         ESP32 Template Web Flasher Server                 ║${NC}"
-echo -e "${BLUE}╚════════════════════════════════════════════════════════════╝${NC}"
+echo -e "${BLUE}╔══════════════════════════════════════╗${NC}"
+echo -e "${BLUE}║      ESP32 Web Flasher Server        ║${NC}"
+echo -e "${BLUE}╚══════════════════════════════════════╝${NC}"
 echo ""
 
 # Check if build exists and has required files

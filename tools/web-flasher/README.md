@@ -46,7 +46,7 @@ idf.py build
 ### Step 1: Build Firmware
 
 ```bash
-cd /workspaces/esp32-template  # Or your project directory
+cd /workspaces/esp32-distance  # Or your project directory
 idf.py build
 ```
 

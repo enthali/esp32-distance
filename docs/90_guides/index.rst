@@ -1,7 +1,7 @@
 Development Guide
 =================
 
-This guide covers all aspects of developing with the ESP32 Template, from setting up your environment to debugging and testing.
+This guide covers all aspects of developing with the ESP32 Distance Sensor, from setting up your environment to debugging and testing.
 
 .. toctree::
    :maxdepth: 2
