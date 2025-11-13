@@ -1,5 +1,3 @@
-echo "Building Sphinx documentation..."
-sphinx-build -b html . _build/html
 #!/bin/bash
 # Build Sphinx documentation (HTML)
 # Usage: ./build-docs.sh
