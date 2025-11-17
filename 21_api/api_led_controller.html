@@ -301,7 +301,7 @@
         <article role="main" id="furo-main-content">
           <section id="led-controller-api">
 <h1>LED Controller API<a class="headerlink" href="#led-controller-api" title="Link to this heading">¶</a></h1>
-<div class="need_container docutils container" id="SNCB-7b0b50c5">
+<div class="need_container docutils container" id="SNCB-4b0a8983">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apicomponent docutils align-default" id="API_COMP_LED_CONTROLLER">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -319,7 +319,7 @@
 </td>
 </tr>
 <tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>Brief Description</strong></p>
-<p>Hardware abstraction layer for WS2812 addressable LED strips using ESP32 RMT peripheral. Provides low-level control with RAM buffer management for efficient updates, individual pixel control, and color utilities.</p>
+<p>Hardware abstraction layer for WS2812 addressable LED strips using ESP32 RMT peripheral. Provides low-level control with RAM buffer management for efficient updates.</p>
 <p>Key features:</p>
 <ul class="simple">
 <li><p>Individual pixel control (set/get/clear)</p></li>
@@ -329,21 +329,55 @@
 <li><p>Color utility functions</p></li>
 </ul>
 <p><strong>Architecture:</strong></p>
+<p>Uses ESP32 RMT peripheral for precise WS2812 timing. Maintains a RAM buffer for current LED state. Only one controller instance supported. Configuration is loaded from NVS via config_manager.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<section id="data-types">
+<h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading">¶</a></h2>
+<div class="need_container docutils container" id="SNCB-53c3894e">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apistruct docutils align-default" id="API_STRUCT_LED_COLOR">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">API Data Structure</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">led_color_t</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#API_STRUCT_LED_COLOR" title="API_STRUCT_LED_COLOR">API_STRUCT_LED_COLOR</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">implemented</span></span></div>
+<div class="line"><span class="needs_component"><span class="needs_label">component: </span><span class="needs_data">API_COMP_LED_CONTROLLER</span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_led_controller.html#REQ_LED_2" title="API_STRUCT_LED_COLOR">REQ_LED_2</a>, <a class="reference internal" href="../11_requirements/req_led_controller.html#REQ_LED_4" title="API_STRUCT_LED_COLOR">REQ_LED_4</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p>RGB color structure for LED pixel color.</p>
+<p><strong>Definition:</strong></p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">red</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">green</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">blue</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">led_color_t</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Fields:</strong></p>
 <ul class="simple">
-<li><p>RMT peripheral abstraction for WS2812 timing</p></li>
-<li><p>RAM buffer for current LED state</p></li>
-<li><p>Manual update (led_show) for performance</p></li>
-<li><p>Configurable LED count and GPIO pin</p></li>
-<li><p>Color utility functions for RGB and brightness</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">red</span></code> - Red component (0-255)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">green</span></code> - Green component (0-255)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">blue</span></code> - Blue component (0-255)</p></li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
 </div>
+</section>
 <section id="lifecycle-functions">
 <h2>Lifecycle Functions<a class="headerlink" href="#lifecycle-functions" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-17528fce">
+<div class="need_container docutils container" id="SNCB-321862d2">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_LED_CONTROLLER_INIT">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -355,7 +389,7 @@
 <div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">implemented</span></span></div>
 <div class="line"><span class="needs_api_signature"><span class="needs_label">api_signature: </span><span class="needs_data">esp_err_t led_controller_init(gpio_num_t data_pin)</span></span></div>
 <div class="line"><span class="needs_returns"><span class="needs_label">returns: </span><span class="needs_data">ESP_OK on success, ESP_ERR_INVALID_STATE, ESP_ERR_INVALID_ARG, ESP_ERR_*</span></span></div>
-<div class="line"><span class="needs_parameters"><span class="needs_label">parameters: </span><span class="needs_data">data_pin</span></span></div>
+<div class="line"><span class="needs_parameters"><span class="needs_label">parameters: </span><span class="needs_data">data_pin (GPIO pin for WS2812 data line)</span></span></div>
 <div class="line"><span class="needs_component"><span class="needs_label">component: </span><span class="needs_data">API_COMP_LED_CONTROLLER</span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_led_controller.html#REQ_LED_1" title="API_FUNC_LED_CONTROLLER_INIT">REQ_LED_1</a>, <a class="reference internal" href="../11_requirements/req_led_controller.html#REQ_LED_3" title="API_FUNC_LED_CONTROLLER_INIT">REQ_LED_3</a>, <span class="needs_dead_link forbidden">REQ_CFG_1</span></span></span></div>
@@ -363,7 +397,7 @@
 </div>
 </td>
 </tr>
-<tr class="need content row-odd"><td class="need content" colspan="1"><p>Initialize the LED controller, configure GPIO and RMT, allocate RAM buffer, and load configuration.</p>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p>Initialize the LED controller. Loads configuration from config_manager and allocates RAM buffer. Only one instance supported. Uses RMT channel 0.</p>
 <p><strong>Signature:</strong></p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">esp_err_t</span><span class="w"> </span><span class="nf">led_controller_init</span><span class="p">(</span><span class="n">gpio_num_t</span><span class="w"> </span><span class="n">data_pin</span><span class="p">);</span>
 </pre></div>
@@ -376,23 +410,19 @@
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">ESP_OK</span></code> - Initialization successful</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ESP_ERR_INVALID_STATE</span></code> - Config manager not initialized</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ESP_ERR_INVALID_ARG</span></code> - Invalid pin argument</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ESP_ERR_*</span></code> - Other configuration or hardware errors</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ESP_ERR_INVALID_ARG</span></code> - Invalid pin</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ESP_ERR_*</span></code> - Configuration or hardware error</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<ul class="simple">
-<li><p>See requirements: REQ_LED_1, REQ_LED_3, REQ_CFG_1</p></li>
-<li><p>Allocates memory for LED buffer (3 bytes per LED)</p></li>
-<li><p>Only one instance supported, uses RMT channel 0</p></li>
-</ul>
+<p>Allocates memory for LED buffer (3 bytes per LED). Only one instance supported. RMT channel 0 is used.</p>
 </div>
 </td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-2ea29b3a">
+<div class="need_container docutils container" id="SNCB-6975f9ec">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_LED_CONTROLLER_DEINIT">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -412,7 +442,7 @@
 </div>
 </td>
 </tr>
-<tr class="need content row-odd"><td class="need content" colspan="1"><p>Deinitialize the LED controller, free memory, deinit RMT, and reset GPIO.</p>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p>Deinitialize the LED controller. Frees memory, deinitializes RMT, and resets GPIO.</p>
 <p><strong>Signature:</strong></p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">esp_err_t</span><span class="w"> </span><span class="nf">led_controller_deinit</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
 </pre></div>
@@ -424,14 +454,11 @@
 <p><strong>Returns:</strong></p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">ESP_OK</span></code> - Deinitialization successful</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ESP_ERR_*</span></code> - Failure</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ESP_ERR_*</span></code> - Failure during deinit</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<ul class="simple">
-<li><p>See requirements: REQ_LED_1</p></li>
-<li><p>Frees all resources, resets hardware</p></li>
-</ul>
+<p>Frees all allocated resources and resets hardware state.</p>
 </div>
 </td>
 </tr>
@@ -441,11 +468,11 @@
 </section>
 <section id="pixel-control-functions">
 <h2>Pixel Control Functions<a class="headerlink" href="#pixel-control-functions" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-47dd65af">
-<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_LED_CONTROLLER_SET_PIXEL">
+<div class="need_container docutils container" id="SNCB-a8fd6fe3">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_LED_SET_PIXEL">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">API Function</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">led_set_pixel</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#API_FUNC_LED_CONTROLLER_SET_PIXEL" title="API_FUNC_LED_CONTROLLER_SET_PIXEL">API_FUNC_LED_CONTROLLER_SET_PIXEL</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">API Function</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">led_set_pixel</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#API_FUNC_LED_SET_PIXEL" title="API_FUNC_LED_SET_PIXEL">API_FUNC_LED_SET_PIXEL</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
 </div>
 </td>
 </tr>
@@ -453,15 +480,15 @@
 <div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">implemented</span></span></div>
 <div class="line"><span class="needs_api_signature"><span class="needs_label">api_signature: </span><span class="needs_data">esp_err_t led_set_pixel(uint16_t index, led_color_t color)</span></span></div>
 <div class="line"><span class="needs_returns"><span class="needs_label">returns: </span><span class="needs_data">ESP_OK on success, ESP_ERR_INVALID_ARG</span></span></div>
-<div class="line"><span class="needs_parameters"><span class="needs_label">parameters: </span><span class="needs_data">index, color</span></span></div>
+<div class="line"><span class="needs_parameters"><span class="needs_label">parameters: </span><span class="needs_data">index (LED index), color (RGB color)</span></span></div>
 <div class="line"><span class="needs_component"><span class="needs_label">component: </span><span class="needs_data">API_COMP_LED_CONTROLLER</span></span></div>
 </span></span></div>
-<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_led_controller.html#REQ_LED_2" title="API_FUNC_LED_CONTROLLER_SET_PIXEL">REQ_LED_2</a>, <a class="reference internal" href="../11_requirements/req_led_controller.html#REQ_LED_3" title="API_FUNC_LED_CONTROLLER_SET_PIXEL">REQ_LED_3</a></span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_led_controller.html#REQ_LED_2" title="API_FUNC_LED_SET_PIXEL">REQ_LED_2</a>, <a class="reference internal" href="../11_requirements/req_led_controller.html#REQ_LED_4" title="API_FUNC_LED_SET_PIXEL">REQ_LED_4</a></span></span></div>
 </span></div>
 </div>
 </td>
 </tr>
-<tr class="need content row-odd"><td class="need content" colspan="1"><p>Set color of a specific LED pixel in RAM buffer.</p>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p>Set color of a specific LED pixel in RAM buffer. Call led_show() to update physical LEDs.</p>
 <p><strong>Signature:</strong></p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">esp_err_t</span><span class="w"> </span><span class="nf">led_set_pixel</span><span class="p">(</span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">index</span><span class="p">,</span><span class="w"> </span><span class="n">led_color_t</span><span class="w"> </span><span class="n">color</span><span class="p">);</span>
 </pre></div>
@@ -473,26 +500,23 @@
 </ul>
 <p><strong>Returns:</strong></p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">ESP_OK</span></code> - Pixel set successfully</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ESP_OK</span></code> - Pixel color updated in buffer</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ESP_ERR_INVALID_ARG</span></code> - Index out of range</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<ul class="simple">
-<li><p>See requirements: REQ_LED_2, REQ_LED_3</p></li>
-<li><p>Call led_show() to update physical LEDs</p></li>
-</ul>
+<p>Does not update physical LEDs until led_show() is called.</p>
 </div>
 </td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-793dda06">
-<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_LED_CONTROLLER_CLEAR_PIXEL">
+<div class="need_container docutils container" id="SNCB-9aaed222">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_LED_CLEAR_PIXEL">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">API Function</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">led_clear_pixel</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#API_FUNC_LED_CONTROLLER_CLEAR_PIXEL" title="API_FUNC_LED_CONTROLLER_CLEAR_PIXEL">API_FUNC_LED_CONTROLLER_CLEAR_PIXEL</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">API Function</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">led_clear_pixel</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#API_FUNC_LED_CLEAR_PIXEL" title="API_FUNC_LED_CLEAR_PIXEL">API_FUNC_LED_CLEAR_PIXEL</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
 </div>
 </td>
 </tr>
@@ -500,15 +524,15 @@
 <div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">implemented</span></span></div>
 <div class="line"><span class="needs_api_signature"><span class="needs_label">api_signature: </span><span class="needs_data">esp_err_t led_clear_pixel(uint16_t index)</span></span></div>
 <div class="line"><span class="needs_returns"><span class="needs_label">returns: </span><span class="needs_data">ESP_OK on success, ESP_ERR_INVALID_ARG</span></span></div>
-<div class="line"><span class="needs_parameters"><span class="needs_label">parameters: </span><span class="needs_data">index</span></span></div>
+<div class="line"><span class="needs_parameters"><span class="needs_label">parameters: </span><span class="needs_data">index (LED index)</span></span></div>
 <div class="line"><span class="needs_component"><span class="needs_label">component: </span><span class="needs_data">API_COMP_LED_CONTROLLER</span></span></div>
 </span></span></div>
-<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_led_controller.html#REQ_LED_2" title="API_FUNC_LED_CONTROLLER_CLEAR_PIXEL">REQ_LED_2</a></span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_led_controller.html#REQ_LED_2" title="API_FUNC_LED_CLEAR_PIXEL">REQ_LED_2</a></span></span></div>
 </span></div>
 </div>
 </td>
 </tr>
-<tr class="need content row-odd"><td class="need content" colspan="1"><p>Clear a specific LED pixel (set to off/black).</p>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p>Clear a specific LED pixel (turn off). Equivalent to led_set_pixel(index, LED_COLOR_OFF).</p>
 <p><strong>Signature:</strong></p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">esp_err_t</span><span class="w"> </span><span class="nf">led_clear_pixel</span><span class="p">(</span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">index</span><span class="p">);</span>
 </pre></div>
@@ -519,37 +543,34 @@
 </ul>
 <p><strong>Returns:</strong></p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">ESP_OK</span></code> - Pixel cleared successfully</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ESP_OK</span></code> - Pixel cleared</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ESP_ERR_INVALID_ARG</span></code> - Index out of range</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<ul class="simple">
-<li><p>See requirements: REQ_LED_2</p></li>
-<li><p>Equivalent to led_set_pixel(index, LED_COLOR_OFF)</p></li>
-</ul>
+<p>Does not update physical LEDs until led_show() is called.</p>
 </div>
 </td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-dbdb37fd">
-<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_LED_CONTROLLER_GET_PIXEL">
+<div class="need_container docutils container" id="SNCB-f98b5d4b">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_LED_GET_PIXEL">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">API Function</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">led_get_pixel</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#API_FUNC_LED_CONTROLLER_GET_PIXEL" title="API_FUNC_LED_CONTROLLER_GET_PIXEL">API_FUNC_LED_CONTROLLER_GET_PIXEL</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">API Function</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">led_get_pixel</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#API_FUNC_LED_GET_PIXEL" title="API_FUNC_LED_GET_PIXEL">API_FUNC_LED_GET_PIXEL</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
 </div>
 </td>
 </tr>
 <tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
 <div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">implemented</span></span></div>
 <div class="line"><span class="needs_api_signature"><span class="needs_label">api_signature: </span><span class="needs_data">led_color_t led_get_pixel(uint16_t index)</span></span></div>
-<div class="line"><span class="needs_returns"><span class="needs_label">returns: </span><span class="needs_data">Current LED color, or LED_COLOR_OFF if index out of range</span></span></div>
-<div class="line"><span class="needs_parameters"><span class="needs_label">parameters: </span><span class="needs_data">index</span></span></div>
+<div class="line"><span class="needs_returns"><span class="needs_label">returns: </span><span class="needs_data">Current color or LED_COLOR_OFF</span></span></div>
+<div class="line"><span class="needs_parameters"><span class="needs_label">parameters: </span><span class="needs_data">index (LED index)</span></span></div>
 <div class="line"><span class="needs_component"><span class="needs_label">component: </span><span class="needs_data">API_COMP_LED_CONTROLLER</span></span></div>
 </span></span></div>
-<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_led_controller.html#REQ_LED_2" title="API_FUNC_LED_CONTROLLER_GET_PIXEL">REQ_LED_2</a>, <a class="reference internal" href="../11_requirements/req_led_controller.html#REQ_LED_5" title="API_FUNC_LED_CONTROLLER_GET_PIXEL">REQ_LED_5</a></span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_led_controller.html#REQ_LED_2" title="API_FUNC_LED_GET_PIXEL">REQ_LED_2</a>, <a class="reference internal" href="../11_requirements/req_led_controller.html#REQ_LED_4" title="API_FUNC_LED_GET_PIXEL">REQ_LED_4</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -565,25 +586,22 @@
 </ul>
 <p><strong>Returns:</strong></p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">led_color_t</span></code> - Current color, or LED_COLOR_OFF if out of range</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">led_color_t</span></code> - Current color, or LED_COLOR_OFF if index out of range</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<ul class="simple">
-<li><p>See requirements: REQ_LED_2, REQ_LED_5</p></li>
-<li><p>Reads from RAM buffer, not physical LED</p></li>
-</ul>
+<p>Reads from RAM buffer, not physical LED.</p>
 </div>
 </td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-bd4c7587">
-<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_LED_CONTROLLER_CLEAR_ALL">
+<div class="need_container docutils container" id="SNCB-9bc57c06">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_LED_CLEAR_ALL">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">API Function</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">led_clear_all</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#API_FUNC_LED_CONTROLLER_CLEAR_ALL" title="API_FUNC_LED_CONTROLLER_CLEAR_ALL">API_FUNC_LED_CONTROLLER_CLEAR_ALL</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">API Function</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">led_clear_all</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#API_FUNC_LED_CLEAR_ALL" title="API_FUNC_LED_CLEAR_ALL">API_FUNC_LED_CLEAR_ALL</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
 </div>
 </td>
 </tr>
@@ -594,12 +612,12 @@
 <div class="line"><span class="needs_parameters"><span class="needs_label">parameters: </span><span class="needs_data">None</span></span></div>
 <div class="line"><span class="needs_component"><span class="needs_label">component: </span><span class="needs_data">API_COMP_LED_CONTROLLER</span></span></div>
 </span></span></div>
-<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_led_controller.html#REQ_LED_2" title="API_FUNC_LED_CONTROLLER_CLEAR_ALL">REQ_LED_2</a></span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_led_controller.html#REQ_LED_2" title="API_FUNC_LED_CLEAR_ALL">REQ_LED_2</a></span></span></div>
 </span></div>
 </div>
 </td>
 </tr>
-<tr class="need content row-odd"><td class="need content" colspan="1"><p>Clear all LED pixels (set all to off/black) in RAM buffer.</p>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p>Clear all LED pixels (turn off all LEDs) in RAM buffer. Call led_show() to update physical LEDs.</p>
 <p><strong>Signature:</strong></p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">esp_err_t</span><span class="w"> </span><span class="nf">led_clear_all</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
 </pre></div>
@@ -615,21 +633,18 @@
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<ul class="simple">
-<li><p>See requirements: REQ_LED_2</p></li>
-<li><p>Call led_show() to update physical LEDs</p></li>
-</ul>
+<p>Does not update physical LEDs until led_show() is called.</p>
 </div>
 </td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-f31279d4">
-<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_LED_CONTROLLER_SHOW">
+<div class="need_container docutils container" id="SNCB-414b9e2b">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_LED_SHOW">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">API Function</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">led_show</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#API_FUNC_LED_CONTROLLER_SHOW" title="API_FUNC_LED_CONTROLLER_SHOW">API_FUNC_LED_CONTROLLER_SHOW</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">API Function</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">led_show</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#API_FUNC_LED_SHOW" title="API_FUNC_LED_SHOW">API_FUNC_LED_SHOW</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
 </div>
 </td>
 </tr>
@@ -640,12 +655,12 @@
 <div class="line"><span class="needs_parameters"><span class="needs_label">parameters: </span><span class="needs_data">None</span></span></div>
 <div class="line"><span class="needs_component"><span class="needs_label">component: </span><span class="needs_data">API_COMP_LED_CONTROLLER</span></span></div>
 </span></span></div>
-<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_led_controller.html#REQ_LED_2" title="API_FUNC_LED_CONTROLLER_SHOW">REQ_LED_2</a>, <a class="reference internal" href="../11_requirements/req_led_controller.html#REQ_LED_4" title="API_FUNC_LED_CONTROLLER_SHOW">REQ_LED_4</a></span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_led_controller.html#REQ_LED_4" title="API_FUNC_LED_SHOW">REQ_LED_4</a></span></span></div>
 </span></div>
 </div>
 </td>
 </tr>
-<tr class="need content row-odd"><td class="need content" colspan="1"><p>Update physical LED strip with current RAM buffer.</p>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p>Update physical LED strip with current RAM buffer using RMT peripheral. Blocks until transmission is complete.</p>
 <p><strong>Signature:</strong></p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">esp_err_t</span><span class="w"> </span><span class="nf">led_show</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
 </pre></div>
@@ -656,15 +671,12 @@
 </ul>
 <p><strong>Returns:</strong></p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">ESP_OK</span></code> - Update successful</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ESP_OK</span></code> - LEDs updated successfully</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ESP_ERR_*</span></code> - Failure</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<ul class="simple">
-<li><p>See requirements: REQ_LED_2, REQ_LED_4</p></li>
-<li><p>Blocks until transmission complete (~1-2ms for 40 LEDs)</p></li>
-</ul>
+<p>Blocks for ~1-2ms for 40 LEDs. Only function that updates visible LEDs.</p>
 </div>
 </td>
 </tr>
@@ -672,13 +684,13 @@
 </table>
 </div>
 </section>
-<section id="color-utility-functions">
-<h2>Color Utility Functions<a class="headerlink" href="#color-utility-functions" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-ce3bafb5">
-<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_LED_CONTROLLER_COLOR_RGB">
+<section id="utility-functions">
+<h2>Utility Functions<a class="headerlink" href="#utility-functions" title="Link to this heading">¶</a></h2>
+<div class="need_container docutils container" id="SNCB-9a6bca08">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_LED_COLOR_RGB">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">API Function</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">led_color_rgb</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#API_FUNC_LED_CONTROLLER_COLOR_RGB" title="API_FUNC_LED_CONTROLLER_COLOR_RGB">API_FUNC_LED_CONTROLLER_COLOR_RGB</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">API Function</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">led_color_rgb</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#API_FUNC_LED_COLOR_RGB" title="API_FUNC_LED_COLOR_RGB">API_FUNC_LED_COLOR_RGB</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
 </div>
 </td>
 </tr>
@@ -686,10 +698,10 @@
 <div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">implemented</span></span></div>
 <div class="line"><span class="needs_api_signature"><span class="needs_label">api_signature: </span><span class="needs_data">led_color_t led_color_rgb(uint8_t r, uint8_t g, uint8_t b)</span></span></div>
 <div class="line"><span class="needs_returns"><span class="needs_label">returns: </span><span class="needs_data">RGB color structure</span></span></div>
-<div class="line"><span class="needs_parameters"><span class="needs_label">parameters: </span><span class="needs_data">r, g, b</span></span></div>
+<div class="line"><span class="needs_parameters"><span class="needs_label">parameters: </span><span class="needs_data">r (red), g (green), b (blue)</span></span></div>
 <div class="line"><span class="needs_component"><span class="needs_label">component: </span><span class="needs_data">API_COMP_LED_CONTROLLER</span></span></div>
 </span></span></div>
-<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_led_controller.html#REQ_LED_4" title="API_FUNC_LED_CONTROLLER_COLOR_RGB">REQ_LED_4</a></span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_led_controller.html#REQ_LED_4" title="API_FUNC_LED_COLOR_RGB">REQ_LED_4</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -711,37 +723,34 @@
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<ul class="simple">
-<li><p>See requirements: REQ_LED_4</p></li>
-<li><p>Use for custom colors</p></li>
-</ul>
+<p>Utility for constructing custom colors.</p>
 </div>
 </td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-30c7bf72">
-<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_LED_CONTROLLER_COLOR_BRIGHTNESS">
+<div class="need_container docutils container" id="SNCB-cf491cef">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_LED_COLOR_BRIGHTNESS">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">API Function</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">led_color_brightness</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#API_FUNC_LED_CONTROLLER_COLOR_BRIGHTNESS" title="API_FUNC_LED_CONTROLLER_COLOR_BRIGHTNESS">API_FUNC_LED_CONTROLLER_COLOR_BRIGHTNESS</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">API Function</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">led_color_brightness</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#API_FUNC_LED_COLOR_BRIGHTNESS" title="API_FUNC_LED_COLOR_BRIGHTNESS">API_FUNC_LED_COLOR_BRIGHTNESS</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
 </div>
 </td>
 </tr>
 <tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
 <div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">implemented</span></span></div>
 <div class="line"><span class="needs_api_signature"><span class="needs_label">api_signature: </span><span class="needs_data">led_color_t led_color_brightness(led_color_t color, uint8_t brightness)</span></span></div>
-<div class="line"><span class="needs_returns"><span class="needs_label">returns: </span><span class="needs_data">Color with applied brightness scaling</span></span></div>
-<div class="line"><span class="needs_parameters"><span class="needs_label">parameters: </span><span class="needs_data">color, brightness</span></span></div>
+<div class="line"><span class="needs_returns"><span class="needs_label">returns: </span><span class="needs_data">Color with applied brightness</span></span></div>
+<div class="line"><span class="needs_parameters"><span class="needs_label">parameters: </span><span class="needs_data">color (original color), brightness (0-255)</span></span></div>
 <div class="line"><span class="needs_component"><span class="needs_label">component: </span><span class="needs_data">API_COMP_LED_CONTROLLER</span></span></div>
 </span></span></div>
-<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_led_controller.html#REQ_LED_4" title="API_FUNC_LED_CONTROLLER_COLOR_BRIGHTNESS">REQ_LED_4</a></span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_led_controller.html#REQ_LED_4" title="API_FUNC_LED_COLOR_BRIGHTNESS">REQ_LED_4</a></span></span></div>
 </span></div>
 </div>
 </td>
 </tr>
-<tr class="need content row-odd"><td class="need content" colspan="1"><p>Apply brightness scaling to a color.</p>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p>Apply brightness scaling to a color. Scales all RGB components by brightness factor.</p>
 <p><strong>Signature:</strong></p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">led_color_t</span><span class="w"> </span><span class="nf">led_color_brightness</span><span class="p">(</span><span class="n">led_color_t</span><span class="w"> </span><span class="n">color</span><span class="p">,</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">brightness</span><span class="p">);</span>
 </pre></div>
@@ -757,10 +766,7 @@
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<ul class="simple">
-<li><p>See requirements: REQ_LED_4</p></li>
-<li><p>Uses integer math, no floating point</p></li>
-</ul>
+<p>Uses integer math for efficiency.</p>
 </div>
 </td>
 </tr>
@@ -768,24 +774,24 @@
 </table>
 </div>
 </section>
-<section id="configuration-status-functions">
-<h2>Configuration/Status Functions<a class="headerlink" href="#configuration-status-functions" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-d0156221">
-<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_LED_CONTROLLER_GET_COUNT">
+<section id="query-and-state-functions">
+<h2>Query and State Functions<a class="headerlink" href="#query-and-state-functions" title="Link to this heading">¶</a></h2>
+<div class="need_container docutils container" id="SNCB-7a9f2ef9">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_LED_GET_COUNT">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">API Function</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">led_get_count</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#API_FUNC_LED_CONTROLLER_GET_COUNT" title="API_FUNC_LED_CONTROLLER_GET_COUNT">API_FUNC_LED_CONTROLLER_GET_COUNT</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">API Function</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">led_get_count</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#API_FUNC_LED_GET_COUNT" title="API_FUNC_LED_GET_COUNT">API_FUNC_LED_GET_COUNT</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
 </div>
 </td>
 </tr>
 <tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
 <div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">implemented</span></span></div>
 <div class="line"><span class="needs_api_signature"><span class="needs_label">api_signature: </span><span class="needs_data">uint16_t led_get_count(void)</span></span></div>
-<div class="line"><span class="needs_returns"><span class="needs_label">returns: </span><span class="needs_data">Number of LEDs, or 0 if not initialized</span></span></div>
+<div class="line"><span class="needs_returns"><span class="needs_label">returns: </span><span class="needs_data">Number of LEDs or 0</span></span></div>
 <div class="line"><span class="needs_parameters"><span class="needs_label">parameters: </span><span class="needs_data">None</span></span></div>
 <div class="line"><span class="needs_component"><span class="needs_label">component: </span><span class="needs_data">API_COMP_LED_CONTROLLER</span></span></div>
 </span></span></div>
-<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_led_controller.html#REQ_LED_3" title="API_FUNC_LED_CONTROLLER_GET_COUNT">REQ_LED_3</a>, <span class="needs_dead_link forbidden">REQ_CFG_1</span></span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_led_controller.html#REQ_LED_3" title="API_FUNC_LED_GET_COUNT">REQ_LED_3</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -803,23 +809,16 @@
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">uint16_t</span></code> - Number of LEDs, or 0 if not initialized</p></li>
 </ul>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<ul class="simple">
-<li><p>See requirements: REQ_LED_3, REQ_CFG_1</p></li>
-<li><p>Returns value from configuration</p></li>
-</ul>
-</div>
 </td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-ded9c87f">
-<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_LED_CONTROLLER_IS_INITIALIZED">
+<div class="need_container docutils container" id="SNCB-a07d68dc">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_LED_IS_INITIALIZED">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">API Function</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">led_is_initialized</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#API_FUNC_LED_CONTROLLER_IS_INITIALIZED" title="API_FUNC_LED_CONTROLLER_IS_INITIALIZED">API_FUNC_LED_CONTROLLER_IS_INITIALIZED</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">API Function</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">led_is_initialized</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#API_FUNC_LED_IS_INITIALIZED" title="API_FUNC_LED_IS_INITIALIZED">API_FUNC_LED_IS_INITIALIZED</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
 </div>
 </td>
 </tr>
@@ -830,7 +829,7 @@
 <div class="line"><span class="needs_parameters"><span class="needs_label">parameters: </span><span class="needs_data">None</span></span></div>
 <div class="line"><span class="needs_component"><span class="needs_label">component: </span><span class="needs_data">API_COMP_LED_CONTROLLER</span></span></div>
 </span></span></div>
-<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_led_controller.html#REQ_LED_1" title="API_FUNC_LED_CONTROLLER_IS_INITIALIZED">REQ_LED_1</a></span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_led_controller.html#REQ_LED_1" title="API_FUNC_LED_IS_INITIALIZED">REQ_LED_1</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -846,102 +845,52 @@
 </ul>
 <p><strong>Returns:</strong></p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">true</span></code> - Initialized</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">true</span></code> - Controller initialized</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">false</span></code> - Not initialized</p></li>
 </ul>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<ul class="simple">
-<li><p>See requirements: REQ_LED_1</p></li>
-<li><p>Use before calling other API functions</p></li>
-</ul>
-</div>
 </td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-5c82a98e">
-<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_LED_CONTROLLER_GET_ALL_COLORS">
+<div class="need_container docutils container" id="SNCB-1771e675">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_LED_GET_ALL_COLORS">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">API Function</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">led_get_all_colors</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#API_FUNC_LED_CONTROLLER_GET_ALL_COLORS" title="API_FUNC_LED_CONTROLLER_GET_ALL_COLORS">API_FUNC_LED_CONTROLLER_GET_ALL_COLORS</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">API Function</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">led_get_all_colors</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#API_FUNC_LED_GET_ALL_COLORS" title="API_FUNC_LED_GET_ALL_COLORS">API_FUNC_LED_GET_ALL_COLORS</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
 </div>
 </td>
 </tr>
 <tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
 <div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">implemented</span></span></div>
 <div class="line"><span class="needs_api_signature"><span class="needs_label">api_signature: </span><span class="needs_data">uint16_t led_get_all_colors(led_color_t* output_buffer, uint16_t max_count)</span></span></div>
-<div class="line"><span class="needs_returns"><span class="needs_label">returns: </span><span class="needs_data">Number of LEDs copied, or 0 on error</span></span></div>
-<div class="line"><span class="needs_parameters"><span class="needs_label">parameters: </span><span class="needs_data">output_buffer, max_count</span></span></div>
+<div class="line"><span class="needs_returns"><span class="needs_label">returns: </span><span class="needs_data">Number of LEDs copied or 0</span></span></div>
+<div class="line"><span class="needs_parameters"><span class="needs_label">parameters: </span><span class="needs_data">output_buffer (buffer), max_count (buffer size)</span></span></div>
 <div class="line"><span class="needs_component"><span class="needs_label">component: </span><span class="needs_data">API_COMP_LED_CONTROLLER</span></span></div>
 </span></span></div>
-<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_led_controller.html#REQ_LED_5" title="API_FUNC_LED_CONTROLLER_GET_ALL_COLORS">REQ_LED_5</a></span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_led_controller.html#REQ_LED_5" title="API_FUNC_LED_GET_ALL_COLORS">REQ_LED_5</a></span></span></div>
 </span></div>
 </div>
 </td>
 </tr>
-<tr class="need content row-odd"><td class="need content" colspan="1"><p>Get snapshot of all LED colors (thread-safe, matches last led_show).</p>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p>Get snapshot of all LED colors (thread-safe). Returns stable snapshot matching last physical LED update.</p>
 <p><strong>Signature:</strong></p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">uint16_t</span><span class="w"> </span><span class="nf">led_get_all_colors</span><span class="p">(</span><span class="n">led_color_t</span><span class="o">*</span><span class="w"> </span><span class="n">output_buffer</span><span class="p">,</span><span class="w"> </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">max_count</span><span class="p">);</span>
 </pre></div>
 </div>
 <p><strong>Parameters:</strong></p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">output_buffer</span></code> - Buffer to receive LED colors (must be &gt;= led_count)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">max_count</span></code> - Maximum number of LEDs to copy</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">output_buffer</span></code> - Pointer to buffer to receive LED colors</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_count</span></code> - Maximum number of LEDs to copy (buffer size)</p></li>
 </ul>
 <p><strong>Returns:</strong></p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">uint16_t</span></code> - Number of LEDs copied, or 0 on error</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uint16_t</span></code> - Number of LEDs actually copied, or 0 on error</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<ul class="simple">
-<li><p>See requirements: REQ_LED_5</p></li>
-<li><p>Thread-safe, matches physical LED state</p></li>
-</ul>
+<p>Caller must allocate output_buffer with size &gt;= led_count * sizeof(led_color_t). Thread-safe, may block briefly. Returns snapshot matching physical LED state.</p>
 </div>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="data-types">
-<h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-2ff5aafb">
-<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apistruct docutils align-default" id="API_STRUCT_LED_COLOR">
-<tbody>
-<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">API Data Structure</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">led_color_t</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#API_STRUCT_LED_COLOR" title="API_STRUCT_LED_COLOR">API_STRUCT_LED_COLOR</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
-</div>
-</td>
-</tr>
-<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
-<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">implemented</span></span></div>
-<div class="line"><span class="needs_component"><span class="needs_label">component: </span><span class="needs_data">API_COMP_LED_CONTROLLER</span></span></div>
-</span></span></div>
-<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_led_controller.html#REQ_LED_4" title="API_STRUCT_LED_COLOR">REQ_LED_4</a></span></span></div>
-</span></div>
-</div>
-</td>
-</tr>
-<tr class="need content row-odd"><td class="need content" colspan="1"><p>RGB color structure for LED pixel color.</p>
-<p><strong>Definition:</strong></p>
-<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">red</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">green</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">blue</span><span class="p">;</span>
-<span class="p">}</span><span class="w"> </span><span class="n">led_color_t</span><span class="p">;</span>
-</pre></div>
-</div>
-<p><strong>Fields:</strong></p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">red</span></code> - Red component (0-255)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">green</span></code> - Green component (0-255)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">blue</span></code> - Blue component (0-255)</p></li>
-</ul>
 </td>
 </tr>
 </tbody>
@@ -1006,11 +955,11 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">LED Controller API</a><ul>
+<li><a class="reference internal" href="#data-types">Data Types</a></li>
 <li><a class="reference internal" href="#lifecycle-functions">Lifecycle Functions</a></li>
 <li><a class="reference internal" href="#pixel-control-functions">Pixel Control Functions</a></li>
-<li><a class="reference internal" href="#color-utility-functions">Color Utility Functions</a></li>
-<li><a class="reference internal" href="#configuration-status-functions">Configuration/Status Functions</a></li>
-<li><a class="reference internal" href="#data-types">Data Types</a></li>
+<li><a class="reference internal" href="#utility-functions">Utility Functions</a></li>
+<li><a class="reference internal" href="#query-and-state-functions">Query and State Functions</a></li>
 </ul>
 </li>
 </ul>
