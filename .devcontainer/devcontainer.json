@@ -63,5 +63,5 @@
 			]
 		}
 	},
-	"runArgs": ["--privileged", "--name", "esp-32-distance"]
+	"runArgs": ["--privileged", "--name", "esp-32-distance-devcontainer"]
 }
