@@ -4,5 +4,11 @@
   "python.analysis.diagnosticMode": "openFilesOnly",
   "python.terminal.activateEnvironment": false,
   "python-envs.pythonProjects": [],
-  "idf.flashType": "UART"
+  "idf.flashType": "UART",
+  "idf.cmakeCompilerArgs": [
+    "-DPROJECT_NAME=esp32-distance"
+  ],
+  "idf.buildPath": "${workspaceFolder}/build",
+  "idf.buildDirectoryName": "build",
+  "idf.projectName": "esp32-distance"
 }
