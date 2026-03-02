@@ -8,6 +8,7 @@ This guide covers all aspects of developing with the ESP32 Distance Sensor, from
    :caption: Development Topics:
 
    devcontainer
+   switching-dev-modes
    pre-commit-hooks
    qemu-emulator
    web-flasher
