@@ -61,6 +61,13 @@ html_css_files = [
 
 needs_types = [
     dict(
+        directive="story",
+        title="User Story",
+        prefix="US_",
+        color="#D4EDDA",
+        style="node"
+    ),
+    dict(
         directive="req",
         title="Requirement",
         prefix="REQ_",

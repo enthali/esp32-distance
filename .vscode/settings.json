@@ -4,5 +4,15 @@
   "python.analysis.diagnosticMode": "openFilesOnly",
   "python.terminal.activateEnvironment": false,
   "python-envs.pythonProjects": [],
-  "idf.flashType": "UART"
+  "idf.flashType": "UART",
+  "chat.promptFilesRecommendations": {
+    "syspilot.change": true,
+    "syspilot.implement": true,
+    "syspilot.verify": true,
+    "syspilot.mece": true,
+    "syspilot.trace": true,
+    "syspilot.memory": true,
+    "syspilot.setup": true,
+    "syspilot.release": true
+  }
 }

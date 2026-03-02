@@ -70,6 +70,7 @@ An ESP32-powered distance sensor that helps you park your car perfectly every ti
 
 **Requirements & Design:**
 
+* :doc:`10_userstories/index` - User stories (stakeholder needs and goals)
 * :doc:`11_requirements/index` - Formal system requirements (Sphinx-Needs)
 * :doc:`12_design/index` - Technical architecture and design specifications
 * :doc:`31_traceability/index` - Requirements-to-implementation traceability
@@ -128,6 +129,7 @@ All Requirements Overview
 
    01_overview/index
    05_workshop/index
+   10_userstories/index
    11_requirements/index
    12_design/index
    21_api/index
