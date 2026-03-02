@@ -5,18 +5,18 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Web Server Requirements" href="req_web_server.html"><link rel="prev" title="Requirements Documentation" href="index.html">
 
-    <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
         <title>System Requirements - ESP32 Distance Sensor</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/modern.css?v=803738c0" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2dda3639" />
@@ -251,6 +251,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../31_traceability/index.html">Traceability</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../90_guides/index.html">Development Guide</a><input aria-label="Toggle navigation of Development Guide" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/devcontainer.html">Development Container Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/switching-dev-modes.html">Switching Development Modes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/pre-commit-hooks.html">Pre-commit Hooks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/qemu-emulator.html">QEMU Emulator Guide</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/web-flasher.html">Web-Based Firmware Flashing</a></li>
@@ -304,7 +305,7 @@
 <p>This document contains high-level system requirements for the ESP32 Distance Sensor project.</p>
 <p><strong>Document Version</strong>: 2.0
 <strong>Last Updated</strong>: 2025-11-12</p>
-<div class="need_container docutils container" id="SNCB-f5712e35">
+<div class="need_container docutils container" id="SNCB-97b84c4f">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_SYS_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -341,7 +342,7 @@ Many home garages have limited space, and parking too close or too far can be pr
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-4b0272ac">
+<div class="need_container docutils container" id="SNCB-01e98d93">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_SYS_HW_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -374,7 +375,7 @@ ESP32 provides WiFi connectivity, sufficient processing power, and adequate flas
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-2daad46e">
+<div class="need_container docutils container" id="SNCB-e37b7e4d">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_SYS_NET_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -407,7 +408,7 @@ Enables web interface access and network configuration flexibility.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-405725f9">
+<div class="need_container docutils container" id="SNCB-20071266">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_SYS_WEB_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -441,7 +442,7 @@ User-friendly interface for system setup and operation without firmware recompil
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-5b97710c">
+<div class="need_container docutils container" id="SNCB-95fbc9c8">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_SYS_CFG_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -474,7 +475,7 @@ Maintains user settings and system configuration permanently.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-cc1f1cf6">
+<div class="need_container docutils container" id="SNCB-7d88f3d5">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_SYS_ARCH_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -507,7 +508,7 @@ Enables maintainability, testability, and reusability.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-f8e5ffd8">
+<div class="need_container docutils container" id="SNCB-83e2bcf1">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_SYS_REL_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -541,7 +542,7 @@ Ensures system reliability and user experience.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-cb5c7701">
+<div class="need_container docutils container" id="SNCB-00693b62">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_SYS_PERF_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -575,7 +576,7 @@ Prevents memory leaks and ensures stable operation.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-70611bbe">
+<div class="need_container docutils container" id="SNCB-4372f478">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_SYS_SIM_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -610,7 +611,7 @@ Enables development and testing without physical hardware, improves reproducibil
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-52e1dba4">
+<div class="need_container docutils container" id="SNCB-ffdcb555">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_SYS_SIM_2">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -647,7 +648,7 @@ Enables development and testing of web interfaces, WiFi configuration, and netwo
 </div>
 <section id="future-enhancements">
 <h2>Future Enhancements<a class="headerlink" href="#future-enhancements" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-e60c0b3a">
+<div class="need_container docutils container" id="SNCB-f79482bf">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_SYS_SEC_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -691,7 +692,7 @@ Encrypted communication protects sensitive data (WiFi passwords, configuration) 
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-19f97090">
+<div class="need_container docutils container" id="SNCB-24c35727">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_SYS_TIME_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -2239,8 +2240,8 @@ Accurate system time enables timestamped logs, scheduled tasks, and time-based s
 </div><script src="../_static/jquery.js?v=5d32c60e"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
     <script src="../_static/documentation_options.js?v=664ffad9"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
     <script src="../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
     <script src="../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>

@@ -5,18 +5,18 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="LED Controller Design Specification" href="spec_led_controller.html"><link rel="prev" title="Web Server Design Specification" href="spec_web_server.html">
 
-    <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
         <title>Distance Sensor Design Specification - ESP32 Distance Sensor</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/modern.css?v=803738c0" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2dda3639" />
@@ -251,6 +251,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../31_traceability/index.html">Traceability</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../90_guides/index.html">Development Guide</a><input aria-label="Toggle navigation of Development Guide" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/devcontainer.html">Development Container Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/switching-dev-modes.html">Switching Development Modes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/pre-commit-hooks.html">Pre-commit Hooks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/qemu-emulator.html">QEMU Emulator Guide</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/web-flasher.html">Web-Based Firmware Flashing</a></li>
@@ -313,7 +314,7 @@ filtered, validated measurements to consumers.</p>
 </section>
 <section id="architecture-specifications">
 <h2>Architecture Specifications<a class="headerlink" href="#architecture-specifications" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-472351b6">
+<div class="need_container docutils container" id="SNCB-83d37414">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_ARCH_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -347,7 +348,7 @@ consumers get processed measurements.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-9bfcf745">
+<div class="need_container docutils container" id="SNCB-0a7303e4">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_ARCH_2">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -378,7 +379,7 @@ consumers get processed measurements.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-e1df38be">
+<div class="need_container docutils container" id="SNCB-6c64ebcc">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_ISR_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -411,7 +412,7 @@ receives data.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-7edeb6fa">
+<div class="need_container docutils container" id="SNCB-e294bd60">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_TASK_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -447,7 +448,7 @@ processes raw data correctly.</p>
 </section>
 <section id="algorithm-specifications">
 <h2>Algorithm Specifications<a class="headerlink" href="#algorithm-specifications" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-d824baf5">
+<div class="need_container docutils container" id="SNCB-b2125ff5">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_ALGO_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -480,7 +481,7 @@ temperatures.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-8605e6d3">
+<div class="need_container docutils container" id="SNCB-20fd2c94">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_ALGO_2">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -516,7 +517,7 @@ temperatures.</p>
 </section>
 <section id="api-specifications">
 <h2>API Specifications<a class="headerlink" href="#api-specifications" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-b2f15714">
+<div class="need_container docutils container" id="SNCB-a2e0fc07">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_API_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -552,7 +553,7 @@ monitoring functions provide accurate metrics.</p>
 </section>
 <section id="error-handling-specifications">
 <h2>Error Handling Specifications<a class="headerlink" href="#error-handling-specifications" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-0c287dda">
+<div class="need_container docutils container" id="SNCB-c302ff4c">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_ERR_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -587,7 +588,7 @@ correctly, system continues operation.</p>
 </section>
 <section id="simulator-specification">
 <h2>Simulator Specification<a class="headerlink" href="#simulator-specification" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-0ab7e627">
+<div class="need_container docutils container" id="SNCB-b1c48430">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_SIM_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -731,8 +732,8 @@ measurements at ≈1Hz, and status codes match expectations.</p>
 </div><script src="../_static/jquery.js?v=5d32c60e"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
     <script src="../_static/documentation_options.js?v=664ffad9"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
     <script src="../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
     <script src="../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>

@@ -5,18 +5,18 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Configuration Webpage Design Specification" href="spec_config_webpage.html"><link rel="prev" title="High-Level Architecture Design Specification" href="spec_high_level_architecture.html">
 
-    <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
         <title>JSON-Based Configuration Manager Design - ESP32 Distance Sensor</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/modern.css?v=803738c0" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2dda3639" />
@@ -251,6 +251,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../31_traceability/index.html">Traceability</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../90_guides/index.html">Development Guide</a><input aria-label="Toggle navigation of Development Guide" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/devcontainer.html">Development Container Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/switching-dev-modes.html">Switching Development Modes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/pre-commit-hooks.html">Pre-commit Hooks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/qemu-emulator.html">QEMU Emulator Guide</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/web-flasher.html">Web-Based Firmware Flashing</a></li>
@@ -306,7 +307,7 @@
 <strong>Last Updated</strong>: 2025-11-12</p>
 <section id="architecture-overview">
 <h2>Architecture Overview<a class="headerlink" href="#architecture-overview" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-6ff2fd44">
+<div class="need_container docutils container" id="SNCB-3c3e51d3">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_CFG_JSON_ARCH_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -364,7 +365,7 @@
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-91a6df02">
+<div class="need_container docutils container" id="SNCB-ad0bb770">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_CFG_JSON_SOURCE_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -414,7 +415,7 @@
 </section>
 <section id="data-structure-design">
 <h2>Data Structure Design<a class="headerlink" href="#data-structure-design" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-f788c6cc">
+<div class="need_container docutils container" id="SNCB-78660282">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_CFG_JSON_SCHEMA_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -554,7 +555,7 @@
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-96fd7be9">
+<div class="need_container docutils container" id="SNCB-2e1cddab">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_CFG_JSON_CODEGEN_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -655,7 +656,7 @@
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-cd72700d">
+<div class="need_container docutils container" id="SNCB-65d049f0">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_CFG_JSON_STORAGE_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -721,7 +722,7 @@
 </section>
 <section id="nvs-access-layer-config-manager">
 <h2>NVS Access Layer (Config Manager)<a class="headerlink" href="#nvs-access-layer-config-manager" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-3fadb47f">
+<div class="need_container docutils container" id="SNCB-fe978139">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_CFG_JSON_API_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -806,7 +807,7 @@
 </section>
 <section id="web-interface-design">
 <h2>Web Interface Design<a class="headerlink" href="#web-interface-design" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-8d4324ad">
+<div class="need_container docutils container" id="SNCB-ef9824f9">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_CFG_JSON_UI_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -911,7 +912,7 @@
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-febbcf7d">
+<div class="need_container docutils container" id="SNCB-a517ccac">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_CFG_JSON_BULK_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -1031,7 +1032,7 @@
 </section>
 <section id="best-practices-development-guide">
 <h2>Best Practices &amp; Development Guide<a class="headerlink" href="#best-practices-development-guide" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-9b059f37">
+<div class="need_container docutils container" id="SNCB-c91b454e">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_CFG_JSON_EXTEND_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -1097,7 +1098,7 @@
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-eccaa30b">
+<div class="need_container docutils container" id="SNCB-ee8ac5a3">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_CFG_JSON_TYPESAFETY_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -2455,8 +2456,8 @@
 </div><script src="../_static/jquery.js?v=5d32c60e"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
     <script src="../_static/documentation_options.js?v=664ffad9"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
     <script src="../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
     <script src="../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>

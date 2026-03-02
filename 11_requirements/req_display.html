@@ -5,18 +5,18 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Startup Test Requirements" href="req_startup_test.html"><link rel="prev" title="LED Controller Requirements" href="req_led_controller.html">
 
-    <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
         <title>Display System Requirements - ESP32 Distance Sensor</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/modern.css?v=803738c0" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2dda3639" />
@@ -251,6 +251,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../31_traceability/index.html">Traceability</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../90_guides/index.html">Development Guide</a><input aria-label="Toggle navigation of Development Guide" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/devcontainer.html">Development Container Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/switching-dev-modes.html">Switching Development Modes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/pre-commit-hooks.html">Pre-commit Hooks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/qemu-emulator.html">QEMU Emulator Guide</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/web-flasher.html">Web-Based Firmware Flashing</a></li>
@@ -313,7 +314,7 @@ to guide optimal parking.</p>
 </section>
 <section id="system-overview-requirements">
 <h2>System Overview Requirements<a class="headerlink" href="#system-overview-requirements" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-3a523cbc">
+<div class="need_container docutils container" id="SNCB-55388125">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_DSP_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -354,7 +355,7 @@ of concerns.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-6f269095">
+<div class="need_container docutils container" id="SNCB-41158e35">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_DSP_2">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -400,7 +401,7 @@ fragmentation and performance degradation in the embedded environment.</p>
 </section>
 <section id="user-experience-requirements">
 <h2>User Experience Requirements<a class="headerlink" href="#user-experience-requirements" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-ff982041">
+<div class="need_container docutils container" id="SNCB-348d901e">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_DSP_3">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -440,7 +441,7 @@ separation of concerns.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-d65318b7">
+<div class="need_container docutils container" id="SNCB-6835674b">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_DSP_4">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -474,7 +475,7 @@ in red when too close provides immediate, unmistakable indication of dangerous p
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-7aca8110">
+<div class="need_container docutils container" id="SNCB-cc41bd71">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_DSP_5">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -639,8 +640,8 @@ LED in red when too far provides clear indication that the measurement is invali
 </div><script src="../_static/jquery.js?v=5d32c60e"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
     <script src="../_static/documentation_options.js?v=664ffad9"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
     <script src="../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
     <script src="../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>

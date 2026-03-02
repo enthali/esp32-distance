@@ -5,18 +5,18 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Distance Sensor Design Specification" href="spec_distance_sensor.html"><link rel="prev" title="Configuration Webpage Design Specification" href="spec_config_webpage.html">
 
-    <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
         <title>Web Server Design Specification - ESP32 Distance Sensor</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/modern.css?v=803738c0" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2dda3639" />
@@ -251,6 +251,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../31_traceability/index.html">Traceability</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../90_guides/index.html">Development Guide</a><input aria-label="Toggle navigation of Development Guide" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/devcontainer.html">Development Container Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/switching-dev-modes.html">Switching Development Modes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/pre-commit-hooks.html">Pre-commit Hooks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/qemu-emulator.html">QEMU Emulator Guide</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/web-flasher.html">Web-Based Firmware Flashing</a></li>
@@ -306,7 +307,7 @@
 <strong>Last Updated</strong>: 2025-11-12</p>
 <section id="architecture-overview">
 <h2>Architecture Overview<a class="headerlink" href="#architecture-overview" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-a296c171">
+<div class="need_container docutils container" id="SNCB-c0ee30e8">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_WEB_ARCH_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -382,7 +383,7 @@ Return HTTP 200 with success response
 </section>
 <section id="static-file-embedding">
 <h2>Static File Embedding<a class="headerlink" href="#static-file-embedding" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-9fada9a9">
+<div class="need_container docutils container" id="SNCB-6c7bfe0e">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_WEB_STATIC_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -488,7 +489,7 @@ Use ESP-IDF’s <code class="docutils literal notranslate"><span class="pre">EMB
 </section>
 <section id="uri-routing-and-handlers">
 <h2>URI Routing and Handlers<a class="headerlink" href="#uri-routing-and-handlers" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-2ccb8091">
+<div class="need_container docutils container" id="SNCB-252ab92a">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_WEB_ROUTES_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -711,7 +712,7 @@ Use ESP-IDF’s <code class="docutils literal notranslate"><span class="pre">EMB
 </section>
 <section id="configuration-api-design">
 <h2>Configuration API Design<a class="headerlink" href="#configuration-api-design" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-b1049253">
+<div class="need_container docutils container" id="SNCB-11f14c82">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_WEB_REST_CFG_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -908,7 +909,7 @@ The web server provides HTTP transport for configuration operations. All configu
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-19b25cfc">
+<div class="need_container docutils container" id="SNCB-b59b10d4">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_WEB_REST_WIFI_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -992,7 +993,7 @@ The web server provides HTTP transport for configuration operations. All configu
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-9ba9b129">
+<div class="need_container docutils container" id="SNCB-d2592b71">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_WEB_REST_HEALTH_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -1048,7 +1049,7 @@ The web server provides HTTP transport for configuration operations. All configu
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-557ab098">
+<div class="need_container docutils container" id="SNCB-f5dd549d">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_WEB_REST_LED_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -1141,7 +1142,7 @@ The web server provides HTTP transport for configuration operations. All configu
 </section>
 <section id="configuration-manager-integration">
 <h2>Configuration Manager Integration<a class="headerlink" href="#configuration-manager-integration" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-51ff4aa2">
+<div class="need_container docutils container" id="SNCB-76c8283a">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_WEB_INTEGRATION_CFG_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -1243,7 +1244,7 @@ The web server provides HTTP transport for configuration operations. All configu
 </section>
 <section id="wifi-manager-integration">
 <h2>WiFi Manager Integration<a class="headerlink" href="#wifi-manager-integration" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-307ddc62">
+<div class="need_container docutils container" id="SNCB-bcd8e46b">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_WEB_INTEGRATION_WIFI_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -1314,7 +1315,7 @@ The web server provides HTTP transport for configuration operations. All configu
 </section>
 <section id="captive-portal-implementation">
 <h2>Captive Portal Implementation<a class="headerlink" href="#captive-portal-implementation" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-1a4ae45e">
+<div class="need_container docutils container" id="SNCB-baedc337">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_WEB_CAPTIVE_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -1365,7 +1366,7 @@ The web server provides HTTP transport for configuration operations. All configu
 </section>
 <section id="server-configuration-and-lifecycle">
 <h2>Server Configuration and Lifecycle<a class="headerlink" href="#server-configuration-and-lifecycle" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-1c62e26e">
+<div class="need_container docutils container" id="SNCB-82a0a7fd">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_WEB_CONFIG_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -1465,7 +1466,7 @@ The web server provides HTTP transport for configuration operations. All configu
 </section>
 <section id="adding-new-pages-and-endpoints">
 <h2>Adding New Pages and Endpoints<a class="headerlink" href="#adding-new-pages-and-endpoints" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-fc498b81">
+<div class="need_container docutils container" id="SNCB-d2c2a7c6">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_WEB_EXTEND_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -1576,7 +1577,7 @@ The web server provides HTTP transport for configuration operations. All configu
 </section>
 <section id="cors-and-security">
 <h2>CORS and Security<a class="headerlink" href="#cors-and-security" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-073ef76a">
+<div class="need_container docutils container" id="SNCB-d06d9674">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_WEB_SECURITY_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -1644,7 +1645,7 @@ The web server provides HTTP transport for configuration operations. All configu
 </section>
 <section id="testing-and-debugging">
 <h2>Testing and Debugging<a class="headerlink" href="#testing-and-debugging" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-e58809b9">
+<div class="need_container docutils container" id="SNCB-b61200a0">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_WEB_TEST_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -3228,8 +3229,8 @@ I (5679) web_server: Found index.html, size: 4823
 </div><script src="../_static/jquery.js?v=5d32c60e"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
     <script src="../_static/documentation_options.js?v=664ffad9"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
     <script src="../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
     <script src="../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>

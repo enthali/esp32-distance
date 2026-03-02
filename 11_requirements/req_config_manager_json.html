@@ -5,18 +5,18 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Network Interface Tunnel Requirements" href="req_netif_tunnel.html"><link rel="prev" title="Web Server Requirements" href="req_web_server.html">
 
-    <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
         <title>JSON-Based Configuration Manager Requirements - ESP32 Distance Sensor</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/modern.css?v=803738c0" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2dda3639" />
@@ -251,6 +251,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../31_traceability/index.html">Traceability</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../90_guides/index.html">Development Guide</a><input aria-label="Toggle navigation of Development Guide" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/devcontainer.html">Development Container Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/switching-dev-modes.html">Switching Development Modes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/pre-commit-hooks.html">Pre-commit Hooks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/qemu-emulator.html">QEMU Emulator Guide</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/web-flasher.html">Web-Based Firmware Flashing</a></li>
@@ -310,7 +311,7 @@
 </section>
 <section id="configuration-schema-definition">
 <h2>Configuration Schema Definition<a class="headerlink" href="#configuration-schema-definition" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-8a8fa238">
+<div class="need_container docutils container" id="SNCB-21135c25">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_CFG_JSON_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -346,7 +347,7 @@ Single source of truth prevents duplication across C code, web forms, and docume
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-edf60977">
+<div class="need_container docutils container" id="SNCB-fcff33d7">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_CFG_JSON_2">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -381,7 +382,7 @@ Logical organization improves usability for configuration with many parameters.<
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-f8ed0aea">
+<div class="need_container docutils container" id="SNCB-8c1da2ca">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_CFG_JSON_3">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -420,7 +421,7 @@ Covers typical IoT configuration needs while remaining simple. Separate types en
 </section>
 <section id="configuration-generation-and-defaults">
 <h2>Configuration Generation and Defaults<a class="headerlink" href="#configuration-generation-and-defaults" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-5ecda751">
+<div class="need_container docutils container" id="SNCB-be1ee6ca">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_CFG_JSON_4">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -456,7 +457,7 @@ Eliminates manual default value maintenance in C code. Generated code is compile
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-d8f04fdd">
+<div class="need_container docutils container" id="SNCB-7846d00a">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_CFG_JSON_5">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -494,7 +495,7 @@ Eliminates runtime overhead and memory overhead of JSON parser on resource-const
 </section>
 <section id="nvs-storage-and-access">
 <h2>NVS Storage and Access<a class="headerlink" href="#nvs-storage-and-access" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-46e15828">
+<div class="need_container docutils container" id="SNCB-a5382a4a">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_CFG_JSON_6">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -529,7 +530,7 @@ Direct key usage simplifies storage format and eliminates need for separate UUID
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-0eb5d045">
+<div class="need_container docutils container" id="SNCB-e4d56c07">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_CFG_JSON_7">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -565,7 +566,7 @@ Type-specific functions enforce compile-time type checking via function signatur
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-5b894900">
+<div class="need_container docutils container" id="SNCB-1a0267bf">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_CFG_JSON_8">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -600,7 +601,7 @@ Ensures configuration survives power loss and system resets.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-77b74af5">
+<div class="need_container docutils container" id="SNCB-f57bb83b">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_CFG_JSON_9">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -638,7 +639,7 @@ Users need ability to recover from misconfiguration without firmware rebuild.</p
 </section>
 <section id="web-interface-integration">
 <h2>Web Interface Integration<a class="headerlink" href="#web-interface-integration" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-6e47d61c">
+<div class="need_container docutils container" id="SNCB-b2e22a4e">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_CFG_JSON_10">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -678,7 +679,7 @@ Detailed web interface requirements (HTML forms, REST API endpoints, validation)
 </section>
 <section id="error-handling">
 <h2>Error Handling<a class="headerlink" href="#error-handling" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-c5abf5b5">
+<div class="need_container docutils container" id="SNCB-88890585">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_CFG_JSON_11">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -713,7 +714,7 @@ NVS corruption or wear should not prevent system operation.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-7cbfa947">
+<div class="need_container docutils container" id="SNCB-cf341c3e">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_CFG_JSON_12">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -751,7 +752,7 @@ New devices need sensible defaults on first boot.</p>
 </section>
 <section id="development-guide">
 <h2>Development Guide<a class="headerlink" href="#development-guide" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-7f532b5e">
+<div class="need_container docutils container" id="SNCB-d8e65966">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_CFG_JSON_13">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -786,7 +787,7 @@ Low friction for extending configuration reduces development time.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-07949a16">
+<div class="need_container docutils container" id="SNCB-f4ac322b">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_CFG_JSON_14">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -825,7 +826,7 @@ Catches developer errors early without requiring code generation. Optional to ke
 </section>
 <section id="future-enhancements">
 <h2>Future Enhancements<a class="headerlink" href="#future-enhancements" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-79508d3a">
+<div class="need_container docutils container" id="SNCB-209e8943">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_CFG_JSON_15">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -2381,8 +2382,8 @@ As firmware evolves, configuration structure may change (new fields, renamed key
 </div><script src="../_static/jquery.js?v=5d32c60e"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
     <script src="../_static/documentation_options.js?v=664ffad9"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
     <script src="../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
     <script src="../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>

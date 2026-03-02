@@ -5,18 +5,18 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="JSON-Based Configuration Manager Design" href="spec_config_manager_json.html"><link rel="prev" title="Design Specifications" href="index.html">
 
-    <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
         <title>High-Level Architecture Design Specification - ESP32 Distance Sensor</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/modern.css?v=803738c0" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2dda3639" />
@@ -251,6 +251,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../31_traceability/index.html">Traceability</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../90_guides/index.html">Development Guide</a><input aria-label="Toggle navigation of Development Guide" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/devcontainer.html">Development Container Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/switching-dev-modes.html">Switching Development Modes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/pre-commit-hooks.html">Pre-commit Hooks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/qemu-emulator.html">QEMU Emulator Guide</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/web-flasher.html">Web-Based Firmware Flashing</a></li>
@@ -306,7 +307,7 @@
 <strong>Last Updated</strong>: 2025-11-12</p>
 <section id="architecture-overview">
 <h2>Architecture Overview<a class="headerlink" href="#architecture-overview" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-5d8fc494">
+<div class="need_container docutils container" id="SNCB-5e19f3d2">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_LAYERS_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -371,7 +372,7 @@
 </section>
 <section id="component-design-specifications">
 <h2>Component Design Specifications<a class="headerlink" href="#component-design-specifications" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-439ac0c0">
+<div class="need_container docutils container" id="SNCB-59f57634">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_CONFIG_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -405,7 +406,7 @@
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-8b1b2532">
+<div class="need_container docutils container" id="SNCB-3e55fb99">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_WEB_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -441,7 +442,7 @@
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-f05c656e">
+<div class="need_container docutils container" id="SNCB-bc5eea69">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_CERT_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -475,7 +476,7 @@
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-5a4964ed">
+<div class="need_container docutils container" id="SNCB-8754fd6c">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_NETIF_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -517,7 +518,7 @@
 </section>
 <section id="data-flow-architecture">
 <h2>Data Flow Architecture<a class="headerlink" href="#data-flow-architecture" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-66a19a37">
+<div class="need_container docutils container" id="SNCB-676d2caa">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_COMM_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -558,7 +559,7 @@ Hardware
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-92214509">
+<div class="need_container docutils container" id="SNCB-c9e08776">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_CONFIG_FLOW_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -590,7 +591,7 @@ Factory:   Factory Reset → Defaults → NVS → Cache
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-24e38d66">
+<div class="need_container docutils container" id="SNCB-097c1a62">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_WIFI_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -645,7 +646,7 @@ Factory:   Factory Reset → Defaults → NVS → Cache
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-c152d145">
+<div class="need_container docutils container" id="SNCB-e2b7d56a">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_HTTP_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -687,7 +688,7 @@ Factory:   Factory Reset → Defaults → NVS → Cache
 </section>
 <section id="qemu-emulation-architecture">
 <h2>QEMU Emulation Architecture<a class="headerlink" href="#qemu-emulation-architecture" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-de504eb2">
+<div class="need_container docutils container" id="SNCB-e15543fa">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_QEMU_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -735,7 +736,7 @@ Factory:   Factory Reset → Defaults → NVS → Cache
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-49f935aa">
+<div class="need_container docutils container" id="SNCB-7a715cd5">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_QEMU_BUILD_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -777,7 +778,7 @@ Factory:   Factory Reset → Defaults → NVS → Cache
 </section>
 <section id="threading-architecture">
 <h2>Threading Architecture<a class="headerlink" href="#threading-architecture" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-c2a73920">
+<div class="need_container docutils container" id="SNCB-41f9fe9f">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_TASKS_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -820,7 +821,7 @@ Core 1: WiFi/Network Stack (ESP-IDF managed)
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-13961269">
+<div class="need_container docutils container" id="SNCB-171665b7">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_MEMORY_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -860,7 +861,7 @@ Core 1: WiFi/Network Stack (ESP-IDF managed)
 </section>
 <section id="build-system-integration">
 <h2>Build System Integration<a class="headerlink" href="#build-system-integration" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-500abee8">
+<div class="need_container docutils container" id="SNCB-a17b2d28">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_BUILD_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -903,7 +904,7 @@ Core 1: WiFi/Network Stack (ESP-IDF managed)
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-97eaa13f">
+<div class="need_container docutils container" id="SNCB-b2a719fb">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_FLASH_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -944,7 +945,7 @@ factory     app   0x10000  ~3.8MB (firmware)
 </section>
 <section id="development-workflow-design">
 <h2>Development Workflow Design<a class="headerlink" href="#development-workflow-design" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-515d5b1e">
+<div class="need_container docutils container" id="SNCB-6180cfb4">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_CODESPACES_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -983,7 +984,7 @@ Build → Test in QEMU → Flash to Hardware
 </section>
 <section id="logging-and-diagnostics">
 <h2>Logging and Diagnostics<a class="headerlink" href="#logging-and-diagnostics" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-0b89e392">
+<div class="need_container docutils container" id="SNCB-a6995e5e">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_LOGGING_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -1043,7 +1044,7 @@ Build → Test in QEMU → Flash to Hardware
 </section>
 <section id="error-recovery-strategy">
 <h2>Error Recovery Strategy<a class="headerlink" href="#error-recovery-strategy" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-2ec5f6e4">
+<div class="need_container docutils container" id="SNCB-a155f609">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_ERROR_RECOVERY_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -1109,7 +1110,7 @@ Build → Test in QEMU → Flash to Hardware
 </section>
 <section id="performance-targets">
 <h2>Performance Targets<a class="headerlink" href="#performance-targets" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-3b269906">
+<div class="need_container docutils container" id="SNCB-ae2b777a">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_ARCH_PERF_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -2668,8 +2669,8 @@ Build → Test in QEMU → Flash to Hardware
 </div><script src="../_static/jquery.js?v=5d32c60e"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
     <script src="../_static/documentation_options.js?v=664ffad9"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
     <script src="../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
     <script src="../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>

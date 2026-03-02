@@ -5,18 +5,18 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Traceability" href="../31_traceability/index.html"><link rel="prev" title="Web Server API" href="api_web_server.html">
 
-    <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
         <title>WiFi Manager API - ESP32 Distance Sensor</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/modern.css?v=803738c0" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2dda3639" />
@@ -251,6 +251,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../31_traceability/index.html">Traceability</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../90_guides/index.html">Development Guide</a><input aria-label="Toggle navigation of Development Guide" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/devcontainer.html">Development Container Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/switching-dev-modes.html">Switching Development Modes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/pre-commit-hooks.html">Pre-commit Hooks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/qemu-emulator.html">QEMU Emulator Guide</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/web-flasher.html">Web-Based Firmware Flashing</a></li>
@@ -301,7 +302,7 @@
         <article role="main" id="furo-main-content">
           <section id="wifi-manager-api">
 <h1>WiFi Manager API<a class="headerlink" href="#wifi-manager-api" title="Link to this heading">¶</a></h1>
-<div class="need_container docutils container" id="SNCB-f30604c0">
+<div class="need_container docutils container" id="SNCB-5f4b0e0e">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apicomponent docutils align-default" id="API_COMP_WIFI_MGR">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -335,7 +336,7 @@ Manages WiFi connection state machine (AP/STA/Disconnected). Provides captive po
 </div>
 <section id="lifecycle-functions">
 <h2>Lifecycle Functions<a class="headerlink" href="#lifecycle-functions" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-45b6e022">
+<div class="need_container docutils container" id="SNCB-4f90a96f">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_WIFI_INIT">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -379,7 +380,7 @@ Manages WiFi connection state machine (AP/STA/Disconnected). Provides captive po
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-ab37d1bb">
+<div class="need_container docutils container" id="SNCB-56b3399c">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_WIFI_START">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -419,7 +420,7 @@ Manages WiFi connection state machine (AP/STA/Disconnected). Provides captive po
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-67e3dce4">
+<div class="need_container docutils container" id="SNCB-9a913c5d">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_WIFI_STOP">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -462,7 +463,7 @@ Manages WiFi connection state machine (AP/STA/Disconnected). Provides captive po
 </section>
 <section id="configuration-status-functions">
 <h2>Configuration/Status Functions<a class="headerlink" href="#configuration-status-functions" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-74a15bfc">
+<div class="need_container docutils container" id="SNCB-adb5f7b4">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_WIFI_GET_STATUS">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -502,7 +503,7 @@ Manages WiFi connection state machine (AP/STA/Disconnected). Provides captive po
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-4156e14e">
+<div class="need_container docutils container" id="SNCB-2ab2789c">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_WIFI_SET_CRED">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -542,7 +543,7 @@ Manages WiFi connection state machine (AP/STA/Disconnected). Provides captive po
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-8859ae76">
+<div class="need_container docutils container" id="SNCB-f05b6161">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_WIFI_CLEAR_CRED">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -581,7 +582,7 @@ Manages WiFi connection state machine (AP/STA/Disconnected). Provides captive po
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-34bb08b4">
+<div class="need_container docutils container" id="SNCB-77e37a89">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_WIFI_GET_IP">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -625,7 +626,7 @@ Manages WiFi connection state machine (AP/STA/Disconnected). Provides captive po
 </section>
 <section id="utility-functions">
 <h2>Utility Functions<a class="headerlink" href="#utility-functions" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-2a3a7811">
+<div class="need_container docutils container" id="SNCB-a651569c">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_WIFI_SWITCH_AP">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -664,7 +665,7 @@ Manages WiFi connection state machine (AP/STA/Disconnected). Provides captive po
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-635b904b">
+<div class="need_container docutils container" id="SNCB-e85ed799">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_WIFI_MONITOR">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -710,7 +711,7 @@ Manages WiFi connection state machine (AP/STA/Disconnected). Provides captive po
 </section>
 <section id="data-types">
 <h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-a769c9f2">
+<div class="need_container docutils container" id="SNCB-b1e7455e">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apistruct docutils align-default" id="API_STRUCT_WIFI_MODE">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -751,7 +752,7 @@ Manages WiFi connection state machine (AP/STA/Disconnected). Provides captive po
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-0757e0dc">
+<div class="need_container docutils container" id="SNCB-60973750">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apistruct docutils align-default" id="API_STRUCT_WIFI_CRED">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -786,7 +787,7 @@ Manages WiFi connection state machine (AP/STA/Disconnected). Provides captive po
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-d45af495">
+<div class="need_container docutils container" id="SNCB-419e365e">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apistruct docutils align-default" id="API_STRUCT_WIFI_STATUS">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -904,8 +905,8 @@ Manages WiFi connection state machine (AP/STA/Disconnected). Provides captive po
 </div><script src="../_static/jquery.js?v=5d32c60e"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
     <script src="../_static/documentation_options.js?v=664ffad9"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
     <script src="../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
     <script src="../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>
