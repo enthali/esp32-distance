@@ -44,11 +44,13 @@ This is a **template repository** designed to be:
 
 ### Documentation Structure
 
-- `docs/requirements/`: Sphinx-Needs requirements documentation
-  - [`README.md`](../docs/11_requirements/index.rst): Requirements documentation overview and navigation guide
-- `docs/`: Technical documentation using Sphinx-Needs methodology
-- `docs/design/*-design.md`: Technical architecture and system design
-- `docs/planning/Features-*.md`: Feature tracking and planning documents
+- `docs/11_requirements/`: Sphinx-Needs requirements – **read these before implementing features**
+- `docs/12_design/`: Component design specifications – **read the relevant spec before writing code**
+- `docs/21_api/`: Auto-generated API docs per component
+- `docs/90_guides/`: Developer guides (QEMU, flashing, switching dev modes, etc.)
+
+> **Rule**: If a behaviour is specified in a requirements or design document, implement exactly that.
+> Do **not** invent behaviour from general knowledge. When in doubt, check the relevant `.rst` files first and then consult with the user
 
 ## Development Guidelines
 
@@ -78,6 +80,15 @@ This is a **template repository** designed to be:
 - **Prefer stack allocation** for small, temporary variables
 - **Use IRAM_ATTR** sparingly and only when necessary
 
+### API Documentation – Always Use Context7 First
+
+Before writing or suggesting any FreeRTOS or ESP-IDF API calls, **always resolve the latest documentation via the context7 MCP server**:
+
+- **FreeRTOS API**: use context7 library ID `/freertos/freertos`
+- **ESP-IDF v5.4 API**: use context7 library ID `/websites/espressif_projects_esp-idf_en_v5_4_3_esp32c6`
+
+This ensures correct function signatures, return types, and parameters for the exact versions used in this project (ESP-IDF v5.4.1, FreeRTOS as bundled).
+
 ### ESP-IDF Best Practices
 
 - **Use component-based architecture** for new functionality
@@ -88,10 +99,9 @@ This is a **template repository** designed to be:
 
 ### Hardware-Specific Considerations
 
-- **GPIO pin assignments**: Document and validate pin usage in user's hardware configuration
-- **Timing constraints**: Be aware of peripheral timing requirements (RMT, I2C, SPI)
-- **Power management**: Consider current draw when adding peripherals
-- **Pin conflicts**: Check ESP32 strapping pins and boot mode pins
+- **Always document GPIO pin assignments** in the component or config header
+- **Check ESP32 strapping pins** to avoid boot mode conflicts
+- For all other hardware behaviour (timing, power, peripheral constraints): consult the relevant design spec in `docs/12_design/`
 
 ### Template-Specific Guidelines
 
@@ -140,28 +150,20 @@ This is a **template repository** designed to be:
 
 ### When Suggesting Code Changes
 
-1. **Always consider ESP32 memory constraints** when adding features
-2. **Maintain component-based architecture** - create new components instead of cluttering main.c
-3. **Use proper ESP-IDF error handling** and logging (ESP_ERROR_CHECK, ESP_LOG*)
-4. **Keep template minimal** - users should add their own application logic
-5. **Document everything** - this is a learning resource for ESP32 developers
+1. **Check requirements first** – read `docs/11_requirements/` for the relevant area before writing code
+2. **Check the design spec** – read `docs/12_design/` for the component before implementing
+3. **Maintain component-based architecture** – create new components instead of cluttering `main.c`
+4. **Use proper ESP-IDF error handling** and logging (`ESP_ERROR_CHECK`, `ESP_LOG*`)
+5. **Reference requirement IDs in comments** – e.g. `/* REQ_WEB_3 */` for traceability
 6. **Test in QEMU** when possible before suggesting hardware-specific code
-
-### When Working with Network Code
-
-1. **Handle WiFi disconnection gracefully** - implement reconnection logic
-2. **Use proper event handling** for WiFi and IP events
-3. **Consider both AP and STA modes** in networking code
-4. **Implement timeouts** for network operations
-5. **Test captive portal compatibility** across different devices
 
 ### When Users Ask About Template Usage
 
-1. **Guide them to customize main.c** - This is their entry point
-2. **Point to example components** - Show how to structure their code
-3. **Explain QEMU workflow** - Test without hardware first
-4. **Recommend Codespaces** - Best development experience
-5. **Reference Sphinx-Needs docs** - For requirements/design methodology
+1. **Guide them to customize main.c** – this is their entry point
+2. **Point to example components** – show how to structure their code
+3. **Explain QEMU workflow** – test without hardware first (see `docs/90_guides/switching-dev-modes.rst`)
+4. **Recommend Codespaces** – best development experience
+5. **Reference Sphinx-Needs docs** – for requirements/design methodology
 
 ## Quality Gates for Coding Agent
 
