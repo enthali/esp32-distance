@@ -48,8 +48,8 @@ G. **Commit with traceability** — Clean commit referencing the Change Document
 
 ## Workflow
 
-```text
-Change Document → Query Needs → Read Specs → Code → Completeness Check → Quality Gates → Update Docs → Commit
+```
+Change Document → Query Needs → Read Specs → Code → Tests → Run Tests → Update Docs → Commit
 ```
 
 ## Input Sources
@@ -142,48 +142,33 @@ main/components/<name>/
 - Use `esp_err_t` return types with proper error handling
 - Follow `.github/prompt-snippets/esp32-coding-standards.md`
 
-### 4. Implementation Completeness Check
+### 4. Test Implementation
 
-Before running quality gates, verify **every** requirement and acceptance criterion
-from the Change Document has been addressed. This is the most critical step —
-it prevents the Verify Agent from finding gaps that should have been caught here.
+Create tests that verify Requirements and their Acceptance Criteria:
 
-**Procedure:**
-
-1. Re-open the Change Document and list **every** REQ_* with its ACs
-2. For each AC, confirm there is corresponding code (function, handler, config, etc.)
-3. Check **modified** requirements too — new ACs added to existing REQs are easy to miss
-4. For each SPEC_*, confirm the implementation matches the design (enum names, trigger conditions, algorithms)
-
-**Create a checklist** (use todo list tool) with one item per requirement:
-
-```text
-☐ REQ_xxx_1: AC-1 ✓, AC-2 ✓, AC-3 ✓
-☐ REQ_xxx_2: AC-1 ✓, AC-2 ✗ ← MISSING — implement before proceeding
+```python
+class TestFeatureName:
+    """
+    Tests for REQ_xxx_1, REQ_xxx_2
+    """
+    
+    def test_acceptance_criteria_1(self):
+        """
+        Verifies: REQ_xxx_1 AC-1
+        """
+        # Test implementation
+        pass
+    
+    def test_acceptance_criteria_2(self):
+        """
+        Verifies: REQ_xxx_1 AC-2
+        """
+        pass
 ```
 
-**Common gaps to watch for:**
+### 5. Run Tests
 
-- Modified requirements with new ACs (e.g., REQ_WEB_1 gets a new AC-5 for temperature)
-- Design specs with multiple trigger conditions (e.g., SPEC says OUT_OF_RANGE *and* TIMEOUT)
-- Cross-component integration (e.g., web_server needs to call temp_sensor API)
-- Config keys that need to be added to schemas or factory defaults
-
-**Do NOT proceed to quality gates until every AC is covered.**
-
-### 5. Quality Gates
-
-Run quality checks in this order:
-
-#### a) Build
-
-```bash
-idf.py build
-```
-
-Build **must** pass before proceeding.
-
-#### b) Pre-commit checks
+Execute tests and ensure they pass:
 
 ```bash
 pre-commit run --all-files --show-diff-on-failure
@@ -198,7 +183,7 @@ This validates:
 
 **If any check fails**: Fix issues before proceeding.
 
-### 6. Update Documentation
+### 7. Update Documentation
 
 Update all user-facing documentation to reflect the changes:
 
@@ -207,7 +192,7 @@ Update all user-facing documentation to reflect the changes:
 - **Agent files** (`.github/agents/*.agent.md`) — Update if agent behavior changed
 - **copilot-instructions.md** — Update project memory if needed (or hand off to Memory Agent)
 
-### 7. Commit with Traceability
+### 8. Commit with Traceability
 
 Commit following the project's commit message format (see `.github/prompt-snippets/commit-message.md`):
 
