@@ -1,9 +1,12 @@
 ---
 description: Iterative level-based change analysis with persistent Change Document.
 handoffs:
-  - label: Implement Changes
+  - label: Implement Locally
     agent: syspilot.implement
-    prompt: Implement the approved changes from the Change Document
+    prompt: Implement the approved changes locally in the devcontainer
+  - label: Implement via Cloud Agent
+    agent: syspilot.implement-cloud
+    prompt: Create a GitHub Issue for the GH Coding Agent to implement the approved changes
   - label: MECE Analysis
     agent: syspilot.mece
     prompt: Check current level for MECE properties
