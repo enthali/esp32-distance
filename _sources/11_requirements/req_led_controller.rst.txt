@@ -71,7 +71,7 @@ Functional Requirements
 
    **Description:** The system SHALL support configurable LED strip lengths to accommodate 
    different hardware deployments and installation requirements. LED count is a user-configurable 
-   parameter managed by the configuration system (REQ_CFG_1).
+   parameter managed by the configuration system (REQ_CFG_JSON_1).
 
    **Rationale:** Different installations may use varying LED strip lengths; system must be 
    flexible for deployment scenarios. LED count is a user-facing parameter that affects system 

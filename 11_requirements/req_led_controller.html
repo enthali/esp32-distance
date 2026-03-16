@@ -218,6 +218,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_display.html">Distance Display User Story</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_setup.html">Setup User Story</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_reliable.html">Reliability User Story</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_developer.html">Developer User Stories</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Requirements Documentation</a><input aria-label="Toggle navigation of Requirements Documentation" checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
@@ -229,6 +230,7 @@
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">LED Controller Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="req_display.html">Display System Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="req_startup_test.html">Startup Test Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="req_developer_docs.html">Developer Documentation Requirements</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../12_design/index.html">Design Specifications</a><input aria-label="Toggle navigation of Design Specifications" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -240,6 +242,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../12_design/spec_led_controller.html">LED Controller Design Specification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../12_design/spec_display.html">Display System Design Specification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../12_design/spec_startup_test.html">Startup Test Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_netif_tunnel.html">UART Tunnel Network Interface Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_developer_docs.html">Supporting Documentation Design Specifications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_dev_environment.html">Development Environment Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_known_limitations.html">Known Limitations Structure Specification</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../21_api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -258,7 +264,6 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../90_guides/index.html">Development Guide</a><input aria-label="Toggle navigation of Development Guide" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/devcontainer.html">Development Container Setup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/switching-dev-modes.html">Switching Development Modes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../90_guides/pre-commit-hooks.html">Pre-commit Hooks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/qemu-emulator.html">QEMU Emulator Guide</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/web-flasher.html">Web-Based Firmware Flashing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/debugging.html">Debugging Guide</a></li>
@@ -319,7 +324,7 @@ visual distance display, supporting individual pixel control and configurable st
 </section>
 <section id="functional-requirements">
 <h2>Functional Requirements<a class="headerlink" href="#functional-requirements" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-a0086f02">
+<div class="need_container docutils container" id="SNCB-7072ad2d">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_LED_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -333,7 +338,7 @@ visual distance display, supporting individual pixel control and configurable st
 <div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">mandatory</span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="req_system.html#REQ_SYS_1" title="REQ_LED_1">REQ_SYS_1</a></span></span></div>
-<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY" title="REQ_LED_1">US_DISPLAY</a>, <a class="reference internal" href="req_display.html#REQ_DSP_1" title="REQ_LED_1">REQ_DSP_1</a>, <a class="reference internal" href="#REQ_LED_2" title="REQ_LED_1">REQ_LED_2</a>, <a class="reference internal" href="#REQ_LED_3" title="REQ_LED_1">REQ_LED_3</a>, <a class="reference internal" href="req_startup_test.html#REQ_STARTUP_1" title="REQ_LED_1">REQ_STARTUP_1</a>, <a class="reference internal" href="../12_design/spec_led_controller.html#SPEC_LED_ARCH_1" title="REQ_LED_1">SPEC_LED_ARCH_1</a>, <a class="reference internal" href="../12_design/spec_led_controller.html#SPEC_LED_TIMING_1" title="REQ_LED_1">SPEC_LED_TIMING_1</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_COMP_LED_CONTROLLER" title="REQ_LED_1">API_COMP_LED_CONTROLLER</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_FUNC_LED_CONTROLLER_INIT" title="REQ_LED_1">API_FUNC_LED_CONTROLLER_INIT</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_FUNC_LED_CONTROLLER_DEINIT" title="REQ_LED_1">API_FUNC_LED_CONTROLLER_DEINIT</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_FUNC_LED_IS_INITIALIZED" title="REQ_LED_1">API_FUNC_LED_IS_INITIALIZED</a>, <a class="reference internal" href="../21_api/api_startup_tests.html#API_COMP_STARTUP_TESTS" title="REQ_LED_1">API_COMP_STARTUP_TESTS</a></span></span></div>
+<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY_1" title="REQ_LED_1">US_DISPLAY_1</a>, <a class="reference internal" href="req_display.html#REQ_DSP_1" title="REQ_LED_1">REQ_DSP_1</a>, <a class="reference internal" href="#REQ_LED_2" title="REQ_LED_1">REQ_LED_2</a>, <a class="reference internal" href="#REQ_LED_3" title="REQ_LED_1">REQ_LED_3</a>, <a class="reference internal" href="req_startup_test.html#REQ_STARTUP_1" title="REQ_LED_1">REQ_STARTUP_1</a>, <a class="reference internal" href="../12_design/spec_developer_docs.html#SPEC_DEV_OV_HW_COMPONENTS" title="REQ_LED_1">SPEC_DEV_OV_HW_COMPONENTS</a>, <a class="reference internal" href="../12_design/spec_developer_docs.html#SPEC_DEV_OV_HW_PINS" title="REQ_LED_1">SPEC_DEV_OV_HW_PINS</a>, <a class="reference internal" href="../12_design/spec_led_controller.html#SPEC_LED_ARCH_1" title="REQ_LED_1">SPEC_LED_ARCH_1</a>, <a class="reference internal" href="../12_design/spec_led_controller.html#SPEC_LED_TIMING_1" title="REQ_LED_1">SPEC_LED_TIMING_1</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_COMP_LED_CONTROLLER" title="REQ_LED_1">API_COMP_LED_CONTROLLER</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_FUNC_LED_CONTROLLER_INIT" title="REQ_LED_1">API_FUNC_LED_CONTROLLER_INIT</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_FUNC_LED_CONTROLLER_DEINIT" title="REQ_LED_1">API_FUNC_LED_CONTROLLER_DEINIT</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_FUNC_LED_IS_INITIALIZED" title="REQ_LED_1">API_FUNC_LED_IS_INITIALIZED</a>, <a class="reference internal" href="../21_api/api_startup_tests.html#API_COMP_STARTUP_TESTS" title="REQ_LED_1">API_COMP_STARTUP_TESTS</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -356,7 +361,7 @@ expected colors.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-6393e5b1">
+<div class="need_container docutils container" id="SNCB-428d9eda">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_LED_2">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -370,7 +375,7 @@ expected colors.</p>
 <div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">mandatory</span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#REQ_LED_1" title="REQ_LED_2">REQ_LED_1</a></span></span></div>
-<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY" title="REQ_LED_2">US_DISPLAY</a>, <a class="reference internal" href="#REQ_LED_4" title="REQ_LED_2">REQ_LED_4</a>, <a class="reference internal" href="#REQ_LED_5" title="REQ_LED_2">REQ_LED_5</a>, <a class="reference internal" href="req_startup_test.html#REQ_STARTUP_2" title="REQ_LED_2">REQ_STARTUP_2</a>, <a class="reference internal" href="../12_design/spec_led_controller.html#SPEC_LED_ARCH_2" title="REQ_LED_2">SPEC_LED_ARCH_2</a>, <a class="reference internal" href="../12_design/spec_led_controller.html#SPEC_LED_API_1" title="REQ_LED_2">SPEC_LED_API_1</a>, <a class="reference internal" href="../12_design/spec_led_controller.html#SPEC_LED_API_2" title="REQ_LED_2">SPEC_LED_API_2</a>, <a class="reference internal" href="../12_design/spec_led_controller.html#SPEC_LED_ERR_1" title="REQ_LED_2">SPEC_LED_ERR_1</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_COMP_LED_CONTROLLER" title="REQ_LED_2">API_COMP_LED_CONTROLLER</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_STRUCT_LED_COLOR" title="REQ_LED_2">API_STRUCT_LED_COLOR</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_FUNC_LED_SET_PIXEL" title="REQ_LED_2">API_FUNC_LED_SET_PIXEL</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_FUNC_LED_CLEAR_PIXEL" title="REQ_LED_2">API_FUNC_LED_CLEAR_PIXEL</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_FUNC_LED_GET_PIXEL" title="REQ_LED_2">API_FUNC_LED_GET_PIXEL</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_FUNC_LED_CLEAR_ALL" title="REQ_LED_2">API_FUNC_LED_CLEAR_ALL</a>, <a class="reference internal" href="../21_api/api_startup_tests.html#API_COMP_STARTUP_TESTS" title="REQ_LED_2">API_COMP_STARTUP_TESTS</a>, <a class="reference internal" href="../21_api/api_startup_tests.html#API_FUNC_STARTUP_TESTS_SINGLE_CYCLE" title="REQ_LED_2">API_FUNC_STARTUP_TESTS_SINGLE_CYCLE</a>, <a class="reference internal" href="../21_api/api_startup_tests.html#API_FUNC_STARTUP_TESTS_MULTIPLE_CYCLES" title="REQ_LED_2">API_FUNC_STARTUP_TESTS_MULTIPLE_CYCLES</a>, <a class="reference internal" href="../21_api/api_startup_tests.html#API_FUNC_STARTUP_TESTS_RAINBOW" title="REQ_LED_2">API_FUNC_STARTUP_TESTS_RAINBOW</a></span></span></div>
+<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY_1" title="REQ_LED_2">US_DISPLAY_1</a>, <a class="reference internal" href="#REQ_LED_4" title="REQ_LED_2">REQ_LED_4</a>, <a class="reference internal" href="#REQ_LED_5" title="REQ_LED_2">REQ_LED_5</a>, <a class="reference internal" href="req_startup_test.html#REQ_STARTUP_2" title="REQ_LED_2">REQ_STARTUP_2</a>, <a class="reference internal" href="../12_design/spec_led_controller.html#SPEC_LED_ARCH_2" title="REQ_LED_2">SPEC_LED_ARCH_2</a>, <a class="reference internal" href="../12_design/spec_led_controller.html#SPEC_LED_API_1" title="REQ_LED_2">SPEC_LED_API_1</a>, <a class="reference internal" href="../12_design/spec_led_controller.html#SPEC_LED_API_2" title="REQ_LED_2">SPEC_LED_API_2</a>, <a class="reference internal" href="../12_design/spec_led_controller.html#SPEC_LED_ERR_1" title="REQ_LED_2">SPEC_LED_ERR_1</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_COMP_LED_CONTROLLER" title="REQ_LED_2">API_COMP_LED_CONTROLLER</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_STRUCT_LED_COLOR" title="REQ_LED_2">API_STRUCT_LED_COLOR</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_FUNC_LED_SET_PIXEL" title="REQ_LED_2">API_FUNC_LED_SET_PIXEL</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_FUNC_LED_CLEAR_PIXEL" title="REQ_LED_2">API_FUNC_LED_CLEAR_PIXEL</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_FUNC_LED_GET_PIXEL" title="REQ_LED_2">API_FUNC_LED_GET_PIXEL</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_FUNC_LED_CLEAR_ALL" title="REQ_LED_2">API_FUNC_LED_CLEAR_ALL</a>, <a class="reference internal" href="../21_api/api_startup_tests.html#API_COMP_STARTUP_TESTS" title="REQ_LED_2">API_COMP_STARTUP_TESTS</a>, <a class="reference internal" href="../21_api/api_startup_tests.html#API_FUNC_STARTUP_TESTS_SINGLE_CYCLE" title="REQ_LED_2">API_FUNC_STARTUP_TESTS_SINGLE_CYCLE</a>, <a class="reference internal" href="../21_api/api_startup_tests.html#API_FUNC_STARTUP_TESTS_MULTIPLE_CYCLES" title="REQ_LED_2">API_FUNC_STARTUP_TESTS_MULTIPLE_CYCLES</a>, <a class="reference internal" href="../21_api/api_startup_tests.html#API_FUNC_STARTUP_TESTS_RAINBOW" title="REQ_LED_2">API_FUNC_STARTUP_TESTS_RAINBOW</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -393,7 +398,7 @@ test clear all functionality.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-30846d3d">
+<div class="need_container docutils container" id="SNCB-743b94b3">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_LED_3">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -407,14 +412,14 @@ test clear all functionality.</p>
 <div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">mandatory</span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#REQ_LED_1" title="REQ_LED_3">REQ_LED_1</a>, <a class="reference internal" href="req_config_manager_json.html#REQ_CFG_JSON_7" title="REQ_LED_3">REQ_CFG_JSON_7</a></span></span></div>
-<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY" title="REQ_LED_3">US_DISPLAY</a>, <a class="reference internal" href="../12_design/spec_led_controller.html#SPEC_LED_ARCH_2" title="REQ_LED_3">SPEC_LED_ARCH_2</a>, <a class="reference internal" href="../12_design/spec_led_controller.html#SPEC_LED_MEM_1" title="REQ_LED_3">SPEC_LED_MEM_1</a>, <a class="reference internal" href="../12_design/spec_led_controller.html#SPEC_LED_ERR_1" title="REQ_LED_3">SPEC_LED_ERR_1</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_COMP_LED_CONTROLLER" title="REQ_LED_3">API_COMP_LED_CONTROLLER</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_FUNC_LED_CONTROLLER_INIT" title="REQ_LED_3">API_FUNC_LED_CONTROLLER_INIT</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_FUNC_LED_GET_COUNT" title="REQ_LED_3">API_FUNC_LED_GET_COUNT</a></span></span></div>
+<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY_1" title="REQ_LED_3">US_DISPLAY_1</a>, <a class="reference internal" href="../12_design/spec_led_controller.html#SPEC_LED_ARCH_2" title="REQ_LED_3">SPEC_LED_ARCH_2</a>, <a class="reference internal" href="../12_design/spec_led_controller.html#SPEC_LED_MEM_1" title="REQ_LED_3">SPEC_LED_MEM_1</a>, <a class="reference internal" href="../12_design/spec_led_controller.html#SPEC_LED_ERR_1" title="REQ_LED_3">SPEC_LED_ERR_1</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_COMP_LED_CONTROLLER" title="REQ_LED_3">API_COMP_LED_CONTROLLER</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_FUNC_LED_CONTROLLER_INIT" title="REQ_LED_3">API_FUNC_LED_CONTROLLER_INIT</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_FUNC_LED_GET_COUNT" title="REQ_LED_3">API_FUNC_LED_GET_COUNT</a></span></span></div>
 </span></div>
 </div>
 </td>
 </tr>
 <tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>Description:</strong> The system SHALL support configurable LED strip lengths to accommodate
 different hardware deployments and installation requirements. LED count is a user-configurable
-parameter managed by the configuration system (REQ_CFG_1).</p>
+parameter managed by the configuration system (REQ_CFG_JSON_1).</p>
 <p><strong>Rationale:</strong> Different installations may use varying LED strip lengths; system must be
 flexible for deployment scenarios. LED count is a user-facing parameter that affects system
 behavior and visual representation, therefore it belongs in centralized configuration management.</p>
@@ -433,7 +438,7 @@ and out-of-range access is prevented.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-1cad23bb">
+<div class="need_container docutils container" id="SNCB-c20dff83">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_LED_4">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -447,7 +452,7 @@ and out-of-range access is prevented.</p>
 <div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">mandatory</span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#REQ_LED_2" title="REQ_LED_4">REQ_LED_2</a></span></span></div>
-<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY" title="REQ_LED_4">US_DISPLAY</a>, <a class="reference internal" href="../12_design/spec_led_controller.html#SPEC_LED_API_2" title="REQ_LED_4">SPEC_LED_API_2</a>, <a class="reference internal" href="../12_design/spec_led_controller.html#SPEC_LED_DATA_1" title="REQ_LED_4">SPEC_LED_DATA_1</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_COMP_LED_CONTROLLER" title="REQ_LED_4">API_COMP_LED_CONTROLLER</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_STRUCT_LED_COLOR" title="REQ_LED_4">API_STRUCT_LED_COLOR</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_FUNC_LED_SET_PIXEL" title="REQ_LED_4">API_FUNC_LED_SET_PIXEL</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_FUNC_LED_GET_PIXEL" title="REQ_LED_4">API_FUNC_LED_GET_PIXEL</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_FUNC_LED_SHOW" title="REQ_LED_4">API_FUNC_LED_SHOW</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_FUNC_LED_COLOR_RGB" title="REQ_LED_4">API_FUNC_LED_COLOR_RGB</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_FUNC_LED_COLOR_BRIGHTNESS" title="REQ_LED_4">API_FUNC_LED_COLOR_BRIGHTNESS</a></span></span></div>
+<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY_1" title="REQ_LED_4">US_DISPLAY_1</a>, <a class="reference internal" href="../12_design/spec_led_controller.html#SPEC_LED_API_2" title="REQ_LED_4">SPEC_LED_API_2</a>, <a class="reference internal" href="../12_design/spec_led_controller.html#SPEC_LED_DATA_1" title="REQ_LED_4">SPEC_LED_DATA_1</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_COMP_LED_CONTROLLER" title="REQ_LED_4">API_COMP_LED_CONTROLLER</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_STRUCT_LED_COLOR" title="REQ_LED_4">API_STRUCT_LED_COLOR</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_FUNC_LED_SET_PIXEL" title="REQ_LED_4">API_FUNC_LED_SET_PIXEL</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_FUNC_LED_GET_PIXEL" title="REQ_LED_4">API_FUNC_LED_GET_PIXEL</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_FUNC_LED_SHOW" title="REQ_LED_4">API_FUNC_LED_SHOW</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_FUNC_LED_COLOR_RGB" title="REQ_LED_4">API_FUNC_LED_COLOR_RGB</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_FUNC_LED_COLOR_BRIGHTNESS" title="REQ_LED_4">API_FUNC_LED_COLOR_BRIGHTNESS</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -470,7 +475,7 @@ off state, measure color transition timing.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-4f14b7db">
+<div class="need_container docutils container" id="SNCB-f0c973ea">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_LED_5">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -484,7 +489,7 @@ off state, measure color transition timing.</p>
 <div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">important</span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#REQ_LED_2" title="REQ_LED_5">REQ_LED_2</a>, <a class="reference internal" href="req_web_server.html#REQ_WEB_1" title="REQ_LED_5">REQ_WEB_1</a></span></span></div>
-<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY" title="REQ_LED_5">US_DISPLAY</a>, <a class="reference internal" href="req_web_server.html#REQ_WEB_LED_1" title="REQ_LED_5">REQ_WEB_LED_1</a>, <a class="reference internal" href="../12_design/spec_led_controller.html#SPEC_LED_API_3" title="REQ_LED_5">SPEC_LED_API_3</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_COMP_LED_CONTROLLER" title="REQ_LED_5">API_COMP_LED_CONTROLLER</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_FUNC_LED_GET_ALL_COLORS" title="REQ_LED_5">API_FUNC_LED_GET_ALL_COLORS</a></span></span></div>
+<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY_1" title="REQ_LED_5">US_DISPLAY_1</a>, <a class="reference internal" href="req_web_server.html#REQ_WEB_LED_1" title="REQ_LED_5">REQ_WEB_LED_1</a>, <a class="reference internal" href="../12_design/spec_led_controller.html#SPEC_LED_API_3" title="REQ_LED_5">SPEC_LED_API_3</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_COMP_LED_CONTROLLER" title="REQ_LED_5">API_COMP_LED_CONTROLLER</a>, <a class="reference internal" href="../21_api/api_led_controller.html#API_FUNC_LED_GET_ALL_COLORS" title="REQ_LED_5">API_FUNC_LED_GET_ALL_COLORS</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -584,7 +589,7 @@ returned colors match physical LED state, test with various buffer sizes.</p>
   </div>
 </div><script src="../_static/jquery.js?v=5d32c60e"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="../_static/documentation_options.js?v=664ffad9"></script>
+    <script src="../_static/documentation_options.js?v=8d563738"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

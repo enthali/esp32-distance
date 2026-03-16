@@ -218,6 +218,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_display.html">Distance Display User Story</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_setup.html">Setup User Story</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_reliable.html">Reliability User Story</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_developer.html">Developer User Stories</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../11_requirements/index.html">Requirements Documentation</a><input aria-label="Toggle navigation of Requirements Documentation" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -229,6 +230,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_led_controller.html">LED Controller Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_display.html">Display System Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_startup_test.html">Startup Test Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_developer_docs.html">Developer Documentation Requirements</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../12_design/index.html">Design Specifications</a><input aria-label="Toggle navigation of Design Specifications" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -240,6 +242,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../12_design/spec_led_controller.html">LED Controller Design Specification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../12_design/spec_display.html">Display System Design Specification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../12_design/spec_startup_test.html">Startup Test Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_netif_tunnel.html">UART Tunnel Network Interface Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_developer_docs.html">Supporting Documentation Design Specifications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_dev_environment.html">Development Environment Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_known_limitations.html">Known Limitations Structure Specification</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
@@ -258,7 +264,6 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../90_guides/index.html">Development Guide</a><input aria-label="Toggle navigation of Development Guide" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/devcontainer.html">Development Container Setup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/switching-dev-modes.html">Switching Development Modes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../90_guides/pre-commit-hooks.html">Pre-commit Hooks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/qemu-emulator.html">QEMU Emulator Guide</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/web-flasher.html">Web-Based Firmware Flashing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/debugging.html">Debugging Guide</a></li>
@@ -308,7 +313,7 @@
         <article role="main" id="furo-main-content">
           <section id="config-manager-api">
 <h1>Config Manager API<a class="headerlink" href="#config-manager-api" title="Link to this heading">¶</a></h1>
-<div class="need_container docutils container" id="SNCB-bfa1089d">
+<div class="need_container docutils container" id="SNCB-da9d3feb">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apicomponent docutils align-default" id="API_COMP_CONFIG_MANAGER">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -349,7 +354,7 @@ auto-generated helper.</p>
 </div>
 <section id="lifecycle-functions">
 <h2>Lifecycle Functions<a class="headerlink" href="#lifecycle-functions" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-04197a6f">
+<div class="need_container docutils container" id="SNCB-8e4fc6f9">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_CONFIG_INIT">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -393,7 +398,7 @@ If the namespace is uninitialized, factory defaults are written.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-d0d48b78">
+<div class="need_container docutils container" id="SNCB-bed1adc1">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_CONFIG_FACTORY_RESET">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -437,7 +442,7 @@ namespace and writing generated defaults.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-9f0fecac">
+<div class="need_container docutils container" id="SNCB-0ed1e8cd">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_CONFIG_COMMIT">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -452,7 +457,8 @@ namespace and writing generated defaults.</p>
 <div class="line"><span class="needs_parameters"><span class="needs_label">parameters: </span><span class="needs_data">None</span></span></div>
 <div class="line"><span class="needs_component"><span class="needs_label">component: </span><span class="needs_data">API_COMP_CONFIG_MANAGER</span></span></div>
 </span></span></div>
-<div class="line"><span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_7" title="API_FUNC_CONFIG_COMMIT">REQ_CFG_JSON_7</a>, <a class="reference internal" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_8" title="API_FUNC_CONFIG_COMMIT">REQ_CFG_JSON_8</a></span></span></div>
+</span></div>
 </div>
 </td>
 </tr>
@@ -480,7 +486,7 @@ updates to batch flash writes.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-6b777c44">
+<div class="need_container docutils container" id="SNCB-01ff0125">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_CONFIG_WRITE_FACTORY_DEFAULTS">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -527,7 +533,7 @@ called directly by applications; use <code class="docutils literal notranslate">
 </section>
 <section id="string-parameter-access">
 <h2>String Parameter Access<a class="headerlink" href="#string-parameter-access" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-7ba7723d">
+<div class="need_container docutils container" id="SNCB-e460c915">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_CONFIG_GET_STRING">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -574,7 +580,7 @@ called directly by applications; use <code class="docutils literal notranslate">
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-df34cf2d">
+<div class="need_container docutils container" id="SNCB-afa4da08">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_CONFIG_SET_STRING">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -615,7 +621,7 @@ called directly by applications; use <code class="docutils literal notranslate">
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-b4a0d142">
+<div class="need_container docutils container" id="SNCB-280e7186">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_CONFIG_SET_STRING_NO_COMMIT">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -630,7 +636,8 @@ called directly by applications; use <code class="docutils literal notranslate">
 <div class="line"><span class="needs_parameters"><span class="needs_label">parameters: </span><span class="needs_data">Summary for metadata</span></span></div>
 <div class="line"><span class="needs_component"><span class="needs_label">component: </span><span class="needs_data">API_COMP_CONFIG_MANAGER</span></span></div>
 </span></span></div>
-<div class="line"><span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_7" title="API_FUNC_CONFIG_SET_STRING_NO_COMMIT">REQ_CFG_JSON_7</a></span></span></div>
+</span></div>
 </div>
 </td>
 </tr>
@@ -659,7 +666,7 @@ persist batched updates.</p>
 </section>
 <section id="integer-parameter-access">
 <h2>Integer Parameter Access<a class="headerlink" href="#integer-parameter-access" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-0efc910f">
+<div class="need_container docutils container" id="SNCB-2a473f84">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_CONFIG_GET_INT32">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -700,7 +707,7 @@ persist batched updates.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-59a50657">
+<div class="need_container docutils container" id="SNCB-8f1a95e6">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_CONFIG_SET_INT32">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -741,7 +748,7 @@ persist batched updates.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-3135344d">
+<div class="need_container docutils container" id="SNCB-36bb56ad">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_CONFIG_GET_INT16">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -782,7 +789,7 @@ persist batched updates.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-f4f01505">
+<div class="need_container docutils container" id="SNCB-95aba7dc">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_CONFIG_SET_INT16">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -823,7 +830,7 @@ persist batched updates.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-ee674c9c">
+<div class="need_container docutils container" id="SNCB-abc8e252">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_CONFIG_SET_INT16_NO_COMMIT">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -838,7 +845,8 @@ persist batched updates.</p>
 <div class="line"><span class="needs_parameters"><span class="needs_label">parameters: </span><span class="needs_data">Summary for metadata</span></span></div>
 <div class="line"><span class="needs_component"><span class="needs_label">component: </span><span class="needs_data">API_COMP_CONFIG_MANAGER</span></span></div>
 </span></span></div>
-<div class="line"><span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_7" title="API_FUNC_CONFIG_SET_INT16_NO_COMMIT">REQ_CFG_JSON_7</a></span></span></div>
+</span></div>
 </div>
 </td>
 </tr>
@@ -867,7 +875,7 @@ persist batched updates.</p>
 </section>
 <section id="boolean-parameter-access">
 <h2>Boolean Parameter Access<a class="headerlink" href="#boolean-parameter-access" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-0b041c79">
+<div class="need_container docutils container" id="SNCB-a5815219">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_CONFIG_GET_BOOL">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -908,7 +916,7 @@ persist batched updates.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-4291cc34">
+<div class="need_container docutils container" id="SNCB-31811ac9">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_CONFIG_SET_BOOL_NO_COMMIT">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -923,7 +931,8 @@ persist batched updates.</p>
 <div class="line"><span class="needs_parameters"><span class="needs_label">parameters: </span><span class="needs_data">Summary for metadata</span></span></div>
 <div class="line"><span class="needs_component"><span class="needs_label">component: </span><span class="needs_data">API_COMP_CONFIG_MANAGER</span></span></div>
 </span></span></div>
-<div class="line"><span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_7" title="API_FUNC_CONFIG_SET_BOOL_NO_COMMIT">REQ_CFG_JSON_7</a></span></span></div>
+</span></div>
 </div>
 </td>
 </tr>
@@ -949,7 +958,7 @@ to persist batched updates.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-67bf4621">
+<div class="need_container docutils container" id="SNCB-d23619aa">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_CONFIG_SET_BOOL">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -993,7 +1002,7 @@ to persist batched updates.</p>
 </section>
 <section id="bulk-json-configuration-api">
 <h2>Bulk JSON Configuration API<a class="headerlink" href="#bulk-json-configuration-api" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-7e11d6ec">
+<div class="need_container docutils container" id="SNCB-3fcf5f62">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_CONFIG_GET_SCHEMA_JSON">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -1034,7 +1043,7 @@ owned by the binary and must not be freed by the caller.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-8cecd252">
+<div class="need_container docutils container" id="SNCB-a871b1b5">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_CONFIG_GET_ALL_AS_JSON">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -1075,7 +1084,7 @@ configuration values. Caller must free the returned string.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-3314cbbe">
+<div class="need_container docutils container" id="SNCB-5a7368ae">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_CONFIG_SET_ALL_FROM_JSON">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -1195,7 +1204,7 @@ are ignored.</p>
   </div>
 </div><script src="../_static/jquery.js?v=5d32c60e"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="../_static/documentation_options.js?v=664ffad9"></script>
+    <script src="../_static/documentation_options.js?v=8d563738"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

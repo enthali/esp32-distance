@@ -218,6 +218,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_display.html">Distance Display User Story</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_setup.html">Setup User Story</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_reliable.html">Reliability User Story</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_developer.html">Developer User Stories</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../11_requirements/index.html">Requirements Documentation</a><input aria-label="Toggle navigation of Requirements Documentation" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -229,6 +230,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_led_controller.html">LED Controller Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_display.html">Display System Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_startup_test.html">Startup Test Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_developer_docs.html">Developer Documentation Requirements</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../12_design/index.html">Design Specifications</a><input aria-label="Toggle navigation of Design Specifications" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -240,6 +242,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../12_design/spec_led_controller.html">LED Controller Design Specification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../12_design/spec_display.html">Display System Design Specification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../12_design/spec_startup_test.html">Startup Test Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_netif_tunnel.html">UART Tunnel Network Interface Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_developer_docs.html">Supporting Documentation Design Specifications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_dev_environment.html">Development Environment Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_known_limitations.html">Known Limitations Structure Specification</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
@@ -258,7 +264,6 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../90_guides/index.html">Development Guide</a><input aria-label="Toggle navigation of Development Guide" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/devcontainer.html">Development Container Setup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/switching-dev-modes.html">Switching Development Modes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../90_guides/pre-commit-hooks.html">Pre-commit Hooks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/qemu-emulator.html">QEMU Emulator Guide</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/web-flasher.html">Web-Based Firmware Flashing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/debugging.html">Debugging Guide</a></li>
@@ -308,7 +313,7 @@
         <article role="main" id="furo-main-content">
           <section id="distance-sensor-api">
 <h1>Distance Sensor API<a class="headerlink" href="#distance-sensor-api" title="Link to this heading">¶</a></h1>
-<div class="need_container docutils container" id="SNCB-651a6aa9">
+<div class="need_container docutils container" id="SNCB-3a40ca23">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apicomponent docutils align-default" id="API_COMP_DISTANCE_SENSOR">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -350,7 +355,7 @@
 </div>
 <section id="lifecycle-functions">
 <h2>Lifecycle Functions<a class="headerlink" href="#lifecycle-functions" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-2c32fae1">
+<div class="need_container docutils container" id="SNCB-af5eb682">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_DISTANCE_SENSOR_INIT">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -399,7 +404,7 @@
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-7b3f236a">
+<div class="need_container docutils container" id="SNCB-78adbbe2">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_DISTANCE_SENSOR_START">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -444,7 +449,7 @@
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-96d3d52a">
+<div class="need_container docutils container" id="SNCB-d53fc9cc">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_DISTANCE_SENSOR_STOP">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -492,7 +497,7 @@
 </section>
 <section id="data-access-functions">
 <h2>Data Access Functions<a class="headerlink" href="#data-access-functions" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-58918758">
+<div class="need_container docutils container" id="SNCB-4bf09be7">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_DISTANCE_SENSOR_GET_LATEST">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -538,7 +543,7 @@
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-1b15e013">
+<div class="need_container docutils container" id="SNCB-c948947d">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_DISTANCE_SENSOR_HAS_NEW_MEASUREMENT">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -587,7 +592,7 @@
 </section>
 <section id="statistics-monitoring-functions">
 <h2>Statistics &amp; Monitoring Functions<a class="headerlink" href="#statistics-monitoring-functions" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-3caa9733">
+<div class="need_container docutils container" id="SNCB-09897e75">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_DISTANCE_SENSOR_GET_QUEUE_OVERFLOWS">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -632,7 +637,7 @@
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-a6733b85">
+<div class="need_container docutils container" id="SNCB-da159422">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_DISTANCE_SENSOR_MONITOR">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -677,7 +682,7 @@
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-b6a93f14">
+<div class="need_container docutils container" id="SNCB-a2cbde26">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apifunction docutils align-default" id="API_FUNC_DISTANCE_SENSOR_IS_RUNNING">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -726,7 +731,7 @@
 </section>
 <section id="data-types">
 <h2>Data Types<a class="headerlink" href="#data-types" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-259fbcb3">
+<div class="need_container docutils container" id="SNCB-fba2e3c7">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apistruct docutils align-default" id="API_STRUCT_DISTANCE_SENSOR_ERROR">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -767,7 +772,7 @@
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-a1a4aa04">
+<div class="need_container docutils container" id="SNCB-54fef957">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apistruct docutils align-default" id="API_STRUCT_DISTANCE_SENSOR_RAW_MEASUREMENT">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -804,7 +809,7 @@
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-4b09567a">
+<div class="need_container docutils container" id="SNCB-fb4b2a2b">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_apistruct docutils align-default" id="API_STRUCT_DISTANCE_SENSOR_MEASUREMENT">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -917,7 +922,7 @@
   </div>
 </div><script src="../_static/jquery.js?v=5d32c60e"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="../_static/documentation_options.js?v=664ffad9"></script>
+    <script src="../_static/documentation_options.js?v=8d563738"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

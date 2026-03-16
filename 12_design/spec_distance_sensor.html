@@ -218,6 +218,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_display.html">Distance Display User Story</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_setup.html">Setup User Story</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_reliable.html">Reliability User Story</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_developer.html">Developer User Stories</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../11_requirements/index.html">Requirements Documentation</a><input aria-label="Toggle navigation of Requirements Documentation" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -229,6 +230,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_led_controller.html">LED Controller Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_display.html">Display System Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_startup_test.html">Startup Test Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_developer_docs.html">Developer Documentation Requirements</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Design Specifications</a><input aria-label="Toggle navigation of Design Specifications" checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
@@ -240,6 +242,10 @@
 <li class="toctree-l2"><a class="reference internal" href="spec_led_controller.html">LED Controller Design Specification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spec_display.html">Display System Design Specification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spec_startup_test.html">Startup Test Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spec_netif_tunnel.html">UART Tunnel Network Interface Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spec_developer_docs.html">Supporting Documentation Design Specifications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spec_dev_environment.html">Development Environment Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spec_known_limitations.html">Known Limitations Structure Specification</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../21_api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -258,7 +264,6 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../90_guides/index.html">Development Guide</a><input aria-label="Toggle navigation of Development Guide" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/devcontainer.html">Development Container Setup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/switching-dev-modes.html">Switching Development Modes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../90_guides/pre-commit-hooks.html">Pre-commit Hooks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/qemu-emulator.html">QEMU Emulator Guide</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/web-flasher.html">Web-Based Firmware Flashing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/debugging.html">Debugging Guide</a></li>
@@ -320,7 +325,7 @@ filtered, validated measurements to consumers.</p>
 </section>
 <section id="architecture-specifications">
 <h2>Architecture Specifications<a class="headerlink" href="#architecture-specifications" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-86840774">
+<div class="need_container docutils container" id="SNCB-4145e9ef">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_ARCH_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -332,7 +337,7 @@ filtered, validated measurements to consumers.</p>
 <div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">approved</span></span></div>
 <div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">sensor</span><span class="needs_spacer">, </span><span class="needs_data">architecture</span><span class="needs_spacer">, </span><span class="needs_data">real-time</span></span></span></div>
 </span></span></div>
-<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_distance_sensor.html#REQ_SNS_3" title="SPEC_SNS_ARCH_1">REQ_SNS_3</a>, <a class="reference internal" href="../11_requirements/req_distance_sensor.html#REQ_SNS_4" title="SPEC_SNS_ARCH_1">REQ_SNS_4</a>, <a class="reference internal" href="../11_requirements/req_distance_sensor.html#REQ_SNS_8" title="SPEC_SNS_ARCH_1">REQ_SNS_8</a></span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_distance_sensor.html#REQ_SNS_3" title="SPEC_SNS_ARCH_1">REQ_SNS_3</a>, <a class="reference internal" href="../11_requirements/req_distance_sensor.html#REQ_SNS_4" title="SPEC_SNS_ARCH_1">REQ_SNS_4</a>, <a class="reference internal" href="../11_requirements/req_distance_sensor.html#REQ_SNS_8" title="SPEC_SNS_ARCH_1">REQ_SNS_8</a>, <a class="reference internal" href="../11_requirements/req_distance_sensor.html#REQ_SNS_9" title="SPEC_SNS_ARCH_1">REQ_SNS_9</a></span></span></div>
 <div class="line">links incoming: <span class="links"><span><a class="reference internal" href="#SPEC_SNS_SIM_1" title="SPEC_SNS_ARCH_1">SPEC_SNS_SIM_1</a></span></span></div>
 </span></div>
 </div>
@@ -354,7 +359,7 @@ consumers get processed measurements.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-89e15bc4">
+<div class="need_container docutils container" id="SNCB-205e86df">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_ARCH_2">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -385,7 +390,7 @@ consumers get processed measurements.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-c90f9038">
+<div class="need_container docutils container" id="SNCB-cdc39d46">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_ISR_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -418,7 +423,7 @@ receives data.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-431eb09a">
+<div class="need_container docutils container" id="SNCB-3681d9cb">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_TASK_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -430,7 +435,7 @@ receives data.</p>
 <div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">approved</span></span></div>
 <div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">sensor</span><span class="needs_spacer">, </span><span class="needs_data">freertos</span><span class="needs_spacer">, </span><span class="needs_data">task</span></span></span></div>
 </span></span></div>
-<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_distance_sensor.html#REQ_SNS_4" title="SPEC_SNS_TASK_1">REQ_SNS_4</a>, <a class="reference internal" href="../11_requirements/req_distance_sensor.html#REQ_SNS_6" title="SPEC_SNS_TASK_1">REQ_SNS_6</a>, <a class="reference internal" href="../11_requirements/req_distance_sensor.html#REQ_SNS_10" title="SPEC_SNS_TASK_1">REQ_SNS_10</a></span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_distance_sensor.html#REQ_SNS_4" title="SPEC_SNS_TASK_1">REQ_SNS_4</a>, <a class="reference internal" href="../11_requirements/req_distance_sensor.html#REQ_SNS_6" title="SPEC_SNS_TASK_1">REQ_SNS_6</a>, <a class="reference internal" href="../11_requirements/req_distance_sensor.html#REQ_SNS_9" title="SPEC_SNS_TASK_1">REQ_SNS_9</a>, <a class="reference internal" href="../11_requirements/req_distance_sensor.html#REQ_SNS_10" title="SPEC_SNS_TASK_1">REQ_SNS_10</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -454,7 +459,7 @@ processes raw data correctly.</p>
 </section>
 <section id="algorithm-specifications">
 <h2>Algorithm Specifications<a class="headerlink" href="#algorithm-specifications" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-2a20405a">
+<div class="need_container docutils container" id="SNCB-1aa89cd8">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_ALGO_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -487,7 +492,7 @@ temperatures.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-91af7a26">
+<div class="need_container docutils container" id="SNCB-f6926d61">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_ALGO_2">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -523,7 +528,7 @@ temperatures.</p>
 </section>
 <section id="api-specifications">
 <h2>API Specifications<a class="headerlink" href="#api-specifications" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-60dfcaa9">
+<div class="need_container docutils container" id="SNCB-131465e9">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_API_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -559,7 +564,7 @@ monitoring functions provide accurate metrics.</p>
 </section>
 <section id="error-handling-specifications">
 <h2>Error Handling Specifications<a class="headerlink" href="#error-handling-specifications" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-1c7b5506">
+<div class="need_container docutils container" id="SNCB-a315d06d">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_ERR_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -594,7 +599,7 @@ correctly, system continues operation.</p>
 </section>
 <section id="simulator-specification">
 <h2>Simulator Specification<a class="headerlink" href="#simulator-specification" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-498f3fb3">
+<div class="need_container docutils container" id="SNCB-bf568509">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_SNS_SIM_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -737,7 +742,7 @@ measurements at ≈1Hz, and status codes match expectations.</p>
   </div>
 </div><script src="../_static/jquery.js?v=5d32c60e"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="../_static/documentation_options.js?v=664ffad9"></script>
+    <script src="../_static/documentation_options.js?v=8d563738"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

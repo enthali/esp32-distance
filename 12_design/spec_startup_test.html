@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="API Reference" href="../21_api/index.html"><link rel="prev" title="Display System Design Specification" href="spec_display.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="UART Tunnel Network Interface Design Specification" href="spec_netif_tunnel.html"><link rel="prev" title="Display System Design Specification" href="spec_display.html">
 
     <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
         <title>Startup Test Design Specification - ESP32 Distance Sensor</title>
@@ -218,6 +218,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_display.html">Distance Display User Story</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_setup.html">Setup User Story</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_reliable.html">Reliability User Story</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_developer.html">Developer User Stories</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../11_requirements/index.html">Requirements Documentation</a><input aria-label="Toggle navigation of Requirements Documentation" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -229,6 +230,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_led_controller.html">LED Controller Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_display.html">Display System Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_startup_test.html">Startup Test Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_developer_docs.html">Developer Documentation Requirements</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Design Specifications</a><input aria-label="Toggle navigation of Design Specifications" checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
@@ -240,6 +242,10 @@
 <li class="toctree-l2"><a class="reference internal" href="spec_led_controller.html">LED Controller Design Specification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spec_display.html">Display System Design Specification</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Startup Test Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spec_netif_tunnel.html">UART Tunnel Network Interface Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spec_developer_docs.html">Supporting Documentation Design Specifications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spec_dev_environment.html">Development Environment Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spec_known_limitations.html">Known Limitations Structure Specification</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../21_api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -258,7 +264,6 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../90_guides/index.html">Development Guide</a><input aria-label="Toggle navigation of Development Guide" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/devcontainer.html">Development Container Setup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/switching-dev-modes.html">Switching Development Modes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../90_guides/pre-commit-hooks.html">Pre-commit Hooks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/qemu-emulator.html">QEMU Emulator Guide</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/web-flasher.html">Web-Based Firmware Flashing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/debugging.html">Debugging Guide</a></li>
@@ -320,7 +325,7 @@ LEDs are functional.</p>
 </section>
 <section id="integration-architecture">
 <h2>Integration Architecture<a class="headerlink" href="#integration-architecture" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-84b46231">
+<div class="need_container docutils container" id="SNCB-ee67278a">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_STARTUP_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -359,7 +364,7 @@ LEDs are functional.</p>
 </section>
 <section id="test-algorithm">
 <h2>Test Algorithm<a class="headerlink" href="#test-algorithm" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-670dd01c">
+<div class="need_container docutils container" id="SNCB-aa5a5c88">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_STARTUP_2">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -419,7 +424,7 @@ LEDs are functional.</p>
 </section>
 <section id="startup-integration">
 <h2>Startup Integration<a class="headerlink" href="#startup-integration" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-8a0e7313">
+<div class="need_container docutils container" id="SNCB-2e4fe6bf">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_STARTUP_3">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -480,7 +485,7 @@ LEDs are functional.</p>
 </section>
 <section id="component-structure">
 <h2>Component Structure<a class="headerlink" href="#component-structure" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-883dfdf5">
+<div class="need_container docutils container" id="SNCB-898c99e2">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_STARTUP_4">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -532,12 +537,12 @@ patterns available for diagnostics.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../21_api/index.html">
+          <a class="next-page" href="spec_netif_tunnel.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">API Reference</div>
+                <div class="title">UART Tunnel Network Interface Design Specification</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -601,7 +606,7 @@ patterns available for diagnostics.</p>
   </div>
 </div><script src="../_static/jquery.js?v=5d32c60e"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="../_static/documentation_options.js?v=664ffad9"></script>
+    <script src="../_static/documentation_options.js?v=8d563738"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

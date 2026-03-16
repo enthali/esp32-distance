@@ -1,0 +1,1256 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html">
+
+    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
+        <title>Change Document: netif-tunnel-spec - ESP32 Distance Sensor</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/modern.css?v=803738c0" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2dda3639" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">ESP32 Distance Sensor</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <span class="sidebar-brand-text">ESP32 Distance Sensor</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../01_overview/index.html">Project Overview</a><input aria-label="Toggle navigation of Project Overview" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../01_overview/introduction.html">Project Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_overview/hardware.html">Hardware Specifications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01_overview/quick-start.html">Quick Start Guide</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../05_workshop/index.html">Workshop Overview</a><input aria-label="Toggle navigation of Workshop Overview" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../05_workshop/prerequisites.html">Workshop Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_workshop/getting-started.html">Getting Started with the Workshop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_workshop/hardware-setup.html">Hardware Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05_workshop/exercises.html">Workshop Exercises</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../10_userstories/index.html">User Stories</a><input aria-label="Toggle navigation of User Stories" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_display.html">Distance Display User Story</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_setup.html">Setup User Story</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_reliable.html">Reliability User Story</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_developer.html">Developer User Stories</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../11_requirements/index.html">Requirements Documentation</a><input aria-label="Toggle navigation of Requirements Documentation" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_system.html">System Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_web_server.html">Web Server Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_config_manager_json.html">JSON-Based Configuration Manager Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_netif_tunnel.html">Network Interface Tunnel Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_distance_sensor.html">Distance Sensor Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_led_controller.html">LED Controller Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_display.html">Display System Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_startup_test.html">Startup Test Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_developer_docs.html">Developer Documentation Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../12_design/index.html">Design Specifications</a><input aria-label="Toggle navigation of Design Specifications" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_high_level_architecture.html">High-Level Architecture Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_config_manager_json.html">JSON-Based Configuration Manager Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_config_webpage.html">Configuration Webpage Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_web_server.html">Web Server Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_distance_sensor.html">Distance Sensor Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_led_controller.html">LED Controller Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_display.html">Display System Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_startup_test.html">Startup Test Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_netif_tunnel.html">UART Tunnel Network Interface Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_developer_docs.html">Supporting Documentation Design Specifications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_dev_environment.html">Development Environment Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_known_limitations.html">Known Limitations Structure Specification</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../21_api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_config_manager.html">Config Manager API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_led_controller.html">LED Controller API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_distance_sensor.html">Distance Sensor API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_display_logic.html">Display Logic API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_startup_tests.html">Startup Tests API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_netif_uart_tunnel.html">Network Tunnel API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_cert_handler.html">Certificate Handler API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_web_server.html">Web Server API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../21_api/api_wifi_manager.html">WiFi Manager API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../31_traceability/index.html">Traceability</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../90_guides/index.html">Development Guide</a><input aria-label="Toggle navigation of Development Guide" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/devcontainer.html">Development Container Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/switching-dev-modes.html">Switching Development Modes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/qemu-emulator.html">QEMU Emulator Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/web-flasher.html">Web-Based Firmware Flashing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/debugging.html">Debugging Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/qemu-network-internals.html">QEMU Network Internals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../90_guides/known-issues.html">Known Issues and Limitations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../legal/impressum.html">Impressum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../legal/datenschutz.html">Datenschutzerklärung</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/changes/netif-tunnel-spec.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="change-document-netif-tunnel-spec">
+<h1>Change Document: netif-tunnel-spec<a class="headerlink" href="#change-document-netif-tunnel-spec" title="Link to this heading">¶</a></h1>
+<p><strong>Status</strong>: in-progress
+<strong>Branch</strong>: feature/netif-tunnel-spec
+<strong>Created</strong>: 2025-03-16
+<strong>Author</strong>: syspilot Change Agent</p>
+<hr class="docutils" />
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">¶</a></h2>
+<p>Documentation catch-up task: Create <code class="docutils literal notranslate"><span class="pre">docs/12_design/spec_netif_tunnel.rst</span></code> to fill the
+MECE gap G-1 identified in design analysis. The <code class="docutils literal notranslate"><span class="pre">netif_uart_tunnel</span></code> component has been
+running in production without any component-level design spec. The code is stable; this
+change documents what is already implemented.</p>
+<p><strong>Scope</strong>: New design spec file + index update. No code changes. No new requirements.
+No new user stories.</p>
+<p><strong>Gap</strong>: 8 requirements (<code class="docutils literal notranslate"><span class="pre">REQ_NETIF_TUNNEL_1</span></code> through <code class="docutils literal notranslate"><span class="pre">REQ_NETIF_TUNNEL_NF_2</span></code> and
+<code class="docutils literal notranslate"><span class="pre">REQ_NETIF_TUNNEL_DOC_1</span></code>) are not covered by any SPEC. The only existing coverage is
+<code class="docutils literal notranslate"><span class="pre">SPEC_ARCH_NETIF_1</span></code> (high-level component overview in <code class="docutils literal notranslate"><span class="pre">spec_high_level_architecture.rst</span></code>),
+which is intentionally brief and does not constitute a component-level design spec.</p>
+</section>
+<hr class="docutils" />
+<section id="level-0-user-stories">
+<h2>Level 0: User Stories<a class="headerlink" href="#level-0-user-stories" title="Link to this heading">¶</a></h2>
+<p><strong>Status</strong>: ✅ completed</p>
+<section id="analysis">
+<h3>Analysis<a class="headerlink" href="#analysis" title="Link to this heading">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">netif_uart_tunnel</span></code> component serves developers testing in QEMU emulation — not
+end users. The three existing user stories (<code class="docutils literal notranslate"><span class="pre">US_SETUP_1</span></code>, <code class="docutils literal notranslate"><span class="pre">US_RELIABLE_1</span></code>,
+<code class="docutils literal notranslate"><span class="pre">US_DISPLAY_1</span></code>) are all end-user facing (garage user / maker). None link to
+<code class="docutils literal notranslate"><span class="pre">REQ_SYS_SIM_1</span></code> or <code class="docutils literal notranslate"><span class="pre">REQ_SYS_SIM_2</span></code>.</p>
+<p>The system requirements <code class="docutils literal notranslate"><span class="pre">REQ_SYS_SIM_1</span></code> (Emulator Support) and <code class="docutils literal notranslate"><span class="pre">REQ_SYS_SIM_2</span></code>
+(Emulator Network Connectivity) sit in <code class="docutils literal notranslate"><span class="pre">req_system.rst</span></code> without explicit US links —
+they represent an implicit developer/contributor story.</p>
+</section>
+<section id="impacted-user-stories">
+<h3>Impacted User Stories<a class="headerlink" href="#impacted-user-stories" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Title</p></th>
+<th class="head"><p>Impact</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><em>(none)</em></p></td>
+<td><p>—</p></td>
+<td><p>none</p></td>
+<td><p>This is a documentation task for a developer-facing component. No end-user story is impacted.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="decision-no-new-user-story-needed">
+<h3>Decision: No new User Story needed<a class="headerlink" href="#decision-no-new-user-story-needed" title="Link to this heading">¶</a></h3>
+<p><strong>Rationale:</strong> The missing spec documents an internal developer tool (QEMU emulation
+bridge). The existing implicit requirement chain
+<code class="docutils literal notranslate"><span class="pre">REQ_SYS_SIM_1</span> <span class="pre">→</span> <span class="pre">REQ_SYS_SIM_2</span> <span class="pre">→</span> <span class="pre">REQ_NETIF_TUNNEL_*</span></code> is sufficient. Adding a new
+User Story for “a developer wants QEMU emulation” would be valid but is out of scope
+for this gap-filling task. The MECE analysis flagged missing SPEC coverage, not missing
+User Story coverage.</p>
+<p><strong>Horizontal Check (MECE):</strong></p>
+<ul class="simple">
+<li><p>✅ No contradictions with existing User Stories</p></li>
+<li><p>✅ No redundancies — existing US are end-user focused, this component is developer tooling</p></li>
+<li><p>✅ Gap acknowledged and deliberately deferred: a <code class="docutils literal notranslate"><span class="pre">US_DEV_SIM</span></code> story could be added
+in a future change if the project adopts developer personas in US scope</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="level-1-requirements">
+<h2>Level 1: Requirements<a class="headerlink" href="#level-1-requirements" title="Link to this heading">¶</a></h2>
+<p><strong>Status</strong>: ✅ completed</p>
+<section id="impacted-requirements-existing-all-approved-no-changes-needed">
+<h3>Impacted Requirements (existing, all approved — no changes needed)<a class="headerlink" href="#impacted-requirements-existing-all-approved-no-changes-needed" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Title</p></th>
+<th class="head"><p>Impact</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>REQ_NETIF_TUNNEL_1</p></td>
+<td><p>QEMU UART Network Bridge</p></td>
+<td><p>covered by new SPEC</p></td>
+<td><p>Will be linked from SPEC_NETIF_UART_ARCH_1</p></td>
+</tr>
+<tr class="row-odd"><td><p>REQ_NETIF_TUNNEL_2</p></td>
+<td><p>Packet Encapsulation</p></td>
+<td><p>covered by new SPEC</p></td>
+<td><p>Will be linked from SPEC_NETIF_UART_PROTO_1</p></td>
+</tr>
+<tr class="row-even"><td><p>REQ_NETIF_TUNNEL_3</p></td>
+<td><p>Host-Side Bridge Script</p></td>
+<td><p>covered by new SPEC</p></td>
+<td><p>Will be linked from SPEC_NETIF_UART_BRIDGE_1</p></td>
+</tr>
+<tr class="row-odd"><td><p>REQ_NETIF_TUNNEL_4</p></td>
+<td><p>DHCP Client Support</p></td>
+<td><p>covered by new SPEC</p></td>
+<td><p>Will be linked from SPEC_NETIF_UART_DHCP_1</p></td>
+</tr>
+<tr class="row-even"><td><p>REQ_NETIF_TUNNEL_5</p></td>
+<td><p>Conditional Compilation</p></td>
+<td><p>covered by new SPEC</p></td>
+<td><p>Will be linked from SPEC_NETIF_UART_COND_1</p></td>
+</tr>
+<tr class="row-odd"><td><p>REQ_NETIF_TUNNEL_DOC_1</p></td>
+<td><p>Emulation Setup Documentation</p></td>
+<td><p>covered by new SPEC</p></td>
+<td><p>Will be linked from SPEC_NETIF_UART_DOC_1</p></td>
+</tr>
+<tr class="row-even"><td><p>REQ_NETIF_TUNNEL_NF_1</p></td>
+<td><p>Tunnel Throughput</p></td>
+<td><p>covered by new SPEC</p></td>
+<td><p>Will be linked from SPEC_NETIF_UART_PERF_1</p></td>
+</tr>
+<tr class="row-odd"><td><p>REQ_NETIF_TUNNEL_NF_2</p></td>
+<td><p>Packet Loss Handling</p></td>
+<td><p>covered by new SPEC</p></td>
+<td><p>Will be linked from SPEC_NETIF_UART_PERF_1</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="no-new-requirements">
+<h3>No new Requirements<a class="headerlink" href="#no-new-requirements" title="Link to this heading">¶</a></h3>
+<p>All requirements already exist and are approved. This is a documentation catch-up — not
+a design change.</p>
+</section>
+<section id="horizontal-check-mece">
+<h3>Horizontal Check (MECE)<a class="headerlink" href="#horizontal-check-mece" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>✅ No contradictions with existing Requirements</p></li>
+<li><p>✅ No redundancies — REQs are already approved</p></li>
+<li><p>✅ All 8 uncovered REQs will be addressed by new SPECs</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="level-2-design">
+<h2>Level 2: Design<a class="headerlink" href="#level-2-design" title="Link to this heading">¶</a></h2>
+<p><strong>Status</strong>: ✅ completed</p>
+<section id="impacted-design-elements">
+<h3>Impacted Design Elements<a class="headerlink" href="#impacted-design-elements" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Title</p></th>
+<th class="head"><p>Impact</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>SPEC_ARCH_NETIF_1</p></td>
+<td><p>UART Tunnel Netif Component (arch overview)</p></td>
+<td><p>no change needed</p></td>
+<td><p>Already approved; new spec_netif_tunnel.rst provides component detail</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="new-design-elements">
+<h3>New Design Elements<a class="headerlink" href="#new-design-elements" title="Link to this heading">¶</a></h3>
+<p>All SPECs are derived from code review of:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">main/components/netif_uart_tunnel/netif_uart_tunnel_sim.c</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">main/components/netif_uart_tunnel/netif_uart_tunnel_sim.h</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tools/qemu/network/serial_tun_bridge.py</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">main/components/netif_uart_tunnel/README.md</span></code></p></li>
+</ul>
+<section id="spec-netif-uart-arch-1-component-architecture">
+<h4>SPEC_NETIF_UART_ARCH_1 — Component Architecture<a class="headerlink" href="#spec-netif-uart-arch-1-component-architecture" title="Link to this heading">¶</a></h4>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">spec</span><span class="p">::</span> UART Tunnel Component Architecture
+   <span class="nc">:id:</span> SPEC_NETIF_UART_ARCH_1
+   <span class="nc">:links:</span> REQ_NETIF_TUNNEL_1, REQ_NETIF_TUNNEL_5
+   <span class="nc">:status:</span> approved
+   <span class="nc">:tags:</span> netif, qemu, uart, architecture
+
+   <span class="gs">**Description:**</span> The <span class="s">``netif_uart_tunnel``</span> component implements a lwIP network interface
+   that tunnels IP packets over UART1, providing full TCP/IP stack functionality in QEMU
+   emulation. The component is conditionally compiled only for <span class="s">``CONFIG_IDF_TARGET_ESP32_QEMU``</span>
+   targets.
+
+   <span class="gs">**Component Location:**</span> <span class="s">``main/components/netif_uart_tunnel/``</span>
+
+   <span class="gs">**Key Files:**</span>
+
+   <span class="m">-</span> <span class="s">``netif_uart_tunnel_sim.c``</span> — Implementation (<span class="s">``_sim``</span> suffix marks simulator-only)
+   <span class="m">-</span> <span class="s">``netif_uart_tunnel_sim.h``</span> — Public API
+   <span class="m">-</span> <span class="s">``CMakeLists.txt``</span> — Build integration
+
+   <span class="gs">**Threading Model:**</span>
+
+   <span class="m">-</span> <span class="s">``uart_rx_task``</span> (FreeRTOS task, priority 2, stack 4096 bytes): reads UART1 frames
+     and injects into lwIP via <span class="s">``esp_netif_receive``</span>
+   <span class="m">-</span> TX path: lwIP calls <span class="s">``netif_linkoutput``</span> synchronously in <span class="s">``tcpip_thread``</span> context
+
+   <span class="gs">**Data Flow:**</span>
+
+<span class="p">   ..</span> <span class="ow">code-block</span><span class="p">::</span> <span class="k">text</span>
+
+      ┌─────────────────────────────────────────────────────────┐
+      │  ESP32 (QEMU)                                           │
+      │  Application → lwIP → etharp_output → netif_linkoutput │
+      │                                         │               │
+      │                                       UART1 TX (GPIO17) │
+      └─────────────────────────────────────────────────────────┘
+               ↕  Unix socket (temp/esp32-uart1.sock)
+      ┌─────────────────────────────────────────────────────────┐
+      │  Host (Linux)                                           │
+      │  serial_tun_bridge.py                                   │
+      │  UART socket ↔ TUN device (tun0)                       │
+      │  tun0: 192.168.100.1/24                                 │
+      └─────────────────────────────────────────────────────────┘
+
+   <span class="gs">**UART Configuration (hardcoded in implementation):**</span>
+
+   <span class="m">-</span> Port: UART1
+   <span class="m">-</span> TX pin: GPIO17, RX pin: GPIO16
+   <span class="m">-</span> Baud rate: 115200
+   <span class="m">-</span> Buffer: 2048 bytes (RX and TX)
+
+   <span class="gs">**Network Configuration (default):**</span>
+
+   <span class="m">-</span> ESP32 IP: 192.168.100.2
+   <span class="m">-</span> Gateway/Host: 192.168.100.1
+   <span class="m">-</span> Netmask: 255.255.255.0
+   <span class="m">-</span> ESP32 MAC: 02:00:00:00:00:02 (static, assigned in init)
+
+   <span class="gs">**Known Limitation:**</span> This component is QEMU-only. It MUST NOT be linked in hardware
+   builds. See <span class="s">``SPEC_NETIF_UART_COND_1``</span> for build guard details.
+</pre></div>
+</div>
+</section>
+<section id="spec-netif-uart-proto-1-wire-protocol-length-prefix-framing">
+<h4>SPEC_NETIF_UART_PROTO_1 — Wire Protocol (Length-Prefix Framing)<a class="headerlink" href="#spec-netif-uart-proto-1-wire-protocol-length-prefix-framing" title="Link to this heading">¶</a></h4>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">spec</span><span class="p">::</span> UART Wire Protocol — Length-Prefix Framing
+   <span class="nc">:id:</span> SPEC_NETIF_UART_PROTO_1
+   <span class="nc">:links:</span> REQ_NETIF_TUNNEL_2, REQ_NETIF_TUNNEL_NF_2
+   <span class="nc">:status:</span> approved
+   <span class="nc">:tags:</span> netif, qemu, protocol, framing
+
+   <span class="gs">**Description:**</span> IP packets (wrapped in Ethernet frames) are transported over UART1
+   using a simple 2-byte length-prefix framing protocol.
+
+   <span class="gs">**Frame Format:**</span>
+
+<span class="p">   ..</span> <span class="ow">code-block</span><span class="p">::</span> <span class="k">text</span>
+
+      ┌─────────────────┬────────────────────────────────────┐
+      │  LENGTH (2 B)   │  DATA (N bytes, Ethernet frame)    │
+      │  big-endian     │  N = 14 (eth hdr) + IP payload     │
+      │  uint16_t       │  max N = 1500 bytes (MTU)          │
+      └─────────────────┴────────────────────────────────────┘
+
+   <span class="gs">**Ethernet Encapsulation:**</span>
+
+   The DATA field is a complete Ethernet frame (not raw IP). lwIP operates as an
+   Ethernet interface (<span class="s">``NETIF_FLAG_ETHARP | NETIF_FLAG_ETHERNET``</span>), so it produces
+   and consumes full Ethernet frames including the 14-byte header.
+
+   The Python bridge strips/adds the 14-byte Ethernet header when interfacing with
+   the TUN device (which handles raw IP packets).
+
+   <span class="gs">**Framing Rules:**</span>
+
+   <span class="m">-</span> LENGTH is transmitted as 2 bytes, big-endian, immediately before DATA
+   <span class="m">-</span> LENGTH encodes the byte count of DATA only (not including the 2-byte header itself)
+   <span class="m">-</span> Receiver MUST read exactly 2 bytes for LENGTH, then exactly LENGTH bytes for DATA
+   <span class="m">-</span> Frames with <span class="s">``LENGTH == 0``</span> or <span class="s">``LENGTH &gt; 1500``</span> are invalid; receiver MUST flush
+     UART and resync
+   <span class="m">-</span> No checksum or CRC — TCP handles end-to-end integrity
+
+   <span class="gs">**TX Path (ESP32 → Host):**</span>
+
+   <span class="m">1.</span> lwIP calls <span class="s">``netif_linkoutput``</span> with pbuf chain
+   <span class="m">2.</span> pbuf chain is copied into contiguous <span class="s">``frame_buf``</span> via <span class="s">``pbuf_copy_partial``</span>
+   <span class="m">3.</span> 2-byte length header is written to UART1 via <span class="s">``uart_write_bytes``</span>
+   <span class="m">4.</span> Frame data is written to UART1 via <span class="s">``uart_write_bytes``</span>
+   <span class="m">5.</span> <span class="s">``frame_buf``</span> is freed
+
+   <span class="gs">**RX Path (Host → ESP32):**</span>
+
+   <span class="m">1.</span> <span class="s">``uart_rx_task``</span> reads 2-byte length header with <span class="s">``UART_READ_TIMEOUT_MS = 100 ms``</span>
+   <span class="m">2.</span> Reads LENGTH bytes of frame data with 1 s timeout
+   <span class="m">3.</span> Passes frame to lwIP via <span class="s">``esp_netif_receive``</span>
+   <span class="m">4.</span> lwIP calls <span class="s">``tcpip_input``</span> → processes Ethernet frame
+
+   <span class="gs">**Error Recovery:**</span>
+
+   <span class="m">-</span> Invalid LENGTH: log warning, <span class="s">``uart_flush()``</span>, delay 100 ms, retry
+   <span class="m">-</span> Incomplete frame data (timeout): log warning, discard, retry
+   <span class="m">-</span> No data within timeout: <span class="s">``vTaskDelay(10 ms)``</span>, retry (avoids busy-loop)
+</pre></div>
+</div>
+</section>
+<section id="spec-netif-uart-bridge-1-host-side-python-bridge">
+<h4>SPEC_NETIF_UART_BRIDGE_1 — Host-Side Python Bridge<a class="headerlink" href="#spec-netif-uart-bridge-1-host-side-python-bridge" title="Link to this heading">¶</a></h4>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">spec</span><span class="p">::</span> Host-Side Serial-TUN Bridge Script
+   <span class="nc">:id:</span> SPEC_NETIF_UART_BRIDGE_1
+   <span class="nc">:links:</span> REQ_NETIF_TUNNEL_3, REQ_NETIF_TUNNEL_DOC_1
+   <span class="nc">:status:</span> approved
+   <span class="nc">:tags:</span> netif, qemu, python, bridge, tooling
+
+   <span class="gs">**Description:**</span> <span class="s">``tools/qemu/network/serial_tun_bridge.py``</span> is the host-side
+   component that bridges QEMU UART1 to the Linux TUN network device, giving the
+   simulated ESP32 real network connectivity.
+
+   <span class="gs">**Script Location:**</span> <span class="s">``tools/qemu/network/serial_tun_bridge.py``</span>
+
+   <span class="gs">**Prerequisites:**</span>
+
+   <span class="m">-</span> Linux host (TUN device creation requires <span class="s">``/dev/net/tun``</span>)
+   <span class="m">-</span> Root privileges (for TUN device ioctl)
+   <span class="m">-</span> Python ≥ 3.8
+   <span class="m">-</span> Optional: <span class="s">``pytun``</span> package (falls back to manual <span class="s">``ioctl``</span> if absent)
+
+   <span class="gs">**Architecture:**</span>
+
+<span class="p">   ..</span> <span class="ow">code-block</span><span class="p">::</span> <span class="k">text</span>
+
+      QEMU UART1 (Unix socket at temp/esp32-uart1.sock)
+           ↕ Ethernet frames with length-prefix
+      SerialTunBridge.serial_to_tun() / tun_to_serial()
+           ↕ Raw IP packets (Ethernet header stripped/added)
+      TUN device tun0 (192.168.100.1/24)
+           ↕
+      Linux host network stack
+
+   <span class="gs">**TUN Device:**</span>
+
+   <span class="m">-</span> Name: <span class="s">``tun0``</span>
+   <span class="m">-</span> Host IP: <span class="s">``192.168.100.1``</span>
+   <span class="m">-</span> Netmask: <span class="s">``255.255.255.0``</span>
+   <span class="m">-</span> MTU: 1500 bytes
+   <span class="m">-</span> Mode: IFF_TUN (raw IP, no packet info header)
+
+   <span class="gs">**Ethernet/IP Translation:**</span>
+
+   <span class="m">-</span> <span class="gs">**serial → TUN**</span>: Strip 14-byte Ethernet header, write raw IP to TUN
+   <span class="m">-</span> <span class="gs">**TUN → serial**</span>: Read raw IP, prepend Ethernet header
+     (DST=<span class="s">``02:00:00:00:00:02``</span>, SRC=<span class="s">``02:00:00:00:00:01``</span>, EtherType=0x0800),
+     send framed Ethernet frame to serial socket
+
+   <span class="gs">**Socket Connection:**</span>
+
+   <span class="m">-</span> QEMU exposes UART1 as a Unix domain socket at <span class="s">``{PROJECT_DIR}/temp/esp32-uart1.sock``</span>
+   <span class="m">-</span> Bridge connects via <span class="s">``AF_UNIX / SOCK_STREAM``</span>
+   <span class="m">-</span> Auto-reconnects if socket disappears (QEMU restart)
+
+   <span class="gs">**Execution Modes:**</span>
+
+   <span class="m">-</span> Default (verbose): <span class="s">``sudo python3 serial_tun_bridge.py``</span> — INFO logs to console
+   <span class="m">-</span> Quiet: <span class="s">``sudo python3 serial_tun_bridge.py --quiet``</span> — only errors to
+     <span class="s">``temp/tun_errors.log``</span>
+   <span class="m">-</span> The <span class="s">``run_qemu.sh``</span> script automatically starts bridge in quiet mode
+
+   <span class="gs">**Known Limitations:**</span>
+
+   <span class="m">-</span> Linux only (TUN device creation uses Linux-specific ioctls)
+   <span class="m">-</span> Requires root/sudo
+   <span class="m">-</span> Single TUN device per host (<span class="s">``tun0``</span> name hardcoded)
+   <span class="m">-</span> Reconnects on QEMU restart but TUN device persists across reconnects
+</pre></div>
+</div>
+</section>
+<section id="spec-netif-uart-dhcp-1-ip-configuration-and-dhcp-integration">
+<h4>SPEC_NETIF_UART_DHCP_1 — IP Configuration and DHCP Integration<a class="headerlink" href="#spec-netif-uart-dhcp-1-ip-configuration-and-dhcp-integration" title="Link to this heading">¶</a></h4>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">spec</span><span class="p">::</span> IP Configuration and DHCP Client Integration
+   <span class="nc">:id:</span> SPEC_NETIF_UART_DHCP_1
+   <span class="nc">:links:</span> REQ_NETIF_TUNNEL_4
+   <span class="nc">:status:</span> approved
+   <span class="nc">:tags:</span> netif, qemu, dhcp, ip
+
+   <span class="gs">**Description:**</span> The tunnel interface uses static IP configuration (not DHCP client)
+   as implemented. The requirement <span class="s">``REQ_NETIF_TUNNEL_4``</span> specifies DHCP support as a
+   goal; the current implementation satisfies the intent via static configuration that
+   mirrors DHCP-assigned values.
+
+   <span class="gs">**Implemented Behaviour:**</span>
+
+   <span class="m">-</span> DHCP client is explicitly <span class="gs">**stopped**</span> via <span class="s">``esp_netif_dhcpc_stop()``</span> in <span class="s">``netif_uart_tunnel_init``</span>
+   <span class="m">-</span> Static IP is set via <span class="s">``esp_netif_set_ip_info()``</span> with caller-provided config
+   <span class="m">-</span> Caller in <span class="s">``main.c``</span> passes: IP <span class="s">``192.168.100.2``</span>, GW <span class="s">``192.168.100.1``</span>, mask <span class="s">``255.255.255.0``</span>
+   <span class="m">-</span> IP info is logged to console at INFO level after init
+
+   <span class="gs">**Static ARP Entry:**</span>
+
+   A static ARP entry is added for the gateway MAC (<span class="s">``02:00:00:00:00:01``</span>) to avoid
+   ARP request/response cycles that would fail in point-to-point UART tunnels:
+
+<span class="p">   ..</span> <span class="ow">code-block</span><span class="p">::</span> <span class="k">c</span>
+
+      <span class="k">struct</span><span class="w"> </span><span class="nc">eth_addr</span><span class="w"> </span><span class="n">gw_mac</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{{</span><span class="mh">0x02</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x01</span><span class="p">}};</span>
+      <span class="n">etharp_add_static_entry</span><span class="p">(</span><span class="o">&amp;</span><span class="n">gw_ip</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">gw_mac</span><span class="p">);</span>
+
+   <span class="gs">**Rationale for Static Config:**</span> A UART tunnel is a point-to-point link; DHCP
+   discovery over it would require the host-side bridge to run a DHCP server. Static
+   configuration is simpler, deterministic, and sufficient for emulation purposes.
+
+   <span class="gs">**AC Coverage vs REQ_NETIF_TUNNEL_4:**</span>
+
+   <span class="m">-</span> AC-1 (support lwIP DHCP client): ⚠️ Not implemented — static IP used instead.
+     Acceptable for emulation; DHCP adds complexity without benefit.
+   <span class="m">-</span> AC-2 (DHCP discovery via tunnel): Not applicable with static config.
+   <span class="m">-</span> AC-3 (obtain IP from host DHCP): Not implemented — static IP is equivalent.
+   <span class="m">-</span> AC-4 (log IP to console): ✅ Implemented via <span class="s">``ESP_LOGI``</span> in <span class="s">``netif_uart_tunnel_init``</span>.
+
+   <span class="gs">**Note:**</span> AC-1 through AC-3 of <span class="s">``REQ_NETIF_TUNNEL_4``</span> are not met by the current
+   implementation. The requirement should be revisited if dynamic IP assignment becomes
+   necessary. For the current QEMU emulation use case, static IP is the preferred approach.
+</pre></div>
+</div>
+</section>
+<section id="spec-netif-uart-cond-1-conditional-compilation-guard">
+<h4>SPEC_NETIF_UART_COND_1 — Conditional Compilation Guard<a class="headerlink" href="#spec-netif-uart-cond-1-conditional-compilation-guard" title="Link to this heading">¶</a></h4>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">spec</span><span class="p">::</span> Conditional Compilation — QEMU-Only Build Guard
+   <span class="nc">:id:</span> SPEC_NETIF_UART_COND_1
+   <span class="nc">:links:</span> REQ_NETIF_TUNNEL_5
+   <span class="nc">:status:</span> approved
+   <span class="nc">:tags:</span> netif, qemu, build, kconfig
+
+   <span class="gs">**Description:**</span> The tunnel component is conditionally included in the build using
+   CMake and Kconfig guards, ensuring zero overhead on hardware builds.
+
+   <span class="gs">**CMakeLists.txt Guard:**</span>
+
+   The component&#39;s <span class="s">``CMakeLists.txt``</span> uses <span class="s">``idf_build_get_property``</span> to check the
+   target and only registers the component for QEMU builds:
+
+<span class="p">   ..</span> <span class="ow">code-block</span><span class="p">::</span> <span class="k">cmake</span>
+
+      <span class="nb">idf_build_get_property</span><span class="p">(</span><span class="s">idf_target</span><span class="w"> </span><span class="s">IDF_TARGET</span><span class="p">)</span>
+      <span class="nb">if</span><span class="p">(</span><span class="s2">&quot;${idf_target}&quot;</span><span class="w"> </span><span class="s">STREQUAL</span><span class="w"> </span><span class="s2">&quot;esp32&quot;</span><span class="p">)</span>
+      <span class="w">    </span><span class="c"># Only build for QEMU (target is still esp32, but checked via Kconfig below)</span>
+      <span class="nb">endif</span><span class="p">()</span>
+
+   <span class="gs">**Kconfig Guard (source-level):**</span>
+
+   The header and caller code use <span class="s">``#ifdef CONFIG_IDF_TARGET_ESP32_QEMU``</span> (or the
+   equivalent CMake variable <span class="s">``CONFIG_TARGET_EMULATOR``</span>) to exclude the component
+   from hardware builds.
+
+   <span class="gs">**Application-Level Guard in ``main.c``:**</span>
+
+<span class="p">   ..</span> <span class="ow">code-block</span><span class="p">::</span> <span class="k">c</span>
+
+      <span class="cp">#ifdef CONFIG_TARGET_EMULATOR</span>
+      <span class="w">    </span><span class="n">netif_uart_tunnel_init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">tunnel_config</span><span class="p">);</span>
+      <span class="cp">#else</span>
+      <span class="w">    </span><span class="c1">// WiFi init for real hardware</span>
+      <span class="w">    </span><span class="n">wifi_manager_init</span><span class="p">();</span>
+      <span class="cp">#endif</span>
+
+   <span class="gs">**Result:**</span> On hardware builds:
+
+   <span class="m">-</span> Component source files are not compiled
+   <span class="m">-</span> No symbols are linked
+   <span class="m">-</span> Zero flash/RAM overhead
+   <span class="m">-</span> <span class="s">``netif_uart_tunnel_init``</span> call is preprocessed away
+
+   <span class="gs">**Kconfig Options (from README):**</span>
+
+   <span class="m">-</span> <span class="s">``CONFIG_NETIF_UART_TUNNEL_ENABLED``</span> — Enable tunnel (default: y for QEMU)
+   <span class="m">-</span> <span class="s">``CONFIG_NETIF_UART_TUNNEL_UART_NUM``</span> — UART port (default: 1)
+   <span class="m">-</span> <span class="s">``CONFIG_NETIF_UART_TUNNEL_BAUD_RATE``</span> — Baud rate (default: 921600 per README, 115200 per code)
+
+   <span class="gs">**Note:**</span> The baud rate discrepancy between README (921600) and implementation
+   constant <span class="s">``UART_BAUD_RATE = 115200``</span> in <span class="s">``netif_uart_tunnel_sim.c``</span> is a known
+   inconsistency. The code value (115200) is what actually runs.
+</pre></div>
+</div>
+</section>
+<section id="spec-netif-uart-perf-1-performance-characteristics-and-known-limitations">
+<h4>SPEC_NETIF_UART_PERF_1 — Performance Characteristics and Known Limitations<a class="headerlink" href="#spec-netif-uart-perf-1-performance-characteristics-and-known-limitations" title="Link to this heading">¶</a></h4>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">spec</span><span class="p">::</span> Performance Characteristics and Known Limitations
+   <span class="nc">:id:</span> SPEC_NETIF_UART_PERF_1
+   <span class="nc">:links:</span> REQ_NETIF_TUNNEL_NF_1, REQ_NETIF_TUNNEL_NF_2
+   <span class="nc">:status:</span> approved
+   <span class="nc">:tags:</span> netif, qemu, performance, limitations
+
+   <span class="gs">**Description:**</span> Documents measured and expected performance of the UART tunnel,
+   including known limitations for use in emulation contexts.
+
+   <span class="gs">**Throughput:**</span>
+
+   <span class="m">-</span> Actual baud rate: 115200 bps (<span class="s">``UART_BAUD_RATE``</span> constant in implementation)
+   <span class="m">-</span> Theoretical raw throughput: ~14.4 KB/s (115200 / 8 bits, no overhead)
+   <span class="m">-</span> With framing overhead (2 bytes per packet): ~14.3 KB/s effective
+   <span class="m">-</span> <span class="s">``SPEC_ARCH_NETIF_1``</span> documents ~10 KB/s measured throughput
+   <span class="m">-</span> <span class="gs">**Does NOT meet REQ_NETIF_TUNNEL_NF_1 AC-1 (100 KB/s minimum)**</span>
+   <span class="m">-</span> Baud rate is configurable; increasing to 921600 would yield ~115 KB/s
+   <span class="m">-</span> README documents 921600 as intended baud rate (code still uses 115200)
+
+   <span class="gs">**Packet Loss Handling:**</span>
+
+   <span class="m">-</span> Invalid LENGTH detected: UART flushed, 100 ms delay, retry — satisfies
+     <span class="s">``REQ_NETIF_TUNNEL_NF_2 AC-1``</span>
+   <span class="m">-</span> Incomplete frame data: warning logged, packet discarded — satisfies
+     <span class="s">``REQ_NETIF_TUNNEL_NF_2 AC-1``</span>
+   <span class="m">-</span> TCP layer recovery from packet loss: inherent in TCP — satisfies
+     <span class="s">``REQ_NETIF_TUNNEL_NF_2 AC-2``</span>
+   <span class="m">-</span> Packet loss statistics logging: <span class="s">``s_rx_count``</span> and <span class="s">``s_tx_count``</span> debug counters
+     exposed via <span class="s">``ESP_LOGD``</span> — satisfies <span class="s">``REQ_NETIF_TUNNEL_NF_2 AC-3``</span>
+
+   <span class="gs">**RX Task Design:**</span>
+
+   <span class="m">-</span> Stack: 4096 bytes
+   <span class="m">-</span> Priority: 2 (lower than display_logic at 3 to avoid blocking)
+   <span class="m">-</span> Read timeout: 100 ms for length header; 1 s for frame data
+   <span class="m">-</span> 1-second startup delay after UART flush (stability wait)
+   <span class="m">-</span> 10 ms yield on timeout (avoids busy-loop when no traffic)
+
+   <span class="gs">**Known Limitations:**</span>
+
+   <span class="m">1.</span> <span class="gs">**QEMU-only**</span>: TUN device creation requires Linux and root privileges
+   <span class="m">2.</span> <span class="gs">**115200 baud**</span>: Below 100 KB/s NF target (fixable by increasing baud rate)
+   <span class="m">3.</span> <span class="gs">**Static IP only**</span>: No DHCP client (see <span class="s">``SPEC_NETIF_UART_DHCP_1``</span>)
+   <span class="m">4.</span> <span class="gs">**Linux host required**</span>: <span class="s">``serial_tun_bridge.py``</span> uses Linux TUN ioctls
+   <span class="m">5.</span> <span class="gs">**Root required**</span>: TUN device creation requires <span class="s">``sudo``</span>
+   <span class="m">6.</span> <span class="gs">**Single instance**</span>: Module uses static state; <span class="s">``netif_uart_tunnel_init``</span> returns
+      <span class="s">``ESP_ERR_INVALID_STATE``</span> on second call
+   <span class="m">7.</span> <span class="gs">**No graceful task stop**</span>: <span class="s">``netif_uart_tunnel_deinit``</span> calls <span class="s">``vTaskDelete``</span>
+      on RX task (no cooperative shutdown signal)
+</pre></div>
+</div>
+</section>
+<section id="spec-netif-uart-doc-1-emulation-setup-documentation-pointer">
+<h4>SPEC_NETIF_UART_DOC_1 — Emulation Setup Documentation Pointer<a class="headerlink" href="#spec-netif-uart-doc-1-emulation-setup-documentation-pointer" title="Link to this heading">¶</a></h4>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">spec</span><span class="p">::</span> Emulation Setup Documentation
+   <span class="nc">:id:</span> SPEC_NETIF_UART_DOC_1
+   <span class="nc">:links:</span> REQ_NETIF_TUNNEL_DOC_1
+   <span class="nc">:status:</span> approved
+   <span class="nc">:tags:</span> netif, qemu, documentation
+
+   <span class="gs">**Description:**</span> Documents where emulation setup instructions are maintained
+   and what they must cover.
+
+   <span class="gs">**Documentation Locations:**</span>
+
+   <span class="m">-</span> <span class="s">``main/components/netif_uart_tunnel/README.md``</span> — Component-level README with
+     quick-start, configuration, usage, troubleshooting
+   <span class="m">-</span> <span class="s">``tools/qemu/run_qemu.sh``</span> — QEMU launch script (self-documenting via comments)
+   <span class="m">-</span> <span class="s">``tools/qemu/network/serial_tun_bridge.py``</span> — Bridge script with embedded docstring
+   <span class="m">-</span> <span class="s">``docs/90_guides/``</span> — Developer guides (see <span class="s">``switching-dev-modes.rst``</span>)
+
+   <span class="gs">**Coverage by Requirement AC:**</span>
+
+   <span class="m">-</span> <span class="s">``REQ_NETIF_TUNNEL_DOC_1 AC-1``</span> (QEMU build/install): Covered in README and
+     <span class="s">``tools/qemu/``</span> scripts
+   <span class="m">-</span> <span class="s">``REQ_NETIF_TUNNEL_DOC_1 AC-2``</span> (TAP/TUN interface setup): Covered in
+     <span class="s">``serial_tun_bridge.py``</span> docstring and README
+   <span class="m">-</span> <span class="s">``REQ_NETIF_TUNNEL_DOC_1 AC-3``</span> (example commands): Covered in README
+     troubleshooting section and <span class="s">``run_qemu.sh``</span>
+   <span class="m">-</span> <span class="s">``REQ_NETIF_TUNNEL_DOC_1 AC-4``</span> (limitations vs hardware): Covered in
+     README limitations section and <span class="s">``SPEC_NETIF_UART_PERF_1``</span> above
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id1">
+<h3>Horizontal Check (MECE)<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>✅ No contradictions with <code class="docutils literal notranslate"><span class="pre">SPEC_ARCH_NETIF_1</span></code> (intentionally kept as high-level overview)</p></li>
+<li><p>✅ No redundancies — new SPECs add component detail, not re-state architectural overview</p></li>
+<li><p>✅ All 8 REQs covered: TUNNEL_1→ARCH_1+COND_1, TUNNEL_2→PROTO_1, TUNNEL_3→BRIDGE_1, TUNNEL_4→DHCP_1, TUNNEL_5→COND_1, DOC_1→BRIDGE_1+DOC_1, NF_1→PERF_1, NF_2→PROTO_1+PERF_1</p></li>
+<li><p>✅ Every new SPEC links to at least one REQ</p></li>
+<li><p>⚠️ <code class="docutils literal notranslate"><span class="pre">SPEC_NETIF_UART_DHCP_1</span></code> documents a partial implementation gap vs AC-1..3 of <code class="docutils literal notranslate"><span class="pre">REQ_NETIF_TUNNEL_4</span></code>. This is intentionally documented as a known deviation; no code change is needed for this catch-up task.</p></li>
+<li><p>⚠️ <code class="docutils literal notranslate"><span class="pre">SPEC_NETIF_UART_PERF_1</span></code> documents that 115200 baud does not meet the 100 KB/s NF target. The baud rate constant was increased to 921600 in the README but not in code. This deviation is documented.</p></li>
+</ul>
+</section>
+<section id="decisions">
+<h3>Decisions<a class="headerlink" href="#decisions" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Decision 1</strong>: Use ID prefix <code class="docutils literal notranslate"><span class="pre">SPEC_NETIF_UART_</span></code> (not <code class="docutils literal notranslate"><span class="pre">SPEC_NETIF_TUN_</span></code>) to match
+the component name <code class="docutils literal notranslate"><span class="pre">netif_uart_tunnel</span></code> and be distinct from any future WiFi netif specs.</p></li>
+<li><p><strong>Decision 2</strong>: Keep <code class="docutils literal notranslate"><span class="pre">SPEC_ARCH_NETIF_1</span></code> unchanged. It serves as the arch overview entry
+point. The new <code class="docutils literal notranslate"><span class="pre">spec_netif_tunnel.rst</span></code> provides the component detail layer.</p></li>
+<li><p><strong>Decision 3</strong>: Document the DHCP gap in the spec rather than silently claiming compliance.
+Honest specs are more useful than optimistic ones.</p></li>
+<li><p><strong>Decision 4</strong>: Document the 115200 vs 921600 baud rate inconsistency. This is a known
+issue in the code that should be fixed separately.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="final-consistency-check">
+<h2>Final Consistency Check<a class="headerlink" href="#final-consistency-check" title="Link to this heading">¶</a></h2>
+<p><strong>Status</strong>: ✅ passed</p>
+<section id="traceability-verification">
+<h3>Traceability Verification<a class="headerlink" href="#traceability-verification" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Requirement</p></th>
+<th class="head"><p>SPEC</p></th>
+<th class="head"><p>Complete?</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>REQ_NETIF_TUNNEL_1</p></td>
+<td><p>SPEC_NETIF_UART_ARCH_1</p></td>
+<td><p>✅</p></td>
+</tr>
+<tr class="row-odd"><td><p>REQ_NETIF_TUNNEL_2</p></td>
+<td><p>SPEC_NETIF_UART_PROTO_1</p></td>
+<td><p>✅</p></td>
+</tr>
+<tr class="row-even"><td><p>REQ_NETIF_TUNNEL_3</p></td>
+<td><p>SPEC_NETIF_UART_BRIDGE_1</p></td>
+<td><p>✅</p></td>
+</tr>
+<tr class="row-odd"><td><p>REQ_NETIF_TUNNEL_4</p></td>
+<td><p>SPEC_NETIF_UART_DHCP_1</p></td>
+<td><p>✅ (with documented deviation)</p></td>
+</tr>
+<tr class="row-even"><td><p>REQ_NETIF_TUNNEL_5</p></td>
+<td><p>SPEC_NETIF_UART_COND_1</p></td>
+<td><p>✅</p></td>
+</tr>
+<tr class="row-odd"><td><p>REQ_NETIF_TUNNEL_DOC_1</p></td>
+<td><p>SPEC_NETIF_UART_DOC_1</p></td>
+<td><p>✅</p></td>
+</tr>
+<tr class="row-even"><td><p>REQ_NETIF_TUNNEL_NF_1</p></td>
+<td><p>SPEC_NETIF_UART_PERF_1</p></td>
+<td><p>✅ (with documented deviation)</p></td>
+</tr>
+<tr class="row-odd"><td><p>REQ_NETIF_TUNNEL_NF_2</p></td>
+<td><p>SPEC_NETIF_UART_PROTO_1, SPEC_NETIF_UART_PERF_1</p></td>
+<td><p>✅</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="issues-found">
+<h3>Issues Found<a class="headerlink" href="#issues-found" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>⚠️ <strong>Baud rate inconsistency</strong>: README says 921600, code uses 115200. Documented in
+<code class="docutils literal notranslate"><span class="pre">SPEC_NETIF_UART_PERF_1</span></code>. Separate fix task recommended.</p></li>
+<li><p>⚠️ <strong>DHCP not implemented</strong>: <code class="docutils literal notranslate"><span class="pre">REQ_NETIF_TUNNEL_4</span></code> AC-1..3 not met. Documented in
+<code class="docutils literal notranslate"><span class="pre">SPEC_NETIF_UART_DHCP_1</span></code>. Static IP sufficient for emulation; no immediate action needed.</p></li>
+</ul>
+</section>
+<section id="sign-off">
+<h3>Sign-off<a class="headerlink" href="#sign-off" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>[x] All levels completed (no ⚠️ DEPRECATED markers remaining)</p></li>
+<li><p>[x] All conflicts resolved (deviations documented, not hidden)</p></li>
+<li><p>[x] Traceability verified (all 8 REQs covered)</p></li>
+<li><p>[x] Ready for implementation (spec writing + index update)</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="implementation-instructions">
+<h2>Implementation Instructions<a class="headerlink" href="#implementation-instructions" title="Link to this heading">¶</a></h2>
+<p>The Implement Agent should create the following files:</p>
+<section id="new-file-docs-12-design-spec-netif-tunnel-rst">
+<h3>1. New file: <code class="docutils literal notranslate"><span class="pre">docs/12_design/spec_netif_tunnel.rst</span></code><a class="headerlink" href="#new-file-docs-12-design-spec-netif-tunnel-rst" title="Link to this heading">¶</a></h3>
+<p>File content: combine all SPEC blocks above into a proper RST document following
+the structure of <code class="docutils literal notranslate"><span class="pre">docs/12_design/spec_web_server.rst</span></code> or similar.</p>
+<p>Structure:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">UART</span> <span class="n">Tunnel</span> <span class="n">Network</span> <span class="n">Interface</span> <span class="n">Design</span> <span class="n">Specification</span>
+<span class="o">==================================================</span>
+
+<span class="p">[</span><span class="n">intro</span> <span class="n">paragraph</span><span class="p">]</span>
+
+<span class="n">Component</span> <span class="n">Architecture</span>
+<span class="o">----------------------</span>
+<span class="p">[</span><span class="n">SPEC_NETIF_UART_ARCH_1</span> <span class="n">block</span><span class="p">]</span>
+
+<span class="n">Wire</span> <span class="n">Protocol</span>
+<span class="o">-------------</span>
+<span class="p">[</span><span class="n">SPEC_NETIF_UART_PROTO_1</span> <span class="n">block</span><span class="p">]</span>
+
+<span class="n">Host</span><span class="o">-</span><span class="n">Side</span> <span class="n">Bridge</span>
+<span class="o">----------------</span>
+<span class="p">[</span><span class="n">SPEC_NETIF_UART_BRIDGE_1</span> <span class="n">block</span><span class="p">]</span>
+
+<span class="n">IP</span> <span class="n">Configuration</span>
+<span class="o">----------------</span>
+<span class="p">[</span><span class="n">SPEC_NETIF_UART_DHCP_1</span> <span class="n">block</span><span class="p">]</span>
+
+<span class="n">Conditional</span> <span class="n">Compilation</span>
+<span class="o">-----------------------</span>
+<span class="p">[</span><span class="n">SPEC_NETIF_UART_COND_1</span> <span class="n">block</span><span class="p">]</span>
+
+<span class="n">Performance</span> <span class="ow">and</span> <span class="n">Limitations</span>
+<span class="o">----------------------------</span>
+<span class="p">[</span><span class="n">SPEC_NETIF_UART_PERF_1</span> <span class="n">block</span><span class="p">]</span>
+
+<span class="n">Documentation</span>
+<span class="o">-------------</span>
+<span class="p">[</span><span class="n">SPEC_NETIF_UART_DOC_1</span> <span class="n">block</span><span class="p">]</span>
+
+<span class="n">Traceability</span>
+<span class="o">------------</span>
+<span class="p">[</span><span class="n">needtable</span> <span class="o">+</span> <span class="n">needflow</span> <span class="k">for</span> <span class="n">REQ_NETIF_TUNNEL_1</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="update-docs-12-design-index-rst">
+<h3>2. Update: <code class="docutils literal notranslate"><span class="pre">docs/12_design/index.rst</span></code><a class="headerlink" href="#update-docs-12-design-index-rst" title="Link to this heading">¶</a></h3>
+<p>Add <code class="docutils literal notranslate"><span class="pre">spec_netif_tunnel</span></code> to the toctree after <code class="docutils literal notranslate"><span class="pre">spec_high_level_architecture</span></code>.</p>
+<p>Update the “Design Hierarchy” section to mention:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">SPEC_NETIF_UART_*</span></code> — UART Tunnel Netif Component design</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="appendix-code-review-summary">
+<h2>Appendix: Code Review Summary<a class="headerlink" href="#appendix-code-review-summary" title="Link to this heading">¶</a></h2>
+<section id="netif-uart-tunnel-sim-c-key-facts">
+<h3><code class="docutils literal notranslate"><span class="pre">netif_uart_tunnel_sim.c</span></code> key facts<a class="headerlink" href="#netif-uart-tunnel-sim-c-key-facts" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Fact</p></th>
+<th class="head"><p>Value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>UART port</p></td>
+<td><p>UART_NUM_1</p></td>
+</tr>
+<tr class="row-odd"><td><p>TX pin</p></td>
+<td><p>GPIO17</p></td>
+</tr>
+<tr class="row-even"><td><p>RX pin</p></td>
+<td><p>GPIO16</p></td>
+</tr>
+<tr class="row-odd"><td><p>Baud rate</p></td>
+<td><p>115200 (constant)</p></td>
+</tr>
+<tr class="row-even"><td><p>Frame format</p></td>
+<td><p>2-byte BE length + Ethernet frame data</p></td>
+</tr>
+<tr class="row-odd"><td><p>Max frame</p></td>
+<td><p>1500 bytes</p></td>
+</tr>
+<tr class="row-even"><td><p>RX task stack</p></td>
+<td><p>4096 bytes</p></td>
+</tr>
+<tr class="row-odd"><td><p>RX task priority</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-even"><td><p>Read timeout (length)</p></td>
+<td><p>100 ms</p></td>
+</tr>
+<tr class="row-odd"><td><p>Read timeout (data)</p></td>
+<td><p>1000 ms</p></td>
+</tr>
+<tr class="row-even"><td><p>Startup delay</p></td>
+<td><p>1000 ms after uart_flush</p></td>
+</tr>
+<tr class="row-odd"><td><p>MAC address</p></td>
+<td><p>02:00:00:00:00:02 (static)</p></td>
+</tr>
+<tr class="row-even"><td><p>IP stack mode</p></td>
+<td><p>Ethernet (NETIF_FLAG_ETHARP + NETIF_FLAG_ETHERNET)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Default IP</p></td>
+<td><p>192.168.100.2 (set by caller)</p></td>
+</tr>
+<tr class="row-even"><td><p>DHCP</p></td>
+<td><p>Disabled (static IP)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Static ARP for GW</p></td>
+<td><p>02:00:00:00:00:01</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="serial-tun-bridge-py-key-facts">
+<h3><code class="docutils literal notranslate"><span class="pre">serial_tun_bridge.py</span></code> key facts<a class="headerlink" href="#serial-tun-bridge-py-key-facts" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Fact</p></th>
+<th class="head"><p>Value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Socket path</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{PROJECT_DIR}/temp/esp32-uart1.sock</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Socket type</p></td>
+<td><p>AF_UNIX / SOCK_STREAM</p></td>
+</tr>
+<tr class="row-even"><td><p>TUN device</p></td>
+<td><p>tun0</p></td>
+</tr>
+<tr class="row-odd"><td><p>Host IP</p></td>
+<td><p>192.168.100.1/24</p></td>
+</tr>
+<tr class="row-even"><td><p>Host MAC</p></td>
+<td><p>02:00:00:00:00:01</p></td>
+</tr>
+<tr class="row-odd"><td><p>ESP32 MAC</p></td>
+<td><p>02:00:00:00:00:02</p></td>
+</tr>
+<tr class="row-even"><td><p>Frame direction TUN→serial</p></td>
+<td><p>Adds 14-byte Ethernet header to IP packet</p></td>
+</tr>
+<tr class="row-odd"><td><p>Frame direction serial→TUN</p></td>
+<td><p>Strips 14-byte Ethernet header</p></td>
+</tr>
+<tr class="row-even"><td><p>Auto-reconnect</p></td>
+<td><p>Yes (on serial disconnect)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Quiet mode</p></td>
+<td><p>–quiet flag, errors to temp/tun_errors.log</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+<p><em>Generated by syspilot Change Agent</em></p>
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2025, ESP32 Distance Sensor Team
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Change Document: netif-tunnel-spec</a><ul>
+<li><a class="reference internal" href="#summary">Summary</a></li>
+<li><a class="reference internal" href="#level-0-user-stories">Level 0: User Stories</a><ul>
+<li><a class="reference internal" href="#analysis">Analysis</a></li>
+<li><a class="reference internal" href="#impacted-user-stories">Impacted User Stories</a></li>
+<li><a class="reference internal" href="#decision-no-new-user-story-needed">Decision: No new User Story needed</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#level-1-requirements">Level 1: Requirements</a><ul>
+<li><a class="reference internal" href="#impacted-requirements-existing-all-approved-no-changes-needed">Impacted Requirements (existing, all approved — no changes needed)</a></li>
+<li><a class="reference internal" href="#no-new-requirements">No new Requirements</a></li>
+<li><a class="reference internal" href="#horizontal-check-mece">Horizontal Check (MECE)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#level-2-design">Level 2: Design</a><ul>
+<li><a class="reference internal" href="#impacted-design-elements">Impacted Design Elements</a></li>
+<li><a class="reference internal" href="#new-design-elements">New Design Elements</a><ul>
+<li><a class="reference internal" href="#spec-netif-uart-arch-1-component-architecture">SPEC_NETIF_UART_ARCH_1 — Component Architecture</a></li>
+<li><a class="reference internal" href="#spec-netif-uart-proto-1-wire-protocol-length-prefix-framing">SPEC_NETIF_UART_PROTO_1 — Wire Protocol (Length-Prefix Framing)</a></li>
+<li><a class="reference internal" href="#spec-netif-uart-bridge-1-host-side-python-bridge">SPEC_NETIF_UART_BRIDGE_1 — Host-Side Python Bridge</a></li>
+<li><a class="reference internal" href="#spec-netif-uart-dhcp-1-ip-configuration-and-dhcp-integration">SPEC_NETIF_UART_DHCP_1 — IP Configuration and DHCP Integration</a></li>
+<li><a class="reference internal" href="#spec-netif-uart-cond-1-conditional-compilation-guard">SPEC_NETIF_UART_COND_1 — Conditional Compilation Guard</a></li>
+<li><a class="reference internal" href="#spec-netif-uart-perf-1-performance-characteristics-and-known-limitations">SPEC_NETIF_UART_PERF_1 — Performance Characteristics and Known Limitations</a></li>
+<li><a class="reference internal" href="#spec-netif-uart-doc-1-emulation-setup-documentation-pointer">SPEC_NETIF_UART_DOC_1 — Emulation Setup Documentation Pointer</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id1">Horizontal Check (MECE)</a></li>
+<li><a class="reference internal" href="#decisions">Decisions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#final-consistency-check">Final Consistency Check</a><ul>
+<li><a class="reference internal" href="#traceability-verification">Traceability Verification</a></li>
+<li><a class="reference internal" href="#issues-found">Issues Found</a></li>
+<li><a class="reference internal" href="#sign-off">Sign-off</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#implementation-instructions">Implementation Instructions</a><ul>
+<li><a class="reference internal" href="#new-file-docs-12-design-spec-netif-tunnel-rst">1. New file: <code class="docutils literal notranslate"><span class="pre">docs/12_design/spec_netif_tunnel.rst</span></code></a></li>
+<li><a class="reference internal" href="#update-docs-12-design-index-rst">2. Update: <code class="docutils literal notranslate"><span class="pre">docs/12_design/index.rst</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#appendix-code-review-summary">Appendix: Code Review Summary</a><ul>
+<li><a class="reference internal" href="#netif-uart-tunnel-sim-c-key-facts"><code class="docutils literal notranslate"><span class="pre">netif_uart_tunnel_sim.c</span></code> key facts</a></li>
+<li><a class="reference internal" href="#serial-tun-bridge-py-key-facts"><code class="docutils literal notranslate"><span class="pre">serial_tun_bridge.py</span></code> key facts</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../_static/documentation_options.js?v=8d563738"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
+    <script src="../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>
+    <script src="../_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
+    <script src="../_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
+    <script src="../_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
+    </body>
+</html>

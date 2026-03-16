@@ -218,6 +218,7 @@
 <li class="toctree-l2"><a class="reference internal" href="10_userstories/us_display.html">Distance Display User Story</a></li>
 <li class="toctree-l2"><a class="reference internal" href="10_userstories/us_setup.html">Setup User Story</a></li>
 <li class="toctree-l2"><a class="reference internal" href="10_userstories/us_reliable.html">Reliability User Story</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10_userstories/us_developer.html">Developer User Stories</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="11_requirements/index.html">Requirements Documentation</a><input aria-label="Toggle navigation of Requirements Documentation" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -229,6 +230,7 @@
 <li class="toctree-l2"><a class="reference internal" href="11_requirements/req_led_controller.html">LED Controller Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="11_requirements/req_display.html">Display System Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="11_requirements/req_startup_test.html">Startup Test Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11_requirements/req_developer_docs.html">Developer Documentation Requirements</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="12_design/index.html">Design Specifications</a><input aria-label="Toggle navigation of Design Specifications" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -240,6 +242,10 @@
 <li class="toctree-l2"><a class="reference internal" href="12_design/spec_led_controller.html">LED Controller Design Specification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="12_design/spec_display.html">Display System Design Specification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="12_design/spec_startup_test.html">Startup Test Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12_design/spec_netif_tunnel.html">UART Tunnel Network Interface Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12_design/spec_developer_docs.html">Supporting Documentation Design Specifications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12_design/spec_dev_environment.html">Development Environment Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12_design/spec_known_limitations.html">Known Limitations Structure Specification</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="21_api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -258,7 +264,6 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="90_guides/index.html">Development Guide</a><input aria-label="Toggle navigation of Development Guide" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="90_guides/devcontainer.html">Development Container Setup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="90_guides/switching-dev-modes.html">Switching Development Modes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="90_guides/pre-commit-hooks.html">Pre-commit Hooks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="90_guides/qemu-emulator.html">QEMU Emulator Guide</a></li>
 <li class="toctree-l2"><a class="reference internal" href="90_guides/web-flasher.html">Web-Based Firmware Flashing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="90_guides/debugging.html">Debugging Guide</a></li>
@@ -425,24 +430,37 @@
 <section id="all-requirements-overview">
 <h1>All Requirements Overview<a class="headerlink" href="#all-requirements-overview" title="Link to this heading">¶</a></h1>
 <div class="line-block" id="needlist-index-0">
-<div class="line"><a class="reference external" href="10_userstories/us_display.html#US_DISPLAY">US_DISPLAY: Visual Distance Feedback for Parking (approved) [display; sensor; garage-user]</a></div>
-<div class="line"><a class="reference external" href="10_userstories/us_reliable.html#US_RELIABLE">US_RELIABLE: Appliance Reliability - Just Works on Power (approved) [reliability; startup; garage-user]</a></div>
-<div class="line"><a class="reference external" href="10_userstories/us_setup.html#US_SETUP">US_SETUP: Device Setup via Web Interface (approved) [setup; wifi; web; maker]</a></div>
-<div class="line"><a class="reference external" href="11_requirements/req_config_manager_json.html#REQ_CFG_JSON_1">REQ_CFG_JSON_1: JSON Schema as Configuration Source of Truth (draft) [config; schema; architecture]</a></div>
-<div class="line"><a class="reference external" href="11_requirements/req_config_manager_json.html#REQ_CFG_JSON_2">REQ_CFG_JSON_2: Parameter Grouping for UI Organization (draft) [config; ui; schema]</a></div>
-<div class="line"><a class="reference external" href="11_requirements/req_config_manager_json.html#REQ_CFG_JSON_3">REQ_CFG_JSON_3: Parameter Type System (draft) [config; types]</a></div>
-<div class="line"><a class="reference external" href="11_requirements/req_config_manager_json.html#REQ_CFG_JSON_4">REQ_CFG_JSON_4: Build-Time Factory Defaults Generation (draft) [config; build; code-generation]</a></div>
-<div class="line"><a class="reference external" href="11_requirements/req_config_manager_json.html#REQ_CFG_JSON_5">REQ_CFG_JSON_5: No Runtime JSON Parsing in C Code (draft) [config; performance; memory]</a></div>
-<div class="line"><a class="reference external" href="11_requirements/req_config_manager_json.html#REQ_CFG_JSON_6">REQ_CFG_JSON_6: Key-Based NVS Storage (draft) [config; storage; nvs]</a></div>
-<div class="line"><a class="reference external" href="11_requirements/req_config_manager_json.html#REQ_CFG_JSON_7">REQ_CFG_JSON_7: Type-Safe Configuration API (draft) [config; api; type-safety]</a></div>
-<div class="line"><a class="reference external" href="11_requirements/req_config_manager_json.html#REQ_CFG_JSON_8">REQ_CFG_JSON_8: Persistent Configuration Storage (draft) [config; storage; nvs]</a></div>
-<div class="line"><a class="reference external" href="11_requirements/req_config_manager_json.html#REQ_CFG_JSON_9">REQ_CFG_JSON_9: Factory Reset Capability (draft) [config; reset]</a></div>
+<div class="line"><a class="reference external" href="10_userstories/us_developer.html#US_DEV_1">US_DEV_1: Modular Firmware Extensibility (approved) [developer; firmware; extensibility]</a></div>
+<div class="line"><a class="reference external" href="10_userstories/us_developer.html#US_DEV_2">US_DEV_2: Traceable Supporting Documentation (approved) [developer; documentation; traceability]</a></div>
+<div class="line"><a class="reference external" href="10_userstories/us_display.html#US_DISPLAY_1">US_DISPLAY_1: Visual Distance Feedback for Parking (approved) [display; sensor; garage-user]</a></div>
+<div class="line"><a class="reference external" href="10_userstories/us_reliable.html#US_RELIABLE_1">US_RELIABLE_1: Appliance Reliability - Just Works on Power (approved) [reliability; startup; garage-user]</a></div>
+<div class="line"><a class="reference external" href="10_userstories/us_setup.html#US_SETUP_1">US_SETUP_1: Device Setup via Web Interface (approved) [setup; wifi; web; maker]</a></div>
+<div class="line"><a class="reference external" href="11_requirements/req_config_manager_json.html#REQ_CFG_JSON_1">REQ_CFG_JSON_1: JSON Schema as Configuration Source of Truth (implemented) [config; schema; architecture]</a></div>
+<div class="line"><a class="reference external" href="11_requirements/req_config_manager_json.html#REQ_CFG_JSON_2">REQ_CFG_JSON_2: Parameter Grouping for UI Organization (implemented) [config; ui; schema]</a></div>
+<div class="line"><a class="reference external" href="11_requirements/req_config_manager_json.html#REQ_CFG_JSON_3">REQ_CFG_JSON_3: Parameter Type System (implemented) [config; types]</a></div>
+<div class="line"><a class="reference external" href="11_requirements/req_config_manager_json.html#REQ_CFG_JSON_4">REQ_CFG_JSON_4: Build-Time Factory Defaults Generation (implemented) [config; build; code-generation]</a></div>
+<div class="line"><a class="reference external" href="11_requirements/req_config_manager_json.html#REQ_CFG_JSON_5">REQ_CFG_JSON_5: No Runtime JSON Parsing in C Code (implemented) [config; performance; memory]</a></div>
+<div class="line"><a class="reference external" href="11_requirements/req_config_manager_json.html#REQ_CFG_JSON_6">REQ_CFG_JSON_6: Key-Based NVS Storage (implemented) [config; storage; nvs]</a></div>
+<div class="line"><a class="reference external" href="11_requirements/req_config_manager_json.html#REQ_CFG_JSON_7">REQ_CFG_JSON_7: Type-Safe Configuration API (implemented) [config; api; type-safety]</a></div>
+<div class="line"><a class="reference external" href="11_requirements/req_config_manager_json.html#REQ_CFG_JSON_8">REQ_CFG_JSON_8: Persistent Configuration Storage (implemented) [config; storage; nvs]</a></div>
+<div class="line"><a class="reference external" href="11_requirements/req_config_manager_json.html#REQ_CFG_JSON_9">REQ_CFG_JSON_9: Factory Reset Capability (implemented) [config; reset]</a></div>
 <div class="line"><a class="reference external" href="11_requirements/req_config_manager_json.html#REQ_CFG_JSON_10">REQ_CFG_JSON_10: Web Interface Integration Support (approved) [config; integration]</a></div>
-<div class="line"><a class="reference external" href="11_requirements/req_config_manager_json.html#REQ_CFG_JSON_11">REQ_CFG_JSON_11: NVS Error Graceful Handling (draft) [config; error-handling; reliability]</a></div>
-<div class="line"><a class="reference external" href="11_requirements/req_config_manager_json.html#REQ_CFG_JSON_12">REQ_CFG_JSON_12: Configuration Initialization on Boot (draft) [config; boot]</a></div>
-<div class="line"><a class="reference external" href="11_requirements/req_config_manager_json.html#REQ_CFG_JSON_13">REQ_CFG_JSON_13: Simple Process to Add Configuration Fields (draft) [config; extensibility; developer-experience]</a></div>
-<div class="line"><a class="reference external" href="11_requirements/req_config_manager_json.html#REQ_CFG_JSON_14">REQ_CFG_JSON_14: Type Safety via Optional Static Validation (draft) [config; validation; developer-experience]</a></div>
+<div class="line"><a class="reference external" href="11_requirements/req_config_manager_json.html#REQ_CFG_JSON_11">REQ_CFG_JSON_11: NVS Error Graceful Handling (implemented) [config; error-handling; reliability]</a></div>
+<div class="line"><a class="reference external" href="11_requirements/req_config_manager_json.html#REQ_CFG_JSON_12">REQ_CFG_JSON_12: Configuration Initialization on Boot (implemented) [config; boot]</a></div>
+<div class="line"><a class="reference external" href="11_requirements/req_config_manager_json.html#REQ_CFG_JSON_13">REQ_CFG_JSON_13: Simple Process to Add Configuration Fields (implemented) [config; extensibility; developer-experience]</a></div>
+<div class="line"><a class="reference external" href="11_requirements/req_config_manager_json.html#REQ_CFG_JSON_14">REQ_CFG_JSON_14: Type Safety via Optional Static Validation (implemented) [config; validation; developer-experience]</a></div>
 <div class="line"><a class="reference external" href="11_requirements/req_config_manager_json.html#REQ_CFG_JSON_15">REQ_CFG_JSON_15: Configuration Schema Versioning and Migration (open) [config; versioning; migration; future]</a></div>
+<div class="line"><a class="reference external" href="11_requirements/req_developer_docs.html#REQ_DEV_DOC_1">REQ_DEV_DOC_1: Supporting Documentation Traceability (approved) [developer; documentation; traceability]</a></div>
+<div class="line"><a class="reference external" href="11_requirements/req_developer_docs.html#REQ_DEV_README_1">REQ_DEV_README_1: README Content Scope (approved) [developer; documentation; readme]</a></div>
+<div class="line"><a class="reference external" href="11_requirements/req_developer_docs.html#REQ_DEV_OV_INDEX_1">REQ_DEV_OV_INDEX_1: Overview Index Content (approved) [developer; documentation; overview]</a></div>
+<div class="line"><a class="reference external" href="11_requirements/req_developer_docs.html#REQ_DEV_OV_HW_1">REQ_DEV_OV_HW_1: Hardware Specifications Content (approved) [developer; documentation; hardware]</a></div>
+<div class="line"><a class="reference external" href="11_requirements/req_developer_docs.html#REQ_DEV_OV_QS_1">REQ_DEV_OV_QS_1: Quick Start Content (approved) [developer; documentation; quickstart]</a></div>
+<div class="line"><a class="reference external" href="11_requirements/req_developer_docs.html#REQ_DEV_GUIDE_QEMU_1">REQ_DEV_GUIDE_QEMU_1: QEMU Emulator Guide Content (approved) [developer; documentation; qemu]</a></div>
+<div class="line"><a class="reference external" href="11_requirements/req_developer_docs.html#REQ_DEV_GUIDE_MODES_1">REQ_DEV_GUIDE_MODES_1: Switching Dev Modes Guide Content (approved) [developer; documentation; devmodes]</a></div>
+<div class="line"><a class="reference external" href="11_requirements/req_developer_docs.html#REQ_DEV_GUIDE_DEBUG_1">REQ_DEV_GUIDE_DEBUG_1: Debugging Guide Content (approved) [developer; documentation; debugging]</a></div>
+<div class="line"><a class="reference external" href="11_requirements/req_developer_docs.html#REQ_DEV_GUIDE_FLASH_1">REQ_DEV_GUIDE_FLASH_1: Web Flasher Guide Content (approved) [developer; documentation; flasher]</a></div>
+<div class="line"><a class="reference external" href="11_requirements/req_developer_docs.html#REQ_DEV_ENV_1">REQ_DEV_ENV_1: Supported Development Environments (approved) [developer; devcontainer; codespaces]</a></div>
+<div class="line"><a class="reference external" href="11_requirements/req_developer_docs.html#REQ_DEV_LIMITS_1">REQ_DEV_LIMITS_1: Known Limitations Documentation (approved) [developer; limitations; known-issues]</a></div>
 <div class="line"><a class="reference external" href="11_requirements/req_display.html#REQ_DSP_1">REQ_DSP_1: Hardware Platform (approved) [display; hardware; integration]</a></div>
 <div class="line"><a class="reference external" href="11_requirements/req_display.html#REQ_DSP_2">REQ_DSP_2: Configuration Integration (approved) [display; configuration; integration]</a></div>
 <div class="line"><a class="reference external" href="11_requirements/req_display.html#REQ_DSP_3">REQ_DSP_3: Core Visualization Concept (approved) [display; ux; visualization]</a></div>
@@ -510,14 +528,34 @@
 <div class="line"><a class="reference external" href="12_design/spec_config_manager_json.html#SPEC_CFG_JSON_BULK_1">SPEC_CFG_JSON_BULK_1: Bulk JSON Configuration API (approved) [api; json; bulk-operations]</a></div>
 <div class="line"><a class="reference external" href="12_design/spec_config_manager_json.html#SPEC_CFG_JSON_EXTEND_1">SPEC_CFG_JSON_EXTEND_1: Adding New Configuration Fields (approved) [development; guide; extensibility]</a></div>
 <div class="line"><a class="reference external" href="12_design/spec_config_manager_json.html#SPEC_CFG_JSON_TYPESAFETY_1">SPEC_CFG_JSON_TYPESAFETY_1: Type Safety Without Code Generation (approved) [type-safety; best-practices]</a></div>
-<div class="line"><a class="reference external" href="12_design/spec_config_webpage.html#SPEC_CFG_WEB_ARCH_1">SPEC_CFG_WEB_ARCH_1: Configuration Webpage Architecture (open) [frontend; javascript; ui]</a></div>
-<div class="line"><a class="reference external" href="12_design/spec_config_webpage.html#SPEC_CFG_WEB_FLOW_1">SPEC_CFG_WEB_FLOW_1: Configuration Data Flow (open) [data-flow; json; api]</a></div>
-<div class="line"><a class="reference external" href="12_design/spec_config_webpage.html#SPEC_CFG_WEB_FORM_1">SPEC_CFG_WEB_FORM_1: Dynamic Form Generation from Schema (open) [form-generation; schema; javascript]</a></div>
-<div class="line"><a class="reference external" href="12_design/spec_config_webpage.html#SPEC_CFG_WEB_MAPPING_1">SPEC_CFG_WEB_MAPPING_1: JSON Array to Form Field Mapping (open) [data-mapping; json; form]</a></div>
-<div class="line"><a class="reference external" href="12_design/spec_config_webpage.html#SPEC_CFG_WEB_STATE_1">SPEC_CFG_WEB_STATE_1: UI State Management (open) [ui-state; javascript]</a></div>
-<div class="line"><a class="reference external" href="12_design/spec_config_webpage.html#SPEC_CFG_WEB_COUNTDOWN_1">SPEC_CFG_WEB_COUNTDOWN_1: Device Reset Countdown Interface (open) [ui; countdown; reset]</a></div>
-<div class="line"><a class="reference external" href="12_design/spec_config_webpage.html#SPEC_CFG_WEB_ERROR_1">SPEC_CFG_WEB_ERROR_1: Error Handling and User Feedback (open) [error-handling; feedback]</a></div>
-<div class="line"><a class="reference external" href="12_design/spec_config_webpage.html#SPEC_CFG_WEB_INIT_1">SPEC_CFG_WEB_INIT_1: Complete Page Initialization Flow (open) [initialization; lifecycle]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_config_webpage.html#SPEC_CFG_WEB_ARCH_1">SPEC_CFG_WEB_ARCH_1: Configuration Webpage Architecture (implemented) [frontend; javascript; ui]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_config_webpage.html#SPEC_CFG_WEB_FLOW_1">SPEC_CFG_WEB_FLOW_1: Configuration Data Flow (implemented) [data-flow; json; api]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_config_webpage.html#SPEC_CFG_WEB_FORM_1">SPEC_CFG_WEB_FORM_1: Dynamic Form Generation from Schema (implemented) [form-generation; schema; javascript]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_config_webpage.html#SPEC_CFG_WEB_MAPPING_1">SPEC_CFG_WEB_MAPPING_1: JSON Array to Form Field Mapping (implemented) [data-mapping; json; form]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_config_webpage.html#SPEC_CFG_WEB_STATE_1">SPEC_CFG_WEB_STATE_1: UI State Management (implemented) [ui-state; javascript]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_config_webpage.html#SPEC_CFG_WEB_COUNTDOWN_1">SPEC_CFG_WEB_COUNTDOWN_1: Device Reset Countdown Interface (implemented) [ui; countdown; reset]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_config_webpage.html#SPEC_CFG_WEB_ERROR_1">SPEC_CFG_WEB_ERROR_1: Error Handling and User Feedback (implemented) [error-handling; feedback]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_config_webpage.html#SPEC_CFG_WEB_INIT_1">SPEC_CFG_WEB_INIT_1: Complete Page Initialization Flow (implemented) [initialization; lifecycle]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_dev_environment.html#SPEC_DEV_ENV_OPTIONS">SPEC_DEV_ENV_OPTIONS: Supported Development Environments — Options (approved) [developer; devcontainer; codespaces]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_dev_environment.html#SPEC_DEV_ENV_USAGE">SPEC_DEV_ENV_USAGE: Supported Development Environments — Setup Steps (approved) [developer; devcontainer; codespaces]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_developer_docs.html#SPEC_DEV_README_INTRO">SPEC_DEV_README_INTRO: README Introduction and Project Link (approved) [developer; documentation; readme]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_developer_docs.html#SPEC_DEV_README_META">SPEC_DEV_README_META: README Metadata Section (approved) [developer; documentation; readme]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_developer_docs.html#SPEC_DEV_OV_INDEX_WHAT">SPEC_DEV_OV_INDEX_WHAT: Overview Index — Project Description (approved) [developer; documentation; overview]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_developer_docs.html#SPEC_DEV_OV_INDEX_WHO">SPEC_DEV_OV_INDEX_WHO: Overview Index — Audience Section (approved) [developer; documentation; overview]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_developer_docs.html#SPEC_DEV_OV_INDEX_NAV">SPEC_DEV_OV_INDEX_NAV: Overview Index — Navigation Section (approved) [developer; documentation; overview]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_developer_docs.html#SPEC_DEV_OV_HW_COMPONENTS">SPEC_DEV_OV_HW_COMPONENTS: Hardware Components Listing (approved) [developer; documentation; hardware]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_developer_docs.html#SPEC_DEV_OV_HW_PINS">SPEC_DEV_OV_HW_PINS: Hardware Pin Assignment Table (approved) [developer; documentation; hardware]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_developer_docs.html#SPEC_DEV_OV_QS_QEMU">SPEC_DEV_OV_QS_QEMU: Quick Start — QEMU Path (approved) [developer; documentation; quickstart; qemu]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_developer_docs.html#SPEC_DEV_OV_QS_HW">SPEC_DEV_OV_QS_HW: Quick Start — Hardware Path (approved) [developer; documentation; quickstart; hardware]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_developer_docs.html#SPEC_DEV_GUIDE_QEMU_START">SPEC_DEV_GUIDE_QEMU_START: QEMU Guide — Starting QEMU (approved) [developer; documentation; qemu]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_developer_docs.html#SPEC_DEV_GUIDE_QEMU_WEB">SPEC_DEV_GUIDE_QEMU_WEB: QEMU Guide — Accessing the Web Interface (approved) [developer; documentation; qemu]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_developer_docs.html#SPEC_DEV_GUIDE_QEMU_STOP">SPEC_DEV_GUIDE_QEMU_STOP: QEMU Guide — Stopping QEMU (approved) [developer; documentation; qemu]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_developer_docs.html#SPEC_DEV_GUIDE_MODES_HOW">SPEC_DEV_GUIDE_MODES_HOW: Dev Modes Guide — How to Switch (approved) [developer; documentation; devmodes]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_developer_docs.html#SPEC_DEV_GUIDE_MODES_DIFF">SPEC_DEV_GUIDE_MODES_DIFF: Dev Modes Guide — What Changes Between Modes (approved) [developer; documentation; devmodes]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_developer_docs.html#SPEC_DEV_GUIDE_DEBUG_START">SPEC_DEV_GUIDE_DEBUG_START: Debugging Guide — Quick Start in QEMU (approved) [developer; documentation; debugging]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_developer_docs.html#SPEC_DEV_GUIDE_DEBUG_FEATURES">SPEC_DEV_GUIDE_DEBUG_FEATURES: Debugging Guide — Debugging Features (approved) [developer; documentation; debugging]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_developer_docs.html#SPEC_DEV_GUIDE_FLASH_OVERVIEW">SPEC_DEV_GUIDE_FLASH_OVERVIEW: Web Flasher Guide — Overview and Browser Requirements (approved) [developer; documentation; flasher]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_developer_docs.html#SPEC_DEV_GUIDE_FLASH_STEPS">SPEC_DEV_GUIDE_FLASH_STEPS: Web Flasher Guide — Flash Procedure (approved) [developer; documentation; flasher]</a></div>
 <div class="line"><a class="reference external" href="12_design/spec_display.html#SPEC_DSP_OVERVIEW_1">SPEC_DSP_OVERVIEW_1: WS2812 Hardware Integration (approved) [display; hardware; integration]</a></div>
 <div class="line"><a class="reference external" href="12_design/spec_display.html#SPEC_DSP_ARCH_1">SPEC_DSP_ARCH_1: Task-Based Architecture (approved) [display; freertos; task]</a></div>
 <div class="line"><a class="reference external" href="12_design/spec_display.html#SPEC_DSP_ARCH_2">SPEC_DSP_ARCH_2: Configuration Integration (approved) [display; configuration]</a></div>
@@ -552,6 +590,7 @@
 <div class="line"><a class="reference external" href="12_design/spec_high_level_architecture.html#SPEC_ARCH_LOGGING_1">SPEC_ARCH_LOGGING_1: Logging and Diagnostics Strategy (approved) [logging; diagnostics; debugging]</a></div>
 <div class="line"><a class="reference external" href="12_design/spec_high_level_architecture.html#SPEC_ARCH_ERROR_RECOVERY_1">SPEC_ARCH_ERROR_RECOVERY_1: Error Recovery and Reset Strategy (approved) [error-handling; reliability; reset]</a></div>
 <div class="line"><a class="reference external" href="12_design/spec_high_level_architecture.html#SPEC_ARCH_PERF_1">SPEC_ARCH_PERF_1: System Performance Requirements (approved) [performance; requirements]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_known_limitations.html#SPEC_DEV_LIMITS_STRUCTURE">SPEC_DEV_LIMITS_STRUCTURE: Known Limitations File Structure and Process (approved) [developer; limitations; known-issues]</a></div>
 <div class="line"><a class="reference external" href="12_design/spec_led_controller.html#SPEC_LED_ARCH_1">SPEC_LED_ARCH_1: RMT Peripheral Hardware Abstraction (approved) [led; rmt; hardware]</a></div>
 <div class="line"><a class="reference external" href="12_design/spec_led_controller.html#SPEC_LED_ARCH_2">SPEC_LED_ARCH_2: RAM Buffer Architecture (approved) [led; memory; buffer]</a></div>
 <div class="line"><a class="reference external" href="12_design/spec_led_controller.html#SPEC_LED_API_1">SPEC_LED_API_1: Pixel-Level Control API (approved) [led; api; control]</a></div>
@@ -562,6 +601,13 @@
 <div class="line"><a class="reference external" href="12_design/spec_led_controller.html#SPEC_LED_MEM_1">SPEC_LED_MEM_1: Dynamic Memory Management (approved) [led; memory; resource]</a></div>
 <div class="line"><a class="reference external" href="12_design/spec_led_controller.html#SPEC_LED_ERR_1">SPEC_LED_ERR_1: Error Handling and Validation (approved) [led; error-handling; validation]</a></div>
 <div class="line"><a class="reference external" href="12_design/spec_led_controller.html#SPEC_LED_SIM_1">SPEC_LED_SIM_1: LED Controller Simulator (approved) [led; simulator; qemu]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_netif_tunnel.html#SPEC_NETIF_UART_ARCH_1">SPEC_NETIF_UART_ARCH_1: UART Tunnel Component Architecture (approved) [netif; qemu; uart; architecture]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_netif_tunnel.html#SPEC_NETIF_UART_PROTO_1">SPEC_NETIF_UART_PROTO_1: UART Wire Protocol — Length-Prefix Framing (approved) [netif; qemu; protocol; framing]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_netif_tunnel.html#SPEC_NETIF_UART_BRIDGE_1">SPEC_NETIF_UART_BRIDGE_1: Host-Side Serial-TUN Bridge Script (approved) [netif; qemu; python; bridge; tooling]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_netif_tunnel.html#SPEC_NETIF_UART_DHCP_1">SPEC_NETIF_UART_DHCP_1: IP Configuration and DHCP Client Integration (approved) [netif; qemu; dhcp; ip]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_netif_tunnel.html#SPEC_NETIF_UART_COND_1">SPEC_NETIF_UART_COND_1: Conditional Compilation — QEMU-Only Build Guard (approved) [netif; qemu; build; kconfig]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_netif_tunnel.html#SPEC_NETIF_UART_PERF_1">SPEC_NETIF_UART_PERF_1: Performance Characteristics and Known Limitations (approved) [netif; qemu; performance; limitations]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_netif_tunnel.html#SPEC_NETIF_UART_DOC_1">SPEC_NETIF_UART_DOC_1: Emulation Setup Documentation (approved) [netif; qemu; documentation]</a></div>
 <div class="line"><a class="reference external" href="12_design/spec_startup_test.html#SPEC_STARTUP_1">SPEC_STARTUP_1: LED Controller Dependency Design (approved) [startup; initialization; dependency]</a></div>
 <div class="line"><a class="reference external" href="12_design/spec_startup_test.html#SPEC_STARTUP_2">SPEC_STARTUP_2: Sequential LED Pattern Algorithm (approved) [startup; algorithm; visual]</a></div>
 <div class="line"><a class="reference external" href="12_design/spec_startup_test.html#SPEC_STARTUP_3">SPEC_STARTUP_3: Startup Integration and Cleanup (approved) [startup; integration; cleanup]</a></div>
@@ -580,6 +626,7 @@
 <div class="line"><a class="reference external" href="12_design/spec_web_server.html#SPEC_WEB_EXTEND_1">SPEC_WEB_EXTEND_1: Extension Guide for Web Pages (approved) [web; extensibility; guide]</a></div>
 <div class="line"><a class="reference external" href="12_design/spec_web_server.html#SPEC_WEB_SECURITY_1">SPEC_WEB_SECURITY_1: CORS Configuration (approved) [web; security; cors]</a></div>
 <div class="line"><a class="reference external" href="12_design/spec_web_server.html#SPEC_WEB_TEST_1">SPEC_WEB_TEST_1: Web Server Testing Strategy (approved) [web; testing]</a></div>
+<div class="line"><a class="reference external" href="12_design/spec_web_server.html#SPEC_WEB_NF_1">SPEC_WEB_NF_1: Mobile-First Responsive Design (approved) [web; ui; mobile; responsive]</a></div>
 <div class="line"><a class="reference external" href="21_api/api_cert_handler.html#API_COMP_CERT_HANDLER">API_COMP_CERT_HANDLER: Certificate Handler (implemented)</a></div>
 <div class="line"><a class="reference external" href="21_api/api_cert_handler.html#API_FUNC_CERT_HANDLER_INIT">API_FUNC_CERT_HANDLER_INIT: cert_handler_init (implemented)</a></div>
 <div class="line"><a class="reference external" href="21_api/api_cert_handler.html#API_FUNC_CERT_HANDLER_GET_SERVER_CERT">API_FUNC_CERT_HANDLER_GET_SERVER_CERT: cert_handler_get_server_cert (implemented)</a></div>
@@ -735,7 +782,7 @@
   </div>
 </div><script src="_static/jquery.js?v=5d32c60e"></script>
     <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="_static/documentation_options.js?v=664ffad9"></script>
+    <script src="_static/documentation_options.js?v=8d563738"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>

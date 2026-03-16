@@ -218,6 +218,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_display.html">Distance Display User Story</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_setup.html">Setup User Story</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_reliable.html">Reliability User Story</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_developer.html">Developer User Stories</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Requirements Documentation</a><input aria-label="Toggle navigation of Requirements Documentation" checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
@@ -229,6 +230,7 @@
 <li class="toctree-l2"><a class="reference internal" href="req_led_controller.html">LED Controller Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="req_display.html">Display System Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="req_startup_test.html">Startup Test Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="req_developer_docs.html">Developer Documentation Requirements</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../12_design/index.html">Design Specifications</a><input aria-label="Toggle navigation of Design Specifications" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -240,6 +242,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../12_design/spec_led_controller.html">LED Controller Design Specification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../12_design/spec_display.html">Display System Design Specification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../12_design/spec_startup_test.html">Startup Test Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_netif_tunnel.html">UART Tunnel Network Interface Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_developer_docs.html">Supporting Documentation Design Specifications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_dev_environment.html">Development Environment Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_known_limitations.html">Known Limitations Structure Specification</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../21_api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -258,7 +264,6 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../90_guides/index.html">Development Guide</a><input aria-label="Toggle navigation of Development Guide" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/devcontainer.html">Development Container Setup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/switching-dev-modes.html">Switching Development Modes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../90_guides/pre-commit-hooks.html">Pre-commit Hooks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/qemu-emulator.html">QEMU Emulator Guide</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/web-flasher.html">Web-Based Firmware Flashing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/debugging.html">Debugging Guide</a></li>
@@ -318,7 +323,7 @@ noise reduction via exponential moving average filtering, and robust error handl
 </section>
 <section id="functional-requirements">
 <h2>Functional Requirements<a class="headerlink" href="#functional-requirements" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-a8c56461">
+<div class="need_container docutils container" id="SNCB-031de369">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_SNS_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -332,7 +337,7 @@ noise reduction via exponential moving average filtering, and robust error handl
 <div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">mandatory</span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="req_system.html#REQ_SYS_1" title="REQ_SNS_1">REQ_SYS_1</a></span></span></div>
-<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY" title="REQ_SNS_1">US_DISPLAY</a>, <a class="reference internal" href="#REQ_SNS_2" title="REQ_SNS_1">REQ_SNS_2</a>, <a class="reference internal" href="#REQ_SNS_3" title="REQ_SNS_1">REQ_SNS_3</a>, <a class="reference internal" href="#REQ_SNS_6" title="REQ_SNS_1">REQ_SNS_6</a>, <a class="reference internal" href="#REQ_SNS_9" title="REQ_SNS_1">REQ_SNS_9</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_ARCH_2" title="REQ_SNS_1">SPEC_SNS_ARCH_2</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_COMP_DISTANCE_SENSOR" title="REQ_SNS_1">API_COMP_DISTANCE_SENSOR</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_INIT" title="REQ_SNS_1">API_FUNC_DISTANCE_SENSOR_INIT</a></span></span></div>
+<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY_1" title="REQ_SNS_1">US_DISPLAY_1</a>, <a class="reference internal" href="#REQ_SNS_2" title="REQ_SNS_1">REQ_SNS_2</a>, <a class="reference internal" href="#REQ_SNS_3" title="REQ_SNS_1">REQ_SNS_3</a>, <a class="reference internal" href="#REQ_SNS_6" title="REQ_SNS_1">REQ_SNS_6</a>, <a class="reference internal" href="#REQ_SNS_9" title="REQ_SNS_1">REQ_SNS_9</a>, <a class="reference internal" href="../12_design/spec_developer_docs.html#SPEC_DEV_OV_HW_COMPONENTS" title="REQ_SNS_1">SPEC_DEV_OV_HW_COMPONENTS</a>, <a class="reference internal" href="../12_design/spec_developer_docs.html#SPEC_DEV_OV_HW_PINS" title="REQ_SNS_1">SPEC_DEV_OV_HW_PINS</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_ARCH_2" title="REQ_SNS_1">SPEC_SNS_ARCH_2</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_COMP_DISTANCE_SENSOR" title="REQ_SNS_1">API_COMP_DISTANCE_SENSOR</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_INIT" title="REQ_SNS_1">API_FUNC_DISTANCE_SENSOR_INIT</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -359,7 +364,7 @@ initialization with NULL and custom configurations.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-56ebf6bb">
+<div class="need_container docutils container" id="SNCB-ed0d6897">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_SNS_2">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -373,7 +378,7 @@ initialization with NULL and custom configurations.</p>
 <div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">mandatory</span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#REQ_SNS_1" title="REQ_SNS_2">REQ_SNS_1</a></span></span></div>
-<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY" title="REQ_SNS_2">US_DISPLAY</a>, <a class="reference internal" href="#REQ_SNS_3" title="REQ_SNS_2">REQ_SNS_3</a>, <a class="reference internal" href="#REQ_SNS_10" title="REQ_SNS_2">REQ_SNS_10</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_ARCH_2" title="REQ_SNS_2">SPEC_SNS_ARCH_2</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_COMP_DISTANCE_SENSOR" title="REQ_SNS_2">API_COMP_DISTANCE_SENSOR</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_START" title="REQ_SNS_2">API_FUNC_DISTANCE_SENSOR_START</a></span></span></div>
+<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY_1" title="REQ_SNS_2">US_DISPLAY_1</a>, <a class="reference internal" href="#REQ_SNS_3" title="REQ_SNS_2">REQ_SNS_3</a>, <a class="reference internal" href="#REQ_SNS_10" title="REQ_SNS_2">REQ_SNS_10</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_ARCH_2" title="REQ_SNS_2">SPEC_SNS_ARCH_2</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_COMP_DISTANCE_SENSOR" title="REQ_SNS_2">API_COMP_DISTANCE_SENSOR</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_START" title="REQ_SNS_2">API_FUNC_DISTANCE_SENSOR_START</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -395,7 +400,7 @@ width and timing accuracy.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-def0a757">
+<div class="need_container docutils container" id="SNCB-f116d18b">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_SNS_3">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -409,7 +414,7 @@ width and timing accuracy.</p>
 <div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">mandatory</span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#REQ_SNS_1" title="REQ_SNS_3">REQ_SNS_1</a>, <a class="reference internal" href="#REQ_SNS_2" title="REQ_SNS_3">REQ_SNS_2</a></span></span></div>
-<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY" title="REQ_SNS_3">US_DISPLAY</a>, <a class="reference internal" href="#REQ_SNS_4" title="REQ_SNS_3">REQ_SNS_4</a>, <a class="reference internal" href="#REQ_SNS_8" title="REQ_SNS_3">REQ_SNS_8</a>, <a class="reference internal" href="#REQ_SNS_12" title="REQ_SNS_3">REQ_SNS_12</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_ARCH_1" title="REQ_SNS_3">SPEC_SNS_ARCH_1</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_ISR_1" title="REQ_SNS_3">SPEC_SNS_ISR_1</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_COMP_DISTANCE_SENSOR" title="REQ_SNS_3">API_COMP_DISTANCE_SENSOR</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_START" title="REQ_SNS_3">API_FUNC_DISTANCE_SENSOR_START</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_STRUCT_DISTANCE_SENSOR_RAW_MEASUREMENT" title="REQ_SNS_3">API_STRUCT_DISTANCE_SENSOR_RAW_MEASUREMENT</a></span></span></div>
+<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY_1" title="REQ_SNS_3">US_DISPLAY_1</a>, <a class="reference internal" href="#REQ_SNS_4" title="REQ_SNS_3">REQ_SNS_4</a>, <a class="reference internal" href="#REQ_SNS_8" title="REQ_SNS_3">REQ_SNS_8</a>, <a class="reference internal" href="#REQ_SNS_12" title="REQ_SNS_3">REQ_SNS_12</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_ARCH_1" title="REQ_SNS_3">SPEC_SNS_ARCH_1</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_ISR_1" title="REQ_SNS_3">SPEC_SNS_ISR_1</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_COMP_DISTANCE_SENSOR" title="REQ_SNS_3">API_COMP_DISTANCE_SENSOR</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_START" title="REQ_SNS_3">API_FUNC_DISTANCE_SENSOR_START</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_STRUCT_DISTANCE_SENSOR_RAW_MEASUREMENT" title="REQ_SNS_3">API_STRUCT_DISTANCE_SENSOR_RAW_MEASUREMENT</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -435,7 +440,7 @@ time &lt; 10µs.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-51a96255">
+<div class="need_container docutils container" id="SNCB-c4ca0e91">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_SNS_4">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -449,33 +454,32 @@ time &lt; 10µs.</p>
 <div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">mandatory</span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#REQ_SNS_3" title="REQ_SNS_4">REQ_SNS_3</a></span></span></div>
-<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY" title="REQ_SNS_4">US_DISPLAY</a>, <a class="reference internal" href="#REQ_SNS_5" title="REQ_SNS_4">REQ_SNS_5</a>, <a class="reference internal" href="#REQ_SNS_7" title="REQ_SNS_4">REQ_SNS_7</a>, <a class="reference internal" href="#REQ_SNS_10" title="REQ_SNS_4">REQ_SNS_10</a>, <a class="reference internal" href="#REQ_SNS_11" title="REQ_SNS_4">REQ_SNS_11</a>, <a class="reference internal" href="#REQ_SNS_12" title="REQ_SNS_4">REQ_SNS_12</a>, <a class="reference internal" href="#REQ_SNS_13" title="REQ_SNS_4">REQ_SNS_13</a>, <a class="reference internal" href="#REQ_SNS_14" title="REQ_SNS_4">REQ_SNS_14</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_ARCH_1" title="REQ_SNS_4">SPEC_SNS_ARCH_1</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_TASK_1" title="REQ_SNS_4">SPEC_SNS_TASK_1</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_ALGO_2" title="REQ_SNS_4">SPEC_SNS_ALGO_2</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_COMP_DISTANCE_SENSOR" title="REQ_SNS_4">API_COMP_DISTANCE_SENSOR</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_START" title="REQ_SNS_4">API_FUNC_DISTANCE_SENSOR_START</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_STRUCT_DISTANCE_SENSOR_ERROR" title="REQ_SNS_4">API_STRUCT_DISTANCE_SENSOR_ERROR</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_STRUCT_DISTANCE_SENSOR_MEASUREMENT" title="REQ_SNS_4">API_STRUCT_DISTANCE_SENSOR_MEASUREMENT</a></span></span></div>
+<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY_1" title="REQ_SNS_4">US_DISPLAY_1</a>, <a class="reference internal" href="req_display.html#REQ_DSP_3" title="REQ_SNS_4">REQ_DSP_3</a>, <a class="reference internal" href="#REQ_SNS_5" title="REQ_SNS_4">REQ_SNS_5</a>, <a class="reference internal" href="#REQ_SNS_7" title="REQ_SNS_4">REQ_SNS_7</a>, <a class="reference internal" href="#REQ_SNS_10" title="REQ_SNS_4">REQ_SNS_10</a>, <a class="reference internal" href="#REQ_SNS_11" title="REQ_SNS_4">REQ_SNS_11</a>, <a class="reference internal" href="#REQ_SNS_12" title="REQ_SNS_4">REQ_SNS_12</a>, <a class="reference internal" href="#REQ_SNS_13" title="REQ_SNS_4">REQ_SNS_13</a>, <a class="reference internal" href="#REQ_SNS_14" title="REQ_SNS_4">REQ_SNS_14</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_ARCH_1" title="REQ_SNS_4">SPEC_SNS_ARCH_1</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_TASK_1" title="REQ_SNS_4">SPEC_SNS_TASK_1</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_ALGO_2" title="REQ_SNS_4">SPEC_SNS_ALGO_2</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_COMP_DISTANCE_SENSOR" title="REQ_SNS_4">API_COMP_DISTANCE_SENSOR</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_START" title="REQ_SNS_4">API_FUNC_DISTANCE_SENSOR_START</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_STRUCT_DISTANCE_SENSOR_ERROR" title="REQ_SNS_4">API_STRUCT_DISTANCE_SENSOR_ERROR</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_STRUCT_DISTANCE_SENSOR_MEASUREMENT" title="REQ_SNS_4">API_STRUCT_DISTANCE_SENSOR_MEASUREMENT</a></span></span></div>
 </span></div>
 </div>
 </td>
 </tr>
 <tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>Description:</strong> The sensor task SHALL calculate distance in millimeters using integer
-arithmetic with temperature compensation, validate measurement range (20mm-4000mm), apply
-exponential moving average smoothing for valid measurements, and enqueue processed results.</p>
+arithmetic with temperature compensation, apply exponential moving average smoothing for
+valid measurements, and enqueue processed results. Range validation is specified in
+<a class="reference internal" href="#REQ_SNS_13" title="REQ_SNS_13"><em class="xref need">Range Validation (REQ_SNS_13)</em></a>.</p>
 <p><strong>Rationale:</strong> Separation of concerns keeps ISR minimal while providing filtered, validated
 measurements to consumers.</p>
 <p><strong>Acceptance Criteria:</strong></p>
 <ul class="simple">
 <li><p>AC-1: Distance calculation SHALL use integer arithmetic with temperature compensation</p></li>
-<li><p>AC-2: Measurements below 20mm or above 4000mm SHALL be marked <code class="docutils literal notranslate"><span class="pre">DISTANCE_SENSOR_OUT_OF_RANGE</span></code></p></li>
-<li><p>AC-3: Valid measurements SHALL be processed through EMA filter based on <code class="docutils literal notranslate"><span class="pre">smoothing_factor</span></code></p></li>
-<li><p>AC-4: Out-of-range measurements SHALL NOT update EMA filter state</p></li>
-<li><p>AC-5: Processed measurements SHALL include <code class="docutils literal notranslate"><span class="pre">distance_mm</span></code>, <code class="docutils literal notranslate"><span class="pre">timestamp_us</span></code>, and <code class="docutils literal notranslate"><span class="pre">status</span></code> fields</p></li>
-<li><p>AC-6: Processed measurements SHALL be queued to processed measurement queue</p></li>
+<li><p>AC-2: Valid measurements SHALL be processed through EMA filter based on <code class="docutils literal notranslate"><span class="pre">smoothing_factor</span></code></p></li>
+<li><p>AC-3: Processed measurements SHALL include <code class="docutils literal notranslate"><span class="pre">distance_mm</span></code>, <code class="docutils literal notranslate"><span class="pre">timestamp_us</span></code>, and <code class="docutils literal notranslate"><span class="pre">status</span></code> fields</p></li>
+<li><p>AC-4: Processed measurements SHALL be queued to processed measurement queue</p></li>
 </ul>
-<p><strong>Verification:</strong> Unit tests with synthetic timestamps validating distance calculations, range
-validation, and EMA filter behavior.</p>
+<p><strong>Verification:</strong> Unit tests with synthetic timestamps validating distance calculations and
+EMA filter behavior.</p>
 </td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-a9e04b77">
+<div class="need_container docutils container" id="SNCB-daa46f92">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_SNS_5">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -489,7 +493,7 @@ validation, and EMA filter behavior.</p>
 <div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">mandatory</span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#REQ_SNS_4" title="REQ_SNS_5">REQ_SNS_4</a></span></span></div>
-<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY" title="REQ_SNS_5">US_DISPLAY</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_API_1" title="REQ_SNS_5">SPEC_SNS_API_1</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_COMP_DISTANCE_SENSOR" title="REQ_SNS_5">API_COMP_DISTANCE_SENSOR</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_INIT" title="REQ_SNS_5">API_FUNC_DISTANCE_SENSOR_INIT</a></span></span></div>
+<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY_1" title="REQ_SNS_5">US_DISPLAY_1</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_API_1" title="REQ_SNS_5">SPEC_SNS_API_1</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_COMP_DISTANCE_SENSOR" title="REQ_SNS_5">API_COMP_DISTANCE_SENSOR</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_INIT" title="REQ_SNS_5">API_FUNC_DISTANCE_SENSOR_INIT</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -512,7 +516,7 @@ measurements.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-93c73e7e">
+<div class="need_container docutils container" id="SNCB-de9e68b3">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_SNS_6">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -526,7 +530,7 @@ measurements.</p>
 <div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">mandatory</span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#REQ_SNS_1" title="REQ_SNS_6">REQ_SNS_1</a></span></span></div>
-<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY" title="REQ_SNS_6">US_DISPLAY</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_TASK_1" title="REQ_SNS_6">SPEC_SNS_TASK_1</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_COMP_DISTANCE_SENSOR" title="REQ_SNS_6">API_COMP_DISTANCE_SENSOR</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_INIT" title="REQ_SNS_6">API_FUNC_DISTANCE_SENSOR_INIT</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_GET_QUEUE_OVERFLOWS" title="REQ_SNS_6">API_FUNC_DISTANCE_SENSOR_GET_QUEUE_OVERFLOWS</a></span></span></div>
+<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY_1" title="REQ_SNS_6">US_DISPLAY_1</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_TASK_1" title="REQ_SNS_6">SPEC_SNS_TASK_1</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_COMP_DISTANCE_SENSOR" title="REQ_SNS_6">API_COMP_DISTANCE_SENSOR</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_INIT" title="REQ_SNS_6">API_FUNC_DISTANCE_SENSOR_INIT</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_GET_QUEUE_OVERFLOWS" title="REQ_SNS_6">API_FUNC_DISTANCE_SENSOR_GET_QUEUE_OVERFLOWS</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -550,7 +554,7 @@ start/stop cycles.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-eb061858">
+<div class="need_container docutils container" id="SNCB-8ce2f8af">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_SNS_7">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -564,7 +568,7 @@ start/stop cycles.</p>
 <div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">important</span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#REQ_SNS_4" title="REQ_SNS_7">REQ_SNS_4</a></span></span></div>
-<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY" title="REQ_SNS_7">US_DISPLAY</a>, <a class="reference internal" href="#REQ_SNS_14" title="REQ_SNS_7">REQ_SNS_14</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_API_1" title="REQ_SNS_7">SPEC_SNS_API_1</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_COMP_DISTANCE_SENSOR" title="REQ_SNS_7">API_COMP_DISTANCE_SENSOR</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_MONITOR" title="REQ_SNS_7">API_FUNC_DISTANCE_SENSOR_MONITOR</a></span></span></div>
+<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY_1" title="REQ_SNS_7">US_DISPLAY_1</a>, <a class="reference internal" href="#REQ_SNS_14" title="REQ_SNS_7">REQ_SNS_14</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_API_1" title="REQ_SNS_7">SPEC_SNS_API_1</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_COMP_DISTANCE_SENSOR" title="REQ_SNS_7">API_COMP_DISTANCE_SENSOR</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_MONITOR" title="REQ_SNS_7">API_FUNC_DISTANCE_SENSOR_MONITOR</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -590,7 +594,7 @@ output.</p>
 </section>
 <section id="non-functional-requirements">
 <h2>Non-Functional Requirements<a class="headerlink" href="#non-functional-requirements" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-82ccb16e">
+<div class="need_container docutils container" id="SNCB-b276d401">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_SNS_8">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -604,7 +608,7 @@ output.</p>
 <div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">critical</span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#REQ_SNS_3" title="REQ_SNS_8">REQ_SNS_3</a></span></span></div>
-<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY" title="REQ_SNS_8">US_DISPLAY</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_ARCH_1" title="REQ_SNS_8">SPEC_SNS_ARCH_1</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_ISR_1" title="REQ_SNS_8">SPEC_SNS_ISR_1</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_COMP_DISTANCE_SENSOR" title="REQ_SNS_8">API_COMP_DISTANCE_SENSOR</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_START" title="REQ_SNS_8">API_FUNC_DISTANCE_SENSOR_START</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_STOP" title="REQ_SNS_8">API_FUNC_DISTANCE_SENSOR_STOP</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_GET_LATEST" title="REQ_SNS_8">API_FUNC_DISTANCE_SENSOR_GET_LATEST</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_HAS_NEW_MEASUREMENT" title="REQ_SNS_8">API_FUNC_DISTANCE_SENSOR_HAS_NEW_MEASUREMENT</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_IS_RUNNING" title="REQ_SNS_8">API_FUNC_DISTANCE_SENSOR_IS_RUNNING</a></span></span></div>
+<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY_1" title="REQ_SNS_8">US_DISPLAY_1</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_ARCH_1" title="REQ_SNS_8">SPEC_SNS_ARCH_1</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_ISR_1" title="REQ_SNS_8">SPEC_SNS_ISR_1</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_COMP_DISTANCE_SENSOR" title="REQ_SNS_8">API_COMP_DISTANCE_SENSOR</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_START" title="REQ_SNS_8">API_FUNC_DISTANCE_SENSOR_START</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_STOP" title="REQ_SNS_8">API_FUNC_DISTANCE_SENSOR_STOP</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_GET_LATEST" title="REQ_SNS_8">API_FUNC_DISTANCE_SENSOR_GET_LATEST</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_HAS_NEW_MEASUREMENT" title="REQ_SNS_8">API_FUNC_DISTANCE_SENSOR_HAS_NEW_MEASUREMENT</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_IS_RUNNING" title="REQ_SNS_8">API_FUNC_DISTANCE_SENSOR_IS_RUNNING</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -630,7 +634,7 @@ load conditions.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-7990c75a">
+<div class="need_container docutils container" id="SNCB-9d077a9f">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_SNS_9">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -644,7 +648,7 @@ load conditions.</p>
 <div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">important</span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#REQ_SNS_1" title="REQ_SNS_9">REQ_SNS_1</a></span></span></div>
-<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY" title="REQ_SNS_9">US_DISPLAY</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_COMP_DISTANCE_SENSOR" title="REQ_SNS_9">API_COMP_DISTANCE_SENSOR</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_INIT" title="REQ_SNS_9">API_FUNC_DISTANCE_SENSOR_INIT</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_GET_LATEST" title="REQ_SNS_9">API_FUNC_DISTANCE_SENSOR_GET_LATEST</a></span></span></div>
+<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY_1" title="REQ_SNS_9">US_DISPLAY_1</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_ARCH_1" title="REQ_SNS_9">SPEC_SNS_ARCH_1</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_TASK_1" title="REQ_SNS_9">SPEC_SNS_TASK_1</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_COMP_DISTANCE_SENSOR" title="REQ_SNS_9">API_COMP_DISTANCE_SENSOR</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_INIT" title="REQ_SNS_9">API_FUNC_DISTANCE_SENSOR_INIT</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_GET_LATEST" title="REQ_SNS_9">API_FUNC_DISTANCE_SENSOR_GET_LATEST</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -668,7 +672,7 @@ functionality.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-6a9457de">
+<div class="need_container docutils container" id="SNCB-2fe848d3">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_SNS_10">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -682,7 +686,7 @@ functionality.</p>
 <div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">important</span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#REQ_SNS_2" title="REQ_SNS_10">REQ_SNS_2</a>, <a class="reference internal" href="#REQ_SNS_4" title="REQ_SNS_10">REQ_SNS_4</a></span></span></div>
-<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY" title="REQ_SNS_10">US_DISPLAY</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_TASK_1" title="REQ_SNS_10">SPEC_SNS_TASK_1</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_COMP_DISTANCE_SENSOR" title="REQ_SNS_10">API_COMP_DISTANCE_SENSOR</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_GET_QUEUE_OVERFLOWS" title="REQ_SNS_10">API_FUNC_DISTANCE_SENSOR_GET_QUEUE_OVERFLOWS</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_MONITOR" title="REQ_SNS_10">API_FUNC_DISTANCE_SENSOR_MONITOR</a></span></span></div>
+<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY_1" title="REQ_SNS_10">US_DISPLAY_1</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_TASK_1" title="REQ_SNS_10">SPEC_SNS_TASK_1</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_COMP_DISTANCE_SENSOR" title="REQ_SNS_10">API_COMP_DISTANCE_SENSOR</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_GET_QUEUE_OVERFLOWS" title="REQ_SNS_10">API_FUNC_DISTANCE_SENSOR_GET_QUEUE_OVERFLOWS</a>, <a class="reference internal" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_MONITOR" title="REQ_SNS_10">API_FUNC_DISTANCE_SENSOR_MONITOR</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -707,7 +711,7 @@ and jitter.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-1f95097a">
+<div class="need_container docutils container" id="SNCB-b23a691e">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_SNS_11">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -721,7 +725,7 @@ and jitter.</p>
 <div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">mandatory</span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#REQ_SNS_4" title="REQ_SNS_11">REQ_SNS_4</a></span></span></div>
-<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY" title="REQ_SNS_11">US_DISPLAY</a>, <a class="reference internal" href="req_display.html#REQ_DSP_3" title="REQ_SNS_11">REQ_DSP_3</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_ALGO_1" title="REQ_SNS_11">SPEC_SNS_ALGO_1</a></span></span></div>
+<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY_1" title="REQ_SNS_11">US_DISPLAY_1</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_ALGO_1" title="REQ_SNS_11">SPEC_SNS_ALGO_1</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -749,7 +753,7 @@ validation.</p>
 </section>
 <section id="error-handling-requirements">
 <h2>Error Handling Requirements<a class="headerlink" href="#error-handling-requirements" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-bde52fbc">
+<div class="need_container docutils container" id="SNCB-eb10524a">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_SNS_12">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -763,7 +767,7 @@ validation.</p>
 <div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">mandatory</span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#REQ_SNS_3" title="REQ_SNS_12">REQ_SNS_3</a>, <a class="reference internal" href="#REQ_SNS_4" title="REQ_SNS_12">REQ_SNS_4</a></span></span></div>
-<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY" title="REQ_SNS_12">US_DISPLAY</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_ERR_1" title="REQ_SNS_12">SPEC_SNS_ERR_1</a></span></span></div>
+<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY_1" title="REQ_SNS_12">US_DISPLAY_1</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_ERR_1" title="REQ_SNS_12">SPEC_SNS_ERR_1</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -787,7 +791,7 @@ continue operation.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-85521c26">
+<div class="need_container docutils container" id="SNCB-248cd3dd">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_SNS_13">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -801,7 +805,7 @@ continue operation.</p>
 <div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">mandatory</span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#REQ_SNS_4" title="REQ_SNS_13">REQ_SNS_4</a></span></span></div>
-<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY" title="REQ_SNS_13">US_DISPLAY</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_ERR_1" title="REQ_SNS_13">SPEC_SNS_ERR_1</a></span></span></div>
+<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY_1" title="REQ_SNS_13">US_DISPLAY_1</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_ERR_1" title="REQ_SNS_13">SPEC_SNS_ERR_1</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -826,7 +830,7 @@ validation of status codes.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-4ef2ce09">
+<div class="need_container docutils container" id="SNCB-6c0b5606">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_SNS_14">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -840,7 +844,7 @@ validation of status codes.</p>
 <div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">important</span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#REQ_SNS_4" title="REQ_SNS_14">REQ_SNS_4</a>, <a class="reference internal" href="#REQ_SNS_7" title="REQ_SNS_14">REQ_SNS_7</a></span></span></div>
-<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY" title="REQ_SNS_14">US_DISPLAY</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_ERR_1" title="REQ_SNS_14">SPEC_SNS_ERR_1</a></span></span></div>
+<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY_1" title="REQ_SNS_14">US_DISPLAY_1</a>, <a class="reference internal" href="../12_design/spec_distance_sensor.html#SPEC_SNS_ERR_1" title="REQ_SNS_14">SPEC_SNS_ERR_1</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -941,7 +945,7 @@ behavior and statistics.</p>
   </div>
 </div><script src="../_static/jquery.js?v=5d32c60e"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="../_static/documentation_options.js?v=664ffad9"></script>
+    <script src="../_static/documentation_options.js?v=8d563738"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

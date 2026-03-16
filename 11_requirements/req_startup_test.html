@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Design Specifications" href="../12_design/index.html"><link rel="prev" title="Display System Requirements" href="req_display.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Developer Documentation Requirements" href="req_developer_docs.html"><link rel="prev" title="Display System Requirements" href="req_display.html">
 
     <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
         <title>Startup Test Requirements - ESP32 Distance Sensor</title>
@@ -218,6 +218,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_display.html">Distance Display User Story</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_setup.html">Setup User Story</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_reliable.html">Reliability User Story</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_developer.html">Developer User Stories</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Requirements Documentation</a><input aria-label="Toggle navigation of Requirements Documentation" checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
@@ -229,6 +230,7 @@
 <li class="toctree-l2"><a class="reference internal" href="req_led_controller.html">LED Controller Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="req_display.html">Display System Requirements</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Startup Test Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="req_developer_docs.html">Developer Documentation Requirements</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../12_design/index.html">Design Specifications</a><input aria-label="Toggle navigation of Design Specifications" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -240,6 +242,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../12_design/spec_led_controller.html">LED Controller Design Specification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../12_design/spec_display.html">Display System Design Specification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../12_design/spec_startup_test.html">Startup Test Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_netif_tunnel.html">UART Tunnel Network Interface Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_developer_docs.html">Supporting Documentation Design Specifications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_dev_environment.html">Development Environment Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_known_limitations.html">Known Limitations Structure Specification</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../21_api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -258,7 +264,6 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../90_guides/index.html">Development Guide</a><input aria-label="Toggle navigation of Development Guide" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/devcontainer.html">Development Container Setup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/switching-dev-modes.html">Switching Development Modes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../90_guides/pre-commit-hooks.html">Pre-commit Hooks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/qemu-emulator.html">QEMU Emulator Guide</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/web-flasher.html">Web-Based Firmware Flashing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/debugging.html">Debugging Guide</a></li>
@@ -319,7 +324,7 @@ that the device is initializing properly and all LEDs in the strip are functiona
 </section>
 <section id="functional-requirements">
 <h2>Functional Requirements<a class="headerlink" href="#functional-requirements" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-f5119b04">
+<div class="need_container docutils container" id="SNCB-37c28465">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_STARTUP_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -333,7 +338,7 @@ that the device is initializing properly and all LEDs in the strip are functiona
 <div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">mandatory</span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="req_led_controller.html#REQ_LED_1" title="REQ_STARTUP_1">REQ_LED_1</a>, <a class="reference internal" href="req_system.html#REQ_SYS_1" title="REQ_STARTUP_1">REQ_SYS_1</a></span></span></div>
-<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_reliable.html#US_RELIABLE" title="REQ_STARTUP_1">US_RELIABLE</a>, <a class="reference internal" href="#REQ_STARTUP_2" title="REQ_STARTUP_1">REQ_STARTUP_2</a>, <a class="reference internal" href="../12_design/spec_startup_test.html#SPEC_STARTUP_1" title="REQ_STARTUP_1">SPEC_STARTUP_1</a>, <a class="reference internal" href="../21_api/api_startup_tests.html#API_COMP_STARTUP_TESTS" title="REQ_STARTUP_1">API_COMP_STARTUP_TESTS</a></span></span></div>
+<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_reliable.html#US_RELIABLE_1" title="REQ_STARTUP_1">US_RELIABLE_1</a>, <a class="reference internal" href="#REQ_STARTUP_2" title="REQ_STARTUP_1">REQ_STARTUP_2</a>, <a class="reference internal" href="../12_design/spec_startup_test.html#SPEC_STARTUP_1" title="REQ_STARTUP_1">SPEC_STARTUP_1</a>, <a class="reference internal" href="../21_api/api_startup_tests.html#API_COMP_STARTUP_TESTS" title="REQ_STARTUP_1">API_COMP_STARTUP_TESTS</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -352,7 +357,7 @@ performing the visual test sequence.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-24816f07">
+<div class="need_container docutils container" id="SNCB-9e786e24">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_STARTUP_2">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -366,7 +371,7 @@ performing the visual test sequence.</p>
 <div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">mandatory</span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#REQ_STARTUP_1" title="REQ_STARTUP_2">REQ_STARTUP_1</a>, <a class="reference internal" href="req_led_controller.html#REQ_LED_2" title="REQ_STARTUP_2">REQ_LED_2</a></span></span></div>
-<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_reliable.html#US_RELIABLE" title="REQ_STARTUP_2">US_RELIABLE</a>, <a class="reference internal" href="#REQ_STARTUP_3" title="REQ_STARTUP_2">REQ_STARTUP_3</a>, <a class="reference internal" href="../12_design/spec_startup_test.html#SPEC_STARTUP_2" title="REQ_STARTUP_2">SPEC_STARTUP_2</a>, <a class="reference internal" href="../21_api/api_startup_tests.html#API_COMP_STARTUP_TESTS" title="REQ_STARTUP_2">API_COMP_STARTUP_TESTS</a>, <a class="reference internal" href="../21_api/api_startup_tests.html#API_FUNC_STARTUP_TESTS_SINGLE_CYCLE" title="REQ_STARTUP_2">API_FUNC_STARTUP_TESTS_SINGLE_CYCLE</a>, <a class="reference internal" href="../21_api/api_startup_tests.html#API_FUNC_STARTUP_TESTS_MULTIPLE_CYCLES" title="REQ_STARTUP_2">API_FUNC_STARTUP_TESTS_MULTIPLE_CYCLES</a></span></span></div>
+<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_reliable.html#US_RELIABLE_1" title="REQ_STARTUP_2">US_RELIABLE_1</a>, <a class="reference internal" href="#REQ_STARTUP_3" title="REQ_STARTUP_2">REQ_STARTUP_3</a>, <a class="reference internal" href="../12_design/spec_startup_test.html#SPEC_STARTUP_2" title="REQ_STARTUP_2">SPEC_STARTUP_2</a>, <a class="reference internal" href="../21_api/api_startup_tests.html#API_COMP_STARTUP_TESTS" title="REQ_STARTUP_2">API_COMP_STARTUP_TESTS</a>, <a class="reference internal" href="../21_api/api_startup_tests.html#API_FUNC_STARTUP_TESTS_SINGLE_CYCLE" title="REQ_STARTUP_2">API_FUNC_STARTUP_TESTS_SINGLE_CYCLE</a>, <a class="reference internal" href="../21_api/api_startup_tests.html#API_FUNC_STARTUP_TESTS_MULTIPLE_CYCLES" title="REQ_STARTUP_2">API_FUNC_STARTUP_TESTS_MULTIPLE_CYCLES</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -394,7 +399,7 @@ timing and visual clarity.</p>
 </section>
 <section id="non-functional-requirements">
 <h2>Non-Functional Requirements<a class="headerlink" href="#non-functional-requirements" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-6f676d29">
+<div class="need_container docutils container" id="SNCB-08aaceeb">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_STARTUP_3">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -408,7 +413,7 @@ timing and visual clarity.</p>
 <div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">important</span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#REQ_STARTUP_2" title="REQ_STARTUP_3">REQ_STARTUP_2</a></span></span></div>
-<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_reliable.html#US_RELIABLE" title="REQ_STARTUP_3">US_RELIABLE</a>, <a class="reference internal" href="../12_design/spec_startup_test.html#SPEC_STARTUP_3" title="REQ_STARTUP_3">SPEC_STARTUP_3</a>, <a class="reference internal" href="../21_api/api_startup_tests.html#API_COMP_STARTUP_TESTS" title="REQ_STARTUP_3">API_COMP_STARTUP_TESTS</a>, <a class="reference internal" href="../21_api/api_startup_tests.html#API_FUNC_STARTUP_TESTS_RAINBOW" title="REQ_STARTUP_3">API_FUNC_STARTUP_TESTS_RAINBOW</a></span></span></div>
+<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_reliable.html#US_RELIABLE_1" title="REQ_STARTUP_3">US_RELIABLE_1</a>, <a class="reference internal" href="../12_design/spec_startup_test.html#SPEC_STARTUP_3" title="REQ_STARTUP_3">SPEC_STARTUP_3</a>, <a class="reference internal" href="../21_api/api_startup_tests.html#API_COMP_STARTUP_TESTS" title="REQ_STARTUP_3">API_COMP_STARTUP_TESTS</a>, <a class="reference internal" href="../21_api/api_startup_tests.html#API_FUNC_STARTUP_TESTS_RAINBOW" title="REQ_STARTUP_3">API_FUNC_STARTUP_TESTS_RAINBOW</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -438,12 +443,12 @@ performance meets timing requirements.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../12_design/index.html">
+          <a class="next-page" href="req_developer_docs.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Design Specifications</div>
+                <div class="title">Developer Documentation Requirements</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -505,7 +510,7 @@ performance meets timing requirements.</p>
   </div>
 </div><script src="../_static/jquery.js?v=5d32c60e"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="../_static/documentation_options.js?v=664ffad9"></script>
+    <script src="../_static/documentation_options.js?v=8d563738"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

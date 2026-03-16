@@ -97,24 +97,23 @@ Functional Requirements
    :priority: mandatory
    :tags: sensor, processing, filtering
 
-   **Description:** The sensor task SHALL calculate distance in millimeters using integer 
-   arithmetic with temperature compensation, validate measurement range (20mm-4000mm), apply 
-   exponential moving average smoothing for valid measurements, and enqueue processed results.
+   **Description:** The sensor task SHALL calculate distance in millimeters using integer
+   arithmetic with temperature compensation, apply exponential moving average smoothing for
+   valid measurements, and enqueue processed results. Range validation is specified in
+   :need:`REQ_SNS_13`.
 
-   **Rationale:** Separation of concerns keeps ISR minimal while providing filtered, validated 
+   **Rationale:** Separation of concerns keeps ISR minimal while providing filtered, validated
    measurements to consumers.
 
    **Acceptance Criteria:**
 
    - AC-1: Distance calculation SHALL use integer arithmetic with temperature compensation
-   - AC-2: Measurements below 20mm or above 4000mm SHALL be marked ``DISTANCE_SENSOR_OUT_OF_RANGE``
-   - AC-3: Valid measurements SHALL be processed through EMA filter based on ``smoothing_factor``
-   - AC-4: Out-of-range measurements SHALL NOT update EMA filter state
-   - AC-5: Processed measurements SHALL include ``distance_mm``, ``timestamp_us``, and ``status`` fields
-   - AC-6: Processed measurements SHALL be queued to processed measurement queue
+   - AC-2: Valid measurements SHALL be processed through EMA filter based on ``smoothing_factor``
+   - AC-3: Processed measurements SHALL include ``distance_mm``, ``timestamp_us``, and ``status`` fields
+   - AC-4: Processed measurements SHALL be queued to processed measurement queue
 
-   **Verification:** Unit tests with synthetic timestamps validating distance calculations, range 
-   validation, and EMA filter behavior.
+   **Verification:** Unit tests with synthetic timestamps validating distance calculations and
+   EMA filter behavior.
 
 .. req:: Blocking API Access
    :id: REQ_SNS_5

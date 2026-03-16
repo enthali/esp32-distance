@@ -218,6 +218,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_display.html">Distance Display User Story</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_setup.html">Setup User Story</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_reliable.html">Reliability User Story</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_developer.html">Developer User Stories</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../11_requirements/index.html">Requirements Documentation</a><input aria-label="Toggle navigation of Requirements Documentation" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -229,6 +230,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_led_controller.html">LED Controller Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_display.html">Display System Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_startup_test.html">Startup Test Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_developer_docs.html">Developer Documentation Requirements</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Design Specifications</a><input aria-label="Toggle navigation of Design Specifications" checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
@@ -240,6 +242,10 @@
 <li class="toctree-l2"><a class="reference internal" href="spec_led_controller.html">LED Controller Design Specification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spec_display.html">Display System Design Specification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spec_startup_test.html">Startup Test Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spec_netif_tunnel.html">UART Tunnel Network Interface Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spec_developer_docs.html">Supporting Documentation Design Specifications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spec_dev_environment.html">Development Environment Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spec_known_limitations.html">Known Limitations Structure Specification</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../21_api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -258,7 +264,6 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../90_guides/index.html">Development Guide</a><input aria-label="Toggle navigation of Development Guide" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/devcontainer.html">Development Container Setup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/switching-dev-modes.html">Switching Development Modes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../90_guides/pre-commit-hooks.html">Pre-commit Hooks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/qemu-emulator.html">QEMU Emulator Guide</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/web-flasher.html">Web-Based Firmware Flashing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/debugging.html">Debugging Guide</a></li>
@@ -313,7 +318,7 @@
 <strong>Last Updated</strong>: 2025-11-12</p>
 <section id="architecture-overview">
 <h2>Architecture Overview<a class="headerlink" href="#architecture-overview" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-7abd1c2c">
+<div class="need_container docutils container" id="SNCB-b1f34efd">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_CFG_WEB_ARCH_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -322,7 +327,7 @@
 </td>
 </tr>
 <tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
-<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">implemented</span></span></div>
 <div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">frontend</span><span class="needs_spacer">, </span><span class="needs_data">javascript</span><span class="needs_spacer">, </span><span class="needs_data">ui</span></span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="../11_requirements/req_web_server.html#REQ_WEB_CONF_1" title="SPEC_CFG_WEB_ARCH_1">REQ_WEB_CONF_1</a>, <a class="reference internal" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_12" title="SPEC_CFG_WEB_ARCH_1">REQ_CFG_JSON_12</a>, <a class="reference internal" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_13" title="SPEC_CFG_WEB_ARCH_1">REQ_CFG_JSON_13</a></span></span></div>
@@ -374,7 +379,7 @@ The configuration webpage is a single-page JavaScript application that dynamical
 </section>
 <section id="data-flow-architecture">
 <h2>Data Flow Architecture<a class="headerlink" href="#data-flow-architecture" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-2782fbb6">
+<div class="need_container docutils container" id="SNCB-94583c3a">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_CFG_WEB_FLOW_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -383,7 +388,7 @@ The configuration webpage is a single-page JavaScript application that dynamical
 </td>
 </tr>
 <tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
-<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">implemented</span></span></div>
 <div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">data-flow</span><span class="needs_spacer">, </span><span class="needs_data">json</span><span class="needs_spacer">, </span><span class="needs_data">api</span></span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#SPEC_CFG_WEB_ARCH_1" title="SPEC_CFG_WEB_FLOW_1">SPEC_CFG_WEB_ARCH_1</a>, <a class="reference internal" href="spec_config_manager_json.html#SPEC_CFG_JSON_BULK_1" title="SPEC_CFG_WEB_FLOW_1">SPEC_CFG_JSON_BULK_1</a></span></span></div>
@@ -462,7 +467,7 @@ The configuration webpage is a single-page JavaScript application that dynamical
 </section>
 <section id="schema-driven-form-generation">
 <h2>Schema-Driven Form Generation<a class="headerlink" href="#schema-driven-form-generation" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-fdb51938">
+<div class="need_container docutils container" id="SNCB-f2aef073">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_CFG_WEB_FORM_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -471,7 +476,7 @@ The configuration webpage is a single-page JavaScript application that dynamical
 </td>
 </tr>
 <tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
-<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">implemented</span></span></div>
 <div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">form-generation</span><span class="needs_spacer">, </span><span class="needs_data">schema</span><span class="needs_spacer">, </span><span class="needs_data">javascript</span></span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#SPEC_CFG_WEB_ARCH_1" title="SPEC_CFG_WEB_FORM_1">SPEC_CFG_WEB_ARCH_1</a>, <a class="reference internal" href="spec_config_manager_json.html#SPEC_CFG_JSON_SCHEMA_1" title="SPEC_CFG_WEB_FORM_1">SPEC_CFG_JSON_SCHEMA_1</a></span></span></div>
@@ -594,7 +599,7 @@ The configuration webpage is a single-page JavaScript application that dynamical
 </section>
 <section id="configuration-data-mapping">
 <h2>Configuration Data Mapping<a class="headerlink" href="#configuration-data-mapping" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-cba8d1f3">
+<div class="need_container docutils container" id="SNCB-ebc355ae">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_CFG_WEB_MAPPING_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -603,7 +608,7 @@ The configuration webpage is a single-page JavaScript application that dynamical
 </td>
 </tr>
 <tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
-<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">implemented</span></span></div>
 <div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">data-mapping</span><span class="needs_spacer">, </span><span class="needs_data">json</span><span class="needs_spacer">, </span><span class="needs_data">form</span></span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#SPEC_CFG_WEB_ARCH_1" title="SPEC_CFG_WEB_MAPPING_1">SPEC_CFG_WEB_ARCH_1</a>, <a class="reference internal" href="spec_config_manager_json.html#SPEC_CFG_JSON_BULK_1" title="SPEC_CFG_WEB_MAPPING_1">SPEC_CFG_JSON_BULK_1</a></span></span></div>
@@ -730,7 +735,7 @@ The configuration webpage is a single-page JavaScript application that dynamical
 </section>
 <section id="user-interface-states">
 <h2>User Interface States<a class="headerlink" href="#user-interface-states" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-f83d687c">
+<div class="need_container docutils container" id="SNCB-57d4cccc">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_CFG_WEB_STATE_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -739,7 +744,7 @@ The configuration webpage is a single-page JavaScript application that dynamical
 </td>
 </tr>
 <tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
-<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">implemented</span></span></div>
 <div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">ui-state</span><span class="needs_spacer">, </span><span class="needs_data">javascript</span></span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#SPEC_CFG_WEB_ARCH_1" title="SPEC_CFG_WEB_STATE_1">SPEC_CFG_WEB_ARCH_1</a></span></span></div>
@@ -844,7 +849,7 @@ The configuration webpage is a single-page JavaScript application that dynamical
 </section>
 <section id="reset-countdown-modal">
 <h2>Reset Countdown Modal<a class="headerlink" href="#reset-countdown-modal" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-455a09c7">
+<div class="need_container docutils container" id="SNCB-8c7858d5">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_CFG_WEB_COUNTDOWN_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -853,7 +858,7 @@ The configuration webpage is a single-page JavaScript application that dynamical
 </td>
 </tr>
 <tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
-<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">implemented</span></span></div>
 <div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">ui</span><span class="needs_spacer">, </span><span class="needs_data">countdown</span><span class="needs_spacer">, </span><span class="needs_data">reset</span></span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#SPEC_CFG_WEB_ARCH_1" title="SPEC_CFG_WEB_COUNTDOWN_1">SPEC_CFG_WEB_ARCH_1</a></span></span></div>
@@ -961,7 +966,7 @@ The configuration webpage is a single-page JavaScript application that dynamical
 </section>
 <section id="error-handling">
 <h2>Error Handling<a class="headerlink" href="#error-handling" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-7513ba7a">
+<div class="need_container docutils container" id="SNCB-2e8044a1">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_CFG_WEB_ERROR_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -970,7 +975,7 @@ The configuration webpage is a single-page JavaScript application that dynamical
 </td>
 </tr>
 <tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
-<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">implemented</span></span></div>
 <div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">error-handling</span><span class="needs_spacer">, </span><span class="needs_data">feedback</span></span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#SPEC_CFG_WEB_ARCH_1" title="SPEC_CFG_WEB_ERROR_1">SPEC_CFG_WEB_ARCH_1</a></span></span></div>
@@ -1071,7 +1076,7 @@ The configuration webpage is a single-page JavaScript application that dynamical
 </section>
 <section id="page-initialization-sequence">
 <h2>Page Initialization Sequence<a class="headerlink" href="#page-initialization-sequence" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-63a04e3c">
+<div class="need_container docutils container" id="SNCB-dcdce039">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_CFG_WEB_INIT_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -1080,7 +1085,7 @@ The configuration webpage is a single-page JavaScript application that dynamical
 </td>
 </tr>
 <tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
-<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">implemented</span></span></div>
 <div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">initialization</span><span class="needs_spacer">, </span><span class="needs_data">lifecycle</span></span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#SPEC_CFG_WEB_ARCH_1" title="SPEC_CFG_WEB_INIT_1">SPEC_CFG_WEB_ARCH_1</a></span></span></div>
@@ -1180,279 +1185,321 @@ User can interact
 <tbody>
 <tr class="need row-even"><td class="needs_id"><p><a class="reference internal" href="#SPEC_CFG_WEB_ARCH_1">SPEC_CFG_WEB_ARCH_1</a></p></td>
 <td class="needs_title"><p>Configuration Webpage Architecture</p></td>
-<td class="needs_status"><p>open</p></td>
+<td class="needs_status"><p>implemented</p></td>
 </tr>
 <tr class="need row-odd"><td class="needs_id"><p><a class="reference internal" href="#SPEC_CFG_WEB_COUNTDOWN_1">SPEC_CFG_WEB_COUNTDOWN_1</a></p></td>
 <td class="needs_title"><p>Device Reset Countdown Interface</p></td>
-<td class="needs_status"><p>open</p></td>
+<td class="needs_status"><p>implemented</p></td>
 </tr>
 <tr class="need row-even"><td class="needs_id"><p><a class="reference internal" href="#SPEC_CFG_WEB_ERROR_1">SPEC_CFG_WEB_ERROR_1</a></p></td>
 <td class="needs_title"><p>Error Handling and User Feedback</p></td>
-<td class="needs_status"><p>open</p></td>
+<td class="needs_status"><p>implemented</p></td>
 </tr>
 <tr class="need row-odd"><td class="needs_id"><p><a class="reference internal" href="#SPEC_CFG_WEB_FLOW_1">SPEC_CFG_WEB_FLOW_1</a></p></td>
 <td class="needs_title"><p>Configuration Data Flow</p></td>
-<td class="needs_status"><p>open</p></td>
+<td class="needs_status"><p>implemented</p></td>
 </tr>
 <tr class="need row-even"><td class="needs_id"><p><a class="reference internal" href="#SPEC_CFG_WEB_FORM_1">SPEC_CFG_WEB_FORM_1</a></p></td>
 <td class="needs_title"><p>Dynamic Form Generation from Schema</p></td>
-<td class="needs_status"><p>open</p></td>
+<td class="needs_status"><p>implemented</p></td>
 </tr>
 <tr class="need row-odd"><td class="needs_id"><p><a class="reference internal" href="#SPEC_CFG_WEB_INIT_1">SPEC_CFG_WEB_INIT_1</a></p></td>
 <td class="needs_title"><p>Complete Page Initialization Flow</p></td>
-<td class="needs_status"><p>open</p></td>
+<td class="needs_status"><p>implemented</p></td>
 </tr>
 <tr class="need row-even"><td class="needs_id"><p><a class="reference internal" href="#SPEC_CFG_WEB_MAPPING_1">SPEC_CFG_WEB_MAPPING_1</a></p></td>
 <td class="needs_title"><p>JSON Array to Form Field Mapping</p></td>
-<td class="needs_status"><p>open</p></td>
+<td class="needs_status"><p>implemented</p></td>
 </tr>
 <tr class="need row-odd"><td class="needs_id"><p><a class="reference internal" href="#SPEC_CFG_WEB_STATE_1">SPEC_CFG_WEB_STATE_1</a></p></td>
 <td class="needs_title"><p>UI State Management</p></td>
-<td class="needs_status"><p>open</p></td>
+<td class="needs_status"><p>implemented</p></td>
 </tr>
 </tbody>
 </table>
 <figure class="align-center" id="needflow-12_design/spec_config_webpage-0">
-<div class="graphviz"><img src="../_images/needflow-b665b18849264b1cf0ba2da5cbee96245c634a8c.png" alt="" usemap="#needflow" class="graphviz" /></div>
+<div class="graphviz"><img src="../_images/needflow-02e54ccdb9790addc64d9e2e5e0b9207efe87e36.png" alt="" usemap="#needflow" class="graphviz" /></div>
 <map id="needflow" name="needflow">
-<area shape="rect" id="node1" href="../10_userstories/us_display.html#US_DISPLAY" target="_top" title="US_DISPLAY" alt="" coords="3843,228,4047,335"/>
-<area shape="rect" id="node19" href="../11_requirements/req_display.html#REQ_DSP_1" target="_top" title="REQ_DSP_1" alt="" coords="6764,1311,6908,1399"/>
-<area shape="rect" id="node20" href="../11_requirements/req_display.html#REQ_DSP_2" target="_top" title="REQ_DSP_2" alt="" coords="7481,1001,7668,1089"/>
-<area shape="rect" id="node21" href="../11_requirements/req_display.html#REQ_DSP_3" target="_top" title="REQ_DSP_3" alt="" coords="6517,992,6694,1099"/>
-<area shape="rect" id="node22" href="../11_requirements/req_display.html#REQ_DSP_4" target="_top" title="REQ_DSP_4" alt="" coords="7313,769,7527,876"/>
-<area shape="rect" id="node23" href="../11_requirements/req_display.html#REQ_DSP_5" target="_top" title="REQ_DSP_5" alt="" coords="7804,556,7983,644"/>
-<area shape="rect" id="node24" href="../11_requirements/req_distance_sensor.html#REQ_SNS_1" target="_top" title="REQ_SNS_1" alt="" coords="4498,2117,4675,2205"/>
-<area shape="rect" id="node25" href="../11_requirements/req_distance_sensor.html#REQ_SNS_2" target="_top" title="REQ_SNS_2" alt="" coords="4114,1923,4297,2011"/>
-<area shape="rect" id="node26" href="../11_requirements/req_distance_sensor.html#REQ_SNS_3" target="_top" title="REQ_SNS_3" alt="" coords="2565,1719,2723,1825"/>
-<area shape="rect" id="node27" href="../11_requirements/req_distance_sensor.html#REQ_SNS_4" target="_top" title="REQ_SNS_4" alt="" coords="2550,1524,2738,1612"/>
-<area shape="rect" id="node28" href="../11_requirements/req_distance_sensor.html#REQ_SNS_5" target="_top" title="REQ_SNS_5" alt="" coords="3617,1311,3794,1399"/>
-<area shape="rect" id="node29" href="../11_requirements/req_distance_sensor.html#REQ_SNS_6" target="_top" title="REQ_SNS_6" alt="" coords="4312,1311,4499,1399"/>
-<area shape="rect" id="node30" href="../11_requirements/req_distance_sensor.html#REQ_SNS_7" target="_top" title="REQ_SNS_7" alt="" coords="2053,1311,2213,1399"/>
-<area shape="rect" id="node31" href="../11_requirements/req_distance_sensor.html#REQ_SNS_8" target="_top" title="REQ_SNS_8" alt="" coords="1369,1524,1559,1612"/>
-<area shape="rect" id="node32" href="../11_requirements/req_distance_sensor.html#REQ_SNS_9" target="_top" title="REQ_SNS_9" alt="" coords="4625,1311,4855,1399"/>
-<area shape="rect" id="node33" href="../11_requirements/req_distance_sensor.html#REQ_SNS_10" target="_top" title="REQ_SNS_10" alt="" coords="2237,1311,2413,1399"/>
-<area shape="rect" id="node34" href="../11_requirements/req_distance_sensor.html#REQ_SNS_11" target="_top" title="REQ_SNS_11" alt="" coords="1595,1311,1775,1399"/>
-<area shape="rect" id="node35" href="../11_requirements/req_distance_sensor.html#REQ_SNS_12" target="_top" title="REQ_SNS_12" alt="" coords="1754,1156,1945,1244"/>
-<area shape="rect" id="node36" href="../11_requirements/req_distance_sensor.html#REQ_SNS_13" target="_top" title="REQ_SNS_13" alt="" coords="1937,1001,2084,1089"/>
-<area shape="rect" id="node37" href="../11_requirements/req_distance_sensor.html#REQ_SNS_14" target="_top" title="REQ_SNS_14" alt="" coords="1607,1001,1812,1089"/>
-<area shape="rect" id="node38" href="../11_requirements/req_led_controller.html#REQ_LED_1" target="_top" title="REQ_LED_1" alt="" coords="5950,1524,6133,1612"/>
-<area shape="rect" id="node39" href="../11_requirements/req_led_controller.html#REQ_LED_2" target="_top" title="REQ_LED_2" alt="" coords="6130,779,6307,867"/>
-<area shape="rect" id="node40" href="../11_requirements/req_led_controller.html#REQ_LED_3" target="_top" title="REQ_LED_3" alt="" coords="10157,556,10334,644"/>
-<area shape="rect" id="node41" href="../11_requirements/req_led_controller.html#REQ_LED_4" target="_top" title="REQ_LED_4" alt="" coords="5701,556,5897,644"/>
-<area shape="rect" id="node42" href="../11_requirements/req_led_controller.html#REQ_LED_5" target="_top" title="REQ_LED_5" alt="" coords="7162,556,7366,644"/>
-<area shape="rect" id="node54" href="../11_requirements/req_system.html#REQ_SYS_1" target="_top" title="REQ_SYS_1" alt="" coords="5525,2312,5731,2419"/>
-<area shape="rect" id="node2" href="../10_userstories/us_reliable.html#US_RELIABLE" target="_top" title="US_RELIABLE" alt="" coords="8467,5,8653,131"/>
-<area shape="rect" id="node51" href="../11_requirements/req_startup_test.html#REQ_STARTUP_1" target="_top" title="REQ_STARTUP_1" alt="" coords="6669,779,6867,867"/>
-<area shape="rect" id="node52" href="../11_requirements/req_startup_test.html#REQ_STARTUP_2" target="_top" title="REQ_STARTUP_2" alt="" coords="6722,556,6883,644"/>
-<area shape="rect" id="node53" href="../11_requirements/req_startup_test.html#REQ_STARTUP_3" target="_top" title="REQ_STARTUP_3" alt="" coords="6772,237,6948,325"/>
-<area shape="rect" id="node55" href="../11_requirements/req_system.html#REQ_SYS_HW_1" target="_top" title="REQ_SYS_HW_1" alt="" coords="21113,237,21330,325"/>
-<area shape="rect" id="node60" href="../11_requirements/req_system.html#REQ_SYS_REL_1" target="_top" title="REQ_SYS_REL_1" alt="" coords="19387,1001,19589,1089"/>
-<area shape="rect" id="node61" href="../11_requirements/req_system.html#REQ_SYS_PERF_1" target="_top" title="REQ_SYS_PERF_1" alt="" coords="8701,237,8881,325"/>
-<area shape="rect" id="node3" href="../10_userstories/us_setup.html#US_SETUP" target="_top" title="US_SETUP" alt="" coords="15767,15,15945,121"/>
-<area shape="rect" id="node4" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_1" target="_top" title="REQ_CFG_JSON_1" alt="" coords="18703,1301,18916,1408"/>
-<area shape="rect" id="node5" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_2" target="_top" title="REQ_CFG_JSON_2" alt="" coords="19687,547,19894,653"/>
-<area shape="rect" id="node6" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_3" target="_top" title="REQ_CFG_JSON_3" alt="" coords="19919,556,20124,644"/>
-<area shape="rect" id="node7" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_4" target="_top" title="REQ_CFG_JSON_4" alt="" coords="18752,760,18920,885"/>
-<area shape="rect" id="node8" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_5" target="_top" title="REQ_CFG_JSON_5" alt="" coords="19281,547,19511,653"/>
-<area shape="rect" id="node9" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_6" target="_top" title="REQ_CFG_JSON_6" alt="" coords="17727,1001,17929,1089"/>
-<area shape="rect" id="node56" href="../11_requirements/req_system.html#REQ_SYS_NET_1" target="_top" title="REQ_SYS_NET_1" alt="" coords="12916,1311,13089,1399"/>
-<area shape="rect" id="node57" href="../11_requirements/req_system.html#REQ_SYS_WEB_1" target="_top" title="REQ_SYS_WEB_1" alt="" coords="11456,1001,11643,1089"/>
-<area shape="rect" id="node58" href="../11_requirements/req_system.html#REQ_SYS_CFG_1" target="_top" title="REQ_SYS_CFG_1" alt="" coords="12016,1515,12203,1621"/>
-<area shape="rect" id="node66" href="../11_requirements/req_web_server.html#REQ_WEB_1" target="_top" title="REQ_WEB_1" alt="" coords="12388,779,12580,867"/>
-<area shape="rect" id="node67" href="../11_requirements/req_web_server.html#REQ_WEB_2" target="_top" title="REQ_WEB_2" alt="" coords="14101,556,14288,644"/>
-<area shape="rect" id="node68" href="../11_requirements/req_web_server.html#REQ_WEB_3" target="_top" title="REQ_WEB_3" alt="" coords="13535,556,13691,644"/>
-<area shape="rect" id="node69" href="../11_requirements/req_web_server.html#REQ_WEB_CONF_1" target="_top" title="REQ_WEB_CONF_1" alt="" coords="11025,556,11212,644"/>
-<area shape="rect" id="node70" href="../11_requirements/req_web_server.html#REQ_WEB_SCHEMA_1" target="_top" title="REQ_WEB_SCHEMA_1" alt="" coords="11314,228,11515,335"/>
-<area shape="rect" id="node71" href="../11_requirements/req_web_server.html#REQ_WEB_4" target="_top" title="REQ_WEB_4" alt="" coords="12378,237,12566,325"/>
-<area shape="rect" id="node72" href="../11_requirements/req_web_server.html#REQ_WEB_5" target="_top" title="REQ_WEB_5" alt="" coords="10367,237,10542,325"/>
-<area shape="rect" id="node73" href="../11_requirements/req_web_server.html#REQ_WEB_LED_1" target="_top" title="REQ_WEB_LED_1" alt="" coords="10618,237,10806,325"/>
-<area shape="rect" id="node74" href="../11_requirements/req_web_server.html#REQ_WEB_NF_1" target="_top" title="REQ_WEB_NF_1" alt="" coords="15365,237,15573,325"/>
-<area shape="rect" id="node75" href="../11_requirements/req_web_server.html#REQ_WEB_NF_2" target="_top" title="REQ_WEB_NF_2" alt="" coords="15597,237,15768,325"/>
-<area shape="rect" id="node10" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_7" target="_top" title="REQ_CFG_JSON_7" alt="" coords="15580,769,15767,876"/>
-<area shape="rect" id="node11" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_8" target="_top" title="REQ_CFG_JSON_8" alt="" coords="17865,769,18052,876"/>
-<area shape="rect" id="node12" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_9" target="_top" title="REQ_CFG_JSON_9" alt="" coords="19073,556,19257,644"/>
-<area shape="rect" id="node13" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_10" target="_top" title="REQ_CFG_JSON_10" alt="" coords="14617,547,14805,653"/>
-<area shape="rect" id="node14" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_11" target="_top" title="REQ_CFG_JSON_11" alt="" coords="18145,769,18321,876"/>
-<area shape="rect" id="node15" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_12" target="_top" title="REQ_CFG_JSON_12" alt="" coords="18345,547,18532,653"/>
-<area shape="rect" id="node16" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_13" target="_top" title="REQ_CFG_JSON_13" alt="" coords="20148,537,20348,663"/>
-<area shape="rect" id="node17" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_14" target="_top" title="REQ_CFG_JSON_14" alt="" coords="15109,547,15307,653"/>
-<area shape="rect" id="node18" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_15" target="_top" title="REQ_CFG_JSON_15" alt="" coords="18897,983,19095,1108"/>
-<area shape="rect" id="node43" href="../11_requirements/req_netif_tunnel.html#REQ_NETIF_TUNNEL_1" target="_top" title="REQ_NETIF_TUNNEL_1" alt="" coords="8807,1001,9017,1089"/>
-<area shape="rect" id="node62" href="../11_requirements/req_system.html#REQ_SYS_SIM_1" target="_top" title="REQ_SYS_SIM_1" alt="" coords="9119,1311,9275,1399"/>
-<area shape="rect" id="node44" href="../11_requirements/req_netif_tunnel.html#REQ_NETIF_TUNNEL_2" target="_top" title="REQ_NETIF_TUNNEL_2" alt="" coords="9678,779,9887,867"/>
-<area shape="rect" id="node45" href="../11_requirements/req_netif_tunnel.html#REQ_NETIF_TUNNEL_3" target="_top" title="REQ_NETIF_TUNNEL_3" alt="" coords="8066,779,8275,867"/>
-<area shape="rect" id="node46" href="../11_requirements/req_netif_tunnel.html#REQ_NETIF_TUNNEL_4" target="_top" title="REQ_NETIF_TUNNEL_4" alt="" coords="10197,779,10406,867"/>
-<area shape="rect" id="node47" href="../11_requirements/req_netif_tunnel.html#REQ_NETIF_TUNNEL_5" target="_top" title="REQ_NETIF_TUNNEL_5" alt="" coords="9911,779,10121,867"/>
-<area shape="rect" id="node48" href="../11_requirements/req_netif_tunnel.html#REQ_NETIF_TUNNEL_NF_1" target="_top" title="REQ_NETIF_TUNNEL_NF_1" alt="" coords="7804,779,8041,867"/>
-<area shape="rect" id="node49" href="../11_requirements/req_netif_tunnel.html#REQ_NETIF_TUNNEL_NF_2" target="_top" title="REQ_NETIF_TUNNEL_NF_2" alt="" coords="9743,556,9980,644"/>
-<area shape="rect" id="node50" href="../11_requirements/req_netif_tunnel.html#REQ_NETIF_TUNNEL_DOC_1" target="_top" title="REQ_NETIF_TUNNEL_DOC_1" alt="" coords="8369,556,8617,644"/>
-<area shape="rect" id="node59" href="../11_requirements/req_system.html#REQ_SYS_ARCH_1" target="_top" title="REQ_SYS_ARCH_1" alt="" coords="21475,237,21706,325"/>
-<area shape="rect" id="node63" href="../11_requirements/req_system.html#REQ_SYS_SIM_2" target="_top" title="REQ_SYS_SIM_2" alt="" coords="10315,992,10488,1099"/>
-<area shape="rect" id="node64" href="../11_requirements/req_system.html#REQ_SYS_SEC_1" target="_top" title="REQ_SYS_SEC_1" alt="" coords="23048,247,23251,316"/>
-<area shape="rect" id="node65" href="../11_requirements/req_system.html#REQ_SYS_TIME_1" target="_top" title="REQ_SYS_TIME_1" alt="" coords="24288,24,24509,112"/>
-<area shape="rect" id="node76" href="spec_config_manager_json.html#SPEC_CFG_JSON_ARCH_1" target="_top" title="SPEC_CFG_JSON_ARCH_1" alt="" coords="14880,769,15104,876"/>
-<area shape="rect" id="node77" href="spec_config_manager_json.html#SPEC_CFG_JSON_SOURCE_1" target="_top" title="SPEC_CFG_JSON_SOURCE_1" alt="" coords="19120,992,19363,1099"/>
-<area shape="rect" id="node78" href="spec_config_manager_json.html#SPEC_CFG_JSON_SCHEMA_1" target="_top" title="SPEC_CFG_JSON_SCHEMA_1" alt="" coords="20473,228,20719,335"/>
-<area shape="rect" id="node79" href="spec_config_manager_json.html#SPEC_CFG_JSON_CODEGEN_1" target="_top" title="SPEC_CFG_JSON_CODEGEN_1" alt="" coords="18847,228,19105,335"/>
-<area shape="rect" id="node80" href="spec_config_manager_json.html#SPEC_CFG_JSON_STORAGE_1" target="_top" title="SPEC_CFG_JSON_STORAGE_1" alt="" coords="17815,556,18067,644"/>
-<area shape="rect" id="node81" href="spec_config_manager_json.html#SPEC_CFG_JSON_API_1" target="_top" title="SPEC_CFG_JSON_API_1" alt="" coords="14880,547,15085,653"/>
-<area shape="rect" id="node82" href="spec_config_manager_json.html#SPEC_CFG_JSON_UI_1" target="_top" title="SPEC_CFG_JSON_UI_1" alt="" coords="16046,237,16266,325"/>
-<area shape="rect" id="node83" href="spec_config_manager_json.html#SPEC_CFG_JSON_BULK_1" target="_top" title="SPEC_CFG_JSON_BULK_1" alt="" coords="19960,228,20181,335"/>
-<area shape="rect" id="node84" href="spec_config_manager_json.html#SPEC_CFG_JSON_EXTEND_1" target="_top" title="SPEC_CFG_JSON_EXTEND_1" alt="" coords="20205,228,20448,335"/>
-<area shape="rect" id="node85" href="spec_config_manager_json.html#SPEC_CFG_JSON_TYPESAFETY_1" target="_top" title="SPEC_CFG_JSON_TYPESAFETY_1" alt="" coords="16291,228,16565,335"/>
-<area shape="rect" id="node86" href="spec_config_webpage.html#SPEC_CFG_WEB_ARCH_1" target="_top" title="SPEC_CFG_WEB_ARCH_1" alt="" coords="19715,228,19936,335"/>
-<area shape="rect" id="node87" href="spec_config_webpage.html#SPEC_CFG_WEB_FLOW_1" target="_top" title="SPEC_CFG_WEB_FLOW_1" alt="" coords="20293,24,20515,112"/>
-<area shape="rect" id="node88" href="spec_config_webpage.html#SPEC_CFG_WEB_FORM_1" target="_top" title="SPEC_CFG_WEB_FORM_1" alt="" coords="20539,15,20762,121"/>
-<area shape="rect" id="node89" href="spec_config_webpage.html#SPEC_CFG_WEB_MAPPING_1" target="_top" title="SPEC_CFG_WEB_MAPPING_1" alt="" coords="20019,15,20269,121"/>
-<area shape="rect" id="node90" href="spec_config_webpage.html#SPEC_CFG_WEB_STATE_1" target="_top" title="SPEC_CFG_WEB_STATE_1" alt="" coords="19213,24,19437,112"/>
-<area shape="rect" id="node91" href="spec_config_webpage.html#SPEC_CFG_WEB_COUNTDOWN_1" target="_top" title="SPEC_CFG_WEB_COUNTDOWN_1" alt="" coords="19461,15,19741,121"/>
-<area shape="rect" id="node92" href="spec_config_webpage.html#SPEC_CFG_WEB_ERROR_1" target="_top" title="SPEC_CFG_WEB_ERROR_1" alt="" coords="19765,15,19995,121"/>
-<area shape="rect" id="node93" href="spec_config_webpage.html#SPEC_CFG_WEB_INIT_1" target="_top" title="SPEC_CFG_WEB_INIT_1" alt="" coords="18979,15,19189,121"/>
-<area shape="rect" id="node94" href="spec_display.html#SPEC_DSP_OVERVIEW_1" target="_top" title="SPEC_DSP_OVERVIEW_1" alt="" coords="6718,1001,6954,1089"/>
-<area shape="rect" id="node95" href="spec_display.html#SPEC_DSP_ARCH_1" target="_top" title="SPEC_DSP_ARCH_1" alt="" coords="5849,779,6055,867"/>
-<area shape="rect" id="node96" href="spec_display.html#SPEC_DSP_ARCH_2" target="_top" title="SPEC_DSP_ARCH_2" alt="" coords="11676,779,11881,867"/>
-<area shape="rect" id="node97" href="spec_display.html#SPEC_DSP_ALGO_1" target="_top" title="SPEC_DSP_ALGO_1" alt="" coords="9364,228,9569,335"/>
-<area shape="rect" id="node98" href="spec_display.html#SPEC_DSP_ALGO_3" target="_top" title="SPEC_DSP_ALGO_3" alt="" coords="6611,2108,6816,2215"/>
-<area shape="rect" id="node99" href="spec_display.html#SPEC_DSP_API_1" target="_top" title="SPEC_DSP_API_1" alt="" coords="5620,779,5825,867"/>
-<area shape="rect" id="node100" href="spec_distance_sensor.html#SPEC_SNS_ARCH_1" target="_top" title="SPEC_SNS_ARCH_1" alt="" coords="4880,1301,5085,1408"/>
-<area shape="rect" id="node101" href="spec_distance_sensor.html#SPEC_SNS_ARCH_2" target="_top" title="SPEC_SNS_ARCH_2" alt="" coords="4293,1728,4499,1816"/>
-<area shape="rect" id="node102" href="spec_distance_sensor.html#SPEC_SNS_ISR_1" target="_top" title="SPEC_SNS_ISR_1" alt="" coords="94,1301,301,1408"/>
-<area shape="rect" id="node103" href="spec_distance_sensor.html#SPEC_SNS_TASK_1" target="_top" title="SPEC_SNS_TASK_1" alt="" coords="2807,1001,3012,1089"/>
-<area shape="rect" id="node104" href="spec_distance_sensor.html#SPEC_SNS_ALGO_1" target="_top" title="SPEC_SNS_ALGO_1" alt="" coords="1327,992,1532,1099"/>
-<area shape="rect" id="node105" href="spec_distance_sensor.html#SPEC_SNS_ALGO_2" target="_top" title="SPEC_SNS_ALGO_2" alt="" coords="2539,1311,2749,1399"/>
-<area shape="rect" id="node106" href="spec_distance_sensor.html#SPEC_SNS_API_1" target="_top" title="SPEC_SNS_API_1" alt="" coords="2577,1001,2783,1089"/>
-<area shape="rect" id="node107" href="spec_distance_sensor.html#SPEC_SNS_ERR_1" target="_top" title="SPEC_SNS_ERR_1" alt="" coords="1716,779,1921,867"/>
-<area shape="rect" id="node108" href="spec_distance_sensor.html#SPEC_SNS_SIM_1" target="_top" title="SPEC_SNS_SIM_1" alt="" coords="6977,992,7188,1099"/>
-<area shape="rect" id="node109" href="spec_high_level_architecture.html#SPEC_ARCH_LAYERS_1" target="_top" title="SPEC_ARCH_LAYERS_1" alt="" coords="21717,15,21923,121"/>
-<area shape="rect" id="node110" href="spec_high_level_architecture.html#SPEC_ARCH_CONFIG_1" target="_top" title="SPEC_ARCH_CONFIG_1" alt="" coords="11581,1292,11789,1417"/>
-<area shape="rect" id="node111" href="spec_high_level_architecture.html#SPEC_ARCH_WEB_1" target="_top" title="SPEC_ARCH_WEB_1" alt="" coords="10937,769,11143,876"/>
-<area shape="rect" id="node112" href="spec_high_level_architecture.html#SPEC_ARCH_CERT_1" target="_top" title="SPEC_ARCH_CERT_1" alt="" coords="11167,760,11372,885"/>
-<area shape="rect" id="node113" href="spec_high_level_architecture.html#SPEC_ARCH_NETIF_1" target="_top" title="SPEC_ARCH_NETIF_1" alt="" coords="9093,992,9302,1099"/>
-<area shape="rect" id="node114" href="spec_high_level_architecture.html#SPEC_ARCH_COMM_1" target="_top" title="SPEC_ARCH_COMM_1" alt="" coords="21947,15,22155,121"/>
-<area shape="rect" id="node115" href="spec_high_level_architecture.html#SPEC_ARCH_CONFIG_FLOW_1" target="_top" title="SPEC_ARCH_CONFIG_FLOW_1" alt="" coords="11814,1311,12071,1399"/>
-<area shape="rect" id="node116" href="spec_high_level_architecture.html#SPEC_ARCH_WIFI_1" target="_top" title="SPEC_ARCH_WIFI_1" alt="" coords="11447,779,11652,867"/>
-<area shape="rect" id="node117" href="spec_high_level_architecture.html#SPEC_ARCH_HTTP_1" target="_top" title="SPEC_ARCH_HTTP_1" alt="" coords="11905,769,12111,876"/>
-<area shape="rect" id="node118" href="spec_high_level_architecture.html#SPEC_ARCH_QEMU_1" target="_top" title="SPEC_ARCH_QEMU_1" alt="" coords="9326,1001,9543,1089"/>
-<area shape="rect" id="node119" href="spec_high_level_architecture.html#SPEC_ARCH_QEMU_BUILD_1" target="_top" title="SPEC_ARCH_QEMU_BUILD_1" alt="" coords="9567,1001,9817,1089"/>
-<area shape="rect" id="node120" href="spec_high_level_architecture.html#SPEC_ARCH_TASKS_1" target="_top" title="SPEC_ARCH_TASKS_1" alt="" coords="21488,24,21693,112"/>
-<area shape="rect" id="node121" href="spec_high_level_architecture.html#SPEC_ARCH_MEMORY_1" target="_top" title="SPEC_ARCH_MEMORY_1" alt="" coords="21246,15,21463,121"/>
-<area shape="rect" id="node122" href="spec_high_level_architecture.html#SPEC_ARCH_BUILD_1" target="_top" title="SPEC_ARCH_BUILD_1" alt="" coords="20787,24,20992,112"/>
-<area shape="rect" id="node123" href="spec_high_level_architecture.html#SPEC_ARCH_FLASH_1" target="_top" title="SPEC_ARCH_FLASH_1" alt="" coords="21016,24,21221,112"/>
-<area shape="rect" id="node124" href="spec_high_level_architecture.html#SPEC_ARCH_CODESPACES_1" target="_top" title="SPEC_ARCH_CODESPACES_1" alt="" coords="9840,992,10088,1099"/>
-<area shape="rect" id="node125" href="spec_high_level_architecture.html#SPEC_ARCH_LOGGING_1" target="_top" title="SPEC_ARCH_LOGGING_1" alt="" coords="19387,769,19607,876"/>
-<area shape="rect" id="node126" href="spec_high_level_architecture.html#SPEC_ARCH_ERROR_RECOVERY_1" target="_top" title="SPEC_ARCH_ERROR_RECOVERY_1" alt="" coords="19075,769,19363,876"/>
-<area shape="rect" id="node127" href="spec_high_level_architecture.html#SPEC_ARCH_PERF_1" target="_top" title="SPEC_ARCH_PERF_1" alt="" coords="8688,15,8893,121"/>
-<area shape="rect" id="node128" href="spec_led_controller.html#SPEC_LED_ARCH_1" target="_top" title="SPEC_LED_ARCH_1" alt="" coords="5511,1301,5721,1408"/>
-<area shape="rect" id="node129" href="spec_led_controller.html#SPEC_LED_ARCH_2" target="_top" title="SPEC_LED_ARCH_2" alt="" coords="8311,237,8516,325"/>
-<area shape="rect" id="node130" href="spec_led_controller.html#SPEC_LED_API_1" target="_top" title="SPEC_LED_API_1" alt="" coords="5420,556,5625,644"/>
-<area shape="rect" id="node131" href="spec_led_controller.html#SPEC_LED_API_2" target="_top" title="SPEC_LED_API_2" alt="" coords="4173,237,4379,325"/>
-<area shape="rect" id="node132" href="spec_led_controller.html#SPEC_LED_API_3" target="_top" title="SPEC_LED_API_3" alt="" coords="8905,237,9111,325"/>
-<area shape="rect" id="node133" href="spec_led_controller.html#SPEC_LED_TIMING_1" target="_top" title="SPEC_LED_TIMING_1" alt="" coords="5745,1311,5953,1399"/>
-<area shape="rect" id="node134" href="spec_led_controller.html#SPEC_LED_DATA_1" target="_top" title="SPEC_LED_DATA_1" alt="" coords="4991,228,5196,335"/>
-<area shape="rect" id="node135" href="spec_led_controller.html#SPEC_LED_MEM_1" target="_top" title="SPEC_LED_MEM_1" alt="" coords="9593,237,9817,325"/>
-<area shape="rect" id="node136" href="spec_led_controller.html#SPEC_LED_ERR_1" target="_top" title="SPEC_LED_ERR_1" alt="" coords="9135,237,9340,325"/>
-<area shape="rect" id="node137" href="spec_led_controller.html#SPEC_LED_SIM_1" target="_top" title="SPEC_LED_SIM_1" alt="" coords="7921,24,8127,112"/>
-<area shape="rect" id="node138" href="spec_startup_test.html#SPEC_STARTUP_1" target="_top" title="SPEC_STARTUP_1" alt="" coords="7076,383,7281,489"/>
-<area shape="rect" id="node139" href="spec_startup_test.html#SPEC_STARTUP_2" target="_top" title="SPEC_STARTUP_2" alt="" coords="6972,228,7177,335"/>
-<area shape="rect" id="node140" href="spec_startup_test.html#SPEC_STARTUP_3" target="_top" title="SPEC_STARTUP_3" alt="" coords="6813,15,7019,121"/>
-<area shape="rect" id="node141" href="spec_startup_test.html#SPEC_STARTUP_4" target="_top" title="SPEC_STARTUP_4" alt="" coords="7299,24,7504,112"/>
-<area shape="rect" id="node142" href="spec_web_server.html#SPEC_WEB_ARCH_1" target="_top" title="SPEC_WEB_ARCH_1" alt="" coords="11084,237,11289,325"/>
-<area shape="rect" id="node143" href="spec_web_server.html#SPEC_WEB_STATIC_1" target="_top" title="SPEC_WEB_STATIC_1" alt="" coords="15033,15,15239,121"/>
-<area shape="rect" id="node144" href="spec_web_server.html#SPEC_WEB_ROUTES_1" target="_top" title="SPEC_WEB_ROUTES_1" alt="" coords="11235,24,11440,112"/>
-<area shape="rect" id="node145" href="spec_web_server.html#SPEC_WEB_REST_CFG_1" target="_top" title="SPEC_WEB_REST_CFG_1" alt="" coords="11711,24,11929,112"/>
-<area shape="rect" id="node146" href="spec_web_server.html#SPEC_WEB_REST_WIFI_1" target="_top" title="SPEC_WEB_REST_WIFI_1" alt="" coords="13727,228,13961,335"/>
-<area shape="rect" id="node147" href="spec_web_server.html#SPEC_WEB_REST_HEALTH_1" target="_top" title="SPEC_WEB_REST_HEALTH_1" alt="" coords="12268,556,12516,644"/>
-<area shape="rect" id="node148" href="spec_web_server.html#SPEC_WEB_REST_LED_1" target="_top" title="SPEC_WEB_REST_LED_1" alt="" coords="8975,24,9193,112"/>
-<area shape="rect" id="node149" href="spec_web_server.html#SPEC_WEB_INTEGRATION_CFG_1" target="_top" title="SPEC_WEB_INTEGRATION_CFG_1" alt="" coords="13985,228,14266,335"/>
-<area shape="rect" id="node150" href="spec_web_server.html#SPEC_WEB_INTEGRATION_WIFI_1" target="_top" title="SPEC_WEB_INTEGRATION_WIFI_1" alt="" coords="14291,228,14576,335"/>
-<area shape="rect" id="node151" href="spec_web_server.html#SPEC_WEB_CAPTIVE_1" target="_top" title="SPEC_WEB_CAPTIVE_1" alt="" coords="14600,237,14805,325"/>
-<area shape="rect" id="node152" href="spec_web_server.html#SPEC_WEB_CONFIG_1" target="_top" title="SPEC_WEB_CONFIG_1" alt="" coords="10301,24,10507,112"/>
-<area shape="rect" id="node153" href="spec_web_server.html#SPEC_WEB_EXTEND_1" target="_top" title="SPEC_WEB_EXTEND_1" alt="" coords="12599,24,12812,112"/>
-<area shape="rect" id="node154" href="spec_web_server.html#SPEC_WEB_SECURITY_1" target="_top" title="SPEC_WEB_SECURITY_1" alt="" coords="10531,24,10746,112"/>
-<area shape="rect" id="node155" href="spec_web_server.html#SPEC_WEB_TEST_1" target="_top" title="SPEC_WEB_TEST_1" alt="" coords="10771,15,10976,121"/>
-<area shape="rect" id="node156" href="../21_api/api_cert_handler.html#API_COMP_CERT_HANDLER" target="_top" title="API_COMP_CERT_HANDLER" alt="" coords="22179,24,22421,112"/>
-<area shape="rect" id="node157" href="../21_api/api_cert_handler.html#API_FUNC_CERT_HANDLER_INIT" target="_top" title="API_FUNC_CERT_HANDLER_INIT" alt="" coords="22446,24,22725,112"/>
-<area shape="rect" id="node158" href="../21_api/api_cert_handler.html#API_FUNC_CERT_HANDLER_GET_SERVER_CERT" target="_top" title="API_FUNC_CERT_HANDLER_GET_SERVER_CERT" alt="" coords="22749,24,23139,112"/>
-<area shape="rect" id="node159" href="../21_api/api_cert_handler.html#API_FUNC_CERT_HANDLER_GET_SERVER_KEY" target="_top" title="API_FUNC_CERT_HANDLER_GET_SERVER_KEY" alt="" coords="23163,24,23543,112"/>
-<area shape="rect" id="node160" href="../21_api/api_cert_handler.html#API_FUNC_CERT_HANDLER_GET_CA_CERT" target="_top" title="API_FUNC_CERT_HANDLER_GET_CA_CERT" alt="" coords="23567,24,23918,112"/>
-<area shape="rect" id="node161" href="../21_api/api_cert_handler.html#API_FUNC_CERT_HANDLER_GET_INFO" target="_top" title="API_FUNC_CERT_HANDLER_GET_INFO" alt="" coords="23942,24,24263,112"/>
-<area shape="rect" id="node162" href="../21_api/api_config_manager.html#API_COMP_CONFIG_MANAGER" target="_top" title="API_COMP_CONFIG_MANAGER" alt="" coords="17615,247,17881,316"/>
-<area shape="rect" id="node163" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_INIT" target="_top" title="API_FUNC_CONFIG_INIT" alt="" coords="18250,247,18467,316"/>
-<area shape="rect" id="node164" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_FACTORY_RESET" target="_top" title="API_FUNC_CONFIG_FACTORY_RESET" alt="" coords="19129,237,19437,325"/>
-<area shape="rect" id="node165" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_COMMIT" target="_top" title="API_FUNC_CONFIG_COMMIT" alt="" coords="24534,33,24783,103"/>
-<area shape="rect" id="node166" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_WRITE_FACTORY_DEFAULTS" target="_top" title="API_FUNC_CONFIG_WRITE_FACTORY_DEFAULTS" alt="" coords="18607,556,18998,644"/>
-<area shape="rect" id="node167" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_GET_STRING" target="_top" title="API_FUNC_CONFIG_GET_STRING" alt="" coords="15382,556,15661,644"/>
-<area shape="rect" id="node168" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_SET_STRING" target="_top" title="API_FUNC_CONFIG_SET_STRING" alt="" coords="15685,556,15963,644"/>
-<area shape="rect" id="node169" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_SET_STRING_NO_COMMIT" target="_top" title="API_FUNC_CONFIG_SET_STRING_NO_COMMIT" alt="" coords="24807,24,25185,112"/>
-<area shape="rect" id="node170" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_GET_INT32" target="_top" title="API_FUNC_CONFIG_GET_INT32" alt="" coords="15987,556,16253,644"/>
-<area shape="rect" id="node171" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_SET_INT32" target="_top" title="API_FUNC_CONFIG_SET_INT32" alt="" coords="16277,556,16539,644"/>
-<area shape="rect" id="node172" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_GET_INT16" target="_top" title="API_FUNC_CONFIG_GET_INT16" alt="" coords="16563,556,16829,644"/>
-<area shape="rect" id="node173" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_SET_INT16" target="_top" title="API_FUNC_CONFIG_SET_INT16" alt="" coords="16853,556,17115,644"/>
-<area shape="rect" id="node174" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_SET_INT16_NO_COMMIT" target="_top" title="API_FUNC_CONFIG_SET_INT16_NO_COMMIT" alt="" coords="25209,24,25572,112"/>
-<area shape="rect" id="node175" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_GET_BOOL" target="_top" title="API_FUNC_CONFIG_GET_BOOL" alt="" coords="17140,565,17404,635"/>
-<area shape="rect" id="node176" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_SET_BOOL_NO_COMMIT" target="_top" title="API_FUNC_CONFIG_SET_BOOL_NO_COMMIT" alt="" coords="25597,24,25958,112"/>
-<area shape="rect" id="node177" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_SET_BOOL" target="_top" title="API_FUNC_CONFIG_SET_BOOL" alt="" coords="17428,565,17689,635"/>
-<area shape="rect" id="node178" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_GET_SCHEMA_JSON" target="_top" title="API_FUNC_CONFIG_GET_SCHEMA_JSON" alt="" coords="18491,237,18823,325"/>
-<area shape="rect" id="node179" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_GET_ALL_AS_JSON" target="_top" title="API_FUNC_CONFIG_GET_ALL_AS_JSON" alt="" coords="17905,237,18226,325"/>
-<area shape="rect" id="node180" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_SET_ALL_FROM_JSON" target="_top" title="API_FUNC_CONFIG_SET_ALL_FROM_JSON" alt="" coords="20744,237,21088,325"/>
-<area shape="rect" id="node181" href="../21_api/api_display_logic.html#API_COMP_DISPLAY_LOGIC" target="_top" title="API_COMP_DISPLAY_LOGIC" alt="" coords="7543,565,7780,635"/>
-<area shape="rect" id="node182" href="../21_api/api_display_logic.html#API_FUNC_DISPLAY_LOGIC_START" target="_top" title="API_FUNC_DISPLAY_LOGIC_START" alt="" coords="8057,556,8345,644"/>
-<area shape="rect" id="node183" href="../21_api/api_distance_sensor.html#API_COMP_DISTANCE_SENSOR" target="_top" title="API_COMP_DISTANCE_SENSOR" alt="" coords="3709,1011,3974,1080"/>
-<area shape="rect" id="node184" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_INIT" target="_top" title="API_FUNC_DISTANCE_SENSOR_INIT" alt="" coords="4436,1001,4737,1089"/>
-<area shape="rect" id="node185" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_START" target="_top" title="API_FUNC_DISTANCE_SENSOR_START" alt="" coords="3869,1311,4187,1399"/>
-<area shape="rect" id="node186" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_STOP" target="_top" title="API_FUNC_DISTANCE_SENSOR_STOP" alt="" coords="1261,1311,1571,1399"/>
-<area shape="rect" id="node187" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_GET_LATEST" target="_top" title="API_FUNC_DISTANCE_SENSOR_GET_LATEST" alt="" coords="4049,1001,4412,1089"/>
-<area shape="rect" id="node188" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_HAS_NEW_MEASUREMENT" target="_top" title="API_FUNC_DISTANCE_SENSOR_HAS_NEW_MEASUREMENT" alt="" coords="377,1301,847,1408"/>
-<area shape="rect" id="node189" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_GET_QUEUE_OVERFLOWS" target="_top" title="API_FUNC_DISTANCE_SENSOR_GET_QUEUE_OVERFLOWS" alt="" coords="3101,992,3563,1099"/>
-<area shape="rect" id="node190" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_MONITOR" target="_top" title="API_FUNC_DISTANCE_SENSOR_MONITOR" alt="" coords="2159,1001,2502,1089"/>
-<area shape="rect" id="node191" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_IS_RUNNING" target="_top" title="API_FUNC_DISTANCE_SENSOR_IS_RUNNING" alt="" coords="872,1311,1237,1399"/>
-<area shape="rect" id="node192" href="../21_api/api_distance_sensor.html#API_STRUCT_DISTANCE_SENSOR_ERROR" target="_top" title="API_STRUCT_DISTANCE_SENSOR_ERROR" alt="" coords="2825,1311,3162,1399"/>
-<area shape="rect" id="node193" href="../21_api/api_distance_sensor.html#API_STRUCT_DISTANCE_SENSOR_RAW_MEASUREMENT" target="_top" title="API_STRUCT_DISTANCE_SENSOR_RAW_MEASUREMENT" alt="" coords="3672,1524,4117,1612"/>
-<area shape="rect" id="node194" href="../21_api/api_distance_sensor.html#API_STRUCT_DISTANCE_SENSOR_MEASUREMENT" target="_top" title="API_STRUCT_DISTANCE_SENSOR_MEASUREMENT" alt="" coords="3187,1311,3592,1399"/>
-<area shape="rect" id="node195" href="../21_api/api_led_controller.html#API_COMP_LED_CONTROLLER" target="_top" title="API_COMP_LED_CONTROLLER" alt="" coords="7711,247,7972,316"/>
-<area shape="rect" id="node196" href="../21_api/api_led_controller.html#API_STRUCT_LED_COLOR" target="_top" title="API_STRUCT_LED_COLOR" alt="" coords="4403,247,4629,316"/>
-<area shape="rect" id="node197" href="../21_api/api_led_controller.html#API_FUNC_LED_CONTROLLER_INIT" target="_top" title="API_FUNC_LED_CONTROLLER_INIT" alt="" coords="11642,237,11939,325"/>
-<area shape="rect" id="node198" href="../21_api/api_led_controller.html#API_FUNC_LED_CONTROLLER_DEINIT" target="_top" title="API_FUNC_LED_CONTROLLER_DEINIT" alt="" coords="6129,1311,6447,1399"/>
-<area shape="rect" id="node199" href="../21_api/api_led_controller.html#API_FUNC_LED_SET_PIXEL" target="_top" title="API_FUNC_LED_SET_PIXEL" alt="" coords="5719,247,5953,316"/>
-<area shape="rect" id="node200" href="../21_api/api_led_controller.html#API_FUNC_LED_CLEAR_PIXEL" target="_top" title="API_FUNC_LED_CLEAR_PIXEL" alt="" coords="6023,565,6279,635"/>
-<area shape="rect" id="node201" href="../21_api/api_led_controller.html#API_FUNC_LED_GET_PIXEL" target="_top" title="API_FUNC_LED_GET_PIXEL" alt="" coords="5977,247,6215,316"/>
-<area shape="rect" id="node202" href="../21_api/api_led_controller.html#API_FUNC_LED_CLEAR_ALL" target="_top" title="API_FUNC_LED_CLEAR_ALL" alt="" coords="6354,565,6595,635"/>
-<area shape="rect" id="node203" href="../21_api/api_led_controller.html#API_FUNC_LED_SHOW" target="_top" title="API_FUNC_LED_SHOW" alt="" coords="5221,247,5425,316"/>
-<area shape="rect" id="node204" href="../21_api/api_led_controller.html#API_FUNC_LED_COLOR_RGB" target="_top" title="API_FUNC_LED_COLOR_RGB" alt="" coords="5449,247,5695,316"/>
-<area shape="rect" id="node205" href="../21_api/api_led_controller.html#API_FUNC_LED_COLOR_BRIGHTNESS" target="_top" title="API_FUNC_LED_COLOR_BRIGHTNESS" alt="" coords="4653,237,4966,325"/>
-<area shape="rect" id="node206" href="../21_api/api_led_controller.html#API_FUNC_LED_GET_COUNT" target="_top" title="API_FUNC_LED_GET_COUNT" alt="" coords="9841,247,10089,316"/>
-<area shape="rect" id="node207" href="../21_api/api_led_controller.html#API_FUNC_LED_IS_INITIALIZED" target="_top" title="API_FUNC_LED_IS_INITIALIZED" alt="" coords="6471,1311,6740,1399"/>
-<area shape="rect" id="node208" href="../21_api/api_led_controller.html#API_FUNC_LED_GET_ALL_COLORS" target="_top" title="API_FUNC_LED_GET_ALL_COLORS" alt="" coords="7997,237,8286,325"/>
-<area shape="rect" id="node209" href="../21_api/api_netif_uart_tunnel.html#API_COMP_NETIF_TUNNEL" target="_top" title="API_COMP_NETIF_TUNNEL" alt="" coords="9481,565,9719,635"/>
-<area shape="rect" id="node210" href="../21_api/api_netif_uart_tunnel.html#API_STRUCT_NETIF_TUNNEL_CONFIG" target="_top" title="API_STRUCT_NETIF_TUNNEL_CONFIG" alt="" coords="8300,779,8617,867"/>
-<area shape="rect" id="node211" href="../21_api/api_netif_uart_tunnel.html#API_FUNC_NETIF_TUNNEL_INIT" target="_top" title="API_FUNC_NETIF_TUNNEL_INIT" alt="" coords="8642,779,8915,867"/>
-<area shape="rect" id="node212" href="../21_api/api_netif_uart_tunnel.html#API_FUNC_NETIF_TUNNEL_DEINIT" target="_top" title="API_FUNC_NETIF_TUNNEL_DEINIT" alt="" coords="8939,779,9234,867"/>
-<area shape="rect" id="node213" href="../21_api/api_netif_uart_tunnel.html#API_FUNC_NETIF_TUNNEL_GET_HANDLE" target="_top" title="API_FUNC_NETIF_TUNNEL_GET_HANDLE" alt="" coords="9259,779,9603,867"/>
-<area shape="rect" id="node214" href="../21_api/api_startup_tests.html#API_COMP_STARTUP_TESTS" target="_top" title="API_COMP_STARTUP_TESTS" alt="" coords="6547,33,6789,103"/>
-<area shape="rect" id="node215" href="../21_api/api_startup_tests.html#API_FUNC_STARTUP_TESTS_SINGLE_CYCLE" target="_top" title="API_FUNC_STARTUP_TESTS_SINGLE_CYCLE" alt="" coords="6239,237,6596,325"/>
-<area shape="rect" id="node216" href="../21_api/api_startup_tests.html#API_FUNC_STARTUP_TESTS_MULTIPLE_CYCLES" target="_top" title="API_FUNC_STARTUP_TESTS_MULTIPLE_CYCLES" alt="" coords="7251,228,7637,335"/>
-<area shape="rect" id="node217" href="../21_api/api_startup_tests.html#API_FUNC_STARTUP_TESTS_RAINBOW" target="_top" title="API_FUNC_STARTUP_TESTS_RAINBOW" alt="" coords="5058,24,5377,112"/>
-<area shape="rect" id="node218" href="../21_api/api_web_server.html#API_COMP_WEB_SERVER" target="_top" title="API_COMP_WEB_SERVER" alt="" coords="11465,33,11687,103"/>
-<area shape="rect" id="node219" href="../21_api/api_web_server.html#API_FUNC_WEB_INIT" target="_top" title="API_FUNC_WEB_INIT" alt="" coords="9273,33,9476,103"/>
-<area shape="rect" id="node220" href="../21_api/api_web_server.html#API_FUNC_WEB_START" target="_top" title="API_FUNC_WEB_START" alt="" coords="13433,24,13641,112"/>
-<area shape="rect" id="node221" href="../21_api/api_web_server.html#API_FUNC_WEB_STOP" target="_top" title="API_FUNC_WEB_STOP" alt="" coords="11000,33,11211,103"/>
-<area shape="rect" id="node222" href="../21_api/api_web_server.html#API_FUNC_WEB_IS_RUNNING" target="_top" title="API_FUNC_WEB_IS_RUNNING" alt="" coords="9500,24,9756,112"/>
-<area shape="rect" id="node223" href="../21_api/api_web_server.html#API_FUNC_WEB_GET_PORT" target="_top" title="API_FUNC_WEB_GET_PORT" alt="" coords="9780,24,10017,112"/>
-<area shape="rect" id="node224" href="../21_api/api_web_server.html#API_FUNC_WEB_STATIC_FILE" target="_top" title="API_FUNC_WEB_STATIC_FILE" alt="" coords="13666,24,13918,112"/>
-<area shape="rect" id="node225" href="../21_api/api_web_server.html#API_STRUCT_WEB_CONFIG" target="_top" title="API_STRUCT_WEB_CONFIG" alt="" coords="10041,24,10277,112"/>
-<area shape="rect" id="node226" href="../21_api/api_wifi_manager.html#API_COMP_WIFI_MGR" target="_top" title="API_COMP_WIFI_MGR" alt="" coords="12187,33,12384,103"/>
-<area shape="rect" id="node227" href="../21_api/api_wifi_manager.html#API_FUNC_WIFI_INIT" target="_top" title="API_FUNC_WIFI_INIT" alt="" coords="11953,24,12162,112"/>
-<area shape="rect" id="node228" href="../21_api/api_wifi_manager.html#API_FUNC_WIFI_START" target="_top" title="API_FUNC_WIFI_START" alt="" coords="13013,237,13222,325"/>
-<area shape="rect" id="node229" href="../21_api/api_wifi_manager.html#API_FUNC_WIFI_STOP" target="_top" title="API_FUNC_WIFI_STOP" alt="" coords="12287,1001,12497,1089"/>
-<area shape="rect" id="node230" href="../21_api/api_wifi_manager.html#API_FUNC_WIFI_GET_STATUS" target="_top" title="API_FUNC_WIFI_GET_STATUS" alt="" coords="13247,237,13500,325"/>
-<area shape="rect" id="node231" href="../21_api/api_wifi_manager.html#API_FUNC_WIFI_SET_CRED" target="_top" title="API_FUNC_WIFI_SET_CRED" alt="" coords="12015,237,12252,325"/>
-<area shape="rect" id="node232" href="../21_api/api_wifi_manager.html#API_FUNC_WIFI_CLEAR_CRED" target="_top" title="API_FUNC_WIFI_CLEAR_CRED" alt="" coords="14982,237,15239,325"/>
-<area shape="rect" id="node233" href="../21_api/api_wifi_manager.html#API_FUNC_WIFI_GET_IP" target="_top" title="API_FUNC_WIFI_GET_IP" alt="" coords="12521,1001,12735,1089"/>
-<area shape="rect" id="node234" href="../21_api/api_wifi_manager.html#API_FUNC_WIFI_SWITCH_AP" target="_top" title="API_FUNC_WIFI_SWITCH_AP" alt="" coords="12743,237,12988,325"/>
-<area shape="rect" id="node235" href="../21_api/api_wifi_manager.html#API_FUNC_WIFI_MONITOR" target="_top" title="API_FUNC_WIFI_MONITOR" alt="" coords="12759,1001,12993,1089"/>
-<area shape="rect" id="node236" href="../21_api/api_wifi_manager.html#API_STRUCT_WIFI_MODE" target="_top" title="API_STRUCT_WIFI_MODE" alt="" coords="13017,1001,13239,1089"/>
-<area shape="rect" id="node237" href="../21_api/api_wifi_manager.html#API_STRUCT_WIFI_CRED" target="_top" title="API_STRUCT_WIFI_CRED" alt="" coords="13263,1001,13481,1089"/>
-<area shape="rect" id="node238" href="../21_api/api_wifi_manager.html#API_STRUCT_WIFI_STATUS" target="_top" title="API_STRUCT_WIFI_STATUS" alt="" coords="13505,1011,13737,1080"/>
+<area shape="rect" id="node1" href="../10_userstories/us_developer.html#US_DEV_1" target="_top" title="US_DEV_1" alt="" coords="22963,1301,23136,1408"/>
+<area shape="rect" id="node72" href="../11_requirements/req_system.html#REQ_SYS_ARCH_1" target="_top" title="REQ_SYS_ARCH_1" alt="" coords="22854,1533,23085,1621"/>
+<area shape="rect" id="node2" href="../10_userstories/us_developer.html#US_DEV_2" target="_top" title="US_DEV_2" alt="" coords="21529,1747,21732,1853"/>
+<area shape="rect" id="node3" href="../10_userstories/us_display.html#US_DISPLAY_1" target="_top" title="US_DISPLAY_1" alt="" coords="5391,219,5595,325"/>
+<area shape="rect" id="node5" href="../10_userstories/us_setup.html#US_SETUP_1" target="_top" title="US_SETUP_1" alt="" coords="13545,441,13722,548"/>
+<area shape="rect" id="node32" href="../11_requirements/req_display.html#REQ_DSP_1" target="_top" title="REQ_DSP_1" alt="" coords="16848,1311,16992,1399"/>
+<area shape="rect" id="node33" href="../11_requirements/req_display.html#REQ_DSP_2" target="_top" title="REQ_DSP_2" alt="" coords="12803,1079,12989,1167"/>
+<area shape="rect" id="node34" href="../11_requirements/req_display.html#REQ_DSP_3" target="_top" title="REQ_DSP_3" alt="" coords="9471,1069,9649,1176"/>
+<area shape="rect" id="node35" href="../11_requirements/req_display.html#REQ_DSP_4" target="_top" title="REQ_DSP_4" alt="" coords="10612,741,10825,848"/>
+<area shape="rect" id="node36" href="../11_requirements/req_display.html#REQ_DSP_5" target="_top" title="REQ_DSP_5" alt="" coords="10629,451,10808,539"/>
+<area shape="rect" id="node37" href="../11_requirements/req_distance_sensor.html#REQ_SNS_1" target="_top" title="REQ_SNS_1" alt="" coords="5201,1969,5378,2057"/>
+<area shape="rect" id="node38" href="../11_requirements/req_distance_sensor.html#REQ_SNS_2" target="_top" title="REQ_SNS_2" alt="" coords="990,1756,1173,1844"/>
+<area shape="rect" id="node39" href="../11_requirements/req_distance_sensor.html#REQ_SNS_3" target="_top" title="REQ_SNS_3" alt="" coords="1755,1524,1914,1631"/>
+<area shape="rect" id="node40" href="../11_requirements/req_distance_sensor.html#REQ_SNS_4" target="_top" title="REQ_SNS_4" alt="" coords="2846,1311,3034,1399"/>
+<area shape="rect" id="node41" href="../11_requirements/req_distance_sensor.html#REQ_SNS_5" target="_top" title="REQ_SNS_5" alt="" coords="4534,1079,4711,1167"/>
+<area shape="rect" id="node42" href="../11_requirements/req_distance_sensor.html#REQ_SNS_6" target="_top" title="REQ_SNS_6" alt="" coords="4736,1079,4923,1167"/>
+<area shape="rect" id="node43" href="../11_requirements/req_distance_sensor.html#REQ_SNS_7" target="_top" title="REQ_SNS_7" alt="" coords="4349,1079,4509,1167"/>
+<area shape="rect" id="node44" href="../11_requirements/req_distance_sensor.html#REQ_SNS_8" target="_top" title="REQ_SNS_8" alt="" coords="1740,1311,1929,1399"/>
+<area shape="rect" id="node45" href="../11_requirements/req_distance_sensor.html#REQ_SNS_9" target="_top" title="REQ_SNS_9" alt="" coords="5174,1311,5405,1399"/>
+<area shape="rect" id="node46" href="../11_requirements/req_distance_sensor.html#REQ_SNS_10" target="_top" title="REQ_SNS_10" alt="" coords="2533,1079,2709,1167"/>
+<area shape="rect" id="node47" href="../11_requirements/req_distance_sensor.html#REQ_SNS_11" target="_top" title="REQ_SNS_11" alt="" coords="2227,451,2407,539"/>
+<area shape="rect" id="node48" href="../11_requirements/req_distance_sensor.html#REQ_SNS_12" target="_top" title="REQ_SNS_12" alt="" coords="2099,905,2290,993"/>
+<area shape="rect" id="node49" href="../11_requirements/req_distance_sensor.html#REQ_SNS_13" target="_top" title="REQ_SNS_13" alt="" coords="2503,751,2649,839"/>
+<area shape="rect" id="node50" href="../11_requirements/req_distance_sensor.html#REQ_SNS_14" target="_top" title="REQ_SNS_14" alt="" coords="3779,751,3984,839"/>
+<area shape="rect" id="node51" href="../11_requirements/req_led_controller.html#REQ_LED_1" target="_top" title="REQ_LED_1" alt="" coords="24242,1533,24425,1621"/>
+<area shape="rect" id="node52" href="../11_requirements/req_led_controller.html#REQ_LED_2" target="_top" title="REQ_LED_2" alt="" coords="25179,1311,25357,1399"/>
+<area shape="rect" id="node53" href="../11_requirements/req_led_controller.html#REQ_LED_3" target="_top" title="REQ_LED_3" alt="" coords="17761,1079,17938,1167"/>
+<area shape="rect" id="node54" href="../11_requirements/req_led_controller.html#REQ_LED_4" target="_top" title="REQ_LED_4" alt="" coords="24453,1079,24649,1167"/>
+<area shape="rect" id="node55" href="../11_requirements/req_led_controller.html#REQ_LED_5" target="_top" title="REQ_LED_5" alt="" coords="20353,1079,20557,1167"/>
+<area shape="rect" id="node67" href="../11_requirements/req_system.html#REQ_SYS_1" target="_top" title="REQ_SYS_1" alt="" coords="18568,2164,18773,2271"/>
+<area shape="rect" id="node4" href="../10_userstories/us_reliable.html#US_RELIABLE_1" target="_top" title="US_RELIABLE_1" alt="" coords="26120,209,26307,335"/>
+<area shape="rect" id="node64" href="../11_requirements/req_startup_test.html#REQ_STARTUP_1" target="_top" title="REQ_STARTUP_1" alt="" coords="27129,1311,27327,1399"/>
+<area shape="rect" id="node65" href="../11_requirements/req_startup_test.html#REQ_STARTUP_2" target="_top" title="REQ_STARTUP_2" alt="" coords="26517,1079,26678,1167"/>
+<area shape="rect" id="node66" href="../11_requirements/req_startup_test.html#REQ_STARTUP_3" target="_top" title="REQ_STARTUP_3" alt="" coords="26591,751,26767,839"/>
+<area shape="rect" id="node68" href="../11_requirements/req_system.html#REQ_SYS_HW_1" target="_top" title="REQ_SYS_HW_1" alt="" coords="27509,451,27726,539"/>
+<area shape="rect" id="node73" href="../11_requirements/req_system.html#REQ_SYS_REL_1" target="_top" title="REQ_SYS_REL_1" alt="" coords="6982,1533,7183,1621"/>
+<area shape="rect" id="node74" href="../11_requirements/req_system.html#REQ_SYS_PERF_1" target="_top" title="REQ_SYS_PERF_1" alt="" coords="25923,451,26103,539"/>
+<area shape="rect" id="node6" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_1" target="_top" title="REQ_CFG_JSON_1" alt="" coords="8187,1747,8400,1853"/>
+<area shape="rect" id="node7" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_2" target="_top" title="REQ_CFG_JSON_2" alt="" coords="13065,1069,13271,1176"/>
+<area shape="rect" id="node8" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_3" target="_top" title="REQ_CFG_JSON_3" alt="" coords="7501,1079,7707,1167"/>
+<area shape="rect" id="node9" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_4" target="_top" title="REQ_CFG_JSON_4" alt="" coords="6236,1292,6404,1417"/>
+<area shape="rect" id="node10" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_5" target="_top" title="REQ_CFG_JSON_5" alt="" coords="6256,1069,6485,1176"/>
+<area shape="rect" id="node11" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_6" target="_top" title="REQ_CFG_JSON_6" alt="" coords="9398,1533,9599,1621"/>
+<area shape="rect" id="node69" href="../11_requirements/req_system.html#REQ_SYS_NET_1" target="_top" title="REQ_SYS_NET_1" alt="" coords="16147,1756,16320,1844"/>
+<area shape="rect" id="node70" href="../11_requirements/req_system.html#REQ_SYS_WEB_1" target="_top" title="REQ_SYS_WEB_1" alt="" coords="14363,1533,14549,1621"/>
+<area shape="rect" id="node71" href="../11_requirements/req_system.html#REQ_SYS_CFG_1" target="_top" title="REQ_SYS_CFG_1" alt="" coords="17875,1960,18061,2067"/>
+<area shape="rect" id="node79" href="../11_requirements/req_web_server.html#REQ_WEB_1" target="_top" title="REQ_WEB_1" alt="" coords="14685,1311,14877,1399"/>
+<area shape="rect" id="node80" href="../11_requirements/req_web_server.html#REQ_WEB_2" target="_top" title="REQ_WEB_2" alt="" coords="13760,1079,13947,1167"/>
+<area shape="rect" id="node81" href="../11_requirements/req_web_server.html#REQ_WEB_3" target="_top" title="REQ_WEB_3" alt="" coords="15993,1079,16149,1167"/>
+<area shape="rect" id="node82" href="../11_requirements/req_web_server.html#REQ_WEB_CONF_1" target="_top" title="REQ_WEB_CONF_1" alt="" coords="13448,1079,13635,1167"/>
+<area shape="rect" id="node83" href="../11_requirements/req_web_server.html#REQ_WEB_SCHEMA_1" target="_top" title="REQ_WEB_SCHEMA_1" alt="" coords="13305,741,13506,848"/>
+<area shape="rect" id="node84" href="../11_requirements/req_web_server.html#REQ_WEB_4" target="_top" title="REQ_WEB_4" alt="" coords="12595,751,12783,839"/>
+<area shape="rect" id="node85" href="../11_requirements/req_web_server.html#REQ_WEB_5" target="_top" title="REQ_WEB_5" alt="" coords="12926,751,13101,839"/>
+<area shape="rect" id="node86" href="../11_requirements/req_web_server.html#REQ_WEB_LED_1" target="_top" title="REQ_WEB_LED_1" alt="" coords="17419,751,17607,839"/>
+<area shape="rect" id="node87" href="../11_requirements/req_web_server.html#REQ_WEB_NF_1" target="_top" title="REQ_WEB_NF_1" alt="" coords="14037,751,14245,839"/>
+<area shape="rect" id="node88" href="../11_requirements/req_web_server.html#REQ_WEB_NF_2" target="_top" title="REQ_WEB_NF_2" alt="" coords="14421,751,14592,839"/>
+<area shape="rect" id="node12" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_7" target="_top" title="REQ_CFG_JSON_7" alt="" coords="10376,1301,10563,1408"/>
+<area shape="rect" id="node13" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_8" target="_top" title="REQ_CFG_JSON_8" alt="" coords="7943,1301,8129,1408"/>
+<area shape="rect" id="node14" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_9" target="_top" title="REQ_CFG_JSON_9" alt="" coords="5581,1079,5765,1167"/>
+<area shape="rect" id="node15" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_10" target="_top" title="REQ_CFG_JSON_10" alt="" coords="8382,1069,8570,1176"/>
+<area shape="rect" id="node16" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_11" target="_top" title="REQ_CFG_JSON_11" alt="" coords="7340,1301,7516,1408"/>
+<area shape="rect" id="node17" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_12" target="_top" title="REQ_CFG_JSON_12" alt="" coords="7189,1069,7376,1176"/>
+<area shape="rect" id="node18" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_13" target="_top" title="REQ_CFG_JSON_13" alt="" coords="6813,1060,7013,1185"/>
+<area shape="rect" id="node19" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_14" target="_top" title="REQ_CFG_JSON_14" alt="" coords="9199,1069,9396,1176"/>
+<area shape="rect" id="node20" href="../11_requirements/req_config_manager_json.html#REQ_CFG_JSON_15" target="_top" title="REQ_CFG_JSON_15" alt="" coords="8907,1515,9106,1640"/>
+<area shape="rect" id="node21" href="../11_requirements/req_developer_docs.html#REQ_DEV_DOC_1" target="_top" title="REQ_DEV_DOC_1" alt="" coords="21425,1524,21628,1631"/>
+<area shape="rect" id="node22" href="../11_requirements/req_developer_docs.html#REQ_DEV_README_1" target="_top" title="REQ_DEV_README_1" alt="" coords="21733,1311,21960,1399"/>
+<area shape="rect" id="node23" href="../11_requirements/req_developer_docs.html#REQ_DEV_OV_INDEX_1" target="_top" title="REQ_DEV_OV_INDEX_1" alt="" coords="22214,1311,22421,1399"/>
+<area shape="rect" id="node24" href="../11_requirements/req_developer_docs.html#REQ_DEV_OV_HW_1" target="_top" title="REQ_DEV_OV_HW_1" alt="" coords="22445,1301,22632,1408"/>
+<area shape="rect" id="node25" href="../11_requirements/req_developer_docs.html#REQ_DEV_OV_QS_1" target="_top" title="REQ_DEV_OV_QS_1" alt="" coords="22657,1311,22837,1399"/>
+<area shape="rect" id="node26" href="../11_requirements/req_developer_docs.html#REQ_DEV_GUIDE_QEMU_1" target="_top" title="REQ_DEV_GUIDE_QEMU_1" alt="" coords="19110,1311,19343,1399"/>
+<area shape="rect" id="node75" href="../11_requirements/req_system.html#REQ_SYS_SIM_1" target="_top" title="REQ_SYS_SIM_1" alt="" coords="18893,1533,19049,1621"/>
+<area shape="rect" id="node27" href="../11_requirements/req_developer_docs.html#REQ_DEV_GUIDE_MODES_1" target="_top" title="REQ_DEV_GUIDE_MODES_1" alt="" coords="20763,1301,21005,1408"/>
+<area shape="rect" id="node28" href="../11_requirements/req_developer_docs.html#REQ_DEV_GUIDE_DEBUG_1" target="_top" title="REQ_DEV_GUIDE_DEBUG_1" alt="" coords="21029,1311,21269,1399"/>
+<area shape="rect" id="node29" href="../11_requirements/req_developer_docs.html#REQ_DEV_GUIDE_FLASH_1" target="_top" title="REQ_DEV_GUIDE_FLASH_1" alt="" coords="20062,1311,20298,1399"/>
+<area shape="rect" id="node30" href="../11_requirements/req_developer_docs.html#REQ_DEV_ENV_1" target="_top" title="REQ_DEV_ENV_1" alt="" coords="21293,1301,21483,1408"/>
+<area shape="rect" id="node31" href="../11_requirements/req_developer_docs.html#REQ_DEV_LIMITS_1" target="_top" title="REQ_DEV_LIMITS_1" alt="" coords="21507,1301,21709,1408"/>
+<area shape="rect" id="node56" href="../11_requirements/req_netif_tunnel.html#REQ_NETIF_TUNNEL_1" target="_top" title="REQ_NETIF_TUNNEL_1" alt="" coords="18014,1079,18223,1167"/>
+<area shape="rect" id="node76" href="../11_requirements/req_system.html#REQ_SYS_SIM_2" target="_top" title="REQ_SYS_SIM_2" alt="" coords="17512,1301,17685,1408"/>
+<area shape="rect" id="node57" href="../11_requirements/req_netif_tunnel.html#REQ_NETIF_TUNNEL_2" target="_top" title="REQ_NETIF_TUNNEL_2" alt="" coords="21449,751,21658,839"/>
+<area shape="rect" id="node58" href="../11_requirements/req_netif_tunnel.html#REQ_NETIF_TUNNEL_3" target="_top" title="REQ_NETIF_TUNNEL_3" alt="" coords="21682,751,21891,839"/>
+<area shape="rect" id="node59" href="../11_requirements/req_netif_tunnel.html#REQ_NETIF_TUNNEL_4" target="_top" title="REQ_NETIF_TUNNEL_4" alt="" coords="18961,751,19170,839"/>
+<area shape="rect" id="node60" href="../11_requirements/req_netif_tunnel.html#REQ_NETIF_TUNNEL_5" target="_top" title="REQ_NETIF_TUNNEL_5" alt="" coords="19297,751,19506,839"/>
+<area shape="rect" id="node61" href="../11_requirements/req_netif_tunnel.html#REQ_NETIF_TUNNEL_NF_1" target="_top" title="REQ_NETIF_TUNNEL_NF_1" alt="" coords="21171,605,21408,693"/>
+<area shape="rect" id="node62" href="../11_requirements/req_netif_tunnel.html#REQ_NETIF_TUNNEL_NF_2" target="_top" title="REQ_NETIF_TUNNEL_NF_2" alt="" coords="21435,451,21672,539"/>
+<area shape="rect" id="node63" href="../11_requirements/req_netif_tunnel.html#REQ_NETIF_TUNNEL_DOC_1" target="_top" title="REQ_NETIF_TUNNEL_DOC_1" alt="" coords="21797,451,22045,539"/>
+<area shape="rect" id="node77" href="../11_requirements/req_system.html#REQ_SYS_SEC_1" target="_top" title="REQ_SYS_SEC_1" alt="" coords="28127,237,28329,307"/>
+<area shape="rect" id="node78" href="../11_requirements/req_system.html#REQ_SYS_TIME_1" target="_top" title="REQ_SYS_TIME_1" alt="" coords="29367,15,29588,103"/>
+<area shape="rect" id="node89" href="spec_config_manager_json.html#SPEC_CFG_JSON_ARCH_1" target="_top" title="SPEC_CFG_JSON_ARCH_1" alt="" coords="10637,1301,10861,1408"/>
+<area shape="rect" id="node90" href="spec_config_manager_json.html#SPEC_CFG_JSON_SOURCE_1" target="_top" title="SPEC_CFG_JSON_SOURCE_1" alt="" coords="9131,1524,9373,1631"/>
+<area shape="rect" id="node91" href="spec_config_manager_json.html#SPEC_CFG_JSON_SCHEMA_1" target="_top" title="SPEC_CFG_JSON_SCHEMA_1" alt="" coords="8991,741,9238,848"/>
+<area shape="rect" id="node92" href="spec_config_manager_json.html#SPEC_CFG_JSON_CODEGEN_1" target="_top" title="SPEC_CFG_JSON_CODEGEN_1" alt="" coords="5953,741,6210,848"/>
+<area shape="rect" id="node93" href="spec_config_manager_json.html#SPEC_CFG_JSON_STORAGE_1" target="_top" title="SPEC_CFG_JSON_STORAGE_1" alt="" coords="7782,1079,8034,1167"/>
+<area shape="rect" id="node94" href="spec_config_manager_json.html#SPEC_CFG_JSON_API_1" target="_top" title="SPEC_CFG_JSON_API_1" alt="" coords="12573,1069,12779,1176"/>
+<area shape="rect" id="node95" href="spec_config_manager_json.html#SPEC_CFG_JSON_UI_1" target="_top" title="SPEC_CFG_JSON_UI_1" alt="" coords="8747,751,8967,839"/>
+<area shape="rect" id="node96" href="spec_config_manager_json.html#SPEC_CFG_JSON_BULK_1" target="_top" title="SPEC_CFG_JSON_BULK_1" alt="" coords="7312,741,7533,848"/>
+<area shape="rect" id="node97" href="spec_config_manager_json.html#SPEC_CFG_JSON_EXTEND_1" target="_top" title="SPEC_CFG_JSON_EXTEND_1" alt="" coords="6387,741,6629,848"/>
+<area shape="rect" id="node98" href="spec_config_manager_json.html#SPEC_CFG_JSON_TYPESAFETY_1" target="_top" title="SPEC_CFG_JSON_TYPESAFETY_1" alt="" coords="9312,741,9587,848"/>
+<area shape="rect" id="node99" href="spec_config_webpage.html#SPEC_CFG_WEB_ARCH_1" target="_top" title="SPEC_CFG_WEB_ARCH_1" alt="" coords="8501,741,8723,848"/>
+<area shape="rect" id="node100" href="spec_config_webpage.html#SPEC_CFG_WEB_FLOW_1" target="_top" title="SPEC_CFG_WEB_FLOW_1" alt="" coords="7423,451,7644,539"/>
+<area shape="rect" id="node101" href="spec_config_webpage.html#SPEC_CFG_WEB_FORM_1" target="_top" title="SPEC_CFG_WEB_FORM_1" alt="" coords="8831,441,9054,548"/>
+<area shape="rect" id="node102" href="spec_config_webpage.html#SPEC_CFG_WEB_MAPPING_1" target="_top" title="SPEC_CFG_WEB_MAPPING_1" alt="" coords="7149,441,7398,548"/>
+<area shape="rect" id="node103" href="spec_config_webpage.html#SPEC_CFG_WEB_STATE_1" target="_top" title="SPEC_CFG_WEB_STATE_1" alt="" coords="7668,451,7892,539"/>
+<area shape="rect" id="node104" href="spec_config_webpage.html#SPEC_CFG_WEB_COUNTDOWN_1" target="_top" title="SPEC_CFG_WEB_COUNTDOWN_1" alt="" coords="7916,441,8196,548"/>
+<area shape="rect" id="node105" href="spec_config_webpage.html#SPEC_CFG_WEB_ERROR_1" target="_top" title="SPEC_CFG_WEB_ERROR_1" alt="" coords="8220,441,8449,548"/>
+<area shape="rect" id="node106" href="spec_config_webpage.html#SPEC_CFG_WEB_INIT_1" target="_top" title="SPEC_CFG_WEB_INIT_1" alt="" coords="8474,441,8683,548"/>
+<area shape="rect" id="node107" href="spec_dev_environment.html#SPEC_DEV_ENV_OPTIONS" target="_top" title="SPEC_DEV_ENV_OPTIONS" alt="" coords="20581,1060,20811,1185"/>
+<area shape="rect" id="node157" href="spec_high_level_architecture.html#SPEC_ARCH_CODESPACES_1" target="_top" title="SPEC_ARCH_CODESPACES_1" alt="" coords="20440,1301,20688,1408"/>
+<area shape="rect" id="node108" href="spec_dev_environment.html#SPEC_DEV_ENV_USAGE" target="_top" title="SPEC_DEV_ENV_USAGE" alt="" coords="20885,1060,21099,1185"/>
+<area shape="rect" id="node109" href="spec_developer_docs.html#SPEC_DEV_README_INTRO" target="_top" title="SPEC_DEV_README_INTRO" alt="" coords="22273,1060,22516,1185"/>
+<area shape="rect" id="node142" href="spec_high_level_architecture.html#SPEC_ARCH_LAYERS_1" target="_top" title="SPEC_ARCH_LAYERS_1" alt="" coords="21984,1301,22189,1408"/>
+<area shape="rect" id="node110" href="spec_developer_docs.html#SPEC_DEV_README_META" target="_top" title="SPEC_DEV_README_META" alt="" coords="22007,1079,22249,1167"/>
+<area shape="rect" id="node111" href="spec_developer_docs.html#SPEC_DEV_OV_INDEX_WHAT" target="_top" title="SPEC_DEV_OV_INDEX_WHAT" alt="" coords="23243,5,23493,112"/>
+<area shape="rect" id="node112" href="spec_developer_docs.html#SPEC_DEV_OV_INDEX_WHO" target="_top" title="SPEC_DEV_OV_INDEX_WHO" alt="" coords="23565,1069,23808,1176"/>
+<area shape="rect" id="node113" href="spec_developer_docs.html#SPEC_DEV_OV_INDEX_NAV" target="_top" title="SPEC_DEV_OV_INDEX_NAV" alt="" coords="22540,1069,22777,1176"/>
+<area shape="rect" id="node114" href="spec_developer_docs.html#SPEC_DEV_OV_HW_COMPONENTS" target="_top" title="SPEC_DEV_OV_HW_COMPONENTS" alt="" coords="22853,1069,23145,1176"/>
+<area shape="rect" id="node115" href="spec_developer_docs.html#SPEC_DEV_OV_HW_PINS" target="_top" title="SPEC_DEV_OV_HW_PINS" alt="" coords="23169,1069,23389,1176"/>
+<area shape="rect" id="node116" href="spec_developer_docs.html#SPEC_DEV_OV_QS_QEMU" target="_top" title="SPEC_DEV_OV_QS_QEMU" alt="" coords="21758,1079,21983,1167"/>
+<area shape="rect" id="node117" href="spec_developer_docs.html#SPEC_DEV_OV_QS_HW" target="_top" title="SPEC_DEV_OV_QS_HW" alt="" coords="26752,228,26957,316"/>
+<area shape="rect" id="node118" href="spec_developer_docs.html#SPEC_DEV_GUIDE_QEMU_START" target="_top" title="SPEC_DEV_GUIDE_QEMU_START" alt="" coords="18248,1079,18525,1167"/>
+<area shape="rect" id="node151" href="spec_high_level_architecture.html#SPEC_ARCH_QEMU_1" target="_top" title="SPEC_ARCH_QEMU_1" alt="" coords="18107,1311,18325,1399"/>
+<area shape="rect" id="node119" href="spec_developer_docs.html#SPEC_DEV_GUIDE_QEMU_WEB" target="_top" title="SPEC_DEV_GUIDE_QEMU_WEB" alt="" coords="17419,1069,17685,1176"/>
+<area shape="rect" id="node120" href="spec_developer_docs.html#SPEC_DEV_GUIDE_QEMU_STOP" target="_top" title="SPEC_DEV_GUIDE_QEMU_STOP" alt="" coords="18989,1079,19259,1167"/>
+<area shape="rect" id="node121" href="spec_developer_docs.html#SPEC_DEV_GUIDE_MODES_HOW" target="_top" title="SPEC_DEV_GUIDE_MODES_HOW" alt="" coords="19691,1079,19968,1167"/>
+<area shape="rect" id="node122" href="spec_developer_docs.html#SPEC_DEV_GUIDE_MODES_DIFF" target="_top" title="SPEC_DEV_GUIDE_MODES_DIFF" alt="" coords="22069,441,22344,548"/>
+<area shape="rect" id="node123" href="spec_developer_docs.html#SPEC_DEV_GUIDE_DEBUG_START" target="_top" title="SPEC_DEV_GUIDE_DEBUG_START" alt="" coords="20043,1069,20328,1176"/>
+<area shape="rect" id="node124" href="spec_developer_docs.html#SPEC_DEV_GUIDE_DEBUG_FEATURES" target="_top" title="SPEC_DEV_GUIDE_DEBUG_FEATURES" alt="" coords="21418,1069,21734,1176"/>
+<area shape="rect" id="node125" href="spec_developer_docs.html#SPEC_DEV_GUIDE_FLASH_OVERVIEW" target="_top" title="SPEC_DEV_GUIDE_FLASH_OVERVIEW" alt="" coords="18549,1051,18864,1195"/>
+<area shape="rect" id="node126" href="spec_developer_docs.html#SPEC_DEV_GUIDE_FLASH_STEPS" target="_top" title="SPEC_DEV_GUIDE_FLASH_STEPS" alt="" coords="19334,1069,19615,1176"/>
+<area shape="rect" id="node127" href="spec_display.html#SPEC_DSP_OVERVIEW_1" target="_top" title="SPEC_DSP_OVERVIEW_1" alt="" coords="17007,1079,17243,1167"/>
+<area shape="rect" id="node128" href="spec_display.html#SPEC_DSP_ARCH_1" target="_top" title="SPEC_DSP_ARCH_1" alt="" coords="9661,751,9867,839"/>
+<area shape="rect" id="node129" href="spec_display.html#SPEC_DSP_ARCH_2" target="_top" title="SPEC_DSP_ARCH_2" alt="" coords="10192,751,10397,839"/>
+<area shape="rect" id="node130" href="spec_display.html#SPEC_DSP_ALGO_1" target="_top" title="SPEC_DSP_ALGO_1" alt="" coords="10616,219,10821,325"/>
+<area shape="rect" id="node131" href="spec_display.html#SPEC_DSP_ALGO_3" target="_top" title="SPEC_DSP_ALGO_3" alt="" coords="27231,1960,27436,2067"/>
+<area shape="rect" id="node132" href="spec_display.html#SPEC_DSP_API_1" target="_top" title="SPEC_DSP_API_1" alt="" coords="9891,751,10096,839"/>
+<area shape="rect" id="node133" href="spec_distance_sensor.html#SPEC_SNS_ARCH_1" target="_top" title="SPEC_SNS_ARCH_1" alt="" coords="4947,1069,5152,1176"/>
+<area shape="rect" id="node134" href="spec_distance_sensor.html#SPEC_SNS_ARCH_2" target="_top" title="SPEC_SNS_ARCH_2" alt="" coords="5,1533,211,1621"/>
+<area shape="rect" id="node135" href="spec_distance_sensor.html#SPEC_SNS_ISR_1" target="_top" title="SPEC_SNS_ISR_1" alt="" coords="2150,1069,2357,1176"/>
+<area shape="rect" id="node136" href="spec_distance_sensor.html#SPEC_SNS_TASK_1" target="_top" title="SPEC_SNS_TASK_1" alt="" coords="4773,751,4979,839"/>
+<area shape="rect" id="node137" href="spec_distance_sensor.html#SPEC_SNS_ALGO_1" target="_top" title="SPEC_SNS_ALGO_1" alt="" coords="2036,219,2241,325"/>
+<area shape="rect" id="node138" href="spec_distance_sensor.html#SPEC_SNS_ALGO_2" target="_top" title="SPEC_SNS_ALGO_2" alt="" coords="2835,1079,3045,1167"/>
+<area shape="rect" id="node139" href="spec_distance_sensor.html#SPEC_SNS_API_1" target="_top" title="SPEC_SNS_API_1" alt="" coords="4544,751,4749,839"/>
+<area shape="rect" id="node140" href="spec_distance_sensor.html#SPEC_SNS_ERR_1" target="_top" title="SPEC_SNS_ERR_1" alt="" coords="2483,451,2688,539"/>
+<area shape="rect" id="node141" href="spec_distance_sensor.html#SPEC_SNS_SIM_1" target="_top" title="SPEC_SNS_SIM_1" alt="" coords="14667,741,14877,848"/>
+<area shape="rect" id="node143" href="spec_high_level_architecture.html#SPEC_ARCH_CONFIG_1" target="_top" title="SPEC_ARCH_CONFIG_1" alt="" coords="23805,1737,24013,1863"/>
+<area shape="rect" id="node144" href="spec_high_level_architecture.html#SPEC_ARCH_WEB_1" target="_top" title="SPEC_ARCH_WEB_1" alt="" coords="13947,1301,14152,1408"/>
+<area shape="rect" id="node145" href="spec_high_level_architecture.html#SPEC_ARCH_CERT_1" target="_top" title="SPEC_ARCH_CERT_1" alt="" coords="14176,1292,14381,1417"/>
+<area shape="rect" id="node146" href="spec_high_level_architecture.html#SPEC_ARCH_NETIF_1" target="_top" title="SPEC_ARCH_NETIF_1" alt="" coords="18401,1301,18610,1408"/>
+<area shape="rect" id="node147" href="spec_high_level_architecture.html#SPEC_ARCH_COMM_1" target="_top" title="SPEC_ARCH_COMM_1" alt="" coords="23389,1301,23597,1408"/>
+<area shape="rect" id="node148" href="spec_high_level_architecture.html#SPEC_ARCH_CONFIG_FLOW_1" target="_top" title="SPEC_ARCH_CONFIG_FLOW_1" alt="" coords="24038,1756,24295,1844"/>
+<area shape="rect" id="node149" href="spec_high_level_architecture.html#SPEC_ARCH_WIFI_1" target="_top" title="SPEC_ARCH_WIFI_1" alt="" coords="15083,1311,15288,1399"/>
+<area shape="rect" id="node150" href="spec_high_level_architecture.html#SPEC_ARCH_HTTP_1" target="_top" title="SPEC_ARCH_HTTP_1" alt="" coords="14405,1301,14611,1408"/>
+<area shape="rect" id="node152" href="spec_high_level_architecture.html#SPEC_ARCH_QEMU_BUILD_1" target="_top" title="SPEC_ARCH_QEMU_BUILD_1" alt="" coords="18634,1311,18883,1399"/>
+<area shape="rect" id="node153" href="spec_high_level_architecture.html#SPEC_ARCH_TASKS_1" target="_top" title="SPEC_ARCH_TASKS_1" alt="" coords="23160,1311,23365,1399"/>
+<area shape="rect" id="node154" href="spec_high_level_architecture.html#SPEC_ARCH_MEMORY_1" target="_top" title="SPEC_ARCH_MEMORY_1" alt="" coords="27885,219,28102,325"/>
+<area shape="rect" id="node155" href="spec_high_level_architecture.html#SPEC_ARCH_BUILD_1" target="_top" title="SPEC_ARCH_BUILD_1" alt="" coords="27425,228,27631,316"/>
+<area shape="rect" id="node156" href="spec_high_level_architecture.html#SPEC_ARCH_FLASH_1" target="_top" title="SPEC_ARCH_FLASH_1" alt="" coords="27655,228,27860,316"/>
+<area shape="rect" id="node158" href="spec_high_level_architecture.html#SPEC_ARCH_LOGGING_1" target="_top" title="SPEC_ARCH_LOGGING_1" alt="" coords="6943,1301,7163,1408"/>
+<area shape="rect" id="node159" href="spec_high_level_architecture.html#SPEC_ARCH_ERROR_RECOVERY_1" target="_top" title="SPEC_ARCH_ERROR_RECOVERY_1" alt="" coords="6631,1301,6919,1408"/>
+<area shape="rect" id="node160" href="spec_high_level_architecture.html#SPEC_ARCH_PERF_1" target="_top" title="SPEC_ARCH_PERF_1" alt="" coords="25891,219,26096,325"/>
+<area shape="rect" id="node161" href="spec_known_limitations.html#SPEC_DEV_LIMITS_STRUCTURE" target="_top" title="SPEC_DEV_LIMITS_STRUCTURE" alt="" coords="21123,1060,21394,1185"/>
+<area shape="rect" id="node162" href="spec_led_controller.html#SPEC_LED_ARCH_1" target="_top" title="SPEC_LED_ARCH_1" alt="" coords="24027,1301,24237,1408"/>
+<area shape="rect" id="node163" href="spec_led_controller.html#SPEC_LED_ARCH_2" target="_top" title="SPEC_LED_ARCH_2" alt="" coords="22297,751,22503,839"/>
+<area shape="rect" id="node164" href="spec_led_controller.html#SPEC_LED_API_1" target="_top" title="SPEC_LED_API_1" alt="" coords="25355,1079,25560,1167"/>
+<area shape="rect" id="node165" href="spec_led_controller.html#SPEC_LED_API_2" target="_top" title="SPEC_LED_API_2" alt="" coords="24961,751,25167,839"/>
+<area shape="rect" id="node166" href="spec_led_controller.html#SPEC_LED_API_3" target="_top" title="SPEC_LED_API_3" alt="" coords="21219,751,21424,839"/>
+<area shape="rect" id="node167" href="spec_led_controller.html#SPEC_LED_TIMING_1" target="_top" title="SPEC_LED_TIMING_1" alt="" coords="24261,1311,24469,1399"/>
+<area shape="rect" id="node168" href="spec_led_controller.html#SPEC_LED_DATA_1" target="_top" title="SPEC_LED_DATA_1" alt="" coords="24732,741,24937,848"/>
+<area shape="rect" id="node169" href="spec_led_controller.html#SPEC_LED_MEM_1" target="_top" title="SPEC_LED_MEM_1" alt="" coords="18661,751,18885,839"/>
+<area shape="rect" id="node170" href="spec_led_controller.html#SPEC_LED_ERR_1" target="_top" title="SPEC_LED_ERR_1" alt="" coords="21967,751,22172,839"/>
+<area shape="rect" id="node171" href="spec_led_controller.html#SPEC_LED_SIM_1" target="_top" title="SPEC_LED_SIM_1" alt="" coords="22368,451,22573,539"/>
+<area shape="rect" id="node172" href="spec_netif_tunnel.html#SPEC_NETIF_UART_ARCH_1" target="_top" title="SPEC_NETIF_UART_ARCH_1" alt="" coords="19087,441,19329,548"/>
+<area shape="rect" id="node173" href="spec_netif_tunnel.html#SPEC_NETIF_UART_PROTO_1" target="_top" title="SPEC_NETIF_UART_PROTO_1" alt="" coords="21519,209,21769,335"/>
+<area shape="rect" id="node174" href="spec_netif_tunnel.html#SPEC_NETIF_UART_BRIDGE_1" target="_top" title="SPEC_NETIF_UART_BRIDGE_1" alt="" coords="21793,219,22050,325"/>
+<area shape="rect" id="node175" href="spec_netif_tunnel.html#SPEC_NETIF_UART_DHCP_1" target="_top" title="SPEC_NETIF_UART_DHCP_1" alt="" coords="18581,432,18822,557"/>
+<area shape="rect" id="node176" href="spec_netif_tunnel.html#SPEC_NETIF_UART_COND_1" target="_top" title="SPEC_NETIF_UART_COND_1" alt="" coords="19615,432,19859,557"/>
+<area shape="rect" id="node177" href="spec_netif_tunnel.html#SPEC_NETIF_UART_PERF_1" target="_top" title="SPEC_NETIF_UART_PERF_1" alt="" coords="21259,209,21496,335"/>
+<area shape="rect" id="node178" href="spec_netif_tunnel.html#SPEC_NETIF_UART_DOC_1" target="_top" title="SPEC_NETIF_UART_DOC_1" alt="" coords="22075,228,22307,316"/>
+<area shape="rect" id="node179" href="spec_startup_test.html#SPEC_STARTUP_1" target="_top" title="SPEC_STARTUP_1" alt="" coords="27223,896,27428,1003"/>
+<area shape="rect" id="node180" href="spec_startup_test.html#SPEC_STARTUP_2" target="_top" title="SPEC_STARTUP_2" alt="" coords="26841,741,27047,848"/>
+<area shape="rect" id="node181" href="spec_startup_test.html#SPEC_STARTUP_3" target="_top" title="SPEC_STARTUP_3" alt="" coords="26641,441,26847,548"/>
+<area shape="rect" id="node182" href="spec_startup_test.html#SPEC_STARTUP_4" target="_top" title="SPEC_STARTUP_4" alt="" coords="27200,451,27405,539"/>
+<area shape="rect" id="node183" href="spec_web_server.html#SPEC_WEB_ARCH_1" target="_top" title="SPEC_WEB_ARCH_1" alt="" coords="14952,751,15157,839"/>
+<area shape="rect" id="node184" href="spec_web_server.html#SPEC_WEB_STATIC_1" target="_top" title="SPEC_WEB_STATIC_1" alt="" coords="14705,441,14911,548"/>
+<area shape="rect" id="node185" href="spec_web_server.html#SPEC_WEB_ROUTES_1" target="_top" title="SPEC_WEB_ROUTES_1" alt="" coords="11815,451,12020,539"/>
+<area shape="rect" id="node186" href="spec_web_server.html#SPEC_WEB_REST_CFG_1" target="_top" title="SPEC_WEB_REST_CFG_1" alt="" coords="13746,451,13963,539"/>
+<area shape="rect" id="node187" href="spec_web_server.html#SPEC_WEB_REST_WIFI_1" target="_top" title="SPEC_WEB_REST_WIFI_1" alt="" coords="16134,741,16367,848"/>
+<area shape="rect" id="node188" href="spec_web_server.html#SPEC_WEB_REST_HEALTH_1" target="_top" title="SPEC_WEB_REST_HEALTH_1" alt="" coords="14427,1079,14675,1167"/>
+<area shape="rect" id="node189" href="spec_web_server.html#SPEC_WEB_REST_LED_1" target="_top" title="SPEC_WEB_REST_LED_1" alt="" coords="18846,451,19063,539"/>
+<area shape="rect" id="node190" href="spec_web_server.html#SPEC_WEB_INTEGRATION_CFG_1" target="_top" title="SPEC_WEB_INTEGRATION_CFG_1" alt="" coords="11045,741,11326,848"/>
+<area shape="rect" id="node191" href="spec_web_server.html#SPEC_WEB_INTEGRATION_WIFI_1" target="_top" title="SPEC_WEB_INTEGRATION_WIFI_1" alt="" coords="16392,741,16677,848"/>
+<area shape="rect" id="node192" href="spec_web_server.html#SPEC_WEB_CAPTIVE_1" target="_top" title="SPEC_WEB_CAPTIVE_1" alt="" coords="16701,751,16907,839"/>
+<area shape="rect" id="node193" href="spec_web_server.html#SPEC_WEB_CONFIG_1" target="_top" title="SPEC_WEB_CONFIG_1" alt="" coords="13315,451,13520,539"/>
+<area shape="rect" id="node194" href="spec_web_server.html#SPEC_WEB_EXTEND_1" target="_top" title="SPEC_WEB_EXTEND_1" alt="" coords="11577,451,11791,539"/>
+<area shape="rect" id="node195" href="spec_web_server.html#SPEC_WEB_SECURITY_1" target="_top" title="SPEC_WEB_SECURITY_1" alt="" coords="12045,451,12259,539"/>
+<area shape="rect" id="node196" href="spec_web_server.html#SPEC_WEB_TEST_1" target="_top" title="SPEC_WEB_TEST_1" alt="" coords="12284,441,12489,548"/>
+<area shape="rect" id="node197" href="spec_web_server.html#SPEC_WEB_NF_1" target="_top" title="SPEC_WEB_NF_1" alt="" coords="14951,441,15156,548"/>
+<area shape="rect" id="node198" href="../21_api/api_cert_handler.html#API_COMP_CERT_HANDLER" target="_top" title="API_COMP_CERT_HANDLER" alt="" coords="27257,15,27500,103"/>
+<area shape="rect" id="node199" href="../21_api/api_cert_handler.html#API_FUNC_CERT_HANDLER_INIT" target="_top" title="API_FUNC_CERT_HANDLER_INIT" alt="" coords="27525,15,27803,103"/>
+<area shape="rect" id="node200" href="../21_api/api_cert_handler.html#API_FUNC_CERT_HANDLER_GET_SERVER_CERT" target="_top" title="API_FUNC_CERT_HANDLER_GET_SERVER_CERT" alt="" coords="27828,15,28217,103"/>
+<area shape="rect" id="node201" href="../21_api/api_cert_handler.html#API_FUNC_CERT_HANDLER_GET_SERVER_KEY" target="_top" title="API_FUNC_CERT_HANDLER_GET_SERVER_KEY" alt="" coords="28242,15,28622,103"/>
+<area shape="rect" id="node202" href="../21_api/api_cert_handler.html#API_FUNC_CERT_HANDLER_GET_CA_CERT" target="_top" title="API_FUNC_CERT_HANDLER_GET_CA_CERT" alt="" coords="28646,15,28997,103"/>
+<area shape="rect" id="node203" href="../21_api/api_cert_handler.html#API_FUNC_CERT_HANDLER_GET_INFO" target="_top" title="API_FUNC_CERT_HANDLER_GET_INFO" alt="" coords="29021,15,29342,103"/>
+<area shape="rect" id="node204" href="../21_api/api_config_manager.html#API_COMP_CONFIG_MANAGER" target="_top" title="API_COMP_CONFIG_MANAGER" alt="" coords="7022,760,7287,829"/>
+<area shape="rect" id="node205" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_INIT" target="_top" title="API_FUNC_CONFIG_INIT" alt="" coords="7903,760,8121,829"/>
+<area shape="rect" id="node206" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_FACTORY_RESET" target="_top" title="API_FUNC_CONFIG_FACTORY_RESET" alt="" coords="5582,751,5890,839"/>
+<area shape="rect" id="node207" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_COMMIT" target="_top" title="API_FUNC_CONFIG_COMMIT" alt="" coords="8058,1088,8307,1157"/>
+<area shape="rect" id="node208" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_WRITE_FACTORY_DEFAULTS" target="_top" title="API_FUNC_CONFIG_WRITE_FACTORY_DEFAULTS" alt="" coords="5790,1079,6181,1167"/>
+<area shape="rect" id="node209" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_GET_STRING" target="_top" title="API_FUNC_CONFIG_GET_STRING" alt="" coords="8594,1079,8873,1167"/>
+<area shape="rect" id="node210" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_SET_STRING" target="_top" title="API_FUNC_CONFIG_SET_STRING" alt="" coords="8897,1079,9175,1167"/>
+<area shape="rect" id="node211" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_SET_STRING_NO_COMMIT" target="_top" title="API_FUNC_CONFIG_SET_STRING_NO_COMMIT" alt="" coords="9673,1079,10050,1167"/>
+<area shape="rect" id="node212" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_GET_INT32" target="_top" title="API_FUNC_CONFIG_GET_INT32" alt="" coords="10074,1079,10339,1167"/>
+<area shape="rect" id="node213" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_SET_INT32" target="_top" title="API_FUNC_CONFIG_SET_INT32" alt="" coords="10363,1079,10626,1167"/>
+<area shape="rect" id="node214" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_GET_INT16" target="_top" title="API_FUNC_CONFIG_GET_INT16" alt="" coords="10650,1079,10915,1167"/>
+<area shape="rect" id="node215" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_SET_INT16" target="_top" title="API_FUNC_CONFIG_SET_INT16" alt="" coords="10939,1079,11202,1167"/>
+<area shape="rect" id="node216" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_SET_INT16_NO_COMMIT" target="_top" title="API_FUNC_CONFIG_SET_INT16_NO_COMMIT" alt="" coords="11227,1079,11589,1167"/>
+<area shape="rect" id="node217" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_GET_BOOL" target="_top" title="API_FUNC_CONFIG_GET_BOOL" alt="" coords="11613,1088,11877,1157"/>
+<area shape="rect" id="node218" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_SET_BOOL_NO_COMMIT" target="_top" title="API_FUNC_CONFIG_SET_BOOL_NO_COMMIT" alt="" coords="11902,1079,12263,1167"/>
+<area shape="rect" id="node219" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_SET_BOOL" target="_top" title="API_FUNC_CONFIG_SET_BOOL" alt="" coords="12288,1088,12549,1157"/>
+<area shape="rect" id="node220" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_GET_SCHEMA_JSON" target="_top" title="API_FUNC_CONFIG_GET_SCHEMA_JSON" alt="" coords="8145,751,8477,839"/>
+<area shape="rect" id="node221" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_GET_ALL_AS_JSON" target="_top" title="API_FUNC_CONFIG_GET_ALL_AS_JSON" alt="" coords="7558,751,7879,839"/>
+<area shape="rect" id="node222" href="../21_api/api_config_manager.html#API_FUNC_CONFIG_SET_ALL_FROM_JSON" target="_top" title="API_FUNC_CONFIG_SET_ALL_FROM_JSON" alt="" coords="6653,751,6997,839"/>
+<area shape="rect" id="node223" href="../21_api/api_display_logic.html#API_COMP_DISPLAY_LOGIC" target="_top" title="API_COMP_DISPLAY_LOGIC" alt="" coords="10368,460,10605,529"/>
+<area shape="rect" id="node224" href="../21_api/api_display_logic.html#API_FUNC_DISPLAY_LOGIC_START" target="_top" title="API_FUNC_DISPLAY_LOGIC_START" alt="" coords="10947,451,11235,539"/>
+<area shape="rect" id="node225" href="../21_api/api_distance_sensor.html#API_COMP_DISTANCE_SENSOR" target="_top" title="API_COMP_DISTANCE_SENSOR" alt="" coords="3289,760,3554,829"/>
+<area shape="rect" id="node226" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_INIT" target="_top" title="API_FUNC_DISTANCE_SENSOR_INIT" alt="" coords="5104,751,5405,839"/>
+<area shape="rect" id="node227" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_START" target="_top" title="API_FUNC_DISTANCE_SENSOR_START" alt="" coords="1808,1079,2125,1167"/>
+<area shape="rect" id="node228" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_STOP" target="_top" title="API_FUNC_DISTANCE_SENSOR_STOP" alt="" coords="928,1079,1237,1167"/>
+<area shape="rect" id="node229" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_GET_LATEST" target="_top" title="API_FUNC_DISTANCE_SENSOR_GET_LATEST" alt="" coords="3069,1079,3432,1167"/>
+<area shape="rect" id="node230" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_HAS_NEW_MEASUREMENT" target="_top" title="API_FUNC_DISTANCE_SENSOR_HAS_NEW_MEASUREMENT" alt="" coords="1262,1069,1733,1176"/>
+<area shape="rect" id="node231" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_GET_QUEUE_OVERFLOWS" target="_top" title="API_FUNC_DISTANCE_SENSOR_GET_QUEUE_OVERFLOWS" alt="" coords="4008,741,4469,848"/>
+<area shape="rect" id="node232" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_MONITOR" target="_top" title="API_FUNC_DISTANCE_SENSOR_MONITOR" alt="" coords="2725,751,3067,839"/>
+<area shape="rect" id="node233" href="../21_api/api_distance_sensor.html#API_FUNC_DISTANCE_SENSOR_IS_RUNNING" target="_top" title="API_FUNC_DISTANCE_SENSOR_IS_RUNNING" alt="" coords="539,1079,904,1167"/>
+<area shape="rect" id="node234" href="../21_api/api_distance_sensor.html#API_STRUCT_DISTANCE_SENSOR_ERROR" target="_top" title="API_STRUCT_DISTANCE_SENSOR_ERROR" alt="" coords="3457,1079,3794,1167"/>
+<area shape="rect" id="node235" href="../21_api/api_distance_sensor.html#API_STRUCT_DISTANCE_SENSOR_RAW_MEASUREMENT" target="_top" title="API_STRUCT_DISTANCE_SENSOR_RAW_MEASUREMENT" alt="" coords="1220,1311,1665,1399"/>
+<area shape="rect" id="node236" href="../21_api/api_distance_sensor.html#API_STRUCT_DISTANCE_SENSOR_MEASUREMENT" target="_top" title="API_STRUCT_DISTANCE_SENSOR_MEASUREMENT" alt="" coords="3819,1079,4224,1167"/>
+<area shape="rect" id="node237" href="../21_api/api_led_controller.html#API_COMP_LED_CONTROLLER" target="_top" title="API_COMP_LED_CONTROLLER" alt="" coords="22892,760,23153,829"/>
+<area shape="rect" id="node238" href="../21_api/api_led_controller.html#API_STRUCT_LED_COLOR" target="_top" title="API_STRUCT_LED_COLOR" alt="" coords="25191,760,25417,829"/>
+<area shape="rect" id="node239" href="../21_api/api_led_controller.html#API_FUNC_LED_CONTROLLER_INIT" target="_top" title="API_FUNC_LED_CONTROLLER_INIT" alt="" coords="17785,751,18082,839"/>
+<area shape="rect" id="node240" href="../21_api/api_led_controller.html#API_FUNC_LED_CONTROLLER_DEINIT" target="_top" title="API_FUNC_LED_CONTROLLER_DEINIT" alt="" coords="24493,1311,24811,1399"/>
+<area shape="rect" id="node241" href="../21_api/api_led_controller.html#API_FUNC_LED_SET_PIXEL" target="_top" title="API_FUNC_LED_SET_PIXEL" alt="" coords="25440,760,25675,829"/>
+<area shape="rect" id="node242" href="../21_api/api_led_controller.html#API_FUNC_LED_CLEAR_PIXEL" target="_top" title="API_FUNC_LED_CLEAR_PIXEL" alt="" coords="25584,1088,25840,1157"/>
+<area shape="rect" id="node243" href="../21_api/api_led_controller.html#API_FUNC_LED_GET_PIXEL" target="_top" title="API_FUNC_LED_GET_PIXEL" alt="" coords="23583,760,23820,829"/>
+<area shape="rect" id="node244" href="../21_api/api_led_controller.html#API_FUNC_LED_CLEAR_ALL" target="_top" title="API_FUNC_LED_CLEAR_ALL" alt="" coords="25915,1088,26157,1157"/>
+<area shape="rect" id="node245" href="../21_api/api_led_controller.html#API_FUNC_LED_SHOW" target="_top" title="API_FUNC_LED_SHOW" alt="" coords="23895,760,24099,829"/>
+<area shape="rect" id="node246" href="../21_api/api_led_controller.html#API_FUNC_LED_COLOR_RGB" target="_top" title="API_FUNC_LED_COLOR_RGB" alt="" coords="24123,760,24370,829"/>
+<area shape="rect" id="node247" href="../21_api/api_led_controller.html#API_FUNC_LED_COLOR_BRIGHTNESS" target="_top" title="API_FUNC_LED_COLOR_BRIGHTNESS" alt="" coords="24394,751,24707,839"/>
+<area shape="rect" id="node248" href="../21_api/api_led_controller.html#API_FUNC_LED_GET_COUNT" target="_top" title="API_FUNC_LED_GET_COUNT" alt="" coords="18107,760,18355,829"/>
+<area shape="rect" id="node249" href="../21_api/api_led_controller.html#API_FUNC_LED_IS_INITIALIZED" target="_top" title="API_FUNC_LED_IS_INITIALIZED" alt="" coords="24835,1311,25104,1399"/>
+<area shape="rect" id="node250" href="../21_api/api_led_controller.html#API_FUNC_LED_GET_ALL_COLORS" target="_top" title="API_FUNC_LED_GET_ALL_COLORS" alt="" coords="22578,751,22867,839"/>
+<area shape="rect" id="node251" href="../21_api/api_netif_uart_tunnel.html#API_COMP_NETIF_TUNNEL" target="_top" title="API_COMP_NETIF_TUNNEL" alt="" coords="19353,460,19591,529"/>
+<area shape="rect" id="node252" href="../21_api/api_netif_uart_tunnel.html#API_STRUCT_NETIF_TUNNEL_CONFIG" target="_top" title="API_STRUCT_NETIF_TUNNEL_CONFIG" alt="" coords="20217,751,20535,839"/>
+<area shape="rect" id="node253" href="../21_api/api_netif_uart_tunnel.html#API_FUNC_NETIF_TUNNEL_INIT" target="_top" title="API_FUNC_NETIF_TUNNEL_INIT" alt="" coords="20559,751,20833,839"/>
+<area shape="rect" id="node254" href="../21_api/api_netif_uart_tunnel.html#API_FUNC_NETIF_TUNNEL_DEINIT" target="_top" title="API_FUNC_NETIF_TUNNEL_DEINIT" alt="" coords="19530,751,19825,839"/>
+<area shape="rect" id="node255" href="../21_api/api_netif_uart_tunnel.html#API_FUNC_NETIF_TUNNEL_GET_HANDLE" target="_top" title="API_FUNC_NETIF_TUNNEL_GET_HANDLE" alt="" coords="19849,751,20193,839"/>
+<area shape="rect" id="node256" href="../21_api/api_startup_tests.html#API_COMP_STARTUP_TESTS" target="_top" title="API_COMP_STARTUP_TESTS" alt="" coords="26913,460,27154,529"/>
+<area shape="rect" id="node257" href="../21_api/api_startup_tests.html#API_FUNC_STARTUP_TESTS_SINGLE_CYCLE" target="_top" title="API_FUNC_STARTUP_TESTS_SINGLE_CYCLE" alt="" coords="26159,751,26516,839"/>
+<area shape="rect" id="node258" href="../21_api/api_startup_tests.html#API_FUNC_STARTUP_TESTS_MULTIPLE_CYCLES" target="_top" title="API_FUNC_STARTUP_TESTS_MULTIPLE_CYCLES" alt="" coords="25749,741,26134,848"/>
+<area shape="rect" id="node259" href="../21_api/api_startup_tests.html#API_FUNC_STARTUP_TESTS_RAINBOW" target="_top" title="API_FUNC_STARTUP_TESTS_RAINBOW" alt="" coords="26246,451,26565,539"/>
+<area shape="rect" id="node260" href="../21_api/api_web_server.html#API_COMP_WEB_SERVER" target="_top" title="API_COMP_WEB_SERVER" alt="" coords="14450,460,14673,529"/>
+<area shape="rect" id="node261" href="../21_api/api_web_server.html#API_FUNC_WEB_INIT" target="_top" title="API_FUNC_WEB_INIT" alt="" coords="14223,460,14425,529"/>
+<area shape="rect" id="node262" href="../21_api/api_web_server.html#API_FUNC_WEB_START" target="_top" title="API_FUNC_WEB_START" alt="" coords="16891,451,17099,539"/>
+<area shape="rect" id="node263" href="../21_api/api_web_server.html#API_FUNC_WEB_STOP" target="_top" title="API_FUNC_WEB_STOP" alt="" coords="13988,460,14199,529"/>
+<area shape="rect" id="node264" href="../21_api/api_web_server.html#API_FUNC_WEB_IS_RUNNING" target="_top" title="API_FUNC_WEB_IS_RUNNING" alt="" coords="12513,451,12769,539"/>
+<area shape="rect" id="node265" href="../21_api/api_web_server.html#API_FUNC_WEB_GET_PORT" target="_top" title="API_FUNC_WEB_GET_PORT" alt="" coords="12793,451,13031,539"/>
+<area shape="rect" id="node266" href="../21_api/api_web_server.html#API_FUNC_WEB_STATIC_FILE" target="_top" title="API_FUNC_WEB_STATIC_FILE" alt="" coords="11301,451,11553,539"/>
+<area shape="rect" id="node267" href="../21_api/api_web_server.html#API_STRUCT_WEB_CONFIG" target="_top" title="API_STRUCT_WEB_CONFIG" alt="" coords="13054,451,13290,539"/>
+<area shape="rect" id="node268" href="../21_api/api_wifi_manager.html#API_COMP_WIFI_MGR" target="_top" title="API_COMP_WIFI_MGR" alt="" coords="15947,460,16144,529"/>
+<area shape="rect" id="node269" href="../21_api/api_wifi_manager.html#API_FUNC_WIFI_INIT" target="_top" title="API_FUNC_WIFI_INIT" alt="" coords="15189,451,15398,539"/>
+<area shape="rect" id="node270" href="../21_api/api_wifi_manager.html#API_FUNC_WIFI_START" target="_top" title="API_FUNC_WIFI_START" alt="" coords="17033,751,17242,839"/>
+<area shape="rect" id="node271" href="../21_api/api_wifi_manager.html#API_FUNC_WIFI_STOP" target="_top" title="API_FUNC_WIFI_STOP" alt="" coords="16322,1533,16531,1621"/>
+<area shape="rect" id="node272" href="../21_api/api_wifi_manager.html#API_FUNC_WIFI_GET_STATUS" target="_top" title="API_FUNC_WIFI_GET_STATUS" alt="" coords="15603,751,15856,839"/>
+<area shape="rect" id="node273" href="../21_api/api_wifi_manager.html#API_FUNC_WIFI_SET_CRED" target="_top" title="API_FUNC_WIFI_SET_CRED" alt="" coords="20856,751,21093,839"/>
+<area shape="rect" id="node274" href="../21_api/api_wifi_manager.html#API_FUNC_WIFI_CLEAR_CRED" target="_top" title="API_FUNC_WIFI_CLEAR_CRED" alt="" coords="18379,751,18637,839"/>
+<area shape="rect" id="node275" href="../21_api/api_wifi_manager.html#API_FUNC_WIFI_GET_IP" target="_top" title="API_FUNC_WIFI_GET_IP" alt="" coords="16556,1533,16769,1621"/>
+<area shape="rect" id="node276" href="../21_api/api_wifi_manager.html#API_FUNC_WIFI_SWITCH_AP" target="_top" title="API_FUNC_WIFI_SWITCH_AP" alt="" coords="15333,751,15579,839"/>
+<area shape="rect" id="node277" href="../21_api/api_wifi_manager.html#API_FUNC_WIFI_MONITOR" target="_top" title="API_FUNC_WIFI_MONITOR" alt="" coords="16794,1533,17027,1621"/>
+<area shape="rect" id="node278" href="../21_api/api_wifi_manager.html#API_STRUCT_WIFI_MODE" target="_top" title="API_STRUCT_WIFI_MODE" alt="" coords="17051,1533,17274,1621"/>
+<area shape="rect" id="node279" href="../21_api/api_wifi_manager.html#API_STRUCT_WIFI_CRED" target="_top" title="API_STRUCT_WIFI_CRED" alt="" coords="17298,1533,17515,1621"/>
+<area shape="rect" id="node280" href="../21_api/api_wifi_manager.html#API_STRUCT_WIFI_STATUS" target="_top" title="API_STRUCT_WIFI_STATUS" alt="" coords="14107,1543,14339,1612"/>
 </map><figcaption>
 <p><span class="caption-text">SPEC_CFG_WEB_ARCH_1</span><a class="headerlink" href="#needflow-12_design/spec_config_webpage-0" title="Link to this image">¶</a></p>
 </figcaption>
@@ -1538,7 +1585,7 @@ User can interact
   </div>
 </div><script src="../_static/jquery.js?v=5d32c60e"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="../_static/documentation_options.js?v=664ffad9"></script>
+    <script src="../_static/documentation_options.js?v=8d563738"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

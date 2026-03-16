@@ -218,6 +218,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_display.html">Distance Display User Story</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_setup.html">Setup User Story</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_reliable.html">Reliability User Story</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_developer.html">Developer User Stories</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../11_requirements/index.html">Requirements Documentation</a><input aria-label="Toggle navigation of Requirements Documentation" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -229,6 +230,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_led_controller.html">LED Controller Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_display.html">Display System Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_startup_test.html">Startup Test Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11_requirements/req_developer_docs.html">Developer Documentation Requirements</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Design Specifications</a><input aria-label="Toggle navigation of Design Specifications" checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
@@ -240,6 +242,10 @@
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">LED Controller Design Specification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spec_display.html">Display System Design Specification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spec_startup_test.html">Startup Test Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spec_netif_tunnel.html">UART Tunnel Network Interface Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spec_developer_docs.html">Supporting Documentation Design Specifications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spec_dev_environment.html">Development Environment Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spec_known_limitations.html">Known Limitations Structure Specification</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../21_api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -258,7 +264,6 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../90_guides/index.html">Development Guide</a><input aria-label="Toggle navigation of Development Guide" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/devcontainer.html">Development Container Setup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/switching-dev-modes.html">Switching Development Modes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../90_guides/pre-commit-hooks.html">Pre-commit Hooks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/qemu-emulator.html">QEMU Emulator Guide</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/web-flasher.html">Web-Based Firmware Flashing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/debugging.html">Debugging Guide</a></li>
@@ -319,7 +324,7 @@ a simple buffer-based API with batch operations and color utilities.</p>
 </section>
 <section id="hardware-abstraction">
 <h2>Hardware Abstraction<a class="headerlink" href="#hardware-abstraction" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-aa1b3d48">
+<div class="need_container docutils container" id="SNCB-15335f28">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_LED_ARCH_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -352,7 +357,7 @@ transmission completes without errors.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-a512e36c">
+<div class="need_container docutils container" id="SNCB-f1a0b508">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_LED_ARCH_2">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -389,7 +394,7 @@ buffer until show, memory freed on cleanup.</p>
 </section>
 <section id="api-specifications">
 <h2>API Specifications<a class="headerlink" href="#api-specifications" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-3a08757e">
+<div class="need_container docutils container" id="SNCB-7d98d6b6">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_LED_API_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -423,7 +428,7 @@ predefined colors work correctly.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-d71c3efe">
+<div class="need_container docutils container" id="SNCB-016ff2d4">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_LED_API_2">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -456,7 +461,7 @@ produce correct colors.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-c709cc8e">
+<div class="need_container docutils container" id="SNCB-c5b53564">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_LED_API_3">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -500,7 +505,7 @@ correctly with buffer size limits.</p>
 </section>
 <section id="timing-and-data-format">
 <h2>Timing and Data Format<a class="headerlink" href="#timing-and-data-format" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-ed96dd17">
+<div class="need_container docutils container" id="SNCB-3389e08f">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_LED_TIMING_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -533,7 +538,7 @@ respond correctly.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-19c2ff4b">
+<div class="need_container docutils container" id="SNCB-34f19d2e">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_LED_DATA_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -569,7 +574,7 @@ ratios, no precision loss.</p>
 </section>
 <section id="memory-and-error-handling">
 <h2>Memory and Error Handling<a class="headerlink" href="#memory-and-error-handling" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-5412ef2f">
+<div class="need_container docutils container" id="SNCB-7565f205">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_LED_MEM_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -602,7 +607,7 @@ clean up properly.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-b487b995">
+<div class="need_container docutils container" id="SNCB-0691c09f">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_LED_ERR_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -638,7 +643,7 @@ system remains stable.</p>
 </section>
 <section id="simulator-specification">
 <h2>Simulator Specification<a class="headerlink" href="#simulator-specification" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-91171449">
+<div class="need_container docutils container" id="SNCB-e25d591e">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_LED_SIM_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -755,7 +760,7 @@ logs appear ~1x/sec and reflect buffer state.</p>
   </div>
 </div><script src="../_static/jquery.js?v=5d32c60e"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="../_static/documentation_options.js?v=664ffad9"></script>
+    <script src="../_static/documentation_options.js?v=8d563738"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>

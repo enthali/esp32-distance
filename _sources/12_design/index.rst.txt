@@ -15,6 +15,10 @@ This section contains detailed design specifications for system components follo
    spec_led_controller
    spec_display
    spec_startup_test
+   spec_netif_tunnel
+   spec_developer_docs
+   spec_dev_environment
+   spec_known_limitations
 
 Overview
 --------

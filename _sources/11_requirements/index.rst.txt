@@ -15,6 +15,7 @@ This section contains system and component requirements following Sphinx-Needs m
    req_led_controller
    req_display
    req_startup_test
+   req_developer_docs
 
 Overview
 --------
@@ -34,6 +35,10 @@ Requirements are organized in two levels:
 1. **System Requirements** (``REQ_SYS_*``) - High-level system capabilities
 2. **Component Requirements** - Detailed component-level specifications
 
+   * ``REQ_SNS_*`` - Distance sensor (HC-SR04 ultrasonic)
+   * ``REQ_LED_*`` - LED strip controller (WS2812)
+   * ``REQ_DSP_*`` - Display system (visualization logic)
+   * ``REQ_STARTUP_*`` - Startup test sequence
    * ``REQ_WEB_*`` - Web server and user interface
    * ``REQ_CFG_JSON_*`` - Configuration management (JSON-based system)
    * ``REQ_NETIF_TUNNEL_*`` - QEMU network tunnel driver

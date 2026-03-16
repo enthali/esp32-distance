@@ -218,6 +218,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_display.html">Distance Display User Story</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_setup.html">Setup User Story</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_reliable.html">Reliability User Story</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10_userstories/us_developer.html">Developer User Stories</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Requirements Documentation</a><input aria-label="Toggle navigation of Requirements Documentation" checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
@@ -229,6 +230,7 @@
 <li class="toctree-l2"><a class="reference internal" href="req_led_controller.html">LED Controller Requirements</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Display System Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="req_startup_test.html">Startup Test Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="req_developer_docs.html">Developer Documentation Requirements</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../12_design/index.html">Design Specifications</a><input aria-label="Toggle navigation of Design Specifications" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -240,6 +242,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../12_design/spec_led_controller.html">LED Controller Design Specification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../12_design/spec_display.html">Display System Design Specification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../12_design/spec_startup_test.html">Startup Test Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_netif_tunnel.html">UART Tunnel Network Interface Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_developer_docs.html">Supporting Documentation Design Specifications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_dev_environment.html">Development Environment Design Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../12_design/spec_known_limitations.html">Known Limitations Structure Specification</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../21_api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -258,7 +264,6 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../90_guides/index.html">Development Guide</a><input aria-label="Toggle navigation of Development Guide" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/devcontainer.html">Development Container Setup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/switching-dev-modes.html">Switching Development Modes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../90_guides/pre-commit-hooks.html">Pre-commit Hooks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/qemu-emulator.html">QEMU Emulator Guide</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/web-flasher.html">Web-Based Firmware Flashing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../90_guides/debugging.html">Debugging Guide</a></li>
@@ -320,7 +325,7 @@ to guide optimal parking.</p>
 </section>
 <section id="system-overview-requirements">
 <h2>System Overview Requirements<a class="headerlink" href="#system-overview-requirements" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-2941bbed">
+<div class="need_container docutils container" id="SNCB-20568d88">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_DSP_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -334,7 +339,7 @@ to guide optimal parking.</p>
 <div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">mandatory</span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="req_led_controller.html#REQ_LED_1" title="REQ_DSP_1">REQ_LED_1</a>, <a class="reference internal" href="req_system.html#REQ_SYS_1" title="REQ_DSP_1">REQ_SYS_1</a></span></span></div>
-<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY" title="REQ_DSP_1">US_DISPLAY</a>, <a class="reference internal" href="#REQ_DSP_3" title="REQ_DSP_1">REQ_DSP_3</a>, <a class="reference internal" href="../12_design/spec_display.html#SPEC_DSP_OVERVIEW_1" title="REQ_DSP_1">SPEC_DSP_OVERVIEW_1</a>, <a class="reference internal" href="../21_api/api_display_logic.html#API_COMP_DISPLAY_LOGIC" title="REQ_DSP_1">API_COMP_DISPLAY_LOGIC</a>, <a class="reference internal" href="../21_api/api_display_logic.html#API_FUNC_DISPLAY_LOGIC_START" title="REQ_DSP_1">API_FUNC_DISPLAY_LOGIC_START</a></span></span></div>
+<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY_1" title="REQ_DSP_1">US_DISPLAY_1</a>, <a class="reference internal" href="#REQ_DSP_3" title="REQ_DSP_1">REQ_DSP_3</a>, <a class="reference internal" href="../12_design/spec_display.html#SPEC_DSP_OVERVIEW_1" title="REQ_DSP_1">SPEC_DSP_OVERVIEW_1</a>, <a class="reference internal" href="../21_api/api_display_logic.html#API_COMP_DISPLAY_LOGIC" title="REQ_DSP_1">API_COMP_DISPLAY_LOGIC</a>, <a class="reference internal" href="../21_api/api_display_logic.html#API_FUNC_DISPLAY_LOGIC_START" title="REQ_DSP_1">API_FUNC_DISPLAY_LOGIC_START</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -361,7 +366,7 @@ of concerns.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-4a63903f">
+<div class="need_container docutils container" id="SNCB-561f008c">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_DSP_2">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -375,7 +380,7 @@ of concerns.</p>
 <div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">mandatory</span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="req_config_manager_json.html#REQ_CFG_JSON_1" title="REQ_DSP_2">REQ_CFG_JSON_1</a>, <a class="reference internal" href="req_system.html#REQ_SYS_CFG_1" title="REQ_DSP_2">REQ_SYS_CFG_1</a></span></span></div>
-<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY" title="REQ_DSP_2">US_DISPLAY</a>, <a class="reference internal" href="#REQ_DSP_4" title="REQ_DSP_2">REQ_DSP_4</a>, <a class="reference internal" href="#REQ_DSP_5" title="REQ_DSP_2">REQ_DSP_5</a>, <a class="reference internal" href="../12_design/spec_display.html#SPEC_DSP_ARCH_2" title="REQ_DSP_2">SPEC_DSP_ARCH_2</a>, <a class="reference internal" href="../21_api/api_display_logic.html#API_COMP_DISPLAY_LOGIC" title="REQ_DSP_2">API_COMP_DISPLAY_LOGIC</a>, <a class="reference internal" href="../21_api/api_display_logic.html#API_FUNC_DISPLAY_LOGIC_START" title="REQ_DSP_2">API_FUNC_DISPLAY_LOGIC_START</a></span></span></div>
+<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY_1" title="REQ_DSP_2">US_DISPLAY_1</a>, <a class="reference internal" href="#REQ_DSP_4" title="REQ_DSP_2">REQ_DSP_4</a>, <a class="reference internal" href="#REQ_DSP_5" title="REQ_DSP_2">REQ_DSP_5</a>, <a class="reference internal" href="../12_design/spec_display.html#SPEC_DSP_ARCH_2" title="REQ_DSP_2">SPEC_DSP_ARCH_2</a>, <a class="reference internal" href="../21_api/api_display_logic.html#API_COMP_DISPLAY_LOGIC" title="REQ_DSP_2">API_COMP_DISPLAY_LOGIC</a>, <a class="reference internal" href="../21_api/api_display_logic.html#API_FUNC_DISPLAY_LOGIC_START" title="REQ_DSP_2">API_FUNC_DISPLAY_LOGIC_START</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -407,7 +412,7 @@ fragmentation and performance degradation in the embedded environment.</p>
 </section>
 <section id="user-experience-requirements">
 <h2>User Experience Requirements<a class="headerlink" href="#user-experience-requirements" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-912a1d0b">
+<div class="need_container docutils container" id="SNCB-9c7cf38e">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_DSP_3">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -420,8 +425,8 @@ fragmentation and performance degradation in the embedded environment.</p>
 <div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">display</span><span class="needs_spacer">, </span><span class="needs_data">ux</span><span class="needs_spacer">, </span><span class="needs_data">visualization</span></span></span></div>
 <div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">mandatory</span></span></div>
 </span></span></div>
-<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="req_distance_sensor.html#REQ_SNS_11" title="REQ_DSP_3">REQ_SNS_11</a>, <a class="reference internal" href="#REQ_DSP_1" title="REQ_DSP_3">REQ_DSP_1</a></span></span></div>
-<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY" title="REQ_DSP_3">US_DISPLAY</a>, <a class="reference internal" href="#REQ_DSP_4" title="REQ_DSP_3">REQ_DSP_4</a>, <a class="reference internal" href="../12_design/spec_display.html#SPEC_DSP_ARCH_1" title="REQ_DSP_3">SPEC_DSP_ARCH_1</a>, <a class="reference internal" href="../12_design/spec_display.html#SPEC_DSP_ALGO_1" title="REQ_DSP_3">SPEC_DSP_ALGO_1</a>, <a class="reference internal" href="../12_design/spec_display.html#SPEC_DSP_API_1" title="REQ_DSP_3">SPEC_DSP_API_1</a>, <a class="reference internal" href="../21_api/api_display_logic.html#API_COMP_DISPLAY_LOGIC" title="REQ_DSP_3">API_COMP_DISPLAY_LOGIC</a>, <a class="reference internal" href="../21_api/api_display_logic.html#API_FUNC_DISPLAY_LOGIC_START" title="REQ_DSP_3">API_FUNC_DISPLAY_LOGIC_START</a></span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="req_distance_sensor.html#REQ_SNS_4" title="REQ_DSP_3">REQ_SNS_4</a>, <a class="reference internal" href="#REQ_DSP_1" title="REQ_DSP_3">REQ_DSP_1</a></span></span></div>
+<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY_1" title="REQ_DSP_3">US_DISPLAY_1</a>, <a class="reference internal" href="#REQ_DSP_4" title="REQ_DSP_3">REQ_DSP_4</a>, <a class="reference internal" href="../12_design/spec_display.html#SPEC_DSP_ARCH_1" title="REQ_DSP_3">SPEC_DSP_ARCH_1</a>, <a class="reference internal" href="../12_design/spec_display.html#SPEC_DSP_ALGO_1" title="REQ_DSP_3">SPEC_DSP_ALGO_1</a>, <a class="reference internal" href="../12_design/spec_display.html#SPEC_DSP_API_1" title="REQ_DSP_3">SPEC_DSP_API_1</a>, <a class="reference internal" href="../21_api/api_display_logic.html#API_COMP_DISPLAY_LOGIC" title="REQ_DSP_3">API_COMP_DISPLAY_LOGIC</a>, <a class="reference internal" href="../21_api/api_display_logic.html#API_FUNC_DISPLAY_LOGIC_START" title="REQ_DSP_3">API_FUNC_DISPLAY_LOGIC_START</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -447,7 +452,7 @@ separation of concerns.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-81a7b8a4">
+<div class="need_container docutils container" id="SNCB-fb36ebee">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_DSP_4">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -461,7 +466,7 @@ separation of concerns.</p>
 <div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">mandatory</span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#REQ_DSP_2" title="REQ_DSP_4">REQ_DSP_2</a>, <a class="reference internal" href="#REQ_DSP_3" title="REQ_DSP_4">REQ_DSP_3</a></span></span></div>
-<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY" title="REQ_DSP_4">US_DISPLAY</a>, <a class="reference internal" href="#REQ_DSP_5" title="REQ_DSP_4">REQ_DSP_5</a>, <a class="reference internal" href="../12_design/spec_display.html#SPEC_DSP_ALGO_1" title="REQ_DSP_4">SPEC_DSP_ALGO_1</a>, <a class="reference internal" href="../21_api/api_display_logic.html#API_COMP_DISPLAY_LOGIC" title="REQ_DSP_4">API_COMP_DISPLAY_LOGIC</a>, <a class="reference internal" href="../21_api/api_display_logic.html#API_FUNC_DISPLAY_LOGIC_START" title="REQ_DSP_4">API_FUNC_DISPLAY_LOGIC_START</a></span></span></div>
+<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY_1" title="REQ_DSP_4">US_DISPLAY_1</a>, <a class="reference internal" href="#REQ_DSP_5" title="REQ_DSP_4">REQ_DSP_5</a>, <a class="reference internal" href="../12_design/spec_display.html#SPEC_DSP_ALGO_1" title="REQ_DSP_4">SPEC_DSP_ALGO_1</a>, <a class="reference internal" href="../21_api/api_display_logic.html#API_COMP_DISPLAY_LOGIC" title="REQ_DSP_4">API_COMP_DISPLAY_LOGIC</a>, <a class="reference internal" href="../21_api/api_display_logic.html#API_FUNC_DISPLAY_LOGIC_START" title="REQ_DSP_4">API_FUNC_DISPLAY_LOGIC_START</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -481,7 +486,7 @@ in red when too close provides immediate, unmistakable indication of dangerous p
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-9d0165e4">
+<div class="need_container docutils container" id="SNCB-0825500e">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_DSP_5">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -495,7 +500,7 @@ in red when too close provides immediate, unmistakable indication of dangerous p
 <div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">mandatory</span></span></div>
 </span></span></div>
 <div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#REQ_DSP_2" title="REQ_DSP_5">REQ_DSP_2</a>, <a class="reference internal" href="#REQ_DSP_4" title="REQ_DSP_5">REQ_DSP_4</a></span></span></div>
-<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY" title="REQ_DSP_5">US_DISPLAY</a>, <a class="reference internal" href="../12_design/spec_display.html#SPEC_DSP_ALGO_1" title="REQ_DSP_5">SPEC_DSP_ALGO_1</a></span></span></div>
+<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="../10_userstories/us_display.html#US_DISPLAY_1" title="REQ_DSP_5">US_DISPLAY_1</a>, <a class="reference internal" href="../12_design/spec_display.html#SPEC_DSP_ALGO_1" title="REQ_DSP_5">SPEC_DSP_ALGO_1</a></span></span></div>
 </span></div>
 </div>
 </td>
@@ -546,7 +551,7 @@ LED in red when too far provides clear indication that the measurement is invali
 <tr class="need row-even"><td class="needs_id"><p><a class="reference internal" href="#REQ_DSP_3">REQ_DSP_3</a></p></td>
 <td class="needs_title"><p>Core Visualization Concept</p></td>
 <td class="needs_status"><p>approved</p></td>
-<td class="needs_links"><p><a class="reference internal" href="req_distance_sensor.html#REQ_SNS_11">REQ_SNS_11</a><em>; </em><a class="reference internal" href="#REQ_DSP_1">REQ_DSP_1</a></p></td>
+<td class="needs_links"><p><a class="reference internal" href="req_distance_sensor.html#REQ_SNS_4">REQ_SNS_4</a><em>; </em><a class="reference internal" href="#REQ_DSP_1">REQ_DSP_1</a></p></td>
 </tr>
 <tr class="need row-odd"><td class="needs_id"><p><a class="reference internal" href="#REQ_DSP_4">REQ_DSP_4</a></p></td>
 <td class="needs_title"><p>Below Minimum Distance Warning</p></td>
@@ -645,7 +650,7 @@ LED in red when too far provides clear indication that the measurement is invali
   </div>
 </div><script src="../_static/jquery.js?v=5d32c60e"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="../_static/documentation_options.js?v=664ffad9"></script>
+    <script src="../_static/documentation_options.js?v=8d563738"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
