@@ -5,6 +5,8 @@
   "python.terminal.activateEnvironment": false,
   "python-envs.pythonProjects": [],
   "idf.flashType": "UART",
+  "sphinx-needs.needsJson": "/workspaces/esp32-distance/docs/_build/html/needs.json",
+  "sphinx-needs.srcDir": "/workspaces/esp32-distance/docs",
   "chat.promptFilesRecommendations": {
     "syspilot.change": true,
     "syspilot.implement": true,
@@ -14,5 +16,8 @@
     "syspilot.memory": true,
     "syspilot.setup": true,
     "syspilot.release": true
-  }
+  },
+  "sphinx-needs.trace.server": "verbose",
+  "sphinx-needs.loggingLevel": "verbose",
+  "editor.defaultFormatter": "ms-vscode.cpptools"
 }

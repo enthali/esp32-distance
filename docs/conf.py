@@ -17,6 +17,8 @@ if os.path.exists(version_file):
 else:
     release = '1.0.0'
 
+version = release
+
 project = 'ESP32 Distance Sensor'
 copyright = '2025, ESP32 Distance Sensor Team'
 author = 'ESP32 Distance Sensor Team'
@@ -140,14 +142,6 @@ needs_statuses = [
     dict(name="implemented", description="Implemented - Code exists"),
     dict(name="verified", description="Verified - Tested and validated"),
     dict(name="deprecated", description="Deprecated - No longer used"),
-]
-
-# Priority options
-needs_priority = [
-    dict(name="mandatory", description="Must have - Critical requirement"),
-    dict(name="high", description="Should have - Important requirement"),
-    dict(name="medium", description="Could have - Nice to have"),
-    dict(name="low", description="Won't have this time - Future consideration"),
 ]
 
 # Enable automatic ID generation

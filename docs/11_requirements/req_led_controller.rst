@@ -64,7 +64,7 @@ Functional Requirements
 
 .. req:: Configurable LED Count
    :id: REQ_LED_3
-   :links: REQ_LED_1, REQ_CFG_1
+   :links: REQ_LED_1, REQ_CFG_JSON_7
    :status: approved
    :priority: mandatory
    :tags: led, configuration, flexibility

@@ -5,7 +5,7 @@ WiFi Manager API
    :id: API_COMP_WIFI_MGR
    :status: implemented
    :header_file: main/components/web_server/wifi_manager.h
-   :links: REQ_SYS_NET_1, REQ_SYS_WEB_1, REQ_WEB_3, REQ_WEB_5, REQ_SYS_CFG_1, REQ_SYS_ARCH_1, SPEC_WEB_SERVER
+   :links: REQ_SYS_NET_1, REQ_SYS_WEB_1, REQ_WEB_3, REQ_WEB_5, REQ_SYS_CFG_1, REQ_SYS_ARCH_1, SPEC_WEB_ARCH_1
 
    Smart WiFi management with captive portal and credential persistence.
 
@@ -29,7 +29,7 @@ Lifecycle Functions
    :api_signature: esp_err_t wifi_manager_init(void)
    :returns: ESP_OK on success, error code on failure
    :parameters: None
-   :links: REQ_SYS_NET_1, REQ_WEB_3, SPEC_WEB_SERVER
+   :links: REQ_SYS_NET_1, REQ_WEB_3, SPEC_WEB_ARCH_1
 
    Initialize WiFi manager with smart boot logic.
 
