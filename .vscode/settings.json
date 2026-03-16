@@ -19,5 +19,7 @@
   },
   "sphinx-needs.trace.server": "verbose",
   "sphinx-needs.loggingLevel": "verbose",
-  "editor.defaultFormatter": "ms-vscode.cpptools"
+  "editor.defaultFormatter": "ms-vscode.cpptools",
+  "ubcode.mcp.defaultConfig": "/workspaces/esp32-distance/docs",
+  "ubcode.preview.experimentalRendering": true
 }

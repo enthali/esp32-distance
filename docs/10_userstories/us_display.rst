@@ -2,9 +2,9 @@ Distance Display User Story
 ============================
 
 .. story:: Visual Distance Feedback for Parking
-   :id: US_DISPLAY
+   :id: US_DISPLAY_1
    :status: approved
-   :links: REQ_SYS_1, REQ_SNS_1, REQ_SNS_2, REQ_SNS_3, REQ_SNS_4, REQ_SNS_5, REQ_SNS_6, REQ_SNS_7, REQ_SNS_8, REQ_SNS_9, REQ_SNS_10, REQ_SNS_11, REQ_SNS_12, REQ_SNS_13, REQ_SNS_14, REQ_LED_1, REQ_LED_2, REQ_LED_3, REQ_LED_4, REQ_LED_5, REQ_DSP_1, REQ_DSP_2, REQ_DSP_3, REQ_DSP_4, REQ_DSP_5
+   :links: US_SETUP_1, REQ_SYS_1, REQ_SNS_1, REQ_SNS_2, REQ_SNS_3, REQ_SNS_4, REQ_SNS_5, REQ_SNS_6, REQ_SNS_7, REQ_SNS_8, REQ_SNS_9, REQ_SNS_10, REQ_SNS_11, REQ_SNS_12, REQ_SNS_13, REQ_SNS_14, REQ_LED_1, REQ_LED_2, REQ_LED_3, REQ_LED_4, REQ_LED_5, REQ_DSP_1, REQ_DSP_2, REQ_DSP_3, REQ_DSP_4, REQ_DSP_5
    :tags: display, sensor, garage-user
 
    **Role:** Garage user

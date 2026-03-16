@@ -6,384 +6,188 @@ handoffs:
     prompt: Start a new change workflow
 ---
 
-# syspilot Release Agent
+# Release Agent
 
-> **Purpose**: Guide maintainers through the syspilot release process with automated release note generation.
+> **Purpose**: Guide maintainers through the release process — tag-based versioning with GitHub Release notes generated from Change Documents.
 
-**Implements**: SPEC_REL_AGENT, REQ_REL_NOTES, REQ_REL_PROCESS_DOC
+## Project-Specific Configuration
+
+- **Version source**: `git describe --tags` (no VERSION file)
+- **Release notes**: GitHub Releases only (no `docs/releasenotes.md`)
+- **Change Documents**: `docs/changes/*.md` — kept after release (not deleted)
+- **Docs workflow**: `deploy-docs.yml` triggers on push to main (not on tag)
+- **Shell**: Bash only (devcontainer / Codespaces)
+- **Sphinx build**: `sphinx-build -b html docs docs/_build/html`
 
 ---
 
-## Overview
-
-You are the **Release Agent** for syspilot. Your role is to help maintainers create high-quality releases by:
-
-1. Finding merged Change Documents
-2. Generating release notes with traceability
-3. Guiding version updates
-4. Running validation checklist
-5. Providing Git tag commands
-
 ## Workflow
 
-### 0. Pre-Flight Check (REQUIRED)
-
-**Before doing anything**, check the current branch:
+### 0. Pre-Flight Check
 
 ```bash
-# Check current branch
 git branch --show-current
 ```
 
-**If NOT on main branch:**
+**If NOT on main:** Squash-merge the current branch into main:
 
-```
-⚠️ You are currently on branch '{CURRENT_BRANCH}'.
+```bash
+BRANCH=$(git branch --show-current)
 
-Releases should be created from the main branch after merging.
+# Ensure working directory is clean
+git status --porcelain
 
-Let me help you merge to main:
+# Switch to main and update
+git checkout main
+git pull origin main
 
-Questions first:
-1. Has the verify agent completed? (all specs marked 'implemented')
-2. Are all changes committed?
-3. Ready to merge?
-```
+# Squash merge — one commit per change on main
+git merge --squash "$BRANCH"
+git commit -m "feat: {brief summary from Change Document}"
 
-**If user confirms YES**, guide through merge:
-
-```
-Great! Let's merge to main:
-
-Step 1: Check working directory is clean
-  git status
-
-Step 2: Switch to main and update
-  git checkout main
-  git pull origin main
-
-Step 3: Merge feature branch (squash)
-  git merge --squash {CURRENT_BRANCH}
-  
-Step 4: Review changes
-  git diff --cached
-
-Step 5: Commit the merge
-  git commit -m "feat: {brief feature description from Change Document}"
-  
-Step 6: Push to main
-  git push origin main
-
-Type 'merged' when complete, or 'conflict' if you need help resolving.
+# Push main
+git push origin main
 ```
 
-**If merge conflicts occur:**
-
-```
-⚠️ Merge conflicts detected.
-
-Common conflicts during release merges:
-- version.json (expected - choose feature branch version)
-- Release notes (if multiple releases)
-
-Would you like help resolving conflicts, or should I hand back to:
-- Implementation agent (if code conflicts)
-- Verify agent (if specs conflict)
-```
-
-**If on main:** Proceed to Preparation Phase.
+**If on main:** Proceed to Preparation.
 
 ### 1. Preparation Phase
 
-When the maintainer invokes you with `@syspilot.release prepare`, analyze the repository:
+When invoked with `@syspilot.release prepare`:
 
+```bash
+# Current version from last tag
+git describe --tags --abbrev=0 2>/dev/null || echo "no tags yet"
+
+# All commits since last tag
+git log $(git describe --tags --abbrev=0 2>/dev/null)..HEAD --oneline
+
+# Find Change Documents
+ls docs/changes/*.md 2>/dev/null
 ```
-Tasks:
-- Read current version from version.json
-- Find all merged feature branches since last release
-- Locate Change Documents in docs/changes/
-- Identify impacted User Stories, Requirements, Design Specs
-- Analyze changes to determine release type (major/minor/patch)
-```
 
-**Release Type Decision Logic:**
+Read each Change Document in `docs/changes/` and extract:
+- Summary
+- User Stories (Level 0)
+- Requirements (Level 1)
+- Design Specs (Level 2)
 
-- **MAJOR**: Breaking changes (incompatible API/workflow changes, User Stories that change existing behavior)
-- **MINOR**: New features (new agents, new capabilities, backward compatible)
-- **PATCH**: Bug fixes, documentation updates, internal refactoring only
+**Release Type Decision:**
+- **MAJOR**: Breaking changes (incompatible API changes)
+- **MINOR**: New features, new components, new specs
+- **PATCH**: Bug fixes, documentation-only updates
 
-**Example:**
-
-```markdown
-Current version: 0.1.0 (from version.json)
-
-I found 3 merged Change Documents since last release:
-
-1. **install-update.md** (feature/install-update)
-   - US_INST_NEW_PROJECT through US_INST_UPDATE: Installation & Update System
-   - 6 Requirements, 5 Design Specs
-   - Impact: New feature (MINOR)
-
-2. **release-process.md** (feature/release-process)
-   - US_REL_CREATE through US_REL_AGENT_TEMPLATE: Release Process
-   - 8 Requirements, 7 Design Specs
-   - Impact: New feature (MINOR)
-
-3. **agent-workflow-fix.md** (feature/agent-improvements)
-   - SPEC_AGENT_QUALITY_GATES: Improved Change Agent workflow
-   - Impact: Internal improvement (PATCH)
-
-**Analysis:**
-- Breaking changes: None
-- New features: 6 User Stories, 14 Requirements (MINOR)
-- Bug fixes/improvements: 1 (PATCH)
-
-**Recommendation**: MINOR release (current → next MINOR)
-Calculated version: 0.2.0
-
-Shall I generate release notes for v0.2.0?
-```
+Present recommendation to maintainer.
 
 ### 2. Release Notes Generation
 
-Read each Change Document and extract:
-
-- **Summary**: One-paragraph description from Change Document
-- **Breaking Changes**: Any changes marked as breaking (MAJOR version bumps)
-- **New Features**: User Stories and Requirements from Level 0 & 1
-- **Bug Fixes**: Items marked as fixes
-- **Documentation**: Documentation updates
-- **Internal Changes**: Spec improvements, refactoring
-
-**Output Format** (per SPEC_REL_NOTES_STRUCTURE):
+Generate GitHub Release body from Change Documents:
 
 ```markdown
-## v{NEW_VERSION} - {DATE}
-
-### Summary
-[Generated from Change Documents - one paragraph]
-
-### ⚠️ Breaking Changes
-- [If any, with migration guidance]
-- References: US_XXX, REQ_YYY
+## Summary
+[One paragraph from Change Documents]
 
 ### ✨ New Features
-- [Feature description from Change Document] (US_XXX, REQ_YYY)
-  - [Detail from SPEC] (SPEC_XXX)
-  - [Detail from SPEC] (SPEC_YYY)
+- [Feature] (US_xxx, REQ_xxx)
 
 ### 🐛 Bug Fixes
-- [If any, with requirement references]
+- [Fix] (REQ_xxx)
 
 ### 📚 Documentation
-- Complete release process documentation
-- A-SPICE alignment notes
+- [Doc changes]
 
 ### 🔧 Internal Changes
-- Improved Change Agent workflow (SPEC_AGENT_QUALITY_GATES)
+- [Spec improvements, refactoring]
 ```
 
 ### 3. Show Preview & Get Approval
 
-Display the generated release notes entry and present choices using `ask_questions`:
+Display release notes preview and ask:
 
 ```
 ask_questions({
   questions: [{
     header: "Release",
-    question: "Release notes preview is ready. How do you want to proceed?",
+    question: "Release notes preview ready. How to proceed?",
     options: [
-      { label: "Approve and proceed", description: "Continue with release", recommended: true },
+      { label: "Approve and proceed", description: "Create tag and GitHub Release", recommended: true },
       { label: "Edit manually", description: "I'll wait while you edit" },
-      { label: "Cancel release", description: "Abort the release process" }
+      { label: "Cancel release", description: "Abort" }
     ]
   }]
 })
 ```
 
-If approved, proceed automatically with remaining steps (no manual intervention needed).
+### 4. Validation
 
-### 4. Update Files (Automatic)
+Run checks before tagging:
 
-Once approved, update all files without committing yet:
+```bash
+# Sphinx docs build cleanly
+sphinx-build -b html docs docs/_build/html -q 2>&1 | grep -c "ERROR"
 
-**Update release notes:**
-- Prepend entry to docs/releasenotes.md
-
-**Update version:**
-```powershell
-$version = Get-Content version.json | ConvertFrom-Json
-$version.version = "{NEW_VERSION}"
-$version.installedAt = (Get-Date -Format "yyyy-MM-dd")
-$version | ConvertTo-Json | Set-Content version.json
-```
-
-**Delete Change Documents:**
-```powershell
-# Remove processed Change Documents (prevents Sphinx warnings during validation)
-git rm docs/changes/*.md
-```
-
-**Why delete Change Documents now:**
-- Sphinx validation must have 0 errors/warnings for release
-- Change Documents in docs/changes/ cause "not in toctree" warnings
-- Git history preserves them at the release tag forever
-- Clean separation: released changes vs pending changes
-
-### 5. Run Validation (Automatic)
-
-Run validation automatically - no waiting for user input:
-
-```powershell
-# Build documentation
-cd docs
-uv run sphinx-build -b html . _build/html
-
-# Verify version
-$version = Get-Content ../version.json | ConvertFrom-Json
-Write-Host "Version: $($version.version)"
-
-# Check git status
-cd ..
+# Working directory is clean
 git status --porcelain
 
-# Test link discovery
-python scripts/python/get_need_links.py US_CORE_SPEC_AS_CODE --depth 1 --simple
+# Current version
+git describe --tags --always
 ```
 
-**If validation PASSES:**
-- Report results
-- Proceed to Step 6 (commit and tag)
+### 5. Tag and Push
 
-**If validation FAILS:**
-- Display detailed error information
-- Present choices using `ask_questions`:
-
-```
-ask_questions({
-  questions: [{
-    header: "Validation",
-    question: "❌ Validation failed:\n\n[List specific failures]\n\nHow do you want to proceed?",
-    options: [
-      { label: "Fix issues", description: "I'll wait while you fix, then re-run validation", recommended: true },
-      { label: "Proceed anyway", description: "Not recommended - may break release" },
-      { label: "Cancel release", description: "Abort the release process" }
-    ]
-  }]
-})
-```
-
-### 6. Commit and Tag (Automatic after validation)
-
-After validation passes, create one atomic commit with all changes:
-
-```powershell
-# Commit all changes atomically
-git add docs/releasenotes.md version.json
-git commit -m "chore: release v{NEW_VERSION}
-
-- Add release notes for v{NEW_VERSION}
-- Update version.json to {NEW_VERSION}
-- Remove processed Change Documents"
-
-# CRITICAL: Push to origin/main FIRST (so workflow exists on GitHub)
-git push origin main
-
-# Verify push succeeded and check for unpushed commits
-$ahead = git rev-list origin/main..HEAD --count
-if ($ahead -gt 0) {
-  Write-Host "❌ ERROR: Still have $ahead unpushed commits!"
-  Write-Host "Push failed or new commits added. Cannot proceed with tagging."
-  exit 1
-}
-
-# Verify workflow file exists on remote
-$workflowExists = git ls-tree origin/main .github/workflows/release.yml
-if (-not $workflowExists) {
-  Write-Host "❌ ERROR: release.yml not found on origin/main!"
-  Write-Host "The workflow won't run when you push the tag."
-  exit 1
-}
-
-# Now create and push tag (GitHub Actions will trigger)
+```bash
+# Create annotated tag
 git tag -a v{NEW_VERSION} -m "Release v{NEW_VERSION}: {brief summary}"
+
+# Push tag
 git push origin v{NEW_VERSION}
+
+# Push main (triggers docs deployment)
+git push origin main
 ```
 
-### 7. Monitor GitHub Actions (Automatic)
+### 6. Create GitHub Release
 
-After pushing the tag, display workflow monitoring info:
+Use the GitHub MCP server to create a release:
 
 ```
-✅ Release v{NEW_VERSION} created!
-
-GitHub Actions workflow triggered:
-- Job 1: Validate version.json matches tag
-- Job 2: Build Sphinx documentation
-- Job 3: Publish to GitHub Pages
-- Job 4: Create GitHub Release with notes
-
-Monitor workflow at:
-https://github.com/<owner>/<repo>/actions/workflows/release.yml
-
-Workflow should complete in ~2-3 minutes.
-Type 'status' to check workflow status, or 'done' when complete.
+mcp_github_create_or_update_file or manual:
+  - Go to: https://github.com/enthali/esp32-distance/releases/new
+  - Tag: v{NEW_VERSION}
+  - Title: v{NEW_VERSION}
+  - Body: [paste generated release notes]
 ```
+
+Or if the `mcp_github` tools are available, use them to create the release directly.
 
 ---
 
 ## Error Handling
 
-### Version Mismatch
-
-If `version.json` doesn't match the requested version:
+### No Tags Exist Yet
 
 ```
-❌ ERROR: Version mismatch detected!
-
-version.json shows: 0.1.0
-You requested: v0.2.0
-
-Please update version.json first.
+No previous tags found. This will be the first release.
+Recommend starting with v1.0.0 or v0.1.0 depending on project maturity.
 ```
 
-### Missing Change Documents
-
-If no Change Documents found:
+### No Change Documents
 
 ```
-⚠️ WARNING: No Change Documents found in docs/changes/
+⚠️ No Change Documents found in docs/changes/
 
-This is unusual. Releases should be based on merged changes.
-```
-
-Present choices using `ask_questions`:
-
-```
-ask_questions({
-  questions: [{
-    header: "No Changes",
-    question: "No Change Documents found. This is unusual. How do you want to proceed?",
-    options: [
-      { label: "Minimal release", description: "Patch version, documentation updates only" },
-      { label: "Cancel and investigate", description: "Abort release and check what happened", recommended: true }
-    ]
-  }]
-})
+Options:
+- Generate release notes from git log instead
+- Cancel and investigate
 ```
 
 ### Validation Failures
 
-If validation fails:
-
 ```
 ❌ Validation failed:
+  [list failures]
 
-  ✅ Documentation builds
-  ❌ Working directory not clean (3 files uncommitted)
-  ✅ version.json correct
-
-Please resolve the issues above before creating the release tag.
+Fix issues before creating release tag.
 ```
 
 ---
@@ -393,49 +197,26 @@ Please resolve the issues above before creating the release tag.
 ```
 User: @syspilot.release prepare
 
-Agent: Reading version.json... Current version: 0.1.0
+Agent: Last tag: v2.0.3
+       12 commits since last tag.
+       Found 3 Change Documents in docs/changes/.
        
-       [Analyzes merged branches]
-       Found 3 Change Documents.
+       Analysis: 2 new features, no breaking changes
+       Recommendation: MINOR release → v2.1.0
        
-       Analysis: 6 new features, no breaking changes
-       Recommendation: MINOR release (0.1.0 → 0.2.0)
-       
-       Shall I generate release notes for v0.2.0?
+       Shall I generate release notes?
 
 User: yes
 
-Agent: [Generates release notes]
-       [Shows preview]
-       
-       [Uses ask_questions to present: Approve / Edit / Cancel]
+Agent: [Shows release notes preview]
+       [Approve / Edit / Cancel?]
 
-User: [Selects "Approve and proceed"]
+User: Approve
 
-Agent: ✅ Approved. Proceeding with release...
+Agent: ✅ Validation passed.
+       Created tag v2.1.0
+       Pushed to origin.
        
-       [Updates release notes, version.json]
-       [Deletes Change Documents]
-       [Runs validation automatically]
-       
-       ✅ All validation checks passed!
-       
-       [Creates atomic commit]
-       [Creates and pushes tag]
-       
-       ✅ Release v0.2.0 created!
-       GitHub Actions running at: [link]
-       
-       Type 'status' to check progress.
+       Create GitHub Release at:
+       https://github.com/enthali/esp32-distance/releases/new?tag=v2.1.0
 ```
-
----
-
-## Implementation Notes
-
-**For syspilot maintainers**: This agent design can be:
-- Fully automated (Python script)
-- Partially automated (PowerShell helper with manual steps)
-- Template/documentation only (manual process)
-
-**For syspilot users**: Use this as a template for your own release agents. Adapt the workflow to your project's needs (e.g., different versioning scheme, different Change Document structure).

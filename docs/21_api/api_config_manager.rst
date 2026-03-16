@@ -94,6 +94,7 @@ Lifecycle Functions
    :id: API_FUNC_CONFIG_COMMIT
    :status: implemented
    :component: API_COMP_CONFIG_MANAGER
+   :links: REQ_CFG_JSON_7, REQ_CFG_JSON_8
    :api_signature: esp_err_t config_commit(void)
    :returns: Summary for metadata
    :parameters: None
@@ -217,6 +218,7 @@ String Parameter Access
    :id: API_FUNC_CONFIG_SET_STRING_NO_COMMIT
    :status: implemented
    :component: API_COMP_CONFIG_MANAGER
+   :links: REQ_CFG_JSON_7
    :api_signature: esp_err_t config_set_string_no_commit(const char* key, const char* value)
    :returns: Summary for metadata
    :parameters: Summary for metadata
@@ -360,6 +362,7 @@ Integer Parameter Access
    :id: API_FUNC_CONFIG_SET_INT16_NO_COMMIT
    :status: implemented
    :component: API_COMP_CONFIG_MANAGER
+   :links: REQ_CFG_JSON_7
    :api_signature: esp_err_t config_set_int16_no_commit(const char* key, int16_t value)
    :returns: Summary for metadata
    :parameters: Summary for metadata
@@ -419,6 +422,7 @@ Boolean Parameter Access
    :id: API_FUNC_CONFIG_SET_BOOL_NO_COMMIT
    :status: implemented
    :component: API_COMP_CONFIG_MANAGER
+   :links: REQ_CFG_JSON_7
    :api_signature: esp_err_t config_set_bool_no_commit(const char* key, bool value)
    :returns: Summary for metadata
    :parameters: Summary for metadata

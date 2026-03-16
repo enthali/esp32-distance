@@ -19,7 +19,7 @@ Architecture Specifications
 
 .. spec:: Dual-Queue Real-Time Architecture
    :id: SPEC_SNS_ARCH_1
-   :links: REQ_SNS_3, REQ_SNS_4, REQ_SNS_8
+   :links: REQ_SNS_3, REQ_SNS_4, REQ_SNS_8, REQ_SNS_9
    :status: approved
    :tags: sensor, architecture, real-time
 
@@ -74,7 +74,7 @@ Architecture Specifications
 
 .. spec:: Sensor Task Design
    :id: SPEC_SNS_TASK_1
-   :links: REQ_SNS_4, REQ_SNS_6, REQ_SNS_10
+   :links: REQ_SNS_4, REQ_SNS_6, REQ_SNS_9, REQ_SNS_10
    :status: approved
    :tags: sensor, freertos, task
 

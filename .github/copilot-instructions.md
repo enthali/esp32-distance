@@ -239,4 +239,18 @@ This template is designed for **GitHub Codespaces** and **VS Code Dev Containers
 - **ESP-IDF**: Pre-configured and ready to use (v5.4.1)
 
 All build tools and dependencies are automatically available in the container environment.
+
+### Python Environments — Two Separate Venvs
+
+**Never mix these two environments:**
+
+| Environment | Path | Purpose |
+|-------------|------|---------|
+| Docs venv | `/opt/venv/` | Sphinx, sphinx-needs, doc tools |
+| ESP-IDF venv | `/opt/esp/python_env/idf5.4_py3.12_env/` | ESP-IDF build tools only |
+
+- `sphinx-build` on PATH resolves to `/opt/venv/bin/sphinx-build` — use it directly
+- **Never run `pip install` into the ESP-IDF venv** — it is write-protected
+- **To build docs**: `sphinx-build -b html docs docs/_build/html` or `tools/docu/build-docs.sh`
+- No project-local `.venv` exists
 ```

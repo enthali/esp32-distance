@@ -1214,6 +1214,29 @@ Testing and Debugging
    4. **Memory Errors:** Reduce ``max_open_sockets`` or check heap usage
 
 
+Non-Functional Design
+----------------------
+
+.. spec:: Mobile-First Responsive Design
+   :id: SPEC_WEB_NF_1
+   :links: REQ_WEB_NF_1, REQ_WEB_NF_2
+   :status: approved
+   :tags: web, ui, mobile, responsive
+
+   **Design:** All web pages use responsive CSS with mobile-first layout.
+
+   **Implementation:**
+
+   - viewport meta tag set for mobile scaling
+   - Minimum usable width: 320px
+   - Touch targets: minimum 44×44px for all interactive elements
+   - Font sizes: minimum 16px base to avoid zoom on mobile
+   - Page load target: < 3 seconds on typical mobile connection
+   - Navigation between pages < 500ms (single-page updates, no full reload)
+
+   **Validation:** Test on 320px viewport, verify all touch targets are reachable,
+   confirm no horizontal scroll at minimum width.
+
 Traceability
 ------------
 

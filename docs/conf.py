@@ -60,99 +60,10 @@ html_css_files = [
 
 # -- Sphinx-Needs Configuration ----------------------------------------------
 # https://sphinx-needs.readthedocs.io/
+# Ontology (types, statuses, extra_options) is defined in ubproject.toml.
+# ubcode MCP server reads this file for structured needs queries.
 
-needs_types = [
-    dict(
-        directive="story",
-        title="User Story",
-        prefix="US_",
-        color="#D4EDDA",
-        style="node"
-    ),
-    dict(
-        directive="req",
-        title="Requirement",
-        prefix="REQ_",
-        color="#BFD8D2",
-        style="node"
-    ),
-    dict(
-        directive="spec",
-        title="Design Specification",
-        prefix="DSN_",
-        color="#FEDCD2",
-        style="node"
-    ),
-    dict(
-        directive="impl",
-        title="Implementation",
-        prefix="IMPL_",
-        color="#DF744A",
-        style="node"
-    ),
-    dict(
-        directive="test",
-        title="Test Case",
-        prefix="TEST_",
-        color="#DCB239",
-        style="node"
-    ),
-    # API Documentation Types
-    dict(
-        directive="apicomponent",
-        title="API Component",
-        prefix="API_COMP_",
-        color="#A8DADC",
-        style="node"
-    ),
-    dict(
-        directive="apifunction",
-        title="API Function",
-        prefix="API_FUNC_",
-        color="#457B9D",
-        style="node"
-    ),
-    dict(
-        directive="apistruct",
-        title="API Data Structure",
-        prefix="API_STRUCT_",
-        color="#1D3557",
-        style="node"
-    ),
-]
-
-# Extra options for needs (status is built-in, don't redefine it)
-needs_extra_options = [
-    "priority",
-    "rationale",
-    "acceptance_criteria",
-    # API-specific options
-    "api_signature",   # Function signature (e.g., "esp_err_t config_init(void)")
-    "returns",         # Return value description
-    "parameters",      # Parameter descriptions
-    "component",       # Parent component name
-    "header_file",     # Source header file path
-]
-
-# Status options
-needs_statuses = [
-    dict(name="draft", description="Draft - Work in progress"),
-    dict(name="open", description="Open - Identified but not yet started"),
-    dict(name="approved", description="Approved - Ready for implementation"),
-    dict(name="implemented", description="Implemented - Code exists"),
-    dict(name="verified", description="Verified - Tested and validated"),
-    dict(name="deprecated", description="Deprecated - No longer used"),
-]
-
-# Enable automatic ID generation
-needs_id_required = True
-
-# Configure needs file output
-needs_build_json = True
-needs_build_json_per_id = True
-
-# Use Graphviz for needflow diagrams instead of PlantUML
-needs_flow_engine = "graphviz"
+needs_from_toml = "ubproject.toml"
 
 # Configure needflow to use SVG instead of PNG (better quality, smaller size)
 needs_flow_configs = {

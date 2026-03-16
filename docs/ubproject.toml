@@ -1,0 +1,116 @@
+# ubproject.toml — Sphinx-Needs ontology for ubcode MCP server
+# Announced to Sphinx-Needs via needs_from_toml in conf.py.
+# Schema: https://ubcode.useblocks.com/ubproject.schema.json
+"$schema" = "https://ubcode.useblocks.com/ubproject.schema.json"
+
+[project]
+name = "ESP32 Distance Sensor"
+description = "Requirements and design documentation for the ESP32 Distance Sensor project"
+srcdir = "."
+
+# --------------------------------------------------------------------------
+# Sphinx-Needs Configuration (without needs_ prefix)
+# --------------------------------------------------------------------------
+[needs]
+build_json = true
+build_json_per_id = true
+id_required = true
+flow_engine = "graphviz"
+
+extra_options = [
+    "priority",
+    "rationale",
+    "acceptance_criteria",
+    # API-specific options
+    "api_signature",   # Function signature (e.g., "esp_err_t config_init(void)")
+    "returns",         # Return value description
+    "parameters",      # Parameter descriptions
+    "component",       # Parent component name
+    "header_file",     # Source header file path
+]
+
+# --------------------------------------------------------------------------
+# Need Types
+# --------------------------------------------------------------------------
+[[needs.types]]
+directive = "story"
+title = "User Story"
+prefix = "US_"
+color = "#D4EDDA"
+style = "node"
+
+[[needs.types]]
+directive = "req"
+title = "Requirement"
+prefix = "REQ_"
+color = "#BFD8D2"
+style = "node"
+
+[[needs.types]]
+directive = "spec"
+title = "Design Specification"
+prefix = "DSN_"
+color = "#FEDCD2"
+style = "node"
+
+[[needs.types]]
+directive = "impl"
+title = "Implementation"
+prefix = "IMPL_"
+color = "#DF744A"
+style = "node"
+
+[[needs.types]]
+directive = "test"
+title = "Test Case"
+prefix = "TEST_"
+color = "#DCB239"
+style = "node"
+
+[[needs.types]]
+directive = "apicomponent"
+title = "API Component"
+prefix = "API_COMP_"
+color = "#A8DADC"
+style = "node"
+
+[[needs.types]]
+directive = "apifunction"
+title = "API Function"
+prefix = "API_FUNC_"
+color = "#457B9D"
+style = "node"
+
+[[needs.types]]
+directive = "apistruct"
+title = "API Data Structure"
+prefix = "API_STRUCT_"
+color = "#1D3557"
+style = "node"
+
+# --------------------------------------------------------------------------
+# Statuses
+# --------------------------------------------------------------------------
+[[needs.statuses]]
+name = "draft"
+description = "Draft - Work in progress"
+
+[[needs.statuses]]
+name = "open"
+description = "Open - Identified but not yet started"
+
+[[needs.statuses]]
+name = "approved"
+description = "Approved - Ready for implementation"
+
+[[needs.statuses]]
+name = "implemented"
+description = "Implemented - Code exists"
+
+[[needs.statuses]]
+name = "verified"
+description = "Verified - Tested and validated"
+
+[[needs.statuses]]
+name = "deprecated"
+description = "Deprecated - No longer used"

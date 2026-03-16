@@ -17,7 +17,7 @@ Functional Requirements
 
 .. req:: QEMU UART Network Bridge
    :id: REQ_NETIF_TUNNEL_1
-   :links: REQ_SYS_SIM_1
+   :links: REQ_SYS_SIM_1, REQ_SYS_SIM_2
    :status: approved
    :priority: mandatory
    :tags: emulation, network, qemu, uart

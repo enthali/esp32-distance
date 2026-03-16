@@ -14,6 +14,7 @@ User stories follow the format:
    us_display
    us_setup
    us_reliable
+   us_developer
 
 Overview
 --------

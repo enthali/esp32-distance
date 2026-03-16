@@ -225,7 +225,7 @@ Data Flow Architecture
 
 .. spec:: WiFi Manager Design Details
    :id: SPEC_ARCH_WIFI_1
-   :links: REQ_SYS_WEB_1
+   :links: REQ_SYS_NET_1, REQ_SYS_WEB_1
    :status: approved
    :tags: network, wifi
 

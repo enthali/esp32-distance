@@ -12,7 +12,7 @@ Architecture Overview
 .. spec:: Configuration Webpage Architecture
    :id: SPEC_CFG_WEB_ARCH_1
    :links: REQ_WEB_CONF_1, REQ_CFG_JSON_12, REQ_CFG_JSON_13
-   :status: open
+   :status: implemented
    :tags: frontend, javascript, ui
 
    **Overview:**
@@ -62,7 +62,7 @@ Data Flow Architecture
 .. spec:: Configuration Data Flow
    :id: SPEC_CFG_WEB_FLOW_1
    :links: SPEC_CFG_WEB_ARCH_1, SPEC_CFG_JSON_BULK_1
-   :status: open
+   :status: implemented
    :tags: data-flow, json, api
 
    **Page Load Sequence:**
@@ -143,7 +143,7 @@ Schema-Driven Form Generation
 .. spec:: Dynamic Form Generation from Schema
    :id: SPEC_CFG_WEB_FORM_1
    :links: SPEC_CFG_WEB_ARCH_1, SPEC_CFG_JSON_SCHEMA_1
-   :status: open
+   :status: implemented
    :tags: form-generation, schema, javascript
 
    **Description:** JavaScript code that dynamically creates HTML form elements based on JSON schema field definitions.
@@ -265,7 +265,7 @@ Configuration Data Mapping
 .. spec:: JSON Array to Form Field Mapping
    :id: SPEC_CFG_WEB_MAPPING_1
    :links: SPEC_CFG_WEB_ARCH_1, SPEC_CFG_JSON_BULK_1
-   :status: open
+   :status: implemented
    :tags: data-mapping, json, form
 
    **Description:** JavaScript logic for loading structured JSON configuration data into form fields and collecting form data back into structured JSON format.
@@ -393,7 +393,7 @@ User Interface States
 .. spec:: UI State Management
    :id: SPEC_CFG_WEB_STATE_1
    :links: SPEC_CFG_WEB_ARCH_1
-   :status: open
+   :status: implemented
    :tags: ui-state, javascript
 
    **Description:** JavaScript state management for different UI states during page lifecycle.
@@ -474,7 +474,7 @@ Reset Countdown Modal
 .. spec:: Device Reset Countdown Interface
    :id: SPEC_CFG_WEB_COUNTDOWN_1
    :links: SPEC_CFG_WEB_ARCH_1
-   :status: open
+   :status: implemented
    :tags: ui, countdown, reset
 
    **Description:** Modal dialog with countdown timer shown after configuration save or factory reset to inform user of pending device reboot.
@@ -583,7 +583,7 @@ Error Handling
 .. spec:: Error Handling and User Feedback
    :id: SPEC_CFG_WEB_ERROR_1
    :links: SPEC_CFG_WEB_ARCH_1
-   :status: open
+   :status: implemented
    :tags: error-handling, feedback
 
    **Description:** Comprehensive error handling for all API operations with user-friendly feedback.
@@ -685,7 +685,7 @@ Page Initialization Sequence
 .. spec:: Complete Page Initialization Flow
    :id: SPEC_CFG_WEB_INIT_1
    :links: SPEC_CFG_WEB_ARCH_1
-   :status: open
+   :status: implemented
    :tags: initialization, lifecycle
 
    **Description:** Complete initialization sequence when configuration page loads.

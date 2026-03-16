@@ -76,7 +76,7 @@ User Experience Requirements
 
 .. req:: Core Visualization Concept
    :id: REQ_DSP_3
-   :links: REQ_SNS_11, REQ_DSP_1
+   :links: REQ_SNS_4, REQ_DSP_1
    :status: approved
    :priority: mandatory
    :tags: display, ux, visualization

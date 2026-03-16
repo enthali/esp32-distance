@@ -18,7 +18,7 @@ Configuration Schema Definition
 .. req:: JSON Schema as Configuration Source of Truth
    :id: REQ_CFG_JSON_1
    :links: REQ_SYS_CFG_1
-   :status: draft
+   :status: implemented
    :priority: mandatory
    :tags: config, schema, architecture
 
@@ -40,7 +40,7 @@ Configuration Schema Definition
 .. req:: Parameter Grouping for UI Organization
    :id: REQ_CFG_JSON_2
    :links: REQ_CFG_JSON_1
-   :status: draft
+   :status: implemented
    :priority: optional
    :tags: config, ui, schema
 
@@ -61,7 +61,7 @@ Configuration Schema Definition
 .. req:: Parameter Type System
    :id: REQ_CFG_JSON_3
    :links: REQ_CFG_JSON_1
-   :status: draft
+   :status: implemented
    :priority: mandatory
    :tags: config, types
 
@@ -86,7 +86,7 @@ Configuration Generation and Defaults
 .. req:: Build-Time Factory Defaults Generation
    :id: REQ_CFG_JSON_4
    :links: REQ_CFG_JSON_1, REQ_SYS_CFG_1
-   :status: draft
+   :status: implemented
    :priority: mandatory
    :tags: config, build, code-generation
 
@@ -108,7 +108,7 @@ Configuration Generation and Defaults
 .. req:: No Runtime JSON Parsing in C Code
    :id: REQ_CFG_JSON_5
    :links: REQ_CFG_JSON_4
-   :status: draft
+   :status: implemented
    :priority: mandatory
    :tags: config, performance, memory
 
@@ -132,7 +132,7 @@ NVS Storage and Access
 .. req:: Key-Based NVS Storage
    :id: REQ_CFG_JSON_6
    :links: REQ_CFG_JSON_1, REQ_SYS_CFG_1
-   :status: draft
+   :status: implemented
    :priority: mandatory
    :tags: config, storage, nvs
 
@@ -153,7 +153,7 @@ NVS Storage and Access
 .. req:: Type-Safe Configuration API
    :id: REQ_CFG_JSON_7
    :links: REQ_CFG_JSON_6
-   :status: draft
+   :status: implemented
    :priority: mandatory
    :tags: config, api, type-safety
 
@@ -175,7 +175,7 @@ NVS Storage and Access
 .. req:: Persistent Configuration Storage
    :id: REQ_CFG_JSON_8
    :links: REQ_CFG_JSON_6
-   :status: draft
+   :status: implemented
    :priority: mandatory
    :tags: config, storage, nvs
 
@@ -196,7 +196,7 @@ NVS Storage and Access
 .. req:: Factory Reset Capability
    :id: REQ_CFG_JSON_9
    :links: REQ_CFG_JSON_4, REQ_SYS_CFG_1
-   :status: draft
+   :status: implemented
    :priority: mandatory
    :tags: config, reset
 
@@ -247,7 +247,7 @@ Error Handling
 .. req:: NVS Error Graceful Handling
    :id: REQ_CFG_JSON_11
    :links: REQ_CFG_JSON_6, REQ_SYS_REL_1
-   :status: draft
+   :status: implemented
    :priority: mandatory
    :tags: config, error-handling, reliability
 
@@ -268,7 +268,7 @@ Error Handling
 .. req:: Configuration Initialization on Boot
    :id: REQ_CFG_JSON_12
    :links: REQ_CFG_JSON_6, REQ_CFG_JSON_11
-   :status: draft
+   :status: implemented
    :priority: mandatory
    :tags: config, boot
 
@@ -292,7 +292,7 @@ Development Guide
 .. req:: Simple Process to Add Configuration Fields
    :id: REQ_CFG_JSON_13
    :links: REQ_CFG_JSON_1
-   :status: draft
+   :status: implemented
    :priority: optional
    :tags: config, extensibility, developer-experience
 
@@ -313,7 +313,7 @@ Development Guide
 .. req:: Type Safety via Optional Static Validation
    :id: REQ_CFG_JSON_14
    :links: REQ_CFG_JSON_7
-   :status: draft
+   :status: implemented
    :priority: optional
    :tags: config, validation, developer-experience
 
