@@ -5,7 +5,7 @@ Web Server API
    :id: API_COMP_WEB_SERVER
    :status: implemented
    :header_file: main/components/web_server/web_server.h
-   :links: REQ_SYS_WEB_1, REQ_WEB_1, REQ_WEB_2, REQ_WEB_3, REQ_WEB_CONF_1, REQ_WEB_SCHEMA_1, REQ_WEB_4, REQ_WEB_5, REQ_WEB_LED_1, REQ_SYS_NET_1, REQ_SYS_CFG_1, REQ_SYS_ARCH_1, SPEC_WEB_SERVER, SPEC_CONFIG_WEBPAGE
+   :links: REQ_SYS_WEB_1, REQ_WEB_1, REQ_WEB_2, REQ_WEB_3, REQ_WEB_CONF_1, REQ_WEB_SCHEMA_1, REQ_WEB_4, REQ_WEB_5, REQ_WEB_LED_1, REQ_SYS_NET_1, REQ_SYS_CFG_1, REQ_SYS_ARCH_1, SPEC_WEB_ARCH_1, SPEC_CFG_WEB_ARCH_1
    
    HTTP server for WiFi captive portal and configuration interface.
 
@@ -30,7 +30,7 @@ Lifecycle Functions
    :api_signature: esp_err_t web_server_init(const web_server_config_t *config)
    :returns: ESP_OK on success, error code on failure
    :parameters: config (server configuration or NULL)
-   :links: REQ_SYS_WEB_1, REQ_WEB_1, REQ_WEB_2, REQ_WEB_3, REQ_WEB_CONF_1, REQ_WEB_4, REQ_WEB_5, SPEC_WEB_SERVER
+   :links: REQ_SYS_WEB_1, REQ_WEB_1, REQ_WEB_2, REQ_WEB_3, REQ_WEB_CONF_1, REQ_WEB_4, REQ_WEB_5, SPEC_WEB_ARCH_1
 
    Initialize web server with embedded static assets.
 
@@ -61,7 +61,7 @@ Lifecycle Functions
    :api_signature: esp_err_t web_server_start(void)
    :returns: ESP_OK on success, error code on failure
    :parameters: None
-   :links: REQ_WEB_3, REQ_SYS_NET_1, SPEC_WEB_SERVER
+   :links: REQ_WEB_3, REQ_SYS_NET_1, SPEC_WEB_ARCH_1
 
    Start web server and DNS server for captive portal.
 
@@ -91,7 +91,7 @@ Lifecycle Functions
    :api_signature: esp_err_t web_server_stop(void)
    :returns: ESP_OK on success, error code on failure
    :parameters: None
-   :links: REQ_WEB_5, SPEC_WEB_SERVER
+   :links: REQ_WEB_5, SPEC_WEB_ARCH_1
 
    Stop web server and DNS server.
 
@@ -175,7 +175,7 @@ Static File Handler
    :api_signature: esp_err_t static_file_handler(httpd_req_t *req)
    :returns: ESP_OK on success, ESP_FAIL on file not found or other errors
    :parameters: req (HTTP request object)
-   :links: REQ_WEB_1, REQ_WEB_2, REQ_WEB_4, REQ_WEB_SCHEMA_1, SPEC_CONFIG_WEBPAGE
+   :links: REQ_WEB_1, REQ_WEB_2, REQ_WEB_4, REQ_WEB_SCHEMA_1, SPEC_CFG_WEB_ARCH_1
 
    HTTP handler for serving embedded static files.
 

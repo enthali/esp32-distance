@@ -5,7 +5,7 @@ LED Controller API
    :id: API_COMP_LED_CONTROLLER
    :status: implemented
    :header_file: main/components/led_controller/led_controller.h
-   :links: REQ_LED_1, REQ_LED_2, REQ_LED_3, REQ_LED_4, REQ_LED_5, REQ_CFG_1
+   :links: REQ_LED_1, REQ_LED_2, REQ_LED_3, REQ_LED_4, REQ_LED_5, REQ_CFG_JSON_7
    
    **Brief Description**
 
@@ -60,7 +60,7 @@ Lifecycle Functions
    :api_signature: esp_err_t led_controller_init(gpio_num_t data_pin)
    :returns: ESP_OK on success, ESP_ERR_INVALID_STATE, ESP_ERR_INVALID_ARG, ESP_ERR_*
    :parameters: data_pin (GPIO pin for WS2812 data line)
-   :links: REQ_LED_1, REQ_LED_3, REQ_CFG_1
+   :links: REQ_LED_1, REQ_LED_3, REQ_CFG_JSON_7
 
    Initialize the LED controller. Loads configuration from config_manager and allocates RAM buffer. Only one instance supported. Uses RMT channel 0.
 
