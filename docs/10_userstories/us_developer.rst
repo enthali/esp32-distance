@@ -26,6 +26,7 @@ extending, maintaining, or contributing to the firmware and documentation.
 .. story:: Traceable Supporting Documentation
    :id: US_DEV_2
    :status: implemented
+   :links: REQ_DEV_DOC_1
    :tags: developer, documentation, traceability
 
    **Role:** Developer
