@@ -7,7 +7,7 @@ extending, maintaining, or contributing to the firmware and documentation.
 .. story:: Modular Firmware Extensibility
    :id: US_DEV_1
    :status: approved
-   :links: REQ_SYS_ARCH_1
+   :links: REQ_SYS_ARCH_1, REQ_TEMP_1
    :tags: developer, firmware, extensibility
 
    **Role:** Developer

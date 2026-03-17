@@ -19,6 +19,7 @@ This section contains detailed design specifications for system components follo
    spec_developer_docs
    spec_dev_environment
    spec_known_limitations
+   spec_temp_sensor
 
 Overview
 --------

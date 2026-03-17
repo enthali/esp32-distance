@@ -184,7 +184,7 @@ URI Routing and Handlers
 
 .. spec:: URI Routing Table
    :id: SPEC_WEB_ROUTES_1
-   :links: REQ_WEB_4, REQ_WEB_5
+   :links: REQ_WEB_4, REQ_WEB_5, REQ_WEB_TEMP_1
    :status: approved
    :tags: web, routing
 
@@ -223,7 +223,7 @@ URI Routing and Handlers
    ``/scan``                  GET           ``scan_handler()``                WiFi network scan
    ``/connect``               POST          ``connect_handler()``             Connect to WiFi network
    ``/reset``                 POST          ``reset_handler()``               Clear WiFi credentials, restart
-   ``/api/status``            GET           ``wifi_status_handler()``         **WiFi status** (SSID, RSSI, mode)
+   ``/api/status``            GET           ``wifi_status_handler()``         **WiFi status** (SSID, RSSI, mode, temperature_c)
    =========================  ============  ================================  ===============
 
    **Configuration Management API:**

@@ -70,6 +70,8 @@ System Overview Requirements
    - ``led_brightness``: LED brightness level
    - ``dist_min_mm``: Minimum distance threshold (millimeters)
    - ``dist_max_mm``: Maximum distance threshold (millimeters)
+   - ``temp_cold_c10``: Cold temperature threshold (tenths of °C, default 50 = 5.0°C)
+   - ``temp_warm_c10``: Warm temperature threshold (tenths of °C, default 200 = 20.0°C)
 
 User Experience Requirements
 -----------------------------
@@ -81,23 +83,25 @@ User Experience Requirements
    :priority: mandatory
    :tags: display, ux, visualization
 
-   **Description:** The display system SHALL illuminate a single LED in green that represents the current 
-   measured distance with real-time updates. The display system consumes processed distance 
-   measurements from the distance sensor component without additional filtering or smoothing.
+   **Description:** The display system SHALL illuminate a single LED in a colour determined by the
+   current temperature (per REQ_DSP_6) that represents the current measured distance with
+   real-time updates. The display system consumes processed distance measurements from the distance
+   sensor component without additional filtering or smoothing.
 
-   **Rationale:** Provides clear, unambiguous visual feedback where users can immediately 
-   understand the current distance measurement through LED position. The distance sensor component 
-   owns all measurement processing, filtering, and smoothing (REQ_SNS_11); the display system is 
-   responsible solely for visual representation of processed measurements, maintaining clear 
-   separation of concerns.
+   **Rationale:** Provides clear, unambiguous visual feedback where users can immediately
+   understand the current distance measurement through LED position. The distance sensor component
+   owns all measurement processing, filtering, and smoothing (REQ_SNS_11); the display system is
+   responsible solely for visual representation of processed measurements, maintaining clear
+   separation of concerns. Temperature dual-coding adds ambient context without extra hardware.
 
    **Acceptance Criteria:**
 
-   - AC-1: Only one LED is illuminated at any given time 
+   - AC-1: Only one LED is illuminated at any given time
    - AC-2: LED position corresponds to processed distance measurement value from sensor component
    - AC-3: Display updates immediately when new processed measurements arrive from sensor queue
    - AC-4: Display system SHALL NOT apply additional smoothing or filtering to distance measurements
    - AC-5: Display system uses distance measurements directly from sensor component's processed measurement queue
+   - AC-6: LED colour for the position indicator is determined by REQ_DSP_6 (temperature-based gradient)
 
 .. req:: Below Minimum Distance Warning
    :id: REQ_DSP_4
@@ -136,6 +140,32 @@ User Experience Requirements
    - AC-1: last LED (LED led_count-1) is illuminated red when distance > dist_max_mm
    - AC-2: No green position indicator is shown (measurement invalid)
    - AC-3: Display persists until measurement returns to valid range
+
+.. req:: Temperature-Based Position LED Colour
+   :id: REQ_DSP_6
+   :status: approved
+   :priority: mandatory
+   :links: REQ_DSP_3, REQ_TEMP_4, REQ_CFG_JSON_16
+   :tags: display, temperature, colour, ux
+
+   **Description:** The display system SHALL apply a temperature-dependent colour to the position
+   indicator LED using a blue→green→orange gradient, with configurable cold and warm temperature
+   thresholds.
+
+   **Rationale:** The LED position already encodes distance; using colour to encode temperature
+   provides a second channel of information without adding hardware. Blue for cold (< 5°C) is a
+   universally understood safety signal for icy garage conditions. The gradient gives a continuous,
+   intuitive readout.
+
+   **Acceptance Criteria:**
+
+   - AC-1: At or below ``temp_cold_c10`` threshold the position LED SHALL be blue (0, 0, 255)
+   - AC-2: At or above ``temp_warm_c10`` threshold the position LED SHALL be orange (255, 165, 0)
+   - AC-3: Between thresholds the colour SHALL be a linear interpolation between blue and orange via green
+   - AC-4: Both thresholds SHALL be read from the configuration system (keys ``temp_cold_c10`` and ``temp_warm_c10``)
+   - AC-5: If no valid temperature reading is available, the position LED SHALL default to green (original behaviour maintained)
+   - AC-6: Colour mapping SHALL NOT affect the warning colour logic of REQ_DSP_4 (too close → red) or REQ_DSP_5 (out of range → red)
+
 
 Traceability
 ------------

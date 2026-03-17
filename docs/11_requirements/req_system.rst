@@ -259,6 +259,32 @@ Future Enhancements
    **Note:** This requirement is marked "open" as template focuses on core functionality. Time synchronization can be added when application requires timestamped events or scheduling.
 
 
+.. req:: Temperature Sensing Capability
+   :id: REQ_SYS_TEMP_1
+   :status: approved
+   :priority: mandatory
+   :links: US_TEMP_1
+   :tags: system, temperature, sensor
+
+   **Description:**
+   The system SHALL incorporate a DS18B20 digital temperature sensor to measure
+   ambient garage temperature. The measurement SHALL serve two purposes: improving
+   distance sensor accuracy through temperature compensation, and providing
+   temperature information to the web interface and LED display.
+
+   **Rationale:**
+   Garage environments vary from sub-zero to summer heat. Temperature-corrected
+   distance measurements give parking accuracy across seasons. Ambient display
+   colour provides safety-relevant cold-weather indication.
+
+   **Acceptance Criteria:**
+
+   * AC-1: System provides temperature readings in the DS18B20 operating range (-55°C to +125°C)
+   * AC-2: Temperature is applied to distance sensor speed-of-sound compensation in real time
+   * AC-3: Temperature is displayed on the web status page and accessible via REST API
+   * AC-4: Temperature affects the position LED colour
+
+
 Traceability
 ------------
 

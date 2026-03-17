@@ -359,6 +359,32 @@ Future Enhancements
    **Note:** This requirement is marked "open" as schema changes are rare in production embedded systems. Hardware constraints typically stabilize configuration structure early in development. For most deployments, factory reset on major firmware updates is acceptable alternative to complex migration logic.
 
 
+.. req:: Temperature Sensor Configuration Parameters
+   :id: REQ_CFG_JSON_16
+   :status: approved
+   :priority: mandatory
+   :links: REQ_CFG_JSON_1, REQ_DSP_6, REQ_TEMP_1, REQ_TEMP_3
+   :tags: config, temperature, thresholds, gpio
+
+   **Description:**
+   The configuration schema SHALL include parameters for the temperature sensor GPIO pin,
+   measurement interval, and colour thresholds used by the display system.
+
+   **Rationale:**
+   Different deployments need different GPIO assignments and climate-appropriate colour
+   thresholds (Scandinavian garage vs Mediterranean garage).
+
+   **Acceptance Criteria:**
+
+   - AC-1: ``temp_gpio`` SHALL be an integer config parameter, default 4, range 0-39; applied on boot
+   - AC-2: ``temp_interval_ms`` SHALL be an integer config parameter (ms), default 2000, range 500-60000
+   - AC-3: ``temp_cold_c10`` SHALL be an integer config parameter (unit: 0.1°C), default 50 (= 5.0°C), range -100 to 500
+   - AC-4: ``temp_warm_c10`` SHALL be an integer config parameter (unit: 0.1°C), default 200 (= 20.0°C), range -100 to 500
+   - AC-5: All four parameters SHALL appear in a "Temperature Sensor" group in the web settings page
+   - AC-6: Validation SHALL ensure ``temp_cold_c10`` < ``temp_warm_c10``
+   - AC-7: Parameters SHALL be stored in NVS under their respective keys
+
+
 Traceability
 ------------
 
