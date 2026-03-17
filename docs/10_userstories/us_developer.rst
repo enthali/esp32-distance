@@ -6,7 +6,7 @@ extending, maintaining, or contributing to the firmware and documentation.
 
 .. story:: Modular Firmware Extensibility
    :id: US_DEV_1
-   :status: approved
+   :status: implemented
    :links: REQ_SYS_ARCH_1, REQ_TEMP_1
    :tags: developer, firmware, extensibility
 
@@ -25,7 +25,7 @@ extending, maintaining, or contributing to the firmware and documentation.
 
 .. story:: Traceable Supporting Documentation
    :id: US_DEV_2
-   :status: approved
+   :status: implemented
    :tags: developer, documentation, traceability
 
    **Role:** Developer
