@@ -29,7 +29,7 @@ Component Architecture
 .. spec:: UART Tunnel Component Architecture
    :id: SPEC_NETIF_UART_ARCH_1
    :links: REQ_NETIF_TUNNEL_1, REQ_NETIF_TUNNEL_5
-   :status: approved
+   :status: implemented
    :tags: netif, qemu, uart, architecture
 
    **Description:** The ``netif_uart_tunnel`` component implements a lwIP network interface
@@ -123,7 +123,7 @@ Wire Protocol
 .. spec:: UART Wire Protocol — Length-Prefix Framing
    :id: SPEC_NETIF_UART_PROTO_1
    :links: REQ_NETIF_TUNNEL_2, REQ_NETIF_TUNNEL_NF_2
-   :status: approved
+   :status: implemented
    :tags: netif, qemu, protocol, framing
 
    **Description:** IP packets (wrapped in Ethernet frames) are transported over UART1
@@ -192,7 +192,7 @@ Host-Side Bridge
 .. spec:: Host-Side Serial-TUN Bridge Script
    :id: SPEC_NETIF_UART_BRIDGE_1
    :links: REQ_NETIF_TUNNEL_3, REQ_NETIF_TUNNEL_DOC_1
-   :status: approved
+   :status: implemented
    :tags: netif, qemu, python, bridge, tooling
 
    **Description:** ``tools/qemu/network/serial_tun_bridge.py`` is the host-side
@@ -270,7 +270,7 @@ IP Configuration
 .. spec:: IP Configuration and DHCP Client Integration
    :id: SPEC_NETIF_UART_DHCP_1
    :links: REQ_NETIF_TUNNEL_4
-   :status: approved
+   :status: implemented
    :tags: netif, qemu, dhcp, ip
 
    **Description:** The tunnel interface uses static IP configuration. The DHCP
@@ -328,7 +328,7 @@ Conditional Compilation
 .. spec:: Conditional Compilation — QEMU-Only Build Guard
    :id: SPEC_NETIF_UART_COND_1
    :links: REQ_NETIF_TUNNEL_5
-   :status: approved
+   :status: implemented
    :tags: netif, qemu, build, kconfig
 
    **Description:** The tunnel component is conditionally included in the build
@@ -376,7 +376,7 @@ Performance and Known Limitations
 .. spec:: Performance Characteristics and Known Limitations
    :id: SPEC_NETIF_UART_PERF_1
    :links: REQ_NETIF_TUNNEL_NF_1, REQ_NETIF_TUNNEL_NF_2
-   :status: approved
+   :status: implemented
    :tags: netif, qemu, performance, limitations
 
    **Description:** Documents the measured and expected performance of the UART
@@ -436,7 +436,7 @@ Documentation
 .. spec:: Emulation Setup Documentation
    :id: SPEC_NETIF_UART_DOC_1
    :links: REQ_NETIF_TUNNEL_DOC_1
-   :status: approved
+   :status: implemented
    :tags: netif, qemu, documentation
 
    **Description:** Documents where emulation setup instructions are maintained

@@ -1,6 +1,6 @@
 # Change Document: netif-tunnel-spec
 
-**Status**: in-progress
+**Status**: approved
 **Branch**: feature/netif-tunnel-spec
 **Created**: 2025-03-16
 **Author**: syspilot Change Agent
