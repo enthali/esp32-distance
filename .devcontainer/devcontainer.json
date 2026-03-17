@@ -54,7 +54,8 @@
 		"DavidAnson.vscode-markdownlint",
 		"github.copilot",
 		"github.copilot-chat",
-		"github.vscode-github-actions"
+		"github.vscode-github-actions",
+		"useblocks.ubcode"
 	]
 		},
 		"codespaces": {
