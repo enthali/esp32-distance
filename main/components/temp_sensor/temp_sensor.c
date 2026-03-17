@@ -262,7 +262,7 @@ esp_err_t temp_sensor_init(const temp_sensor_config_t *config)
         int32_t gpio_num  = 4;
         int32_t intv_ms   = 2000;
         config_get_int32("temp_gpio",        &gpio_num);
-        config_get_int32("temp_interval_ms", &intv_ms);
+        config_get_int32("temp_intv_ms", &intv_ms);
         s_config.data_pin    = (gpio_num_t)gpio_num;
         s_config.interval_ms = (uint32_t)intv_ms;
     }

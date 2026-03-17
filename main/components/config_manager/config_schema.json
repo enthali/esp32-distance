@@ -202,7 +202,7 @@
       "order": 1
     },
     {
-      "key": "temp_interval_ms",
+      "key": "temp_intv_ms",
       "type": "integer",
       "label": "Measurement Interval (ms)",
       "description": "Time between DS18B20 readings (2000ms recommended)",

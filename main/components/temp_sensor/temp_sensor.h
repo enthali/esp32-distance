@@ -30,7 +30,7 @@ extern "C" {
 /** @brief Temperature sensor configuration */
 typedef struct {
     gpio_num_t data_pin;    ///< 1-Wire data GPIO (default: GPIO4, from config key "temp_gpio")
-    uint32_t   interval_ms; ///< Measurement interval ms (default: 2000, from config key "temp_interval_ms")
+    uint32_t   interval_ms; ///< Measurement interval ms (default: 2000, from config key "temp_intv_ms")
 } temp_sensor_config_t;
 
 /** @brief Single temperature measurement */
@@ -43,7 +43,7 @@ typedef struct {
 /**
  * @brief Initialise the temperature sensor component.
  *
- * Pass NULL to load configuration from config_manager (keys: temp_gpio, temp_interval_ms).
+ * Pass NULL to load configuration from config_manager (keys: temp_gpio, temp_intv_ms).
  *
  * REQUIREMENTS TRACEABILITY: REQ_TEMP_1
  *
