@@ -409,7 +409,8 @@ CONFIG_PARTITION_TABLE_MD5=y
 #
 # Build Target Configuration
 #
-# CONFIG_TARGET_EMULATOR is not set
+CONFIG_TARGET_EMULATOR=y
+CONFIG_EMULATOR_MOCK_DATA=y
 # end of Build Target Configuration
 
 #
