@@ -11,7 +11,7 @@ recorded and traced back to their origin — not the limitations themselves.
 .. spec:: Known Limitations File Structure and Process
    :id: SPEC_DEV_LIMITS_STRUCTURE
    :links: REQ_DEV_LIMITS_1
-   :status: approved
+   :status: implemented
    :tags: developer, limitations, known-issues
 
    **Description:** ``docs/90_guides/known-issues.rst`` SHALL be structured

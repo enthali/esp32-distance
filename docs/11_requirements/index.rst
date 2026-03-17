@@ -16,6 +16,7 @@ This section contains system and component requirements following Sphinx-Needs m
    req_display
    req_startup_test
    req_developer_docs
+   req_temp_sensor
 
 Overview
 --------

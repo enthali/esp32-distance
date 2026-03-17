@@ -26,10 +26,9 @@ The ESP32 Distance Sensor is an IoT device that measures distance using an ultra
 Who Is This For?
 ----------------
 
-* **Makers & Tinkerers** - Build a practical IoT device with real-world applications
-* **Students & Learners** - Hands-on introduction to embedded systems development
-* **Workshop Participants** - Guided learning experience with professional practices
-* **Embedded Developers** - Reference implementation of ESP-IDF best practices
+* **Garage user** - End user parking their car using the distance display
+* **Maker / builder** - Assembles the hardware and configures the device
+* **Developer** - Extends or maintains the firmware and documentation
 
 Why Use This Project?
 ----------------------

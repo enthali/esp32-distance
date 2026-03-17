@@ -221,6 +221,27 @@ Non-Functional Requirements
    - AC-3: Text SHALL be readable without zooming on mobile devices
 
 
+.. req:: Temperature Status Display
+   :id: REQ_WEB_TEMP_1
+   :status: approved
+   :priority: mandatory
+   :links: REQ_WEB_1, REQ_TEMP_4
+   :tags: web, temperature, ui, monitoring
+
+   **Description:** The web status page SHALL display the current temperature reading, and the
+   ``/api/status`` REST endpoint SHALL include temperature in its JSON payload.
+
+   **Rationale:** Temperature monitoring via web interface allows garage users to check
+   conditions remotely without physical presence.
+
+   **Acceptance Criteria:**
+
+   - AC-1: Status page SHALL display temperature as "XX.X °C" (one decimal place)
+   - AC-2: ``GET /api/status`` SHALL return JSON including ``"temperature_c": <float>``
+   - AC-3: If no valid reading available, page SHALL show "-- °C" and API SHALL return ``"temperature_c": null``
+   - AC-4: Temperature display SHALL update on page reload (no SSE/WebSocket required)
+
+
 Traceability
 ------------
 

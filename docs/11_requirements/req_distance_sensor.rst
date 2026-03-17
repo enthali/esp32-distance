@@ -284,6 +284,7 @@ Non-Functional Requirements
    - AC-4: Distance accuracy SHALL be ±2mm for distances 20mm-400cm at 20°C
    - AC-5: EMA smoothing factor SHALL be configurable 0-1000 (1000 = no smoothing)
    - AC-6: First measurement SHALL initialize EMA filter without smoothing
+   - AC-7: The ``temperature_c_x10`` compensation value SHALL be updatable at runtime via ``distance_sensor_set_temperature()`` (REQ_SNS_15)
 
    **Verification:** Calibration tests with known distances at various temperatures and EMA filter 
    validation.
@@ -362,5 +363,31 @@ Error Handling Requirements
    - AC-5: Sensor task SHALL never block on processed queue operations
    - AC-6: Raw queue overflow SHALL be prevented by proper task priority
 
-   **Verification:** Load testing with slow consumer to force overflows and validate drop-oldest 
+   **Verification:** Load testing with slow consumer to force overflows and validate drop-oldest
    behavior and statistics.
+
+
+.. req:: Dynamic Temperature Compensation Update
+   :id: REQ_SNS_15
+   :status: approved
+   :priority: mandatory
+   :links: REQ_SNS_11
+   :tags: sensor, temperature, api
+
+   **Description:** The distance sensor component SHALL provide
+   ``distance_sensor_set_temperature(int16_t temperature_c_x10)`` to allow runtime
+   updates of the temperature compensation value without restarting the sensor.
+
+   **Rationale:**
+   Enables the temperature sensor component to feed live DS18B20 readings into the
+   distance calculation without requiring sensor restart or NVS access.
+
+   **Acceptance Criteria:**
+
+   - AC-1: Function SHALL update the internal compensation value used in the next measurement calculation
+   - AC-2: Function SHALL be thread-safe (callable from any task)
+   - AC-3: Updated value SHALL take effect on the next triggered measurement
+   - AC-4: Function SHALL return ``ESP_OK`` on success, ``ESP_ERR_INVALID_STATE`` if sensor not initialised
+
+   **Verification:** Unit test calling ``distance_sensor_set_temperature()`` from a separate task
+   and verifying the updated value appears in the next measurement calculation.

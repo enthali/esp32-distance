@@ -53,33 +53,35 @@ System Integration
 
 .. spec:: Configuration Integration
    :id: SPEC_DSP_ARCH_2
-   :links: REQ_DSP_2, REQ_CFG_JSON_1
+   :links: REQ_DSP_2, REQ_CFG_JSON_1, REQ_CFG_JSON_16
    :status: approved
    :tags: display, configuration
 
-   **Design:** Use ``config_manager`` API for all distance range parameters.
+   **Design:** Use ``config_manager`` API for all distance range parameters and temperature thresholds.
 
    **Implementation:**
 
-   - Obtain min/max distance values via ``config_get_int32()`` using ``dist_min_mm`` / 
+   - Obtain min/max distance values via ``config_get_int32()`` using ``dist_min_mm`` /
      ``dist_max_mm`` fields (millimeters)
-   - Cache config values locally at task startup for performance
+   - Obtain temperature thresholds via ``config_get_int32()`` using ``temp_cold_c10`` /
+     ``temp_warm_c10`` fields (tenths of °C)
+   - Cache all config values locally at task startup for performance
    - Configuration changes handled via system restart (restart-based architecture)
    - Configuration validation responsibility belongs to ``config_manager``
 
-   **Validation:** All distance parameters obtained from ``config_manager`` API, no separate 
-   config structures.
+   **Validation:** All distance and temperature parameters obtained from ``config_manager`` API,
+   no separate config structures.
 
 Core Algorithms
 ---------------
 
 .. spec:: Distance-to-Visual Mapping Algorithm
    :id: SPEC_DSP_ALGO_1
-   :links: REQ_DSP_3, REQ_DSP_4, REQ_DSP_5
+   :links: REQ_DSP_3, REQ_DSP_4, REQ_DSP_5, REQ_DSP_6
    :status: approved
    :tags: display, algorithm, mapping
 
-   **Design:** Distance-to-LED mapping 
+   **Design:** Distance-to-LED mapping with temperature-based colour encoding.
 
 
    **Position Mapping:**
@@ -87,11 +89,38 @@ Core Algorithms
    - Formula: ``led_index = (distance_mm - min_mm) * (led_count - 1) / (max_mm - min_mm)``
    - Boundary clamping: ``[0, led_count-1]``
 
+   **Temperature Colour Mapping (position LED only):**
+
+   - At or below ``temp_cold_c10``: blue (0, 0, 255)
+   - At or above ``temp_warm_c10``: orange (255, 165, 0)
+   - Between thresholds: linear interpolation blue → green → orange
+   - No valid temperature reading: default green (255, 255, 0) — original behaviour
+   - Warning colours (REQ_DSP_4 / REQ_DSP_5) override temperature colour
+
+   .. code-block:: c
+
+      /* Compute blend factor t in [0, 1000] */
+      int32_t range = temp_warm_c10 - temp_cold_c10;  /* > 0 guaranteed by config */
+      int32_t t = (temp_c10 - temp_cold_c10) * 1000 / range;
+      t = (t < 0) ? 0 : (t > 1000) ? 1000 : t;
+
+      /* Blue (0,0,255) → Green (0,255,0) → Orange (255,165,0) via two-segment lerp */
+      if (t <= 500) {
+          r = 0;
+          g = (uint8_t)(t * 255 / 500);
+          b = (uint8_t)((500 - t) * 255 / 500);
+      } else {
+          r = (uint8_t)((t - 500) * 255 / 500);
+          g = (uint8_t)(255 - (t - 500) * (255 - 165) / 500);
+          b = 0;
+      }
+
    **Behaviors:**
 
-   - single LED green illuminated at mapped position
+   - Single LED illuminated at mapped position in temperature-derived colour
 
-   **Validation:** Position updates correctly with distance changes.
+   **Validation:** Position updates correctly with distance changes; colour transitions
+   smoothly across full temperature range; warning colours take precedence.
 
 .. spec:: Embedded Arithmetic Architecture
    :id: SPEC_DSP_ALGO_3
