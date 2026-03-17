@@ -32,6 +32,7 @@
 #include "led_controller.h"
 #include "led_running_test.h"
 #include "distance_sensor.h"
+#include "temp_sensor.h"
 #include "display_logic.h"
 #include "config_manager.h"
 
@@ -95,6 +96,21 @@ void app_main(void)
     ESP_LOGI(TAG, "✓ Distance sensor initialized and started");
     ESP_LOGI(TAG, "  Hardware: Trigger=GPIO%d, Echo=GPIO%d", 
              DISTANCE_TRIGGER_PIN, DISTANCE_ECHO_PIN);
+
+    // Step 4b: Initialize temperature sensor
+    // REQ_SYS_TEMP_1, REQ_TEMP_1: DS18B20 ambient temperature measurement
+    // Feeds speed-of-sound compensation to distance sensor (REQ_TEMP_5)
+    ESP_LOGI(TAG, "Initializing temperature sensor...");
+    esp_err_t temp_ret = temp_sensor_init(NULL);  /* NULL = load from config_manager */
+    if (temp_ret == ESP_OK) {
+        temp_ret = temp_sensor_start();
+    }
+    if (temp_ret != ESP_OK) {
+        ESP_LOGW(TAG, "Temperature sensor init failed (%s) — distance compensation uses default 20°C",
+                 esp_err_to_name(temp_ret));
+    } else {
+        ESP_LOGI(TAG, "✓ Temperature sensor started");
+    }
     
     // Step 5: Initialize WiFi manager and web server
     // Handles both STA mode (connect to WiFi) and AP mode (captive portal)

@@ -3,7 +3,8 @@ idf_component_register(
     INCLUDE_DIRS "."
     REQUIRES 
         led_controller 
-        distance_sensor 
+        distance_sensor
+        temp_sensor
         config_manager
         freertos
     PRIV_REQUIRES 

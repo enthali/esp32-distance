@@ -254,6 +254,22 @@ extern "C"
      */
     bool distance_sensor_is_running(void);
 
+    /**
+     * @brief Set the temperature used for speed-of-sound compensation (runtime update).
+     *
+     * Called by the temperature sensor component after each successful DS18B20 reading
+     * so that distance calculations always use the live ambient temperature.
+     *
+     * REQUIREMENTS TRACEABILITY:
+     *   - REQ_SNS_15: Dynamic temperature compensation update
+     *
+     * Thread-safe: can be called from any task.
+     *
+     * @param temperature_c_x10  Temperature in 0.1 °C units (e.g. 215 = 21.5 °C).
+     * @return ESP_OK on success, ESP_ERR_INVALID_STATE if sensor not initialised.
+     */
+    esp_err_t distance_sensor_set_temperature(int16_t temperature_c_x10);
+
 #ifdef __cplusplus
 }
 #endif

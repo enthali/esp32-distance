@@ -320,7 +320,6 @@ static uint16_t apply_ema_filter_int(uint16_t new_measurement_mm)
 static void distance_sensor_task(void *pvParameters)
 {
     distance_raw_measurement_t raw_data;
-    uint32_t speed_of_sound_scaled = calculate_speed_of_sound_scaled(sensor_config.temperature_c_x10);
 
     ESP_LOGI(TAG, "Distance sensor task started (interval: %lu ms, timeout: %lu ms)",
              sensor_config.measurement_interval_ms, sensor_config.timeout_ms);
@@ -343,6 +342,10 @@ static void distance_sensor_task(void *pvParameters)
 
             // 3. Calculate distance from raw timestamps (integer arithmetic)
             uint64_t echo_duration_us = raw_data.echo_end_us - raw_data.echo_start_us;
+
+            // Recompute speed of sound in case temperature was updated since last measurement
+            // (REQ_SNS_15 AC-3: updated value takes effect on next measurement)
+            uint32_t speed_of_sound_scaled = calculate_speed_of_sound_scaled(sensor_config.temperature_c_x10);
 
             // Distance = (echo_time * speed_of_sound) / 2
             // speed_of_sound_scaled is in (mm/µs * 1000000)
@@ -640,4 +643,17 @@ esp_err_t distance_sensor_monitor(void)
 bool distance_sensor_is_running(void)
 {
     return (sensor_task_handle != NULL);
+}
+
+esp_err_t distance_sensor_set_temperature(int16_t temperature_c_x10)
+{
+    /* REQ_SNS_15: thread-safe runtime temperature update */
+    if (raw_measurement_queue == NULL) {
+        /* Queues not yet created — sensor not initialised */
+        return ESP_ERR_INVALID_STATE;
+    }
+    sensor_config.temperature_c_x10 = temperature_c_x10;
+    ESP_LOGD(TAG, "Temperature compensation updated: %d (%.1f °C)",
+             temperature_c_x10, temperature_c_x10 / 10.0f);
+    return ESP_OK;
 }

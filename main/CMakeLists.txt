@@ -9,6 +9,7 @@ if(CONFIG_TARGET_EMULATOR)
         # Distance sensor system components
         led_controller
         distance_sensor
+        temp_sensor
         startup_tests
         display_logic
         # Web interface and configuration
@@ -29,6 +30,7 @@ else()
         # Distance sensor system components
         led_controller
         distance_sensor
+        temp_sensor
         startup_tests
         display_logic
         # Web interface and configuration

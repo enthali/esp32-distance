@@ -313,3 +313,15 @@ bool distance_sensor_is_running(void)
 {
     return (sensor_task_handle != NULL);
 }
+
+esp_err_t distance_sensor_set_temperature(int16_t temperature_c_x10)
+{
+    /* REQ_SNS_15: simulator accepts updates but does not use them for distance calc */
+    if (!is_initialized) {
+        return ESP_ERR_INVALID_STATE;
+    }
+    sensor_config.temperature_c_x10 = temperature_c_x10;
+    ESP_LOGD("distance_sensor_sim", "Temperature compensation updated: %d (%.1f °C)",
+             temperature_c_x10, temperature_c_x10 / 10.0f);
+    return ESP_OK;
+}

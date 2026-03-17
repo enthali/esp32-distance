@@ -5,15 +5,18 @@
  * Design is documented in `docs/design/display-design.md` and linked to requirements
  * and design IDs (e.g. REQ_DISPLAY_*, DSN_DISPLAY_*). Keep this header short; full design
  * rationale lives in the design document for traceability.
- * 
+ *
  * CONFIGURATION:
  * Uses new JSON-based config_manager API to read distance parameters:
  * - dist_min_mm: Minimum distance threshold (millimeters)
  * - dist_max_mm: Maximum distance threshold (millimeters)
+ * - temp_cold_c10: Cold temperature threshold in 0.1°C (default 50 = 5.0°C)
+ * - temp_warm_c10: Warm temperature threshold in 0.1°C (default 200 = 20.0°C)
  */
 
 #include "display_logic.h"
 #include "distance_sensor.h"
+#include "temp_sensor.h"
 #include "led_controller.h"
 #include "config_manager.h"
 #include "freertos/FreeRTOS.h"
@@ -26,8 +29,64 @@ static const char *TAG = "display_logic";
 static TaskHandle_t display_task_handle = NULL;
 
 // Configuration parameters (read at initialization per REQ_DSP_2)
-static int32_t dist_min_mm = 100;  // Default 100mm = 10cm
-static int32_t dist_max_mm = 500;  // Default 500mm = 50cm
+static int32_t dist_min_mm    = 100;  // Default 100mm = 10cm
+static int32_t dist_max_mm    = 500;  // Default 500mm = 50cm
+static int32_t temp_cold_c10  = 50;   // Default  5.0°C (blue)
+static int32_t temp_warm_c10  = 200;  // Default 20.0°C (orange)
+
+/**
+ * @brief Compute position LED colour from ambient temperature (REQ_DSP_6, SPEC_DSP_ALGO_1).
+ *
+ * Gradient: blue (0,0,255) → green (0,255,0) → orange (255,165,0)
+ * Two-segment linear interpolation between temp_cold_c10 and temp_warm_c10.
+ * If no valid temperature reading is available, returns green (original behaviour).
+ *
+ * @param color  Output colour.
+ */
+static void get_temperature_colour(led_color_t *color)
+{
+    temp_measurement_t meas;
+    if (temp_sensor_get_latest(&meas) != ESP_OK || !meas.valid) {
+        /* No valid reading — fall back to green (REQ_DSP_6 AC-5) */
+        *color = LED_COLOR_GREEN;
+        return;
+    }
+
+    int32_t temp = (int32_t)meas.temperature_c_x10;
+    int32_t cold = temp_cold_c10;
+    int32_t warm = temp_warm_c10;
+
+    if (temp <= cold) {
+        /* At or below cold threshold → blue */
+        color->red = 0; color->green = 0; color->blue = 255;
+        return;
+    }
+    if (temp >= warm) {
+        /* At or above warm threshold → orange */
+        color->red = 255; color->green = 165; color->blue = 0;
+        return;
+    }
+
+    /* Between thresholds: two-segment blend (t ∈ [0, 1000])
+     * 0–500: blue  → green
+     * 500–1000: green → orange                    */
+    int32_t range = warm - cold;  /* > 0 guaranteed by config validation */
+    int32_t t = (temp - cold) * 1000 / range;
+    /* Clamp for safety */
+    if (t < 0)    t = 0;
+    if (t > 1000) t = 1000;
+
+    if (t <= 500) {
+        color->red = 0;
+        color->green = (uint8_t)(t * 255 / 500);
+        color->blue = (uint8_t)((500 - t) * 255 / 500);
+    } else {
+        int32_t t2 = t - 500;
+        color->red = (uint8_t)(t2 * 255 / 500);
+        color->green = (uint8_t)(255 - t2 * (255 - 165) / 500);
+        color->blue = 0;
+    }
+}
 
 /**
  * @brief Update LED display based on distance measurement
@@ -57,10 +116,12 @@ static void update_led_display(const distance_measurement_t *measurement)
             // Ensure within bounds
             if (led_index >= led_count) led_index = led_count - 1;
             
-            // Normal range: Green color for distance visualization - REQ_DISPLAY_3
-            led_color_t color = LED_COLOR_GREEN;
+            // Temperature-based colour for position indicator (REQ_DSP_3 AC-6, REQ_DSP_6)
+            led_color_t color;
+            get_temperature_colour(&color);
             led_set_pixel((uint16_t)led_index, color);
-            ESP_LOGD(TAG, "Distance %d mm → LED %" PRIu32, measurement->distance_mm, led_index);
+            ESP_LOGD(TAG, "Distance %d mm → LED %" PRIu32 " (r=%d g=%d b=%d)",
+                     measurement->distance_mm, led_index, color.red, color.green, color.blue);
         }
         else if (measurement->distance_mm < dist_min_mm)
         {
@@ -156,6 +217,22 @@ esp_err_t display_logic_start(void)
     if (config_get_int32("dist_max_mm", &dist_max_mm) != ESP_OK) {
         ESP_LOGW(TAG, "Failed to read dist_max_mm from config, using default 500mm");
         dist_max_mm = 500;
+    }
+    // Temperature colour thresholds (REQ_DSP_6 AC-4, REQ_CFG_JSON_16)
+    if (config_get_int32("temp_cold_c10", &temp_cold_c10) != ESP_OK) {
+        ESP_LOGW(TAG, "Failed to read temp_cold_c10 from config, using default 50 (5.0°C)");
+        temp_cold_c10 = 50;
+    }
+    if (config_get_int32("temp_warm_c10", &temp_warm_c10) != ESP_OK) {
+        ESP_LOGW(TAG, "Failed to read temp_warm_c10 from config, using default 200 (20.0°C)");
+        temp_warm_c10 = 200;
+    }
+    /* Validate thresholds: cold must be < warm (REQ_CFG_JSON_16 AC-6) */
+    if (temp_cold_c10 >= temp_warm_c10) {
+        ESP_LOGW(TAG, "temp_cold_c10 (%ld) >= temp_warm_c10 (%ld), resetting to defaults",
+                 (long)temp_cold_c10, (long)temp_warm_c10);
+        temp_cold_c10 = 50;
+        temp_warm_c10 = 200;
     }
 
     // Check if LED controller is initialized

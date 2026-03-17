@@ -8,15 +8,16 @@
  * REQUIREMENTS TRACEABILITY:
  *   - REQ_DSP_1: Hardware platform and LED controller integration
  *   - REQ_DSP_2: Configuration integration (all parameters from config_manager)
- *   - REQ_DSP_3: Core visualization concept (single green LED position, real-time updates)
+ *   - REQ_DSP_3: Core visualization concept (temperature-based LED colour, real-time updates)
  *   - REQ_DSP_4: Below minimum distance warning (red LED at position 0)
  *   - REQ_DSP_5: Out of range display (red LED at last position)
+ *   - REQ_DSP_6: Temperature-based position LED colour (blue→green→orange gradient)
  *
  * DESIGN TRACEABILITY:
  *   - SPEC_DSP_OVERVIEW_1: WS2812 hardware integration
  *   - SPEC_DSP_ARCH_1: Task-based architecture (FreeRTOS, blocking on sensor)
  *   - SPEC_DSP_ARCH_2: Configuration integration via config_manager
- *   - SPEC_DSP_ALGO_1: Distance-to-visual mapping algorithm
+ *   - SPEC_DSP_ALGO_1: Distance-to-visual mapping + temperature colour algorithm
  *   - SPEC_DSP_ALGO_3: Embedded arithmetic architecture (integer math)
  *
  * FEATURES:

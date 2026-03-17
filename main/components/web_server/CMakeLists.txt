@@ -18,6 +18,7 @@ idf_component_register(
         cert_handler 
         config_manager
         distance_sensor
+        temp_sensor
         esp_wifi 
         esp_http_server 
         esp_https_server 

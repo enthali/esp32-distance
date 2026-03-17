@@ -25,6 +25,12 @@
       "label": "📡 Sensor Settings",
       "description": "HC-SR04 distance sensor configuration",
       "order": 3
+    },
+    {
+      "id": "temperature",
+      "label": "🌡️ Temperature Sensor",
+      "description": "DS18B20 temperature sensor configuration and colour thresholds",
+      "order": 6
     }
   ],
   "parameters": [
@@ -180,6 +186,58 @@
       "max": 1000,
       "step": 10,
       "group": "sensor",
+      "order": 4
+    },
+    {
+      "key": "temp_gpio",
+      "type": "integer",
+      "label": "Temperature Sensor GPIO",
+      "description": "DS18B20 1-Wire data pin (GPIO number, default 4)",
+      "default": 4,
+      "required": true,
+      "min": 0,
+      "max": 39,
+      "step": 1,
+      "group": "temperature",
+      "order": 1
+    },
+    {
+      "key": "temp_interval_ms",
+      "type": "integer",
+      "label": "Measurement Interval (ms)",
+      "description": "Time between DS18B20 readings (2000ms recommended)",
+      "default": 2000,
+      "required": true,
+      "min": 500,
+      "max": 60000,
+      "step": 100,
+      "group": "temperature",
+      "order": 2
+    },
+    {
+      "key": "temp_cold_c10",
+      "type": "integer",
+      "label": "Cold Threshold (°C × 10)",
+      "description": "At or below this temperature the position LED is blue (50 = 5.0°C)",
+      "default": 50,
+      "required": true,
+      "min": -100,
+      "max": 500,
+      "step": 5,
+      "group": "temperature",
+      "order": 3
+    },
+    {
+      "key": "temp_warm_c10",
+      "type": "integer",
+      "label": "Warm Threshold (°C × 10)",
+      "description": "At or above this temperature the position LED is orange (200 = 20.0°C)",
+      "default": 200,
+      "required": true,
+      "min": -100,
+      "max": 500,
+      "step": 5,
+      "group": "temperature",
       "order": 4
     }
   ]

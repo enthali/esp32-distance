@@ -18,6 +18,7 @@
 #include "config_manager.h"
 #include "distance_sensor.h"
 #include "led_controller.h"
+#include "temp_sensor.h"
 #include "esp_log.h"
 #include "esp_system.h"
 #include "esp_timer.h"
@@ -1049,6 +1050,16 @@ static esp_err_t wifi_status_handler(httpd_req_t *req)
         cJSON_AddStringToObject(json, "ip_address", ip_str);
     } else {
         cJSON_AddStringToObject(json, "ip_address", "--");
+    }
+
+    // Temperature (REQ_WEB_TEMP_1)
+    temp_measurement_t temp_meas;
+    if (temp_sensor_get_latest(&temp_meas) == ESP_OK && temp_meas.valid) {
+        /* Convert 0.1°C units to float for JSON */
+        double temp_c = temp_meas.temperature_c_x10 / 10.0;
+        cJSON_AddNumberToObject(json, "temperature_c", temp_c);
+    } else {
+        cJSON_AddNullToObject(json, "temperature_c");
     }
 
     // Send response
