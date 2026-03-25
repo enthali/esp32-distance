@@ -10,7 +10,7 @@ specifying which development environments are supported and what the guide must 
 .. spec:: Supported Development Environments — Options
    :id: SPEC_DEV_ENV_OPTIONS
    :links: REQ_DEV_ENV_1, SPEC_ARCH_CODESPACES_1
-   :status: approved
+   :status: implemented
    :tags: developer, devcontainer, codespaces
 
    **Description:** The development options section of ``devcontainer.rst``
@@ -43,7 +43,7 @@ specifying which development environments are supported and what the guide must 
 .. spec:: Supported Development Environments — Setup Steps
    :id: SPEC_DEV_ENV_USAGE
    :links: REQ_DEV_ENV_1, SPEC_ARCH_CODESPACES_1
-   :status: approved
+   :status: implemented
    :tags: developer, devcontainer, codespaces
 
    **Description:** The usage section of ``devcontainer.rst`` SHALL provide

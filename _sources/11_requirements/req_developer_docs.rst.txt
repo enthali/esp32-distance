@@ -22,7 +22,7 @@ Governing Principle
 .. req:: Supporting Documentation Traceability
    :id: REQ_DEV_DOC_1
    :links: US_DEV_2
-   :status: approved
+   :status: implemented
    :priority: mandatory
    :tags: developer, documentation, traceability
 
@@ -46,7 +46,7 @@ Overview Documentation Requirements
 .. req:: README Content Scope
    :id: REQ_DEV_README_1
    :links: US_DEV_2, REQ_DEV_DOC_1
-   :status: approved
+   :status: implemented
    :priority: mandatory
    :tags: developer, documentation, readme
 
@@ -67,7 +67,7 @@ Overview Documentation Requirements
 .. req:: Overview Index Content
    :id: REQ_DEV_OV_INDEX_1
    :links: US_DEV_2, REQ_DEV_DOC_1
-   :status: approved
+   :status: implemented
    :priority: mandatory
    :tags: developer, documentation, overview
 
@@ -86,7 +86,7 @@ Overview Documentation Requirements
 .. req:: Hardware Specifications Content
    :id: REQ_DEV_OV_HW_1
    :links: US_DEV_2, REQ_DEV_DOC_1
-   :status: approved
+   :status: implemented
    :priority: mandatory
    :tags: developer, documentation, hardware
 
@@ -105,7 +105,7 @@ Overview Documentation Requirements
 .. req:: Quick Start Content
    :id: REQ_DEV_OV_QS_1
    :links: US_DEV_2, REQ_DEV_DOC_1
-   :status: approved
+   :status: implemented
    :priority: mandatory
    :tags: developer, documentation, quickstart
 
@@ -125,7 +125,7 @@ Guide Documentation Requirements
 .. req:: QEMU Emulator Guide Content
    :id: REQ_DEV_GUIDE_QEMU_1
    :links: US_DEV_2, REQ_DEV_DOC_1, REQ_SYS_SIM_1
-   :status: approved
+   :status: implemented
    :priority: mandatory
    :tags: developer, documentation, qemu
 
@@ -143,7 +143,7 @@ Guide Documentation Requirements
 .. req:: Switching Dev Modes Guide Content
    :id: REQ_DEV_GUIDE_MODES_1
    :links: US_DEV_2, REQ_DEV_DOC_1, REQ_SYS_SIM_1
-   :status: approved
+   :status: implemented
    :priority: mandatory
    :tags: developer, documentation, devmodes
 
@@ -160,7 +160,7 @@ Guide Documentation Requirements
 .. req:: Debugging Guide Content
    :id: REQ_DEV_GUIDE_DEBUG_1
    :links: US_DEV_2, REQ_DEV_DOC_1
-   :status: approved
+   :status: implemented
    :priority: mandatory
    :tags: developer, documentation, debugging
 
@@ -177,7 +177,7 @@ Guide Documentation Requirements
 .. req:: Web Flasher Guide Content
    :id: REQ_DEV_GUIDE_FLASH_1
    :links: US_DEV_2, REQ_DEV_DOC_1
-   :status: approved
+   :status: implemented
    :priority: mandatory
    :tags: developer, documentation, flasher
 
@@ -198,7 +198,7 @@ Development Environment Requirements
 .. req:: Supported Development Environments
    :id: REQ_DEV_ENV_1
    :links: US_DEV_2, REQ_DEV_DOC_1
-   :status: approved
+   :status: implemented
    :priority: mandatory
    :tags: developer, devcontainer, codespaces
 
@@ -217,7 +217,7 @@ Development Environment Requirements
 .. req:: Known Limitations Documentation
    :id: REQ_DEV_LIMITS_1
    :links: US_DEV_2, REQ_DEV_DOC_1
-   :status: approved
+   :status: implemented
    :priority: mandatory
    :tags: developer, limitations, known-issues
 

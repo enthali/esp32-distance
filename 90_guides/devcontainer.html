@@ -333,6 +333,14 @@
 <p class="admonition-title">Note</p>
 <p>This template focuses on Codespaces workflow. Local dev container support is provided but not officially supported.</p>
 </div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Native Windows (without a container) is not supported.</strong>
+The ESP-IDF toolchain relies on a Linux shell environment and has known
+conflicts with Windows PATH conventions. All development must run inside
+a container (GitHub Codespaces or local Dev Container via Docker).
+Running <code class="docutils literal notranslate"><span class="pre">idf.py</span></code> natively on Windows will not work.</p>
+</div>
 </section>
 </section>
 <section id="using-the-dev-container">

@@ -313,74 +313,122 @@
         <article role="main" id="furo-main-content">
           <section id="known-issues-and-limitations">
 <h1>Known Issues and Limitations<a class="headerlink" href="#known-issues-and-limitations" title="Link to this heading">¶</a></h1>
-<p><em>Welcome, brave explorer! Every project has its dragons—here are ours. Don’t panic if you encounter these: you’re not alone, and you’ll probably survive.</em></p>
-<section id="https-the-encryption-that-isn-t-there-yet">
-<h2>🔒 HTTPS: The Encryption That Isn’t There Yet<a class="headerlink" href="#https-the-encryption-that-isn-t-there-yet" title="Link to this heading">¶</a></h2>
-<p><strong>What’s Missing?</strong> Security. Sweet, sweet HTTPS encryption.</p>
-<p><strong>Current Reality:</strong></p>
-<ul class="simple">
-<li><p>HTTP web server works beautifully in both QEMU and hardware</p></li>
-<li><p>HTTPS/SSL/TLS? Not yet. We have a certificate handler component gathering dust in the garage</p></li>
-<li><p>Your credentials are transmitted in plain text like postcards from the 1980s</p></li>
-</ul>
-<p><strong>Why Should You Care?</strong></p>
-<ul class="simple">
-<li><p>Web interface is completely unencrypted (HTTP only)</p></li>
-<li><p>Any credentials you send are readable by anyone on the WiFi</p></li>
-<li><p><strong>Not suitable for production</strong> unless you enjoy living dangerously</p></li>
-</ul>
-<p><strong>What Can You Do?</strong></p>
-<ul class="simple">
-<li><p>Use only on trusted networks (your home lab, not the coffee shop)</p></li>
-<li><p>For production: Implement HTTPS before deployment (certificate handler is there, just needs some love)</p></li>
-<li><p>Or deploy behind a VPN and pretend the problem doesn’t exist</p></li>
-</ul>
-<p><strong>Status:</strong> Open - waiting for someone brave enough to tackle TLS on ESP32</p>
+<p><em>Welcome, brave explorer! Every project has its dragons — here are ours.
+Don’t panic if you encounter these: you’re not alone, and you’ll probably
+survive.</em></p>
+<section id="qemu-emulation">
+<h2>QEMU / Emulation<a class="headerlink" href="#qemu-emulation" title="Link to this heading">¶</a></h2>
+<section id="https-not-available-in-emulator">
+<h3>HTTPS not available in emulator<a class="headerlink" href="#https-not-available-in-emulator" title="Link to this heading">¶</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Origin<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../11_requirements/req_system.html#REQ_SYS_SIM_2" title="REQ_SYS_SIM_2"><em class="xref need">Emulator Network Connectivity (REQ_SYS_SIM_2)</em></a> (QEMU network simulation)</p>
+</dd>
+<dt class="field-even">Description<span class="colon">:</span></dt>
+<dd class="field-even"><p>The QEMU network stack bridges traffic through a UART tunnel.
+The <code class="docutils literal notranslate"><span class="pre">cert_handler</span></code> component exists but TLS handshake behaviour in
+QEMU has not been validated. HTTPS testing is therefore not supported
+in the emulator — you might get an encrypted error message, which is
+somehow worse than a plain-text one.</p>
+</dd>
+<dt class="field-odd">Workaround<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Use HTTP (port 80) when testing in QEMU. HTTPS validation requires
+real hardware.</p>
+</dd>
+</dl>
 </section>
-<section id="the-not-so-captive-captive-portal">
-<h2>📱 The Not-So-Captive Captive Portal<a class="headerlink" href="#the-not-so-captive-captive-portal" title="Link to this heading">¶</a></h2>
-<p><strong>The Problem:</strong> Your phone thinks it’s smarter than our DNS server (spoiler: there is no DNS server).</p>
-<p><strong>What Happens?</strong></p>
-<ul class="simple">
-<li><p>You connect to the ESP32’s WiFi access point</p></li>
-<li><p>Your phone/tablet stubbornly refuses to show the magical “Sign in to network” popup</p></li>
-<li><p>You stare at your screen wondering if WiFi is working</p></li>
-<li><p>Eventually you give up and manually type <code class="docutils literal notranslate"><span class="pre">http://192.168.4.1</span></code> into your browser</p></li>
-</ul>
-<p><strong>Why?</strong></p>
-<ul class="simple">
-<li><p>Modern devices are <em>extremely</em> picky about captive portals</p></li>
-<li><p>Our DNS server is… let’s call it “minimalist” (it doesn’t exist)</p></li>
-<li><p>iOS, Android, and Windows all have different ideas about what makes a proper captive portal</p></li>
-<li><p>We didn’t bribe any of them sufficiently</p></li>
-</ul>
-<p><strong>Impact:</strong></p>
-<ul class="simple">
-<li><p>Reduced “wow factor” when showing off your IoT device</p></li>
-<li><p>Users must manually discover the magic IP address: <code class="docutils literal notranslate"><span class="pre">192.168.4.1</span></code></p></li>
-<li><p>You’ll feel like it’s 1995 and you’re explaining IP addresses to your parents</p></li>
-</ul>
-<p><strong>Status:</strong> Open - low priority (most users figure it out after mild confusion)</p>
-<p><strong>Pro Tip:</strong> Just document <code class="docutils literal notranslate"><span class="pre">http://192.168.4.1</span></code> in big, friendly letters and save everyone the trouble.</p>
+<section id="qemu-web-interface-requires-http-proxy">
+<h3>QEMU web interface requires HTTP proxy<a class="headerlink" href="#qemu-web-interface-requires-http-proxy" title="Link to this heading">¶</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Origin<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../11_requirements/req_system.html#REQ_SYS_SIM_2" title="REQ_SYS_SIM_2"><em class="xref need">Emulator Network Connectivity (REQ_SYS_SIM_2)</em></a> (host browser access to emulated network)</p>
+</dd>
+<dt class="field-even">Description<span class="colon">:</span></dt>
+<dd class="field-even"><p>The emulated ESP32 lives on a virtual network (<code class="docutils literal notranslate"><span class="pre">192.168.100.0/24</span></code>).
+Accessing <code class="docutils literal notranslate"><span class="pre">http://192.168.100.2</span></code> from the Codespaces browser requires
+an HTTP proxy — the forwarded port 8080 goes through a Python proxy
+rather than directly to the ESP32, because the virtual TUN device is
+not directly routable from the browser.</p>
+</dd>
+<dt class="field-odd">Workaround<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Use the proxy URL <code class="docutils literal notranslate"><span class="pre">http://localhost:8080</span></code> (or the Codespaces
+forwarded URL for port 8080). See <a class="reference internal" href="qemu-emulator.html"><span class="doc">QEMU Emulator Guide</span></a> for details.</p>
+</dd>
+</dl>
 </section>
-<section id="other-oddities-and-surprises">
-<h2>🦄 Other Oddities and Surprises<a class="headerlink" href="#other-oddities-and-surprises" title="Link to this heading">¶</a></h2>
-<p>Found a new dragon? A quirk that makes you question your life choices? We want to know!</p>
-<p><strong>How to Report:</strong></p>
+</section>
+<section id="hardware-peripherals">
+<h2>Hardware / Peripherals<a class="headerlink" href="#hardware-peripherals" title="Link to this heading">¶</a></h2>
+<p><em>No known issues at this time. Found a new dragon? See</em> <a class="reference internal" href="#reporting-new-issues">Reporting New Issues</a> <em>below.</em></p>
+</section>
+<section id="networking">
+<h2>Networking<a class="headerlink" href="#networking" title="Link to this heading">¶</a></h2>
+<section id="https-not-implemented-http-only">
+<h3>HTTPS not implemented (HTTP only)<a class="headerlink" href="#https-not-implemented-http-only" title="Link to this heading">¶</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Origin<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../11_requirements/req_system.html#REQ_SYS_SEC_1" title="REQ_SYS_SEC_1"><em class="xref need">HTTPS Support (REQ_SYS_SEC_1)</em></a> (HTTPS support marked as future/open)</p>
+</dd>
+<dt class="field-even">Description<span class="colon">:</span></dt>
+<dd class="field-even"><p>The web interface runs on HTTP only — your credentials travel in plain
+text like postcards from the 1980s. We have a <code class="docutils literal notranslate"><span class="pre">cert_handler</span></code> component
+gathering dust in the garage, but TLS on ESP32 involves certificate
+management, memory pressure, and a surprising number of opinions.
+<strong>Not suitable for production</strong> unless you enjoy living dangerously.</p>
+</dd>
+<dt class="field-odd">Workaround<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Use only on trusted networks (your home lab, not the coffee shop).
+For production deployments: implement HTTPS using the existing
+<code class="docutils literal notranslate"><span class="pre">cert_handler</span></code> component, or deploy behind a VPN.</p>
+</dd>
+</dl>
+</section>
+<section id="captive-portal-auto-detection-unreliable">
+<h3>Captive portal auto-detection unreliable<a class="headerlink" href="#captive-portal-auto-detection-unreliable" title="Link to this heading">¶</a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">Origin<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../11_requirements/req_web_server.html#REQ_WEB_3" title="REQ_WEB_3"><em class="xref need">WiFi Setup Interface (REQ_WEB_3)</em></a> (captive portal WiFi setup page)</p>
+</dd>
+<dt class="field-even">Description<span class="colon">:</span></dt>
+<dd class="field-even"><p>When you connect to the ESP32’s WiFi access point, modern phones and
+tablets stubbornly refuse to show the magical “Sign in to network”
+popup. Our DNS server is… let’s call it “minimalist” (it doesn’t
+exist). iOS, Android, and Windows all have different ideas about what
+makes a proper captive portal, and we didn’t bribe any of them
+sufficiently. You end up manually typing <code class="docutils literal notranslate"><span class="pre">http://192.168.4.1</span></code> into
+your browser like it’s 1995.</p>
+</dd>
+<dt class="field-odd">Workaround<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Navigate directly to <code class="docutils literal notranslate"><span class="pre">http://192.168.4.1</span></code> — document this address
+prominently for your users and save everyone the confusion.</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="build-system">
+<h2>Build System<a class="headerlink" href="#build-system" title="Link to this heading">¶</a></h2>
+<p><em>No known issues at this time. Found a new dragon? See</em> <a class="reference internal" href="#reporting-new-issues">Reporting New Issues</a> <em>below.</em></p>
+</section>
+<section id="reporting-new-issues">
+<span id="id1"></span><h2>Reporting New Issues<a class="headerlink" href="#reporting-new-issues" title="Link to this heading">¶</a></h2>
+<p>Found a new dragon? A quirk that makes you question your life choices?
+We want to know — and whoever finds a bug gets to keep it (briefly),
+before filing a GitHub Issue.</p>
+<p><strong>How to report:</strong></p>
 <ol class="arabic simple">
 <li><p>Check if it’s already documented here (maybe we’re aware of the chaos)</p></li>
 <li><p>Open a GitHub Issue with a descriptive title</p></li>
-<li><p>Include reproduction steps (be specific - “it doesn’t work” doesn’t help)</p></li>
-<li><p>Tell us: ESP-IDF version, hardware variant, build configuration</p></li>
-<li><p>Bonus points for including a fix or workaround</p></li>
+<li><p>Include: ESP-IDF version, hardware variant, build configuration</p></li>
+<li><p>Include reproduction steps — “it doesn’t work” does not help</p></li>
+<li><p>Bonus points for a fix or workaround</p></li>
 </ol>
 <hr class="docutils" />
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Remember: If everything worked perfectly, it wouldn’t be called a “project,” it would be called a “product.” And products are boring.</p>
+<p>Remember: if everything worked perfectly, it wouldn’t be called a
+<em>project</em> — it would be called a <em>product</em>. And products are boring.</p>
 </div>
-<p><em>Last Updated: November 2025</em></p>
-<p><em>Last Debugging Session That Made Us Add This Document: Too many to count</em></p>
+<p><em>Last Updated: 2026-03-17</em></p>
 </section>
 </section>
 
@@ -440,9 +488,19 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Known Issues and Limitations</a><ul>
-<li><a class="reference internal" href="#https-the-encryption-that-isn-t-there-yet">🔒 HTTPS: The Encryption That Isn’t There Yet</a></li>
-<li><a class="reference internal" href="#the-not-so-captive-captive-portal">📱 The Not-So-Captive Captive Portal</a></li>
-<li><a class="reference internal" href="#other-oddities-and-surprises">🦄 Other Oddities and Surprises</a></li>
+<li><a class="reference internal" href="#qemu-emulation">QEMU / Emulation</a><ul>
+<li><a class="reference internal" href="#https-not-available-in-emulator">HTTPS not available in emulator</a></li>
+<li><a class="reference internal" href="#qemu-web-interface-requires-http-proxy">QEMU web interface requires HTTP proxy</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#hardware-peripherals">Hardware / Peripherals</a></li>
+<li><a class="reference internal" href="#networking">Networking</a><ul>
+<li><a class="reference internal" href="#https-not-implemented-http-only">HTTPS not implemented (HTTP only)</a></li>
+<li><a class="reference internal" href="#captive-portal-auto-detection-unreliable">Captive portal auto-detection unreliable</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#build-system">Build System</a></li>
+<li><a class="reference internal" href="#reporting-new-issues">Reporting New Issues</a></li>
 </ul>
 </li>
 </ul>
