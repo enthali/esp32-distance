@@ -14,7 +14,7 @@ README.md
 .. spec:: README Introduction and Project Link
    :id: SPEC_DEV_README_INTRO
    :links: REQ_DEV_README_1, SPEC_ARCH_LAYERS_1
-   :status: approved
+   :status: implemented
    :tags: developer, documentation, readme
 
    **Description:** The README introduction section SHALL contain a short
@@ -37,7 +37,7 @@ README.md
 .. spec:: README Metadata Section
    :id: SPEC_DEV_README_META
    :links: REQ_DEV_README_1
-   :status: approved
+   :status: implemented
    :tags: developer, documentation, readme
 
    **Description:** The README SHALL end with a metadata section covering
@@ -55,7 +55,7 @@ docs/01_overview/index.rst
 .. spec:: Overview Index — Project Description
    :id: SPEC_DEV_OV_INDEX_WHAT
    :links: REQ_DEV_OV_INDEX_1, US_DISPLAY_1
-   :status: approved
+   :status: implemented
    :tags: developer, documentation, overview
 
    **Description:** The "What Is This Project?" section SHALL describe the
@@ -71,7 +71,7 @@ docs/01_overview/index.rst
 .. spec:: Overview Index — Audience Section
    :id: SPEC_DEV_OV_INDEX_WHO
    :links: REQ_DEV_OV_INDEX_1, US_DEV_1, US_DEV_2
-   :status: approved
+   :status: implemented
    :tags: developer, documentation, overview
 
    **Description:** The "Who Is This For?" section SHALL enumerate target
@@ -87,7 +87,7 @@ docs/01_overview/index.rst
 .. spec:: Overview Index — Navigation Section
    :id: SPEC_DEV_OV_INDEX_NAV
    :links: REQ_DEV_OV_INDEX_1
-   :status: approved
+   :status: implemented
    :tags: developer, documentation, overview
 
    **Description:** The navigation / quick-links section SHALL provide a
@@ -105,7 +105,7 @@ docs/01_overview/hardware.rst
 .. spec:: Hardware Components Listing
    :id: SPEC_DEV_OV_HW_COMPONENTS
    :links: REQ_DEV_OV_HW_1, REQ_SNS_1, REQ_LED_1
-   :status: approved
+   :status: implemented
    :tags: developer, documentation, hardware
 
    **Description:** The hardware components section SHALL list all required
@@ -125,7 +125,7 @@ docs/01_overview/hardware.rst
 .. spec:: Hardware Pin Assignment Table
    :id: SPEC_DEV_OV_HW_PINS
    :links: REQ_DEV_OV_HW_1, REQ_SNS_1, REQ_LED_1
-   :status: approved
+   :status: implemented
    :tags: developer, documentation, hardware
 
    **Description:** The pin configuration section SHALL provide a complete
@@ -144,7 +144,7 @@ docs/01_overview/quick-start.rst
 .. spec:: Quick Start — QEMU Path
    :id: SPEC_DEV_OV_QS_QEMU
    :links: REQ_DEV_OV_QS_1, REQ_SYS_SIM_1
-   :status: approved
+   :status: implemented
    :tags: developer, documentation, quickstart, qemu
 
    **Description:** The QEMU emulation path section SHALL provide complete
@@ -164,7 +164,7 @@ docs/01_overview/quick-start.rst
 .. spec:: Quick Start — Hardware Path
    :id: SPEC_DEV_OV_QS_HW
    :links: REQ_DEV_OV_QS_1, REQ_SYS_HW_1
-   :status: approved
+   :status: implemented
    :tags: developer, documentation, quickstart, hardware
 
    **Description:** The hardware path section SHALL provide complete steps
@@ -183,7 +183,7 @@ docs/90_guides/qemu-emulator.rst
 .. spec:: QEMU Guide — Starting QEMU
    :id: SPEC_DEV_GUIDE_QEMU_START
    :links: REQ_DEV_GUIDE_QEMU_1, REQ_SYS_SIM_1, SPEC_ARCH_QEMU_1
-   :status: approved
+   :status: implemented
    :tags: developer, documentation, qemu
 
    **Description:** The QEMU start section SHALL document all methods for
@@ -199,7 +199,7 @@ docs/90_guides/qemu-emulator.rst
 .. spec:: QEMU Guide — Accessing the Web Interface
    :id: SPEC_DEV_GUIDE_QEMU_WEB
    :links: REQ_DEV_GUIDE_QEMU_1, REQ_SYS_SIM_2, REQ_WEB_1
-   :status: approved
+   :status: implemented
    :tags: developer, documentation, qemu
 
    **Description:** The web interface access section SHALL explain how to
@@ -215,7 +215,7 @@ docs/90_guides/qemu-emulator.rst
 .. spec:: QEMU Guide — Stopping QEMU
    :id: SPEC_DEV_GUIDE_QEMU_STOP
    :links: REQ_DEV_GUIDE_QEMU_1, REQ_SYS_SIM_1
-   :status: approved
+   :status: implemented
    :tags: developer, documentation, qemu
 
    **Description:** The QEMU stop section SHALL document how to cleanly
@@ -233,7 +233,7 @@ docs/90_guides/switching-dev-modes.rst
 .. spec:: Dev Modes Guide — How to Switch
    :id: SPEC_DEV_GUIDE_MODES_HOW
    :links: REQ_DEV_GUIDE_MODES_1, REQ_SYS_SIM_1
-   :status: approved
+   :status: implemented
    :tags: developer, documentation, devmodes
 
    **Description:** The switching procedure section SHALL document all
@@ -250,7 +250,7 @@ docs/90_guides/switching-dev-modes.rst
 .. spec:: Dev Modes Guide — What Changes Between Modes
    :id: SPEC_DEV_GUIDE_MODES_DIFF
    :links: REQ_DEV_GUIDE_MODES_1, REQ_SYS_SIM_1, REQ_NETIF_TUNNEL_5
-   :status: approved
+   :status: implemented
    :tags: developer, documentation, devmodes
 
    **Description:** The behavioural differences section SHALL explain what
@@ -269,7 +269,7 @@ docs/90_guides/debugging.rst
 .. spec:: Debugging Guide — Quick Start in QEMU
    :id: SPEC_DEV_GUIDE_DEBUG_START
    :links: REQ_DEV_GUIDE_DEBUG_1, REQ_SYS_SIM_1
-   :status: approved
+   :status: implemented
    :tags: developer, documentation, debugging
 
    **Description:** The quick-start section SHALL provide the minimal steps
@@ -285,7 +285,7 @@ docs/90_guides/debugging.rst
 .. spec:: Debugging Guide — Debugging Features
    :id: SPEC_DEV_GUIDE_DEBUG_FEATURES
    :links: REQ_DEV_GUIDE_DEBUG_1, SPEC_ARCH_LAYERS_1
-   :status: approved
+   :status: implemented
    :tags: developer, documentation, debugging
 
    **Description:** The debugging features section SHALL document the GDB
@@ -306,7 +306,7 @@ docs/90_guides/web-flasher.rst
 .. spec:: Web Flasher Guide — Overview and Browser Requirements
    :id: SPEC_DEV_GUIDE_FLASH_OVERVIEW
    :links: REQ_DEV_GUIDE_FLASH_1, REQ_SYS_NET_1
-   :status: approved
+   :status: implemented
    :tags: developer, documentation, flasher
 
    **Description:** The overview section SHALL explain what the web flasher
@@ -322,7 +322,7 @@ docs/90_guides/web-flasher.rst
 .. spec:: Web Flasher Guide — Flash Procedure
    :id: SPEC_DEV_GUIDE_FLASH_STEPS
    :links: REQ_DEV_GUIDE_FLASH_1, REQ_SYS_NET_1
-   :status: approved
+   :status: implemented
    :tags: developer, documentation, flasher
 
    **Description:** The usage guide section SHALL provide step-by-step

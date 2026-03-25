@@ -26,6 +26,13 @@ Alternative: Local Dev Container
 .. note::
    This template focuses on Codespaces workflow. Local dev container support is provided but not officially supported.
 
+.. warning::
+   **Native Windows (without a container) is not supported.**
+   The ESP-IDF toolchain relies on a Linux shell environment and has known
+   conflicts with Windows PATH conventions. All development must run inside
+   a container (GitHub Codespaces or local Dev Container via Docker).
+   Running ``idf.py`` natively on Windows will not work.
+
 Using the Dev Container
 ------------------------
 

@@ -14,7 +14,7 @@ handoffs:
 
 - **Version source**: `git describe --tags` (no VERSION file)
 - **Release notes**: GitHub Releases only (no `docs/releasenotes.md`)
-- **Change Documents**: `docs/changes/*.md` — kept after release (not deleted)
+- **Change Documents**: `docs/changes/*.md` — archived to `docs/changes/archive/v{VERSION}/` after tagging
 - **Docs workflow**: `deploy-docs.yml` triggers on push to main (not on tag)
 - **Shell**: Bash only (devcontainer / Codespaces)
 - **Sphinx build**: `sphinx-build -b html docs docs/_build/html`
@@ -146,7 +146,20 @@ git push origin v{NEW_VERSION}
 git push origin main
 ```
 
-### 6. Create GitHub Release
+### 6. Archive Change Documents
+
+After the tag is created, move all Change Documents into a version-specific archive folder:
+
+```bash
+mkdir -p docs/changes/archive/v{NEW_VERSION}
+git mv docs/changes/*.md docs/changes/archive/v{NEW_VERSION}/
+git commit -m "docs: archive change documents for v{NEW_VERSION}"
+git push origin main
+```
+
+This ensures `docs/changes/` only contains changes for the **next** release. Archived documents remain available for reference under `docs/changes/archive/`.
+
+### 7. Create GitHub Release
 
 Use the GitHub MCP server to create a release:
 
@@ -216,6 +229,8 @@ User: Approve
 Agent: ✅ Validation passed.
        Created tag v2.1.0
        Pushed to origin.
+       
+       Archived 3 Change Documents → docs/changes/archive/v2.1.0/
        
        Create GitHub Release at:
        https://github.com/enthali/esp32-distance/releases/new?tag=v2.1.0
