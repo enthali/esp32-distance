@@ -23,6 +23,27 @@ extending, maintaining, or contributing to the firmware and documentation.
    system to add a new peripheral.
 
 
+.. story:: Hardware-Free Development via QEMU Emulation
+   :id: US_DEV_3
+   :status: approved
+   :links: REQ_SYS_SIM_1, REQ_SYS_SIM_2
+   :tags: developer, qemu, emulation
+
+   **Role:** Developer
+
+   **Story:**
+   As a developer, I want to be able to develop and test the firmware without
+   physical hardware using QEMU emulation, so that I can iterate quickly and
+   run automated tests in CI without needing an ESP32 board.
+
+   **Value:**
+   QEMU emulation removes the dependency on physical hardware during
+   development. Developers can build, flash, and test in a fully emulated
+   environment — including network features via UART tunnel. This enables
+   faster iteration, reproducible CI pipelines, and onboarding of new
+   contributors who do not have hardware.
+
+
 .. story:: Traceable Supporting Documentation
    :id: US_DEV_2
    :status: implemented
