@@ -11,8 +11,7 @@ Overview
 --------
 
 The display system provides visual feedback through WS2812 LED strips, showing current distance 
-measurement with dual-layer architecture combining position indication and directional animation 
-to guide optimal parking.
+measurement through straightforward distance-to-LED mapping to guide optimal parking.
 
 System Overview Requirements
 -----------------------------

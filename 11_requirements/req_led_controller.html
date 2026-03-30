@@ -12,11 +12,11 @@
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/modern.css?v=803738c0" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2dda3639" />
@@ -324,7 +324,7 @@ visual distance display, supporting individual pixel control and configurable st
 </section>
 <section id="functional-requirements">
 <h2>Functional Requirements<a class="headerlink" href="#functional-requirements" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-961ef2d8">
+<div class="need_container docutils container" id="SNCB-afe179e0">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_LED_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -361,7 +361,7 @@ expected colors.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-a8e1b17d">
+<div class="need_container docutils container" id="SNCB-d182128e">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_LED_2">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -398,7 +398,7 @@ test clear all functionality.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-cfbb86f7">
+<div class="need_container docutils container" id="SNCB-f186c89f">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_LED_3">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -425,10 +425,10 @@ flexible for deployment scenarios. LED count is a user-facing parameter that aff
 behavior and visual representation, therefore it belongs in centralized configuration management.</p>
 <p><strong>Acceptance Criteria:</strong></p>
 <ul class="simple">
-<li><p>AC-1: LED count SHALL be obtained from centralized configuration system (REQ_CFG_1)</p></li>
+<li><p>AC-1: LED count SHALL be obtained from centralized configuration system (<a class="reference internal" href="req_config_manager_json.html#REQ_CFG_JSON_1" title="REQ_CFG_JSON_1"><em class="xref need">JSON Schema as Configuratio... (REQ_CFG_JSON_1)</em></a>)</p></li>
 <li><p>AC-2: LED controller SHALL receive LED count during initialization via configuration structure</p></li>
 <li><p>AC-3: System SHALL support LED counts from 1 to at least 100 LEDs</p></li>
-<li><p>AC-4: Configuration system SHALL validate LED count parameters (validation owned by REQ_CFG_6)</p></li>
+<li><p>AC-4: Configuration system SHALL validate LED count parameters (validation owned by <a class="reference internal" href="req_config_manager_json.html#REQ_CFG_JSON_6" title="REQ_CFG_JSON_6"><em class="xref need">Key-Based NVS Storage (REQ_CFG_JSON_6)</em></a>)</p></li>
 <li><p>AC-5: All LED positions within configured count SHALL be controllable</p></li>
 </ul>
 <p><strong>Verification:</strong> Test with different LED counts, verify all configured LEDs are controllable
@@ -438,7 +438,7 @@ and out-of-range access is prevented.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-04ddc073">
+<div class="need_container docutils container" id="SNCB-2e3630d5">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_LED_4">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -475,7 +475,7 @@ off state, measure color transition timing.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-b8fae0f9">
+<div class="need_container docutils container" id="SNCB-5286949a">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="REQ_LED_5">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">

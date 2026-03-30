@@ -2,7 +2,7 @@ Display System Design Specification
 ======================================
 
 This document specifies the design of the display system that visualizes distance measurements 
-through WS2812 LED strips with dual-layer rendering and zone-based animations.
+through WS2812 LED strips with straightforward distance-to-LED mapping.
 
 **Document Version**: 2.0  
 **Last Updated**: 2025-11-12
@@ -79,17 +79,31 @@ Core Algorithms
    :status: approved
    :tags: display, algorithm, mapping
 
-   **Design:** Distance-to-LED mapping 
+   **Design:** Distance-to-LED mapping with out-of-range handling.
 
 
-   **Position Mapping:**
+   **Position Mapping (valid range):**
 
    - Formula: ``led_index = (distance_mm - min_mm) * (led_count - 1) / (max_mm - min_mm)``
    - Boundary clamping: ``[0, led_count-1]``
 
+   **Out-of-Range Handling:**
+
+   - ``distance < dist_min_mm``: Clear all LEDs, set LED[0] to RED (too close warning)
+   - ``distance > dist_max_mm``: Clear all LEDs, set LED[led_count-1] to RED (too far warning)
+   - Valid range: Clear all LEDs, set LED[mapped_index] to GREEN
+
+   **Sensor Error Handling:**
+
+   - ``DISTANCE_SENSOR_TIMEOUT``: All LEDs off (cleared)
+   - ``DISTANCE_SENSOR_OUT_OF_RANGE``: LED[led_count-1] set to RED
+   - ``DISTANCE_SENSOR_NO_ECHO`` / ``DISTANCE_SENSOR_INVALID_READING``: LED[0] set to RED
+
    **Behaviors:**
 
-   - single LED green illuminated at mapped position
+   - Only one LED is illuminated at any given time
+   - All LEDs are cleared before each update
+   - Physical LEDs updated via ``led_show()`` after state change
 
    **Validation:** Position updates correctly with distance changes.
 
@@ -134,9 +148,7 @@ API Design
    **Internal Functions:**
 
    - ``display_task()``: Main task loop (blocking on distance measurements)
-   - ``animation_timer_callback()``: 100ms timer for animation updates
-   - ``calculate_led_position()``: Distance-to-LED mapping
-   - ``render_frame()``: Multi-layer rendering pipeline
+   - ``update_led_display()``: Distance-to-LED mapping and LED update logic
 
    **Validation:** API minimal and clear, internal functions properly encapsulated, task 
    lifecycle managed correctly.

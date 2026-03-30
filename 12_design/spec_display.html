@@ -12,11 +12,11 @@
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-needs/modern.css?v=803738c0" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=2dda3639" />
@@ -314,7 +314,7 @@
           <section id="display-system-design-specification">
 <h1>Display System Design Specification<a class="headerlink" href="#display-system-design-specification" title="Link to this heading">¶</a></h1>
 <p>This document specifies the design of the display system that visualizes distance measurements
-through WS2812 LED strips with dual-layer rendering and zone-based animations.</p>
+through WS2812 LED strips with straightforward distance-to-LED mapping.</p>
 <p><strong>Document Version</strong>: 2.0
 <strong>Last Updated</strong>: 2025-11-12</p>
 <section id="overview">
@@ -323,7 +323,7 @@ through WS2812 LED strips with dual-layer rendering and zone-based animations.</
 </section>
 <section id="system-integration">
 <h2>System Integration<a class="headerlink" href="#system-integration" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-33736ea6">
+<div class="need_container docutils container" id="SNCB-165f9e4d">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_DSP_OVERVIEW_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -356,7 +356,7 @@ parameters.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-31aea742">
+<div class="need_container docutils container" id="SNCB-3304c9e8">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_DSP_ARCH_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -387,7 +387,7 @@ parameters.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-805fc9c3">
+<div class="need_container docutils container" id="SNCB-a90313af">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_DSP_ARCH_2">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -423,7 +423,7 @@ config structures.</p>
 </section>
 <section id="core-algorithms">
 <h2>Core Algorithms<a class="headerlink" href="#core-algorithms" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-fef32d7a">
+<div class="need_container docutils container" id="SNCB-934c0264">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_DSP_ALGO_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -440,15 +440,29 @@ config structures.</p>
 </div>
 </td>
 </tr>
-<tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>Design:</strong> Distance-to-LED mapping</p>
-<p><strong>Position Mapping:</strong></p>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>Design:</strong> Distance-to-LED mapping with out-of-range handling.</p>
+<p><strong>Position Mapping (valid range):</strong></p>
 <ul class="simple">
 <li><p>Formula: <code class="docutils literal notranslate"><span class="pre">led_index</span> <span class="pre">=</span> <span class="pre">(distance_mm</span> <span class="pre">-</span> <span class="pre">min_mm)</span> <span class="pre">*</span> <span class="pre">(led_count</span> <span class="pre">-</span> <span class="pre">1)</span> <span class="pre">/</span> <span class="pre">(max_mm</span> <span class="pre">-</span> <span class="pre">min_mm)</span></code></p></li>
 <li><p>Boundary clamping: <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">led_count-1]</span></code></p></li>
 </ul>
+<p><strong>Out-of-Range Handling:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">distance</span> <span class="pre">&lt;</span> <span class="pre">dist_min_mm</span></code>: Clear all LEDs, set LED[0] to RED (too close warning)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">distance</span> <span class="pre">&gt;</span> <span class="pre">dist_max_mm</span></code>: Clear all LEDs, set LED[led_count-1] to RED (too far warning)</p></li>
+<li><p>Valid range: Clear all LEDs, set LED[mapped_index] to GREEN</p></li>
+</ul>
+<p><strong>Sensor Error Handling:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">DISTANCE_SENSOR_TIMEOUT</span></code>: All LEDs off (cleared)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DISTANCE_SENSOR_OUT_OF_RANGE</span></code>: LED[led_count-1] set to RED</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DISTANCE_SENSOR_NO_ECHO</span></code> / <code class="docutils literal notranslate"><span class="pre">DISTANCE_SENSOR_INVALID_READING</span></code>: LED[0] set to RED</p></li>
+</ul>
 <p><strong>Behaviors:</strong></p>
 <ul class="simple">
-<li><p>single LED green illuminated at mapped position</p></li>
+<li><p>Only one LED is illuminated at any given time</p></li>
+<li><p>All LEDs are cleared before each update</p></li>
+<li><p>Physical LEDs updated via <code class="docutils literal notranslate"><span class="pre">led_show()</span></code> after state change</p></li>
 </ul>
 <p><strong>Validation:</strong> Position updates correctly with distance changes.</p>
 </td>
@@ -456,7 +470,7 @@ config structures.</p>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-9def4b70">
+<div class="need_container docutils container" id="SNCB-50649e2f">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_DSP_ALGO_3">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -493,7 +507,7 @@ config structures.</p>
 </section>
 <section id="api-design">
 <h2>API Design<a class="headerlink" href="#api-design" title="Link to this heading">¶</a></h2>
-<div class="need_container docutils container" id="SNCB-c93bbd12">
+<div class="need_container docutils container" id="SNCB-083461f0">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SPEC_DSP_API_1">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -520,9 +534,7 @@ config structures.</p>
 <p><strong>Internal Functions:</strong></p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">display_task()</span></code>: Main task loop (blocking on distance measurements)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">animation_timer_callback()</span></code>: 100ms timer for animation updates</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">calculate_led_position()</span></code>: Distance-to-LED mapping</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">render_frame()</span></code>: Multi-layer rendering pipeline</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">update_led_display()</span></code>: Distance-to-LED mapping and LED update logic</p></li>
 </ul>
 <p><strong>Validation:</strong> API minimal and clear, internal functions properly encapsulated, task
 lifecycle managed correctly.</p>

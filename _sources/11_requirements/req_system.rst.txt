@@ -9,6 +9,7 @@ This document contains high-level system requirements for the ESP32 Distance Sen
 
 .. req:: Garage Parking Assistance System
    :id: REQ_SYS_1
+   :links: US_DISPLAY_1
    :status: approved
    :priority: mandatory
    :tags: system, parking, garage
@@ -33,6 +34,7 @@ This document contains high-level system requirements for the ESP32 Distance Sen
 
 .. req:: ESP32 Hardware Platform
    :id: REQ_SYS_HW_1
+   :links: US_RELIABLE_1
    :status: approved
    :priority: mandatory
    :tags: hardware, platform
@@ -51,6 +53,7 @@ This document contains high-level system requirements for the ESP32 Distance Sen
 
 .. req:: WiFi Connectivity
    :id: REQ_SYS_NET_1
+   :links: US_SETUP_1
    :status: approved
    :priority: mandatory
    :tags: network, wifi
@@ -72,7 +75,7 @@ This document contains high-level system requirements for the ESP32 Distance Sen
    :status: approved
    :priority: mandatory
    :tags: web, configuration
-   :links: REQ_SYS_NET_1
+   :links: REQ_SYS_NET_1, US_SETUP_1
 
    **Description:**
    The system SHALL provide web interface for configuration and monitoring.
@@ -88,6 +91,7 @@ This document contains high-level system requirements for the ESP32 Distance Sen
 
 .. req:: Non-volatile Configuration Storage
    :id: REQ_SYS_CFG_1
+   :links: US_SETUP_1
    :status: approved
    :priority: mandatory
    :tags: storage, nvs, configuration
@@ -106,6 +110,7 @@ This document contains high-level system requirements for the ESP32 Distance Sen
 
 .. req:: Component-based Architecture
    :id: REQ_SYS_ARCH_1
+   :links: US_DEV_1
    :status: approved
    :priority: mandatory
    :tags: architecture, modularity
@@ -124,6 +129,7 @@ This document contains high-level system requirements for the ESP32 Distance Sen
 
 .. req:: Error Handling and Recovery
    :id: REQ_SYS_REL_1
+   :links: US_RELIABLE_1
    :status: approved
    :priority: mandatory
    :tags: reliability, error-handling
@@ -143,6 +149,7 @@ This document contains high-level system requirements for the ESP32 Distance Sen
 
 .. req:: Memory Management
    :id: REQ_SYS_PERF_1
+   :links: US_RELIABLE_1
    :status: approved
    :priority: mandatory
    :tags: performance, memory
@@ -162,6 +169,7 @@ This document contains high-level system requirements for the ESP32 Distance Sen
 
 .. req:: Emulator Support
    :id: REQ_SYS_SIM_1
+   :links: US_DEV_3
    :status: approved
    :priority: mandatory
    :tags: emulator, qemu, testing
@@ -185,7 +193,7 @@ This document contains high-level system requirements for the ESP32 Distance Sen
    :status: approved
    :priority: optional
    :tags: emulator, qemu, network, development
-   :links: REQ_SYS_SIM_1, REQ_SYS_NET_1
+   :links: REQ_SYS_SIM_1, REQ_SYS_NET_1, US_DEV_3
 
    **Description:**
    The system SHOULD provide network connectivity when running in QEMU emulation to enable testing of network-dependent features.

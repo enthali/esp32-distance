@@ -79,10 +79,10 @@ Functional Requirements
 
    **Acceptance Criteria:**
 
-   - AC-1: LED count SHALL be obtained from centralized configuration system (REQ_CFG_1)
+   - AC-1: LED count SHALL be obtained from centralized configuration system (:need:`REQ_CFG_JSON_1`)
    - AC-2: LED controller SHALL receive LED count during initialization via configuration structure
    - AC-3: System SHALL support LED counts from 1 to at least 100 LEDs
-   - AC-4: Configuration system SHALL validate LED count parameters (validation owned by REQ_CFG_6)
+   - AC-4: Configuration system SHALL validate LED count parameters (validation owned by :need:`REQ_CFG_JSON_6`)
    - AC-5: All LED positions within configured count SHALL be controllable
 
    **Verification:** Test with different LED counts, verify all configured LEDs are controllable 
