@@ -12,7 +12,7 @@ Architecture Overview
 .. spec:: JSON Schema-Driven Architecture
    :id: SPEC_CFG_JSON_ARCH_1
    :links: REQ_CFG_JSON_1, REQ_CFG_JSON_6
-   :status: draft
+   :status: implemented
    :tags: architecture, config, json-schema
 
    **Description:** The configuration system uses a single JSON schema as source of truth with build-time code generation and runtime NVS storage.

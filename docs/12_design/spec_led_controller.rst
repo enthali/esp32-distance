@@ -178,7 +178,7 @@ Memory and Error Handling
    **Implementation:**
 
    - Initialization Allocation: LED buffer ``malloc()`` based on configured count
-   - Validation: LED count bounds (1-1000) to prevent excessive allocation
+   - Validation: LED count bounds (1-100) to prevent excessive allocation
    - Cleanup: ``free()`` buffer and reset pointers during deinitialization
    - Temporary Allocation: GRB data buffer during transmission (freed immediately)
    - Error Recovery: Cleanup partial initialization on failure
